@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "android_release_apk": "cd android && ./gradlew clean && ./gradlew assembleRelease && cd ../",
     "android_release_bundle": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ../",
-    "pod_clean": "cd ios && pod deintegrate && pod clean && pod install && cd ../",
+    "pod_clean": "cd ios && pod deintegrate && pod install && cd ../",
     "hygen_screen": "hygen generate screen",
     "hygen_screen_component": "hygen generate screen-component",
     "hygen_component": "hygen generate component",
