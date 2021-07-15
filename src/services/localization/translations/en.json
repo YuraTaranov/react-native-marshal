@@ -1,0 +1,17 @@
+﻿{
+  "screen": {
+    "title": {
+      "login": "Login",
+      "registration": "Registration",
+      "profile": "Профиль",
+      "friends": "Friends",
+      "settings": "Settings",
+      "group": "Group",
+      "create_group": "Create Group",
+      "group_settings": "Group Settings",
+      "shop": "Shop",
+      "posts": "Posts",
+      "create_post": "Create Post"
+    }
+  }
+}
