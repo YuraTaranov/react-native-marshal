@@ -31,6 +31,9 @@ module.exports = [
       'Profile',
       'Promotions',
       'Stations',
+      'CodeConfirm',
+      'Onboarding',
+      'Registration',
       //ADD MORE SCREENS
     ],
   },

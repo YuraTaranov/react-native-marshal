@@ -14,37 +14,38 @@ export {
 } from 'react-native';
 
 // MODULES
-// export {default as TextInputMask} from 'react-native-text-input-mask';
-// export {default as GestureRecognizer} from 'react-native-swipe-gestures';
-// export {Pagination} from 'react-native-snap-carousel';
-export {default as Modal} from 'react-native-modal';
-// export {default as Image} from 'react-native-fast-image';
-
-// export {default as ImagePicker} from 'react-native-image-picker';
+export { default as TextInputMask } from 'react-native-text-input-mask';
+export { default as Image } from 'react-native-fast-image'
+export { default as FilledTextField } from 'rn-material-ui-textfield';
+export { default as Modal } from 'react-native-modal';
+export { default as LinearGradient } from 'react-native-linear-gradient';
+export { default as ConfirmationCodeField } from 'react-native-confirmation-code-field'
+export { default as SnapCarousel } from 'react-native-snap-carousel'
+export { default as DateTimePicker } from '@react-native-community/datetimepicker'
 
 // TYPOGRAPHY
-export {default as Text} from './typography/Text';
-export {default as Icon} from './typography/Icon';
-export {default as TextInput} from './typography/TextInput';
+export { default as Text } from './typography/Text';
+export { default as Icon } from './typography/Icon';
+export { default as TextInput } from './typography/TextInput';
 
 // CONTAINER
 
 // CONTROLL
-// export {default as UsualButton} from './control/UsualButton';
-// export {default as KeyboardAvoidingView} from './control/KeyboardAvoiding';
+export { default as QuestionButton } from './control/QuestionButton';
+export { default as HeaderTextButton } from './control/HeaderTextButton';
+export { default as HeaderButton } from './control/HeaderButton';
+export { default as GhostButton } from './control/GhostButton';
+export { default as UsualButton } from './control/UsualButton';
+export { default as MaterialInput} from './control/MaterialInput';
 
 // NAVIGATION
-export {default as TabBar} from './navigation/TabBar';
-// export {default as Header} from './navigation/Header';
-// export {default as HeaderLeft} from './navigation/HeaderLeft';
-// export {default as HeaderRight} from './navigation/HeaderRight';
-// export {default as HeaderTitle} from './navigation/HeaderTitle';
+export { default as TabBar } from './navigation/TabBar';
 
 // LAYOUT
-export {default as Wrapper} from './layout/Wrapper'
-// export {default as KeyboardAvoidingView} from './layout/KeyboardAvoidingView';
+export { default as Wrapper } from './layout/Wrapper'
+export { default as KeyboardAvoidingView } from './layout/KeyboardAvoidingView';
 
 // MODAL
-// export {default as WithoutAuth} from './modal/WithoutAuth/WithoutAuth';
+export { default as Support } from './modal/Support';
 
 // OTHER

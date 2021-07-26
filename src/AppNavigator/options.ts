@@ -1,12 +1,16 @@
 import styles from './styles';
 import { colors } from '@constants';
 import { Platform } from '@components';
+import { StackNavigationOptions } from '@react-navigation/stack';
 
-export const defaultStackOptions = {
+export const defaultStackOptions: StackNavigationOptions = {
+  headerBackTitleVisible: false,
   headerStyle: styles.headerStyle,
   headerTitleStyle: styles.headerTitleStyle,
   headerTintColor: colors.white_FFFFFF,
   cardStyle: styles.cardStyle,
+  headerRightContainerStyle: styles.headerRightContainerStyle,
+  headerLeftContainerStyle: styles.headerLeftContainerStyle
 };
 
 export const theme = {
@@ -18,12 +22,6 @@ export const theme = {
     text: '', // The text color of various elements.
     // border: colors.RED, // The color of borders, e.g. header border, tab bar border etc.
   },
-};
-
-
-export const headerStyleWithMarginLeft = {
-  headerStyle: defaultStackOptions.headerStyle,
-  headerTitleStyle: { ...defaultStackOptions.headerTitleStyle, marginLeft: Platform.OS === 'android' ? -60 : 0 },
 };
 
 export const headerStyle = {

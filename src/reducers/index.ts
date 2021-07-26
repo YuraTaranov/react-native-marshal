@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-  // _additional: require('./_additional').default,
   appGlobalState: require('./appGlobalState').default,
+  modalController: require('./modalController').default,
+  // _additional: require('./_additional').default,
   // modalController: require('./modalController').default,
   // cities: require('./cities').default,
   // profile: require('./profile').default,

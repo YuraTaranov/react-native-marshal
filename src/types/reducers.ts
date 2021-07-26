@@ -1,10 +1,12 @@
 export type TGlobalState = {
     appGlobalState: {
+        onBoarding: boolean,
         lang: TLang
         accessToken: string
+    },
+    modalController: {
+        support: boolean
     }
 }
 
-export type TLang = 'ua' | 'ru' | 'en';
-
-
+export type TLang = 'uk' | 'ru' | 'en';

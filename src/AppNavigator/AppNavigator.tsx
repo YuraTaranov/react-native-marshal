@@ -11,30 +11,33 @@ import AuthStackNavigator from './stacks/AuthStackNavigator';
 import TabNavigator from './TabNavigator';
 import { Wrapper } from '@components';
 import { cardStyle } from './options'
+import OnboardingStackNavigator from './stacks/OnboardingStackNavigator';
 
 const RootStack = createStackNavigator();
 
 const AppNavigator: React.FC<TProps> = ({ appGlobalState }) => {
-
   useEffect(() => {
     i18next.changeLanguage(appGlobalState.lang);
   }, []);
 
   return (
     <NavigationContainer >
-      <Wrapper>
-        <RootStack.Navigator headerMode="none" screenOptions={{
-          gestureEnabled: false,
-        }}>
-          {appGlobalState.accessToken ? (
-            <RootStack.Screen name="TabNavigator" component={TabNavigator} />
-          ) :
-            (<RootStack.Screen
-              name="AuthNavigator" component={AuthStackNavigator} />
-            )
-          }
-        </RootStack.Navigator>
-      </Wrapper>
+      <RootStack.Navigator headerMode="none" screenOptions={{
+        gestureEnabled: false,
+      }}>
+        {
+          appGlobalState.onBoarding ? (
+            <RootStack.Screen name={'Onboarding'} component={OnboardingStackNavigator} />
+          )
+            :
+            appGlobalState.accessToken ? (
+              <RootStack.Screen name="TabNavigator" component={TabNavigator} />
+            ) :
+              (<RootStack.Screen
+                name="AuthNavigator" component={AuthStackNavigator} />
+              )
+        }
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };

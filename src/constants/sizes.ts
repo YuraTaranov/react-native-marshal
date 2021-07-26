@@ -1,4 +1,13 @@
+import { Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get('screen')
+
 export const sizes = {
+  window_width: width,
+  window_height: height,
+  rem: width > 375 ? 18 : 16,
+  horizontalCoefficient: width / 375,
+  verticalCoefficient: height / 812,
   pts_2: 2,
   pts_4: 4,
   pts_6: 6,

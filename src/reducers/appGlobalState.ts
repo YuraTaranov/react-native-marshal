@@ -1,15 +1,17 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import i18next from 'i18next';
-import { TLang } from '@types';
+import { TGlobalState, TLang } from '@types';
 import { languages } from '@constants';
 
 const RESET_APP_GLOBAL_STATE = '[appGlobalState] RESET_APP_GLOBAL_STATE';
 const CHANGE_LANG = '[appGlobalState] CHANGE_LANG';
 const SET_LANG = '[appGlobalState] SET_LANG';
 const SET_TOKEN = '[appGlobalState] SET_TOKEN';
+const SET_ONBOARDING = '[appGlobalState] SET_ONBOARDING';
 
-const initialstate = {
-  lang: languages.UA,
+const initialstate: TGlobalState['appGlobalState'] = {
+  onBoarding: true,
+  lang: 'uk',
   accessToken: '',
 };
 
@@ -19,6 +21,8 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, { ...state, lang: action.lang });
     case SET_TOKEN:
       return Object.assign({}, { ...state, accessToken: action.token });
+    case SET_ONBOARDING:
+      return Object.assign({}, { ...state, onBoarding: action.onBoarding });
     case RESET_APP_GLOBAL_STATE:
       return initialstate;
     default:
@@ -28,6 +32,7 @@ export default (state = initialstate, action: any) => {
 
 export const setLang = (lang: TLang) => ({ lang, type: SET_LANG });
 export const setToken = (token: string) => ({ token, type: SET_TOKEN });
+export const setOnboarding= (onBoarding: boolean) => ({ onBoarding, type: SET_ONBOARDING });
 
 export const changeLang = (lang: TLang) => ({ lang, type: CHANGE_LANG });
 export const resetAppGlobalState = () => ({ type: RESET_APP_GLOBAL_STATE });

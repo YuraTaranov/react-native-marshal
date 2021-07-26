@@ -4,18 +4,18 @@ import * as localize from 'react-native-localize';
 import {languages} from '@constants';
 
 const ru = require('./translations/ru.json');
-const ua = require('./translations/ua.json');
+const uk = require('./translations/uk.json');
 const en = require('./translations/en.json');
 
 const languageCodes = localize.getLocales().map((locale) => locale.languageCode);
 const {languageTag}: any = localize.findBestAvailableLanguage(languageCodes);
 
-const defaultLanguage = languages.UA;
+const defaultLanguage = languages.UK;
 
 i18n.use(initReactI18next).init({
   resources: {
     [languages.RU]: {translation: ru},
-    [languages.UA]: {translation: ua},
+    [languages.UK]: {translation: uk},
     [languages.EN]: {translation: en},
   },
   lng: defaultLanguage,

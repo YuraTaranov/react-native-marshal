@@ -7,9 +7,17 @@ const ios = Platform.OS === 'ios';
 
 const styles = StyleSheet.create({
   headerStyle: {
+    paddingHorizontal: 17,
     backgroundColor: colors.green_27A74C,
   },
+  headerRightContainerStyle: {
+    marginRight: 17
+  },
+  headerLeftContainerStyle: {
+    marginLeft: 17,
+  },
   headerTitleStyle: {
+    fontFamily: fonts.interSemiBold_600,
     fontSize: 18,
   },
   cardStyle: {

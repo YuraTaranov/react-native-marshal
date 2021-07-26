@@ -4,3 +4,6 @@ export {default as Bonuses} from './Bonuses';
 export {default as Profile} from './Profile';
 export {default as Promotions} from './Promotions';
 export {default as Stations} from './Stations';
+export {default as CodeConfirm} from './CodeConfirm';
+export {default as Onboarding} from './Onboarding';
+export {default as Registration} from './Registration';
