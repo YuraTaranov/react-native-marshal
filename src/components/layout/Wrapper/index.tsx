@@ -1,22 +1,27 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView } from '@components';
+import { View, SafeAreaView, Support } from '@components';
 import { TGlobalState } from '@types';
 import styles from './styles';
+// import { useHeaderHeight } from '@react-navigation';
 
-const Wrapper: React.FC<TProps> = ({ children, }) => {
+const Wrapper: React.FC<TProps> = ({ children }) => {
+
+  // const headerHeight = useHeaderHeight();
+
+
   return (
     <Fragment>
-      <SafeAreaView style={styles.headerView}></SafeAreaView>
-      <SafeAreaView style={styles.container}>
+      <Support />
+      <View style={styles.container}>
         {children}
-      </SafeAreaView>
+      </View>
     </Fragment>
   );
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  appGlobalState: state.appGlobalState
+  appGlobalState: state.appGlobalState,
 })
 
 

@@ -1,4 +1,7 @@
 export const urls = {
-    baseDevURL: '',
-    baseProdURL: ''
-}
+  baseDevURL: '',
+  baseProdURL: '',
+
+  login: '/login',
+  checkCode: '/checkCode',
+};

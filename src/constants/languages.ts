@@ -1,5 +1,5 @@
 export const languages = {
-  UA: 'ua',
+  UK: 'uk',
   RU: 'ru',
   EN: 'en',
 };
