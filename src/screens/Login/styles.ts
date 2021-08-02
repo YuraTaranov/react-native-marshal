@@ -1,7 +1,10 @@
-import { StyleSheet } from '@components';
-import { colors, fonts } from '@constants'
+import {StyleSheet} from '@components';
+import {colors, fonts} from '@constants';
 
 export default StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     paddingHorizontal: 16,
@@ -19,24 +22,26 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontFamily: fonts.interRegular_400,
-
   },
   phoneNumberView: {
     height: 56,
     borderBottomWidth: 2,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
     fontFamily: fonts.interMedium_500,
     lineHeight: 24,
-    color: colors.black_1B1B1B
+    color: colors.black_1B1B1B,
   },
   closeBtn: {
     width: 38,
     height: 38,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
+  buttonStyle: {
+    marginBottom: 16,
+  },
 });

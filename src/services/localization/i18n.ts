@@ -7,7 +7,7 @@ const ru = require('./translations/ru.json');
 const uk = require('./translations/uk.json');
 const en = require('./translations/en.json');
 
-const languageCodes = localize.getLocales().map((locale) => locale.languageCode);
+const languageCodes = localize.getLocales().map(locale => locale.languageCode);
 const {languageTag}: any = localize.findBestAvailableLanguage(languageCodes);
 
 const defaultLanguage = languages.UK;
@@ -21,8 +21,8 @@ i18n.use(initReactI18next).init({
   lng: defaultLanguage,
   fallbackLng: languages.RU,
   react: {
-    wait: true,
     nsMode: 'default',
+    useSuspense: true,
   },
   interpolation: {
     escapeValue: false, // react already safes from xss

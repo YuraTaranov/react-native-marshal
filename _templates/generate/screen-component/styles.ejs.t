@@ -1,14 +1,8 @@
 ---
 to: src/screens/<%=folder%>/components/<%=h.changeCase.pascal(name)%>/styles.ts
 ---
-import {StyleSheet} from '@components';
-import {colors} from '@constants'
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-	container: {
-		flex: 1
-	},
+	container: {},
 })
-
-
-

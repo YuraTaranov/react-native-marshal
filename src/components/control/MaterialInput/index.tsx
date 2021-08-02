@@ -1,10 +1,14 @@
 import React from 'react';
-import { KeyboardTypeOptions, ReturnKeyTypeOptions, ViewStyle } from 'react-native';
-import { FilledTextField, TextField } from 'rn-material-ui-textfield';
-import { useState, useMemo } from '@hooks';
-import { colors } from '@constants';
+import {
+  KeyboardTypeOptions,
+  ReturnKeyTypeOptions,
+  ViewStyle,
+} from 'react-native';
+import {FilledTextField, TextField} from 'rn-material-ui-textfield';
+import {useMemo} from '@hooks';
+import {colors} from '@constants';
 import styles from './styles';
-import { Icon } from '@components';
+import {Icon} from '@components';
 
 const MaterialInput: React.FC<TProps> = ({
   value,
@@ -22,7 +26,7 @@ const MaterialInput: React.FC<TProps> = ({
   inputContainerStyle,
   disabled,
   error,
-},) => {
+}) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
       return () => (
@@ -47,7 +51,10 @@ const MaterialInput: React.FC<TProps> = ({
       baseColor={colors.gray_8D909D}
       lineWidth={2}
       activeLineWidth={2}
-      inputContainerStyle={{ ...styles.inputContainerStyle, ...inputContainerStyle }}
+      inputContainerStyle={{
+        ...styles.inputContainerStyle,
+        ...inputContainerStyle,
+      }}
       labelFontSize={12}
       renderRightAccessory={rightAccessory}
       returnKeyType={returnKeyType}
@@ -62,14 +69,14 @@ export default MaterialInput;
 
 type TProps = {
   value: string;
-  onChangeText: (value: string) => void;
-  onRef?: (ref: TextField) => void,
+  onChangeText?: (value: string) => void;
+  onRef?: (ref: TextField) => void;
   onFocus?: () => void;
   onSubmit?: () => void;
   label?: string;
   keyboardType?: KeyboardTypeOptions;
   renderRightAccessory?: JSX.Element | boolean;
-  rightAccessoryName?: string
+  rightAccessoryName?: string;
   returnKeyType?: ReturnKeyTypeOptions;
   secureTextEntry?: boolean;
   maxLength?: number;

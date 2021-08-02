@@ -1,17 +1,12 @@
-import { Dimensions, Platform, StyleSheet } from 'react-native';
-import { colors, fonts } from '@constants';
-import EStyleSheet from 'react-native-extended-stylesheet';
-
-const { width } = Dimensions.get('window');
-const ios = Platform.OS === 'ios';
+import {StyleSheet} from 'react-native';
+import {colors, fonts} from '@constants';
 
 const styles = StyleSheet.create({
   headerStyle: {
-    paddingHorizontal: 17,
     backgroundColor: colors.green_27A74C,
   },
   headerRightContainerStyle: {
-    marginRight: 17
+    marginRight: 17,
   },
   headerLeftContainerStyle: {
     marginLeft: 17,
@@ -22,7 +17,7 @@ const styles = StyleSheet.create({
   },
   cardStyle: {
     backgroundColor: colors.white_FFFFFF,
-  }
+  },
 });
 
-export default styles
+export default styles;

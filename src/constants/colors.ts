@@ -9,7 +9,9 @@ export const colors = {
   gray_404353: '#404353',
   gray_8D909D: '#8D909D',
   gray_E1E1E8: '#E1E1E8',
+  gray_6D6F79: '#6D6F79',
   green_27A74C: '#27A74C',
+  green_007E26: '#007E26',
   green_41BB4E: '#41BB4E',
   white_FFFFFF: '#FFFFFF',
 };

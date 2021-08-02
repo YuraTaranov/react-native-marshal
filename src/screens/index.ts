@@ -7,3 +7,4 @@ export {default as Stations} from './Stations';
 export {default as CodeConfirm} from './CodeConfirm';
 export {default as Onboarding} from './Onboarding';
 export {default as Registration} from './Registration';
+export {default as BonusCardCheck} from './BonusCardCheck/BonusCardCheck';

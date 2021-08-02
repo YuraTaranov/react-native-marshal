@@ -1,140 +1,245 @@
-import React from 'react'
-import { Platform, SafeAreaView, TextInput } from 'react-native';
-import { TextField } from 'rn-material-ui-textfield';
-import { connect } from 'react-redux';
-import moment from 'moment'
-import { useMemo, useTranslation, useState, useNavigation, useRef, useEffect } from '@hooks'
-import { View, Text, UsualButton, KeyboardAvoidingView, QuestionButton, Icon, TouchableOpacity, Keyboard, MaterialInput, DateTimePicker } from '@components'
-import { TGlobalState } from '@types'
-import { animation, verticalScale } from '@helpers';
+import React, {useCallback} from 'react';
+import {SafeAreaView, Linking} from 'react-native';
+import {connect} from 'react-redux';
+import moment from 'moment';
+import {
+  useMemo,
+  useTranslation,
+  useState,
+  useNavigation,
+  useEffect,
+} from '@hooks';
+import {
+  View,
+  Text,
+  UsualButton,
+  KeyboardAvoidingView,
+  QuestionButton,
+  TouchableOpacity,
+  Keyboard,
+  MaterialInput,
+  DateTimePicker,
+  CheckBoxCustom,
+} from '@components';
+import {TGlobalState} from '@types';
+import {verticalScale} from '@helpers';
 import styles from './styles';
+import {ios} from '@constants';
+import ModalContent from './ModalContent/ModalContent';
 
 type TProps = {
-	appGlobalState: TGlobalState['appGlobalState']
-}
+  appGlobalState: TGlobalState['appGlobalState'];
+};
 
-const Registration: React.FC<TProps> = ({ appGlobalState }) => {
-	const { t } = useTranslation()
+// FIXME:
+const loyaltyUrl = 'https://google.com';
+const minimumDate = new Date(Date.now() - 3849948144000); // 122 years in ms
+const maximumDate = new Date(Date.now() - 568080000000); // 18 years in ms
 
-	let nameTIRef = useRef<TextField>(null)
+const Registration: React.FC<TProps> = ({appGlobalState}) => {
+  const {t} = useTranslation();
+  const {setOptions, navigate} = useNavigation();
+  const [nameValue, setNameValue] = useState<string>('');
+  const [surnameValue, setSurnameValue] = useState<string>('');
+  const [birthdayValue, setBirthdayValue] = useState<Date>(maximumDate);
+  const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
+    type: 0,
+    name: '',
+  });
+  const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);
+  const [consentPersonalData, setConsentPersonalData] =
+    useState<boolean>(false);
+  const [agreeLoyaltyProgram, setAgreeLoyaltyProgram] =
+    useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<'date' | 'gender'>('date');
 
-	const textInputMaskRef = useRef<TextInput>(null)
-	const { setOptions, navigate } = useNavigation()
-	const [nameValue, setNameValue] = useState<string>('')
-	const [surnameValue, setSurnameValue] = useState<string>('')
-	const [birthdayValue, setBirthdayValue] = useState<Date>(new Date());
-	const [sexValue, setSexValue] = useState<string>('');
-	const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false)
-	const [consentPersonalData, setConsentPersonalData] = useState<boolean>(false);
-	const [agreeLoyaltyProgram, setAgreeLoyaltyProgram] = useState<boolean>(false);
-	const [textInputFocus, setTextInputFocus] = useState<boolean>(false)
-	const [loading, setLoading] = useState<boolean>(false)
+  useEffect(() => {
+    setOptions({
+      headerRight: () => <QuestionButton />,
+    });
+  }, []);
 
-	useEffect(() => {
-		textInputMaskRef.current?.focus()
-	}, [])
+  const openModal = useCallback(
+    (type: 'date' | 'gender') => () => {
+      if (type === 'date') {
+        setModalType('date');
+        ios ? setIsModalVisible(true) : setVisibleDatePicker(true);
+      } else {
+        setModalType('gender');
+        setIsModalVisible(true);
+      }
+      Keyboard.dismiss();
+    },
+    [],
+  );
 
-	setOptions({
-		headerRight: () => <QuestionButton />
-	})
+  const closeModal = useCallback(() => {
+    setIsModalVisible(false);
+  }, []);
 
-	const submit = async () => {
-		Keyboard.dismiss()
-		setLoading(true)
-		setTimeout(() => {
-			setLoading(false)
-			navigate('CodeConfirm')
-		}, 3000)
-		// const { data } = await AuthService.checkPhone(phoneNumber)
-	}
+  const onChangeDate = useCallback((event: any, date: Date | undefined) => {
+    if (date) {
+      setVisibleDatePicker(false);
+      setBirthdayValue(date);
+    }
+  }, []);
 
-	const onChangeDate = (event: any, date: Date | undefined) => {
-		if (date) {
-			setVisibleDatePicker(Platform.OS === 'ios');
-			setBirthdayValue(date)
-		}
-	}
+  const onChangeGender = useCallback(value => {
+    setGenderValue(value);
+    closeModal();
+  }, []);
 
-	const onFocusField = () => {
-		setVisibleDatePicker(false)
-	}
+  const dateValue = useMemo(() => {
+    return birthdayValue !== maximumDate
+      ? moment(birthdayValue).format('DD.MM.YYYY')
+      : '';
+  }, [birthdayValue]);
 
-	animation('ios')
+  const onPressLoyalty = useCallback(() => {
+    try {
+      Linking.openURL(loyaltyUrl);
+    } catch (error) {
+      console.log('onPressLoyalty error', error);
+    }
+  }, []);
 
-	const onPressDateInput = () => {
-		Keyboard.dismiss()
-		setVisibleDatePicker(true)
-	}
+  //   FIXME:
+  const submit = useCallback(async () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate('BonusCardCheck');
+    }, 1000);
+    // const { data } = await AuthService.checkPhone(phoneNumber)
+  }, []);
 
-	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<KeyboardAvoidingView keyboardVerticalOffset={verticalScale(100)} style={styles.container}>
-				<View style={styles.contentContainer}>
-					<Text style={styles.title}>{t('text.enterYourPersonalInformation')}</Text>
-					<MaterialInput
-						onFocus={onFocusField}
-						onRef={(ref) => { }}
-						keyboardType={'ascii-capable'}
-						returnKeyType={'next'}
-						value={nameValue}
-						label={t('textInput.name')}
-						onChangeText={setNameValue} />
-					<MaterialInput
-						onFocus={onFocusField}
-						onRef={(ref) => { }}
-						keyboardType={'ascii-capable'}
-						returnKeyType={'next'}
-						value={surnameValue}
-						label={t('textInput.surname')}
-						onChangeText={setSurnameValue} />
-					<View>
-						<TouchableOpacity style={styles.buttonTI} onPress={onPressDateInput}>
-						</TouchableOpacity>
-						<MaterialInput
-							renderRightAccessory
-							rightAccessoryName={'calendar-dates'}
-							value={moment(birthdayValue).format('DD.MM.YYYY')}
-							label={t('textInput.dateOfBirth')}
-							onChangeText={setSurnameValue} />
-					</View>
-					<View>
-						<TouchableOpacity style={styles.buttonTI} disabled={true}>
-						</TouchableOpacity>
-						<MaterialInput
-							renderRightAccessory
-							rightAccessoryName={'arrow-down'}
-							returnKeyType={'next'}
-							value={sexValue}
-							label={t('textInput.sex')}
-							onChangeText={setSurnameValue} />
-					</View>
-				</View>
-				{
-					visibleDatePicker &&
-					<DateTimePicker
+  const personalDataText = useMemo(() => {
+    return (
+      <Text style={styles.checkboxText} numberOfLines={2}>
+        {t('Даю згоду на обробку моїх персональних даних')}
+      </Text>
+    );
+  }, []);
 
-						mode={'date'}
-						locale={appGlobalState.lang}
-						value={birthdayValue}
-						is24Hour={true}
-						display='spinner'
-						onChange={onChangeDate}
-					/>
-				}
-				<UsualButton
-					title={t('button.title.continue')}
-					loading={loading}
-					dark={loading || !false}
-					disabled={false}
-					buttonStyle={{ marginBottom: 16, }}
-					onPress={submit}
-				/>
-			</KeyboardAvoidingView >
-		</SafeAreaView>
-	)
-}
+  const loyaltyDataText = useMemo(() => {
+    return (
+      <Text style={styles.checkboxText} numberOfLines={2}>
+        {t('Погоджуюсь із правилами ')}
+        <Text style={styles.checkBoxLink} onPress={onPressLoyalty}>
+          {t('Програми лояльності')}
+        </Text>
+      </Text>
+    );
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={verticalScale(100)}
+        enabled={false}
+        style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>
+            {t('text.enterYourPersonalInformation')}
+          </Text>
+          <MaterialInput
+            keyboardType={'ascii-capable'}
+            returnKeyType={'default'}
+            value={nameValue}
+            onChangeText={setNameValue}
+            label={t('textInput.name')}
+          />
+          <MaterialInput
+            keyboardType={'ascii-capable'}
+            returnKeyType={'default'}
+            value={surnameValue}
+            onChangeText={setSurnameValue}
+            label={t('textInput.surname')}
+          />
+          <View>
+            <TouchableOpacity
+              style={styles.buttonTI}
+              onPress={openModal('date')}
+            />
+            <MaterialInput
+              renderRightAccessory
+              rightAccessoryName={'calendar-dates'}
+              value={dateValue}
+              label={t('textInput.dateOfBirth')}
+              disabled={true}
+            />
+          </View>
+          <View>
+            <TouchableOpacity
+              style={styles.buttonTI}
+              onPress={openModal('gender')}
+            />
+            <MaterialInput
+              renderRightAccessory
+              rightAccessoryName={'arrow-down'}
+              returnKeyType={'next'}
+              value={genderValue.name}
+              label={t('textInput.sex')}
+              disabled={true}
+            />
+          </View>
+          <View>
+            <CheckBoxCustom
+              value={consentPersonalData}
+              toggleValue={setConsentPersonalData}
+              text={personalDataText}
+            />
+            <CheckBoxCustom
+              value={agreeLoyaltyProgram}
+              toggleValue={setAgreeLoyaltyProgram}
+              text={loyaltyDataText}
+            />
+          </View>
+        </View>
+        <UsualButton
+          title={t('button.title.continue')}
+          loading={loading}
+          dark={loading}
+          disabled={
+            !nameValue ||
+            !surnameValue ||
+            birthdayValue === maximumDate ||
+            !genderValue.name ||
+            !consentPersonalData ||
+            !agreeLoyaltyProgram ||
+            loading
+          }
+          buttonStyle={styles.usualButton}
+          onPress={submit}
+        />
+      </KeyboardAvoidingView>
+      {visibleDatePicker && (
+        <DateTimePicker
+          locale={appGlobalState.lang}
+          value={birthdayValue}
+          onChange={onChangeDate}
+          display={'default'}
+          minimumDate={minimumDate}
+          maximumDate={maximumDate}
+          textColor={'#000000'}
+        />
+      )}
+      <ModalContent
+        isModalVisible={isModalVisible}
+        closeModal={closeModal}
+        birthdayValue={birthdayValue}
+        onChangeDate={onChangeDate}
+        modalType={modalType}
+        onChangeGender={onChangeGender}
+        genderValue={genderValue}
+      />
+    </SafeAreaView>
+  );
+};
 const mapStateToProps = (state: TGlobalState) => ({
-	appGlobalState: state.appGlobalState
+  appGlobalState: state.appGlobalState,
 });
 
 export default connect(mapStateToProps)(Registration);

@@ -1,6 +1,6 @@
-import { colors, fonts, sizes } from '@constants';
-import { StyleSheet } from '@components';
-import { verticalScale } from '@helpers';
+import {colors} from '@constants';
+import {StyleSheet} from '@components';
+import {verticalScale} from '@helpers';
 
 export default StyleSheet.create({
   container: {
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 8,
-    backgroundColor: colors.gray_E1E1E8
+    backgroundColor: colors.gray_E1E1E8,
   },
   snapCarousel: {
     width: '100%',
@@ -32,8 +32,7 @@ export default StyleSheet.create({
   },
   usualButtonView: {
     width: '100%',
-    paddingHorizontal: 16
-    // marginBottom: verticalScale(70),
+    paddingHorizontal: 16,
   },
   dotsView: {
     marginBottom: verticalScale(60),

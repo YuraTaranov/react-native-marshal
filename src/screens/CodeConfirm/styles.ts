@@ -1,8 +1,11 @@
-import { StyleSheet } from '@components';
-import { colors, fonts } from '@constants'
-import { verticalScale } from '@helpers';
+import {StyleSheet} from '@components';
+import {colors, fonts} from '@constants';
+import {verticalScale} from '@helpers';
 
 export default StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     paddingHorizontal: 16,
@@ -15,7 +18,7 @@ export default StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.interMedium_500,
     lineHeight: 24,
-    color: colors.black_1B1B1B
+    color: colors.black_1B1B1B,
   },
   codeFiledRoot: {
     marginTop: 16,
@@ -42,14 +45,14 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
   },
   usualBtn: {
-    marginVertical: verticalScale(16)
+    marginVertical: verticalScale(16),
   },
   centerLeftInput: {
     marginLeft: 16,
-    marginRight: 8
+    marginRight: 8,
   },
   centerRightInput: {
     marginLeft: 8,
-    marginRight: 16
-  }
+    marginRight: 16,
+  },
 });

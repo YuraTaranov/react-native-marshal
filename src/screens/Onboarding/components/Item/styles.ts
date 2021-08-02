@@ -1,15 +1,9 @@
-import { StyleSheet } from 'react-native';
-import { colors, fonts, sizes } from '@constants';
-import { assets } from '@assets';
-import { verticalScale } from '@helpers';
+import {StyleSheet} from 'react-native';
+import {colors, fonts, sizes} from '@constants';
+import {verticalScale} from '@helpers';
 
 export default StyleSheet.create({
   container: {
-    // height: 500
-    // paddingTop: verticalScale(122),
-    // paddingHorizontal: scale(40),
-    // justifyContent: 'center',
-    // alignItems: 'center',
     flex: 1,
   },
   image: {
@@ -22,5 +16,8 @@ export default StyleSheet.create({
     fontFamily: fonts.interSemiBold_600,
     fontSize: verticalScale(20),
     color: colors.black_1B1B1B,
-  }
+  },
+  titleContainer: {
+    justifyContent: 'center',
+  },
 });
