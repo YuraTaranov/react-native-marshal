@@ -7,12 +7,13 @@ import {View, Text} from '@components';
 import styles from './styles';
 import { connect } from 'react-redux';
 
+type TProps = {};
+
 const <%=h.changeCase.pascal(name)%>: React.FC<TProps> = ({}) => {
     const {t} = useTranslation();
 
-	return <View>{/* content */}</View>;
+	return <View></View>;
 	};
 
 	export default <%=h.changeCase.pascal(name)%>;
 
-	type TProps = {};

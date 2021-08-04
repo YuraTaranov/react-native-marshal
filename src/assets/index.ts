@@ -5,4 +5,5 @@ export const assets = {
   MESSENGER: require('./images/Messenger.png'),
   TELEGRAM: require('./images/Telegram.png'),
   VIBER: require('./images/Viber.png'),
+  QR_SCAN: require('./images/qr_scan.png'),
 };

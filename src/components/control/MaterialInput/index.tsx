@@ -6,9 +6,10 @@ import {
 } from 'react-native';
 import {FilledTextField, TextField} from 'rn-material-ui-textfield';
 import {useMemo} from '@hooks';
-import {colors} from '@constants';
+import {colors, hitSlop} from '@constants';
 import styles from './styles';
 import {Icon} from '@components';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const MaterialInput: React.FC<TProps> = ({
   value,
@@ -21,6 +22,7 @@ const MaterialInput: React.FC<TProps> = ({
   renderRightAccessory,
   returnKeyType = 'done',
   rightAccessoryName,
+  onPressAccessory,
   maxLength,
   formatText,
   inputContainerStyle,
@@ -30,7 +32,17 @@ const MaterialInput: React.FC<TProps> = ({
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
       return () => (
-        <Icon name={rightAccessoryName} size={24} color={colors.black_000000} />
+        <TouchableOpacity
+          onPress={onPressAccessory}
+          hitSlop={hitSlop}
+          activeOpacity={1}
+          style={styles.accessoryContainer}>
+          <Icon
+            name={rightAccessoryName}
+            size={24}
+            color={colors.black_000000}
+          />
+        </TouchableOpacity>
       );
     }
   }, [renderRightAccessory, rightAccessoryName]);
@@ -77,6 +89,7 @@ type TProps = {
   keyboardType?: KeyboardTypeOptions;
   renderRightAccessory?: JSX.Element | boolean;
   rightAccessoryName?: string;
+  onPressAccessory?: () => void;
   returnKeyType?: ReturnKeyTypeOptions;
   secureTextEntry?: boolean;
   maxLength?: number;

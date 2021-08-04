@@ -1,20 +1,21 @@
-import { StyleSheet } from 'react-native';
-import { colors, fonts } from '@constants';
+import {StyleSheet} from 'react-native';
+import {colors, fonts} from '@constants';
 
 export default StyleSheet.create({
   inputContainerStyle: {
-    // textAlign: 'center',
     alignItems: 'center',
     paddingLeft: 0,
     backgroundColor: colors.white_FFFFFF,
   },
-  accessory: {
+  accessoryContainer: {
+    zIndex: 2,
   },
+  accessory: {},
   lableStyle: {
-    top: 8
+    top: 8,
   },
   textInputStyle: {
     fontSize: 16,
-    fontFamily: fonts.interRegular_400
+    fontFamily: fonts.interRegular_400,
   },
 });

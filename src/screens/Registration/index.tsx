@@ -24,11 +24,15 @@ import {
 import {TGlobalState} from '@types';
 import {verticalScale} from '@helpers';
 import styles from './styles';
-import {ios} from '@constants';
+import {ios, urls} from '@constants';
 import ModalContent from './ModalContent/ModalContent';
+import {httpPost, errorHandler, navigate} from '@services';
+import {setProfile} from '@reducers/profile';
+import {Dispatch} from 'redux';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
+  dispatch: Dispatch;
 };
 
 // FIXME:
@@ -36,9 +40,9 @@ const loyaltyUrl = 'https://google.com';
 const minimumDate = new Date(Date.now() - 3849948144000); // 122 years in ms
 const maximumDate = new Date(Date.now() - 568080000000); // 18 years in ms
 
-const Registration: React.FC<TProps> = ({appGlobalState}) => {
+const Registration: React.FC<TProps> = ({appGlobalState, dispatch}) => {
   const {t} = useTranslation();
-  const {setOptions, navigate} = useNavigation();
+  const {setOptions} = useNavigation();
   const [nameValue, setNameValue] = useState<string>('');
   const [surnameValue, setSurnameValue] = useState<string>('');
   const [birthdayValue, setBirthdayValue] = useState<Date>(maximumDate);
@@ -105,15 +109,31 @@ const Registration: React.FC<TProps> = ({appGlobalState}) => {
     }
   }, []);
 
-  //   FIXME:
+  const gender = useMemo(() => {
+    if (genderValue.type === 1) return 'male';
+    if (genderValue.type === 2) return 'female';
+    if (genderValue.type === 3) return '';
+  }, [genderValue.type]);
+
   const submit = useCallback(async () => {
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const body = await httpPost(urls.profileUpdate, {
+        name: nameValue,
+        surname: surnameValue,
+        birthday: birthdayValue,
+        gender,
+      });
       setLoading(false);
-      navigate('BonusCardCheck');
-    }, 1000);
-    // const { data } = await AuthService.checkPhone(phoneNumber)
-  }, []);
+      if (body.status === 200) {
+        dispatch(setProfile(body.data.data));
+        navigate('BonusCardCheck');
+      }
+    } catch (error) {
+      setLoading(false);
+      errorHandler(error, 'registration error');
+    }
+  }, [nameValue, surnameValue, birthdayValue, genderValue]);
 
   const personalDataText = useMemo(() => {
     return (

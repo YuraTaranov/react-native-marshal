@@ -1,39 +1,35 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import { Profile } from '@screens';
-import { connect } from 'react-redux';
-import { TGlobalState } from '@types';
-import { useTranslation } from '@hooks';
-import { defaultStackOptions } from '../options';
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Profile} from '@screens';
+import {connect} from 'react-redux';
+import {TGlobalState} from '@types';
+import {useTranslation} from '@hooks';
+import {defaultStackOptions} from '../options';
 
-
-type TProps = {
-}
+type TProps = {};
 
 const ProfileStack = createStackNavigator();
 
-const ProfileStackNavigator: React.FC<TProps> = ({ }) => {
-
-  const { t } = useTranslation()
+const ProfileStackNavigator: React.FC<TProps> = ({}) => {
+  const {t} = useTranslation();
 
   return (
-    <ProfileStack.Navigator screenOptions={{
-      ...defaultStackOptions
-    }} >
+    <ProfileStack.Navigator
+      screenOptions={{
+        ...defaultStackOptions,
+      }}>
       <ProfileStack.Screen
         name="Profile"
         component={Profile}
         options={{
-          title: 'Profile'
+          // FIXME:
+          title: 'Ім’я Прізвище',
         }}
       />
     </ProfileStack.Navigator>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
+const mapStateToProps = (state: TGlobalState) => ({});
 
-})
-
-export default connect(mapStateToProps)(ProfileStackNavigator)
-
+export default connect(mapStateToProps)(ProfileStackNavigator);
