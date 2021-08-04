@@ -72,9 +72,9 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
 
   const submit = useCallback(async () => {
     Keyboard.dismiss();
-    setLoading(true);
+    dispatch(setLoading(true));
     dispatch(checkCode(value));
-  }, []);
+  }, [value]);
 
   const renderCell = useCallback(
     ({index, symbol, isFocused}) => (
@@ -137,6 +137,8 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
     </SafeAreaView>
   );
 };
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  loading: state.login.loading,
+});
 
 export default connect(mapStateToProps)(CodeConfirm);

@@ -1,7 +1,8 @@
-import {takeLatest, put, call, select, delay} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {httpPost, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
-import {setToken} from '@reducers/appGlobalState';
+import {setToken, setIsUserAuthorized} from '@reducers/appGlobalState';
+import {setProfile} from './profile';
 
 const CHECK_PHONE = '[login] CHECK_PHONE';
 const SET_LOGIN = '[login] SET_LOGIN';
@@ -52,15 +53,13 @@ export function* checkPhoneAsync(action: any) {
   const {phone} = yield select(state => state.login);
   yield action.data.needNavigate && put(setLoading(true));
   try {
-    // const body = yield call(() => httpPost(urls.login, {phone}));
-    // yield put(setLoading(false));
-    // if (body.data) {
-    //   yield put(setLogin(body.data));
-    //   navigate('CodeConfirm');
-    // }
-    yield delay(1000);
+    const body = yield call(() =>
+      httpPost(urls.checkPhone, {phone: `+380${phone}`}),
+    );
     yield put(setLoading(false));
-    yield action.data.needNavigate && navigate('CodeConfirm');
+    if (body.status === 200) {
+      yield action.data.needNavigate && navigate('CodeConfirm');
+    }
   } catch (e) {
     yield put(setLoading(false));
     errorHandler(e, 'loginAsync');
@@ -70,16 +69,19 @@ export function* checkPhoneAsync(action: any) {
 export function* checkCodeAsync(action: any) {
   yield put(setLoading(true));
   try {
-    // const body = yield call(() => httpPost(urls.checkCode, {auth_sms: action.date}));
-    // yield put(setLoading(false));
-    // if (body.data) {
-    //   yield put(setLogin(body.data));
-    //   yield put(setToken(body.data.authToken));
-    //   navigate('Registration');
-    // }
-    yield delay(1000);
+    const body = yield call(() =>
+      httpPost(urls.login, {auth_sms: action.data}),
+    );
     yield put(setLoading(false));
-    yield navigate('Registration');
+    if (body.data.data) {
+      yield put(setToken(body.data.data.bearer_token));
+      if (body.data.data.card) {
+        yield put(setProfile(body.data.data));
+        yield put(setIsUserAuthorized(true));
+      } else {
+        navigate('Registration');
+      }
+    }
   } catch (e) {
     yield put(setLoading(false));
     errorHandler(e, 'checkCodeAsync');

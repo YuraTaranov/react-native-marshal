@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@constants';
+import {colors, width} from '@constants';
 
 export default StyleSheet.create({
   radioContainer: {
@@ -11,6 +11,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: colors.gray_2D2D2D,
     marginLeft: 16,
+    width: width - 90,
   },
   radioButton: {
     width: 24,

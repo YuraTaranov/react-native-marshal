@@ -23,6 +23,8 @@ export {default as ConfirmationCodeField} from 'react-native-confirmation-code-f
 export {default as SnapCarousel} from 'react-native-snap-carousel';
 export {default as DateTimePicker} from '@react-native-community/datetimepicker';
 export {default as CheckBox} from '@react-native-community/checkbox';
+export {default as QRCodeScanner} from 'react-native-qrcode-scanner';
+export {default as QRCode} from 'react-native-qrcode-svg';
 
 // TYPOGRAPHY
 export {default as Text} from './typography/Text';
@@ -32,6 +34,7 @@ export {default as TextInput} from './typography/TextInput';
 // CONTAINER
 
 // CONTROLL
+export {default as BonusCardModal} from './control/BonusCardModal';
 export {default as RadioButtonCustom} from './control/RadioButtonCustom';
 export {default as CheckBoxCustom} from './control/CheckBoxCustom';
 export {default as QuestionButton} from './control/QuestionButton';

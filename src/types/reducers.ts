@@ -4,6 +4,7 @@ export type TGlobalState = {
     lang: TLang;
     accessToken: string;
     loader: boolean;
+    isUserAuthorized: boolean;
   };
   modalController: {
     support: boolean;
