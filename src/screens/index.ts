@@ -8,3 +8,7 @@ export {default as CodeConfirm} from './CodeConfirm';
 export {default as Onboarding} from './Onboarding';
 export {default as Registration} from './Registration';
 export {default as BonusCardCheck} from './BonusCardCheck/BonusCardCheck';
+export {default as Cars} from './Cars/Cars';
+export {default as AddCar} from './AddCar/AddCar';
+export {default as Settings} from './Settings/Settings';
+export {default as ProfileEdit} from './ProfileEdit/ProfileEdit';

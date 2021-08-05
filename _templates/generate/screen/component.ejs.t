@@ -26,7 +26,7 @@ const <%= h.changeCase.pascal(name) %>: React.FC<TProps> = ({dispatch}) => {
 }
 
 const mapStateToProps = (state: TGlobalState) => ({
-	reducer: state.reducer
+	// reducer: state.reducer
 });
 
 export default connect(mapStateToProps)(<%= h.changeCase.pascal(name) %>);

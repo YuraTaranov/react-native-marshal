@@ -22,10 +22,13 @@ const MaterialInput: React.FC<TProps> = ({
   renderRightAccessory,
   returnKeyType = 'done',
   rightAccessoryName,
+  rightAccessoryColor = colors.black_000000,
   onPressAccessory,
   maxLength,
   formatText,
   inputContainerStyle,
+  lineWidth = 2,
+  activeLineWidth = 2,
   disabled,
   error,
 }) => {
@@ -40,12 +43,12 @@ const MaterialInput: React.FC<TProps> = ({
           <Icon
             name={rightAccessoryName}
             size={24}
-            color={colors.black_000000}
+            color={rightAccessoryColor}
           />
         </TouchableOpacity>
       );
     }
-  }, [renderRightAccessory, rightAccessoryName]);
+  }, [renderRightAccessory, rightAccessoryName, rightAccessoryColor]);
 
   return (
     <FilledTextField
@@ -61,8 +64,8 @@ const MaterialInput: React.FC<TProps> = ({
       style={styles.textInputStyle}
       tintColor={colors.black_000000}
       baseColor={colors.gray_8D909D}
-      lineWidth={2}
-      activeLineWidth={2}
+      lineWidth={lineWidth}
+      activeLineWidth={activeLineWidth}
       inputContainerStyle={{
         ...styles.inputContainerStyle,
         ...inputContainerStyle,
@@ -89,12 +92,15 @@ type TProps = {
   keyboardType?: KeyboardTypeOptions;
   renderRightAccessory?: JSX.Element | boolean;
   rightAccessoryName?: string;
+  rightAccessoryColor?: string;
   onPressAccessory?: () => void;
   returnKeyType?: ReturnKeyTypeOptions;
   secureTextEntry?: boolean;
   maxLength?: number;
   formatText?: (value: string) => string;
   inputContainerStyle?: ViewStyle;
+  lineWidth?: number;
+  activeLineWidth?: number;
   baseColor?: string;
   disabled?: boolean;
   error?: string;

@@ -72,7 +72,7 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
       {
         icon: 'edit_profile',
         name: t('Редагувати профіль'),
-        onPress: () => navigate('EditProfile'),
+        onPress: () => navigate('ProfileEdit'),
       },
     ];
   }, []);
@@ -90,7 +90,9 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
     dispatch(setSupport(true));
   }, []);
 
-  const onPressSettings = useCallback(() => {}, []);
+  const onPressSettings = useCallback(() => {
+    navigate('Settings');
+  }, []);
 
   useEffect(() => {
     setOptions({
@@ -127,7 +129,6 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
         data={menuItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        scrollEnabled={false}
       />
       <BonusCardModal
         isVisible={bonusCardModelVisible}

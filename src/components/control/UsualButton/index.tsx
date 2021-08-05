@@ -12,7 +12,7 @@ import {colors} from '@constants';
 
 type TProps = {
   title: string;
-  loading: boolean;
+  loading?: boolean;
   disabled?: boolean;
   dark?: boolean;
   buttonStyle?: {};

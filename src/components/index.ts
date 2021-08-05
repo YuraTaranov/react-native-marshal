@@ -1,3 +1,4 @@
+export {default as ProfileUpdate} from './dataview/ProfileUpdate';
 export {
   View,
   Alert,
@@ -11,6 +12,7 @@ export {
   Linking,
   StyleSheet,
   Keyboard,
+  Switch,
 } from 'react-native';
 
 // MODULES
@@ -34,6 +36,7 @@ export {default as TextInput} from './typography/TextInput';
 // CONTAINER
 
 // CONTROLL
+export {default as ProfileUpdateModal} from './control/ProfileUpdateModal';
 export {default as BonusCardModal} from './control/BonusCardModal';
 export {default as RadioButtonCustom} from './control/RadioButtonCustom';
 export {default as CheckBoxCustom} from './control/CheckBoxCustom';
