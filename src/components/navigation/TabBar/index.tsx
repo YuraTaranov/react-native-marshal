@@ -12,6 +12,10 @@ type TProps = {
 };
 
 const TabBar: React.FC<TProps> = ({navigation, state}) => {
+  let route = state.routes[state.index];
+  if (route.state && route.state.index > 0) {
+    return null;
+  }
   const generalIndex: number = state?.index || 0;
 
   const jump = useCallback(

@@ -1,39 +1,35 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import { Stations } from '@screens';
-import { connect } from 'react-redux';
-import { TGlobalState } from '@types';
-import { useTranslation } from '@hooks';
-import { defaultStackOptions } from '../options';
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Stations} from '@screens';
+import {connect} from 'react-redux';
+import {TGlobalState} from '@types';
+import {useTranslation} from '@hooks';
+import {defaultStackOptions} from '../options';
 
-
-type TProps = {
-}
+type TProps = {};
 
 const StationsStack = createStackNavigator();
 
-const StationsStackNavigator: React.FC<TProps> = ({ }) => {
-
-  const { t } = useTranslation()
+const StationsStackNavigator: React.FC<TProps> = ({}) => {
+  const {t} = useTranslation();
 
   return (
-    <StationsStack.Navigator screenOptions={{
-      ...defaultStackOptions
-    }} >
+    <StationsStack.Navigator
+      screenOptions={{
+        ...defaultStackOptions,
+      }}>
       <StationsStack.Screen
         name="Stations"
         component={Stations}
         options={{
-          title: 'Stations'
+          headerTitleAlign: 'center',
+          title: 'Stations',
         }}
       />
     </StationsStack.Navigator>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
+const mapStateToProps = (state: TGlobalState) => ({});
 
-})
-
-export default connect(mapStateToProps)(StationsStackNavigator)
-
+export default connect(mapStateToProps)(StationsStackNavigator);

@@ -4,5 +4,7 @@ export const urls = {
 
   checkPhone: 'check-phone',
   login: 'login',
+  logout: 'logout',
   profileUpdate: 'profile/update',
+  addCardNew: 'marshal-card/new-card',
 };

@@ -5,5 +5,6 @@ export default combineReducers({
   modalController: require('./modalController').default,
   login: require('./login').default,
   profile: require('./profile').default,
+  logout: require('./logout').default,
   // ADD NEW REDUCER
 });

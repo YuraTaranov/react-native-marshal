@@ -1,7 +1,6 @@
 import styles from './styles';
-import { colors } from '@constants';
-import { Platform } from '@components';
-import { StackNavigationOptions } from '@react-navigation/stack';
+import {colors} from '@constants';
+import {StackNavigationOptions} from '@react-navigation/stack';
 
 export const defaultStackOptions: StackNavigationOptions = {
   headerBackTitleVisible: false,
@@ -10,7 +9,7 @@ export const defaultStackOptions: StackNavigationOptions = {
   headerTintColor: colors.white_FFFFFF,
   cardStyle: styles.cardStyle,
   headerRightContainerStyle: styles.headerRightContainerStyle,
-  headerLeftContainerStyle: styles.headerLeftContainerStyle
+  headerLeftContainerStyle: styles.headerLeftContainerStyle,
 };
 
 export const theme = {
@@ -31,4 +30,4 @@ export const headerStyle = {
   // headerTintColor: 'red'
 };
 
-export const cardStyle = styles.cardStyle
+export const cardStyle = styles.cardStyle;

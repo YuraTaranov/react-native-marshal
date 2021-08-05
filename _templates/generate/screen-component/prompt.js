@@ -19,6 +19,10 @@ module.exports = [
       'Onboarding',
       'Registration',
       'BonusCardCheck',
+      'Cars',
+      'AddCar',
+      'Settings',
+      'ProfileEdit',
       //ADD MORE SCREENS
     ],
   },

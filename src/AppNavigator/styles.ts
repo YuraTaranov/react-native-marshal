@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     marginRight: 17,
   },
   headerLeftContainerStyle: {
-    marginLeft: 17,
+    marginLeft: 12,
   },
   headerTitleStyle: {
     fontFamily: fonts.interSemiBold_600,

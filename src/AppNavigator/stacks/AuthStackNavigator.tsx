@@ -18,8 +18,7 @@ const AuthStackNavigator: React.FC<TProps> = ({}) => {
   return (
     <Wrapper>
       <AuthStack.Navigator
-        //   FIXME:
-        initialRouteName={'BonusCardCheck'}
+        initialRouteName={'Login'}
         screenOptions={{
           ...defaultStackOptions,
           headerBackImage: () => (

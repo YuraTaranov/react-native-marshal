@@ -6,4 +6,5 @@ export const assets = {
   TELEGRAM: require('./images/Telegram.png'),
   VIBER: require('./images/Viber.png'),
   QR_SCAN: require('./images/qr_scan.png'),
+  NO_CARS: require('./images/no_cars.png'),
 };

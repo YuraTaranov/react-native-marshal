@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import SplashScreen from 'react-native-splash-screen';
 import {Dispatch} from 'redux';
 import i18next from 'i18next';
 import {connect} from 'react-redux';
@@ -9,8 +8,6 @@ import {useEffect} from '@hooks';
 import {TGlobalState} from '@types';
 import AuthStackNavigator from './stacks/AuthStackNavigator';
 import TabNavigator from './TabNavigator';
-import {Wrapper} from '@components';
-import {cardStyle} from './options';
 import OnboardingStackNavigator from './stacks/OnboardingStackNavigator';
 import {navigationRef, onStateChange} from '@services';
 
@@ -33,9 +30,7 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
             name={'Onboarding'}
             component={OnboardingStackNavigator}
           />
-        ) : // FIXME:
-        // ) : appGlobalState.isUserAuthorized ? (
-        true ? (
+        ) : appGlobalState.accessToken ? (
           <RootStack.Screen name="TabNavigator" component={TabNavigator} />
         ) : (
           <RootStack.Screen

@@ -25,7 +25,7 @@ import {connect} from 'react-redux';
 import styles from './styles';
 import {colors, hitSlop, urls} from '@constants';
 import {assets} from '@assets';
-import {navigate, httpPost, errorHandler} from '@services';
+import {httpPost, errorHandler} from '@services';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
 import {setProfile} from '@reducers/profile';
 
@@ -95,17 +95,19 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
       //   errorHandler(error, 'add card old error');
       // }
     } else {
-      // try {
-      //   const body = await httpPost(urls.addCardNew);
-      //   setLoading(false);
-      //   if (body.status === 200) {
-      //     dispatch(setProfile(body.data.data));
-      // 	dispatch(setIsUserAuthorized(true))
-      //   }
-      // } catch (error) {
-      //   setLoading(false);
-      //   errorHandler(error, 'add card new error');
-      // }
+      try {
+        const body = await httpPost(urls.addCardNew, {
+          card: cardNumber.replace(/ /g, ''),
+        });
+        setLoading(false);
+        if (body.status === 200) {
+          dispatch(setProfile(body.data.data));
+          dispatch(setIsUserAuthorized(true));
+        }
+      } catch (error) {
+        setLoading(false);
+        errorHandler(error, 'add card new error');
+      }
     }
   }, [cardNumber, cardType.type]);
 

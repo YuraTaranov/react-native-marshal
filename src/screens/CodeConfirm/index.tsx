@@ -67,6 +67,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
   const resendCode = useCallback(() => {
     dispatch(checkPhone({needNavigate: false}));
     setNeedRefreshTimer(!needRefreshTimer);
+    // FIXME:
     setCounter(5);
   }, [needRefreshTimer]);
 
