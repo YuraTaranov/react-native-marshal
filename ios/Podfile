@@ -6,16 +6,16 @@ platform :ios, '10.0'
 target 'Marshal' do
 
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text', :modular_headers => true
-  
+
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-  
+
   config = use_native_modules!
 
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => false
+    :hermes_enabled => true
   )
 
   target 'MarshalTests' do
@@ -27,7 +27,12 @@ target 'Marshal' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
+  use_flipper!(
+    versions = {
+    'Flipper' => '0.99.0',
+    'Flipper-Folly' => '2.6.7',
+    'Flipper-RSocket' => '1.4.3',
+    })
 
   post_install do |installer|
     react_native_post_install(installer)
