@@ -11,11 +11,11 @@ const SET_IS_USER_AUTHORIZED = '[appGlobalState] SET_IS_USER_AUTHORIZED';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
 
 const initialstate: TGlobalState['appGlobalState'] = {
-  onBoarding: true,
-  lang: 'uk',
   accessToken: '',
   isUserAuthorized: false,
+  lang: 'uk',
   loader: false,
+  onBoarding: true,
 };
 
 export default (state = initialstate, action: any) => {

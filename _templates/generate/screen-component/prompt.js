@@ -27,6 +27,9 @@ module.exports = [
       'AboutApp',
       'LoyaltyTerms',
       'UseTerms',
+      'FilterPage',
+      'StationsList',
+      'MapScreen',
       //ADD MORE SCREENS
     ],
   },

@@ -1,9 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Stations} from '@screens';
+import {Stations, FilterPage} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
-import {useTranslation} from '@hooks';
 import {defaultStackOptions} from '../options';
 
 type TProps = {};
@@ -11,8 +10,6 @@ type TProps = {};
 const StationsStack = createStackNavigator();
 
 const StationsStackNavigator: React.FC<TProps> = ({}) => {
-  const {t} = useTranslation();
-
   return (
     <StationsStack.Navigator
       screenOptions={{
@@ -21,6 +18,14 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
       <StationsStack.Screen
         name="Stations"
         component={Stations}
+        options={{
+          headerTitleAlign: 'center',
+          title: 'Stations',
+        }}
+      />
+      <StationsStack.Screen
+        name="FilterPage"
+        component={FilterPage}
         options={{
           headerTitleAlign: 'center',
           title: 'Stations',
