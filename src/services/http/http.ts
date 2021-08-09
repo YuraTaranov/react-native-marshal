@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { TGenerateOptions, TFormatResponse, TGlobalState } from '@types';
-import storage from '../../store'
-import { urls } from '@constants';
+import {TGenerateOptions, TFormatResponse, TGlobalState} from '@types';
+import storage from '../../store';
+import {urls} from '@constants';
 
 const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
 
@@ -9,20 +9,32 @@ const instance = axios.create();
 instance.defaults.baseURL = baseURL;
 instance.defaults.timeout = 24000;
 
-export const httpPost = (url: string, data?: any) => sendRequest({ method: 'POST', url, data });
-export const httpGet = (url: string, params?: any) => sendRequest({ method: 'GET', url, params });
-export const httpDel = (url: string, data?: any) => sendRequest({ method: 'DELETE', url, data });
-export const httpPut = (url: string, data?: any) => sendRequest({ method: 'PUT', url, data });
-export const httpPatch = (url: string, data?: any) => sendRequest({ method: 'PATCH', url, data });
+export const httpPost = (url: string, data?: any) =>
+  sendRequest({method: 'POST', url, data});
+export const httpGet = (url: string, params?: any) =>
+  sendRequest({method: 'GET', url, params});
+export const httpDel = (url: string, data?: any) =>
+  sendRequest({method: 'DELETE', url, data});
+export const httpPut = (url: string, data?: any) =>
+  sendRequest({method: 'PUT', url, data});
+export const httpPatch = (url: string, data?: any) =>
+  sendRequest({method: 'PATCH', url, data});
 
-const formatResponse: (response?: any) => TFormatResponse = (response = {}) => ({
+const formatResponse: (response?: any) => TFormatResponse = (
+  response = {},
+) => ({
   data: response.data || {},
   status: response.status || 418,
   statusText: response.statusText || '',
 });
 
-const sendRequest = async ({ method, url, data = undefined, params = undefined }: TGenerateOptions) => {
-  const OPTIONS = generateOptions({ method, url, data, params });
+const sendRequest = async ({
+  method,
+  url,
+  data = undefined,
+  params = undefined,
+}: TGenerateOptions) => {
+  const OPTIONS = generateOptions({method, url, data, params});
 
   try {
     const response = await instance(OPTIONS);
@@ -43,7 +55,7 @@ const sendRequest = async ({ method, url, data = undefined, params = undefined }
   }
 };
 
-const generateOptions = ({ method, url, data, params }: TGenerateOptions) => {
+const generateOptions = ({method, url, data, params}: TGenerateOptions) => {
   const appGlobalState: any = storage?.store?.getState().appGlobalState || null;
   const token = appGlobalState.accessToken || '';
 

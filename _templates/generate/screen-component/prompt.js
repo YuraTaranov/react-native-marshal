@@ -23,6 +23,9 @@ module.exports = [
       'AddCar',
       'Settings',
       'ProfileEdit',
+      'FilterPage',
+      'StationsList',
+      'MapScreen',
       //ADD MORE SCREENS
     ],
   },

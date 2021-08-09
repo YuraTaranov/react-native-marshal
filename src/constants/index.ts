@@ -5,5 +5,5 @@ export {fonts} from './fonts';
 export {urls} from './urls';
 export {width, height, top, bottom, hitSlop} from './safeSpaces';
 export {regions} from './regions';
-export {ios, android, longScreen, darkMode} from './platform';
+export {ios, android, longScreen, darkMode, isIphoneX} from './platform';
 export {default as declension} from './declension';

@@ -100,7 +100,7 @@ const Login: React.FC<TProps> = ({dispatch, phone, loading}) => {
               onFocus={setInputFocusTrue}
               onBlur={setInputFocusFalse}
               style={styles.textInput}
-              maxLength={11}
+              maxLength={12}
               keyboardType={'number-pad'}
               value={phone}
               mask={'[00] [000] [00] [00]'}
