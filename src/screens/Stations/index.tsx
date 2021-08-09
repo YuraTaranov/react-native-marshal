@@ -21,12 +21,7 @@ type _t_renderTabBarParams = {
   navigationState: object;
 };
 
-const renderScene = SceneMap({
-  first: MapScreen,
-  second: StationsList,
-});
-
-const StationsStackNavigator: React.FC<TProps> = ({}) => {
+const Stations: React.FC<TProps> = ({}) => {
   const {t} = useTranslation();
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -34,6 +29,11 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
     {key: 'first', title: t('map.tabMapFirst')},
     {key: 'second', title: t('map.tabMapSecond')},
   ]);
+
+  const renderScene = SceneMap({
+    first: MapScreen,
+    second: StationsList,
+  });
 
   const renderTabBar = useCallback(
     (props: _t_renderTabBarParams) => (
@@ -74,4 +74,4 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({});
 
-export default connect(mapStateToProps)(StationsStackNavigator);
+export default connect(mapStateToProps)(Stations);
