@@ -11,20 +11,23 @@ import {
   CheckBoxCustom,
   UsualButton,
   ProfileUpdateModal,
+  formatWithMask,
 } from '@components';
 import styles from './styles';
 import moment from 'moment';
 import {navigate, errorHandler, httpPost} from '@services';
 import {setProfile} from '@reducers/profile';
-import {urls, ios} from '@constants';
+import {urls, ios, colors, darkMode} from '@constants';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {Dispatch} from 'redux';
+import {Alert} from 'react-native';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
   dispatch: Dispatch;
   isRegistration: boolean;
+  profile: TGlobalState['profile'];
 };
 
 // FIXME:
@@ -36,15 +39,27 @@ const ProfileUpdate: React.FC<TProps> = ({
   dispatch,
   appGlobalState,
   isRegistration,
+  profile,
 }) => {
   const {t} = useTranslation();
-  //   FIXME: initial values
-  const [nameValue, setNameValue] = useState<string>('');
-  const [surnameValue, setSurnameValue] = useState<string>('');
-  const [birthdayValue, setBirthdayValue] = useState<Date>(maximumDate);
+  const [nameValue, setNameValue] = useState<string>(profile?.name || '');
+  const [surnameValue, setSurnameValue] = useState<string>(
+    profile?.surname || '',
+  );
+  const [birthdayValue, setBirthdayValue] = useState<Date>(
+    (profile?.birthday && new Date(profile?.birthday)) || maximumDate,
+  );
+  const [phoneValue, setPhoneValue] = useState<string>(
+    profile?.phone.slice(4) || '',
+  );
+  //   FIXME: типы пола
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
-    type: 0,
-    name: '',
+    type: profile?.gender ? (profile?.gender === 'male' ? 1 : 2) : 0,
+    name: profile?.gender
+      ? profile?.gender === 'male'
+        ? 'Чоловіча'
+        : 'Жіноча'
+      : 'Не вказувати',
   });
   const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);
   const [consentPersonalData, setConsentPersonalData] =
@@ -54,6 +69,14 @@ const ProfileUpdate: React.FC<TProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<'date' | 'gender'>('date');
+  const [isPhoneFocus, setIsPhoneFocus] = useState<boolean>(false);
+
+  const onPhoneFocus = useCallback(() => {
+    setIsPhoneFocus(true);
+  }, []);
+  const onPhoneBlur = useCallback(() => {
+    setIsPhoneFocus(false);
+  }, []);
 
   const dateValue = useMemo(() => {
     return birthdayValue !== maximumDate
@@ -108,22 +131,71 @@ const ProfileUpdate: React.FC<TProps> = ({
   const submit = useCallback(async () => {
     setLoading(true);
     try {
-      const body = await httpPost(urls.profileUpdate, {
-        name: nameValue,
-        surname: surnameValue,
-        birthday: birthdayValue,
-        gender,
-      });
+      const data = isRegistration
+        ? {
+            name: nameValue,
+            surname: surnameValue,
+            birthday: birthdayValue,
+            gender,
+          }
+        : {
+            name: nameValue,
+            surname: surnameValue,
+            birthday: birthdayValue,
+            gender,
+            phone: phoneValue,
+          };
+      const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
       if (body.status === 200) {
         dispatch(setProfile(body.data.data));
-        navigate('BonusCardCheck');
+        isRegistration
+          ? navigate('BonusCardCheck')
+          : Alert.alert('', t('Дані профілю оновлені'));
       }
     } catch (error) {
       setLoading(false);
       errorHandler(error, 'registration error');
     }
-  }, [nameValue, surnameValue, birthdayValue, genderValue]);
+  }, [nameValue, surnameValue, birthdayValue, genderValue, phoneValue]);
+
+  const formatPhone = formatWithMask({
+    text: phoneValue,
+    mask: [/\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/],
+  });
+
+  const isButtonDisabled = useMemo(() => {
+    if (isRegistration) {
+      return (
+        !nameValue ||
+        !surnameValue ||
+        birthdayValue === maximumDate ||
+        !genderValue.name ||
+        !consentPersonalData ||
+        !agreeLoyaltyProgram ||
+        phoneValue.length !== 12 ||
+        loading
+      );
+    } else {
+      return (
+        !nameValue ||
+        !surnameValue ||
+        birthdayValue === maximumDate ||
+        !genderValue.name ||
+        phoneValue.length !== 12 ||
+        loading
+      );
+    }
+  }, [
+    nameValue,
+    surnameValue,
+    birthdayValue,
+    genderValue,
+    consentPersonalData,
+    agreeLoyaltyProgram,
+    phoneValue,
+    loading,
+  ]);
 
   const personalDataText = useMemo(() => {
     return (
@@ -210,6 +282,23 @@ const ProfileUpdate: React.FC<TProps> = ({
               />
             </View>
           ) : null}
+          {!isRegistration ? (
+            <MaterialInput
+              keyboardType={'number-pad'}
+              returnKeyType={'done'}
+              value={formatPhone.masked}
+              onChangeText={setPhoneValue}
+              lineWidth={0.5}
+              maxLength={12}
+              label={t('Номер телефону')}
+              prefix="+380"
+              onFocus={onPhoneFocus}
+              onBlur={onPhoneBlur}
+              baseColor={
+                isPhoneFocus ? colors.black_000000 : colors.gray_8D909D
+              }
+            />
+          ) : null}
         </View>
       </View>
       {visibleDatePicker && (
@@ -221,22 +310,17 @@ const ProfileUpdate: React.FC<TProps> = ({
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           textColor={'#000000'}
+          themeVariant={darkMode ? 'dark' : 'light'}
         />
       )}
       <View style={styles.buttonContainer}>
         <UsualButton
-          title={t('button.title.continue')}
+          title={
+            isRegistration ? t('button.title.continue') : t('Прийняти зміни')
+          }
           loading={loading}
           dark={loading}
-          disabled={
-            !nameValue ||
-            !surnameValue ||
-            birthdayValue === maximumDate ||
-            !genderValue.name ||
-            !consentPersonalData ||
-            !agreeLoyaltyProgram ||
-            loading
-          }
+          disabled={isButtonDisabled}
           buttonStyle={styles.usualButton}
           onPress={submit}
         />
@@ -256,6 +340,7 @@ const ProfileUpdate: React.FC<TProps> = ({
 
 const mapStateToProps = (state: TGlobalState) => ({
   appGlobalState: state.appGlobalState,
+  profile: state.profile.data,
 });
 
 export default connect(mapStateToProps)(ProfileUpdate);

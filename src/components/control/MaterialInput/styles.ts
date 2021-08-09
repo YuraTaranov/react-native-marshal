@@ -17,5 +17,6 @@ export default StyleSheet.create({
   textInputStyle: {
     fontSize: 16,
     fontFamily: fonts.interRegular_400,
+    color: colors.black_000000,
   },
 });

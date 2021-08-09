@@ -14,6 +14,16 @@ export type TGlobalState = {
     code: string;
     loading: boolean;
   };
+  profile: {
+    id: number;
+    name: string;
+    surname: string;
+    birthday: string;
+    gender: string;
+    card: string | null;
+    phone: string;
+    bearer_token?: string;
+  };
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

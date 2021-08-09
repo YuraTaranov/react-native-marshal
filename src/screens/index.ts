@@ -12,3 +12,7 @@ export {default as Cars} from './Cars/Cars';
 export {default as AddCar} from './AddCar/AddCar';
 export {default as Settings} from './Settings/Settings';
 export {default as ProfileEdit} from './ProfileEdit/ProfileEdit';
+export {default as NotificationSettings} from './NotificationSettings/NotificationSettings';
+export {default as AboutApp} from './AboutApp/AboutApp';
+export {default as LoyaltyTerms} from './LoyaltyTerms/LoyaltyTerms';
+export {default as UseTerms} from './UseTerms/UseTerms';

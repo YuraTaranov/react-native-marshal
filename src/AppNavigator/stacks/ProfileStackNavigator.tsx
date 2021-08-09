@@ -1,6 +1,16 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Profile, Cars, AddCar, Settings, ProfileEdit} from '@screens';
+import {
+  Profile,
+  Cars,
+  AddCar,
+  Settings,
+  ProfileEdit,
+  NotificationSettings,
+  AboutApp,
+  LoyaltyTerms,
+  UseTerms,
+} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -57,6 +67,38 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Редагувати профіль'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="NotificationSettings"
+        component={NotificationSettings}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Сповіщення'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="AboutApp"
+        component={AboutApp}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Про додаток'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="LoyaltyTerms"
+        component={LoyaltyTerms}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Умови лояльності'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="UseTerms"
+        component={UseTerms}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Умови використання'),
         }}
       />
     </ProfileStack.Navigator>

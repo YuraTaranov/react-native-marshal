@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   Icon,
   FlatList,
-  Switch,
+  OpenAppSettings,
+  SwitchCustom,
 } from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
@@ -59,7 +60,7 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
     return [
       {
         name: t('Геопозиція'),
-        onPress: () => {},
+        onPress: () => OpenAppSettings.open(),
       },
       {
         name: t('Сповіщення'),
@@ -94,25 +95,13 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
     [],
   );
 
-  const switchTrackColor = useMemo(() => {
-    return {false: colors.gray_8D909D, true: colors.green_00AE36};
-  }, []);
-
   return (
     <View style={styles.container}>
-      <View style={styles.biometricsContainer}>
-        <View>
-          <Text style={styles.biometricsTitle}>{t('Вхід за відбитком')}</Text>
-          <Text style={styles.biometricsIsActive}>{t('Вимкнено')}</Text>
-        </View>
-        <Switch
-          trackColor={switchTrackColor}
-          thumbColor={colors.white_FFFFFF}
-          ios_backgroundColor={colors.gray_8D909D}
-          onValueChange={toggleBiometricsSwitch}
-          value={isBiometricsActive}
-        />
-      </View>
+      <SwitchCustom
+        value={isBiometricsActive}
+        onValueChange={toggleBiometricsSwitch}
+        title={t('Вхід за відбитком')}
+      />
       <FlatList
         data={menuItems}
         renderItem={renderItem}

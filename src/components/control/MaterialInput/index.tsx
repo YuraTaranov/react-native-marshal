@@ -14,10 +14,12 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const MaterialInput: React.FC<TProps> = ({
   value,
   onFocus,
+  onBlur,
   onChangeText,
   onSubmit,
   onRef,
   label,
+  baseColor = colors.gray_8D909D,
   keyboardType = 'default',
   renderRightAccessory,
   returnKeyType = 'done',
@@ -25,10 +27,11 @@ const MaterialInput: React.FC<TProps> = ({
   rightAccessoryColor = colors.black_000000,
   onPressAccessory,
   maxLength,
-  formatText,
   inputContainerStyle,
   lineWidth = 2,
   activeLineWidth = 2,
+  prefix,
+  formatText,
   disabled,
   error,
 }) => {
@@ -54,6 +57,7 @@ const MaterialInput: React.FC<TProps> = ({
     <FilledTextField
       ref={onRef}
       onFocus={onFocus}
+      onBlur={onBlur}
       value={value}
       onChangeText={onChangeText}
       label={label}
@@ -63,7 +67,7 @@ const MaterialInput: React.FC<TProps> = ({
       labelTextStyle={styles.lableStyle}
       style={styles.textInputStyle}
       tintColor={colors.black_000000}
-      baseColor={colors.gray_8D909D}
+      baseColor={baseColor}
       lineWidth={lineWidth}
       activeLineWidth={activeLineWidth}
       inputContainerStyle={{
@@ -74,6 +78,7 @@ const MaterialInput: React.FC<TProps> = ({
       renderRightAccessory={rightAccessory}
       returnKeyType={returnKeyType}
       formatText={formatText}
+      prefix={prefix}
       disabled={disabled}
       error={error}
     />
@@ -87,6 +92,7 @@ type TProps = {
   onChangeText?: (value: string) => void;
   onRef?: (ref: TextField) => void;
   onFocus?: () => void;
+  onBlur?: () => void;
   onSubmit?: () => void;
   label?: string;
   keyboardType?: KeyboardTypeOptions;
@@ -102,6 +108,7 @@ type TProps = {
   lineWidth?: number;
   activeLineWidth?: number;
   baseColor?: string;
+  prefix?: string;
   disabled?: boolean;
   error?: string;
 };

@@ -82,6 +82,7 @@ export function* checkCodeAsync(action: any) {
         navigate('Registration');
       }
     }
+    yield put(resetLogin());
   } catch (e) {
     yield put(setLoading(false));
     errorHandler(e, 'checkCodeAsync');

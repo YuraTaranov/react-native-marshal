@@ -27,6 +27,8 @@ export {default as DateTimePicker} from '@react-native-community/datetimepicker'
 export {default as CheckBox} from '@react-native-community/checkbox';
 export {default as QRCodeScanner} from 'react-native-qrcode-scanner';
 export {default as QRCode} from 'react-native-qrcode-svg';
+export {formatWithMask} from 'react-native-mask-input';
+export {default as OpenAppSettings} from 'react-native-app-settings';
 
 // TYPOGRAPHY
 export {default as Text} from './typography/Text';
@@ -36,6 +38,7 @@ export {default as TextInput} from './typography/TextInput';
 // CONTAINER
 
 // CONTROLL
+export {default as SwitchCustom} from './control/SwitchCustom';
 export {default as ProfileUpdateModal} from './control/ProfileUpdateModal';
 export {default as BonusCardModal} from './control/BonusCardModal';
 export {default as RadioButtonCustom} from './control/RadioButtonCustom';

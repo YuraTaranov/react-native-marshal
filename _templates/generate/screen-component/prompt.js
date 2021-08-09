@@ -23,6 +23,10 @@ module.exports = [
       'AddCar',
       'Settings',
       'ProfileEdit',
+      'NotificationSettings',
+      'AboutApp',
+      'LoyaltyTerms',
+      'UseTerms',
       //ADD MORE SCREENS
     ],
   },
