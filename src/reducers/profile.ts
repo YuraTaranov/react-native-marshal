@@ -2,7 +2,7 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
 import {Alert} from 'react-native';
 import i18next from 'i18next';
-import {httpGet, httpPost, navigate} from '@services';
+import {httpGet, httpPost, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
 
 const GET_PROFILE = '[profile] GET_PROFILE';
@@ -42,12 +42,6 @@ export function* getProfileAsync() {
     }
   } catch (e) {
     yield put(setLoader(false));
-    if (e.status === 418) {
-      Alert.alert(
-        '',
-        i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'),
-      );
-    }
-    console.log(e, 'getProfileAsync ERROR');
+    errorHandler(e, 'getProfileAsync');
   }
 }

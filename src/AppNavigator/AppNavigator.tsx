@@ -16,7 +16,7 @@ const RootStack = createStackNavigator();
 const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
   useEffect(() => {
     i18next.changeLanguage(appGlobalState.lang);
-  }, []);
+  }, [appGlobalState]);
 
   return (
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
@@ -30,13 +30,13 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
             name={'Onboarding'}
             component={OnboardingStackNavigator}
           />
-        ) : appGlobalState.accessToken ? (
-          <RootStack.Screen name="TabNavigator" component={TabNavigator} />
-        ) : (
+        ) : !appGlobalState.accessToken ? (
           <RootStack.Screen
             name="AuthNavigator"
             component={AuthStackNavigator}
           />
+        ) : (
+          <RootStack.Screen name="TabNavigator" component={TabNavigator} />
         )}
       </RootStack.Navigator>
     </NavigationContainer>
