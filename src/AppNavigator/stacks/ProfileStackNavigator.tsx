@@ -10,6 +10,7 @@ import {
   AboutApp,
   LoyaltyTerms,
   UseTerms,
+  Purchases,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
@@ -99,6 +100,14 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Умови використання'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="Purchases"
+        component={Purchases}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Мої покупки'),
         }}
       />
     </ProfileStack.Navigator>

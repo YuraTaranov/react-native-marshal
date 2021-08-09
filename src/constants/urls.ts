@@ -7,4 +7,5 @@ export const urls = {
   logout: 'logout',
   profileUpdate: 'profile/update',
   addCardNew: 'marshal-card/new-card',
+  purchases: 'purchases',
 };

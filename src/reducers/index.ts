@@ -6,5 +6,6 @@ export default combineReducers({
   login: require('./login').default,
   profile: require('./profile').default,
   logout: require('./logout').default,
+  purchases: require('./purchases').default,
   // ADD NEW REDUCER
 });

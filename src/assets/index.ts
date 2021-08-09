@@ -7,4 +7,6 @@ export const assets = {
   VIBER: require('./images/Viber.png'),
   QR_SCAN: require('./images/qr_scan.png'),
   NO_CARS: require('./images/no_cars.png'),
+  NO_PURCHASES: require('./images/no_purchases.png'),
+  NO_CARDS: require('./images/no_cards.png'),
 };

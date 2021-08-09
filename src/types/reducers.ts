@@ -24,6 +24,13 @@ export type TGlobalState = {
     phone: string;
     bearer_token?: string;
   };
+  purchases: {
+    //   FIXME:
+    data: [];
+    lazyLoading: boolean;
+    finishLoading: boolean;
+    refreshing: boolean;
+  };
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

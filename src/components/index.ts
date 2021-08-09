@@ -13,6 +13,7 @@ export {
   StyleSheet,
   Keyboard,
   Switch,
+  RefreshControl,
 } from 'react-native';
 
 // MODULES

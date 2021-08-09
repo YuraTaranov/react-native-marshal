@@ -62,7 +62,7 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
       {
         icon: 'shopping',
         name: t('Мої покупки'),
-        onPress: () => navigate('MyPurchases'),
+        onPress: () => navigate('Purchases'),
       },
       {
         icon: 'car',

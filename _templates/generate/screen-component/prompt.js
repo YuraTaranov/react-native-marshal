@@ -30,6 +30,7 @@ module.exports = [
       'FilterPage',
       'StationsList',
       'MapScreen',
+      'Purchases',
       //ADD MORE SCREENS
     ],
   },

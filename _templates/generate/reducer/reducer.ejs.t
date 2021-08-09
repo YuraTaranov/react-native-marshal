@@ -5,7 +5,7 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
 import {Alert} from 'react-native';
 import i18next from 'i18next';
-import {httpGet, httpPost, navigate} from '@services';
+import {httpGet, httpPost, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
 
 const GET_<%=h.changeCase.constant(name)%> = '[<%=h.changeCase.camelCase(name)%>] GET_<%=h.changeCase.constant(name)%>';
@@ -44,10 +44,7 @@ export function* get<%=h.changeCase.pascal(name)%>Async() {
       // navigate('Route');
     }
   } catch (e) {
-	   yield put(setLoader(false));
-    if (e.status === 418) {
-      Alert.alert('', i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'));
-    }
-    console.log(e, 'get<%=h.changeCase.pascal(name)%>Async ERROR');
+	yield put(setLoader(false));
+	errorHandler(e, 'get<%=h.changeCase.pascal(name)%>Async')
   }
 }
