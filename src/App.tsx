@@ -5,6 +5,7 @@ import AppNavigator from './AppNavigator/AppNavigator';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {colors} from '@constants';
+import {Loader} from '@components';
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,9 @@ const App: React.FC = () => {
           backgroundColor={colors.green_27A74C}
           barStyle="light-content"
         />
-        <AppNavigator />
+        <Loader>
+          <AppNavigator />
+        </Loader>
       </PersistGate>
     </Provider>
   );

@@ -30,7 +30,7 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
             name={'Onboarding'}
             component={OnboardingStackNavigator}
           />
-        ) : !appGlobalState.accessToken ? (
+        ) : !appGlobalState.isUserAuthorized ? (
           <RootStack.Screen
             name="AuthNavigator"
             component={AuthStackNavigator}

@@ -7,5 +7,7 @@ export default combineReducers({
   profile: require('./profile').default,
   logout: require('./logout').default,
   purchases: require('./purchases').default,
+  cars: require('./cars').default,
+  addCar: require('./addCar').default,
   // ADD NEW REDUCER
 });

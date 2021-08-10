@@ -39,6 +39,7 @@ export {default as TextInput} from './typography/TextInput';
 // CONTAINER
 
 // CONTROLL
+export {default as ConfirmModal} from './control/ConfirmModal';
 export {default as SwitchCustom} from './control/SwitchCustom';
 export {default as ProfileUpdateModal} from './control/ProfileUpdateModal';
 export {default as BonusCardModal} from './control/BonusCardModal';
@@ -55,6 +56,7 @@ export {default as MaterialInput} from './control/MaterialInput';
 export {default as TabBar} from './navigation/TabBar';
 
 // LAYOUT
+export {default as Loader} from './layout/Loader';
 export {default as Wrapper} from './layout/Wrapper';
 export {default as KeyboardAvoidingView} from './layout/KeyboardAvoidingView';
 

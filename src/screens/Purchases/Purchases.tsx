@@ -7,7 +7,13 @@ import {
   useMemo,
   useEffect,
 } from '@hooks';
-import {View, Text, FlatList, RefreshControl} from '@components';
+import {
+  View,
+  Text,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -112,12 +118,7 @@ const Purchases: React.FC<TProps> = ({
   const lazyLoader = useMemo(
     () =>
       lazyLoading ? (
-        <RefreshControl
-          refreshing={lazyLoading}
-          colors={[colors.green_27A74C]}
-          tintColor={colors.green_27A74C}
-          size={24}
-        />
+        <ActivityIndicator size={'large'} color={colors.green_27A74C} />
       ) : null,
     [lazyLoading],
   );

@@ -17,6 +17,7 @@ import ProfileMenuItem from './components/ProfileMenuItem/ProfileMenuItem';
 import {setSupport} from '@reducers/modalController';
 import {Dispatch} from 'redux';
 import {navigate} from '@services';
+import {getCars} from '@reducers/cars';
 
 type TProps = {
   dispatch: Dispatch;
@@ -67,7 +68,7 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
       {
         icon: 'car',
         name: t('Авто'),
-        onPress: () => navigate('Cars'),
+        onPress: () => dispatch(getCars()),
       },
       {
         icon: 'edit_profile',

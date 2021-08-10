@@ -11,5 +11,5 @@ export {
   reset,
   resetSeveral,
 } from './route';
-export {httpGet, httpPost} from './http/http';
+export {httpGet, httpPost, httpDel, httpPut} from './http/http';
 export {errorHandler} from './errorHandlers/httpErrorHandler';

@@ -13,15 +13,17 @@ import {
   Purchases,
 } from '@screens';
 import {connect} from 'react-redux';
-import {TGlobalState} from '@types';
+import {TGlobalState, TProfile} from '@types';
 import {useTranslation} from '@hooks';
 import {defaultStackOptions} from '../options';
 
-type TProps = {};
+type TProps = {
+  profile: TProfile;
+};
 
 const ProfileStack = createStackNavigator();
 
-const ProfileStackNavigator: React.FC<TProps> = ({}) => {
+const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
   const {t} = useTranslation();
 
   return (
@@ -33,9 +35,8 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         name="Profile"
         component={Profile}
         options={{
-          // FIXME:
           headerTitleAlign: 'center',
-          title: 'Ім’я Прізвище',
+          title: profile?.name ? `${profile?.name} ${profile?.surname}` : '',
         }}
       />
       <ProfileStack.Screen
@@ -114,6 +115,8 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  profile: state.profile.data,
+});
 
 export default connect(mapStateToProps)(ProfileStackNavigator);
