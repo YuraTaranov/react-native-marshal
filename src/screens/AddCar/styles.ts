@@ -1,5 +1,5 @@
 import {StyleSheet} from '@components';
-import {colors} from '@constants';
+import {bottom} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -11,5 +11,10 @@ export default StyleSheet.create({
     height: 56,
     zIndex: 2,
     position: 'absolute',
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: bottom,
   },
 });

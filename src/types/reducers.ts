@@ -1,3 +1,5 @@
+import {TCar, TCarModel, TCarProp, TProfile} from './components';
+
 export type TGlobalState = {
   appGlobalState: {
     onBoarding: boolean;
@@ -15,14 +17,7 @@ export type TGlobalState = {
     loading: boolean;
   };
   profile: {
-    id: number;
-    name: string;
-    surname: string;
-    birthday: string;
-    gender: string;
-    card: string | null;
-    phone: string;
-    bearer_token?: string;
+    data: TProfile;
   };
   purchases: {
     //   FIXME:
@@ -30,6 +25,15 @@ export type TGlobalState = {
     lazyLoading: boolean;
     finishLoading: boolean;
     refreshing: boolean;
+  };
+  cars: {
+    data: TCar[];
+  };
+  addCar: {
+    brands: TCarProp[];
+    models: TCarModel[];
+    tank: TCarProp[];
+    loading: false;
   };
 };
 

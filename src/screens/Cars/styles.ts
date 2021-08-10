@@ -1,11 +1,8 @@
 import {StyleSheet} from '@components';
-import {colors, fonts} from '@constants';
+import {colors, fonts, bottom} from '@constants';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  flatList: {
     flex: 1,
   },
   itemContainer: {
@@ -22,5 +19,17 @@ export default StyleSheet.create({
     color: colors.black_1B1B1B,
     fontSize: 16,
     fontFamily: fonts.interSemiBold_600,
+  },
+  youCanAdd: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: colors.gray_6D6F79,
+    marginBottom: 16,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    margin: 16,
+    marginBottom: bottom,
   },
 });

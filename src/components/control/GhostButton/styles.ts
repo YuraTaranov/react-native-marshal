@@ -1,18 +1,18 @@
-import { StyleSheet } from 'react-native';
-import { colors, fonts } from '@constants';
-import { verticalScale } from '@helpers';
+import {StyleSheet} from 'react-native';
+import {colors, fonts} from '@constants';
+import {verticalScale} from '@helpers';
 
 export default StyleSheet.create({
   container: {
     borderRadius: verticalScale(6),
-    paddingVertical: verticalScale(19),
+    height: 54,
     borderWidth: verticalScale(2),
     borderColor: colors.gray_404353,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   contentContainer: {
-    height: verticalScale(16),
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   title: {
     fontSize: verticalScale(14),

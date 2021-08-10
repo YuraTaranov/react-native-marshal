@@ -43,7 +43,7 @@ const UsualButton: React.FC<TProps> = ({
         style={styles.btnStyle}
         disabled={disabled || loading}
         onPress={onPress}>
-        <View style={styles.contentContainer}>
+        <View>
           {loading ? (
             <ActivityIndicator
               color={

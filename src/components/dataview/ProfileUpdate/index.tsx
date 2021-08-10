@@ -173,7 +173,6 @@ const ProfileUpdate: React.FC<TProps> = ({
         !genderValue.name ||
         !consentPersonalData ||
         !agreeLoyaltyProgram ||
-        phoneValue.length !== 12 ||
         loading
       );
     } else {

@@ -147,7 +147,7 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
           title={t('button.title.continue')}
           loading={loading}
           dark={loading}
-          disabled={cardNumber.length !== 19}
+          disabled={cardType.type === 1 && cardNumber.length !== 19}
           onPress={submit}
         />
       </View>

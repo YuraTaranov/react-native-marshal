@@ -1,43 +1,48 @@
 import React from 'react';
 import {Dispatch} from 'redux';
-import {useCallback} from '@hooks';
-import {View, Text, FlatList, TouchableOpacity, Icon} from '@components';
-import {TGlobalState} from '@types';
+import {useCallback, useTranslation} from '@hooks';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Icon,
+  UsualButton,
+} from '@components';
+import {TGlobalState, TCar} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors} from '@constants';
 import ListEmptyComponent from './components/ListEmptyComponent/ListEmptyComponent';
+import {navigate} from '@services';
 
 type TProps = {
   dispatch: Dispatch;
+  cars: TCar[];
 };
 
-type TCar = {
-  id: string;
-  name: string;
-};
+const Cars: React.FC<TProps> = ({dispatch, cars}) => {
+  const {t} = useTranslation();
 
-const fakeData: TCar[] = [
-  {
-    id: '1',
-    name: 'Volkswagen Polo',
-  },
-  {
-    id: '1',
-    name: 'Volkswagen Polo',
-  },
-];
+  const onPressCar = useCallback(
+    car => () => {
+      navigate('AddCar', {car});
+    },
+    [],
+  );
 
-const Cars: React.FC<TProps> = ({dispatch}) => {
-  const onPressCar = useCallback(id => () => {}, []);
+  const addCar = useCallback(() => {
+    navigate('AddCar');
+  }, []);
 
   const renderItem: ({item}: {item: TCar}) => JSX.Element = useCallback(
     ({item}) => (
-      <TouchableOpacity
-        style={styles.itemContainer}
-        onPress={onPressCar(item.id)}>
+      <TouchableOpacity style={styles.itemContainer} onPress={onPressCar(item)}>
         <Icon name="car" color={colors.black_1E1A1A} size={24} />
-        <Text style={styles.name}>{item.name}</Text>
+        <Text
+          style={
+            styles.name
+          }>{`${item.car_brand.name} ${item.car_model.name}`}</Text>
         <Icon name="right" color={colors.black_1E1A1A} size={24} />
       </TouchableOpacity>
     ),
@@ -50,14 +55,24 @@ const Cars: React.FC<TProps> = ({dispatch}) => {
 
   return (
     <View style={styles.container}>
-      {/* FIXME: */}
-      {false ? (
-        <FlatList
-          data={fakeData}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          style={styles.flatList}
-        />
+      {cars?.length ? (
+        <>
+          <FlatList
+            data={cars}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+          />
+          <View style={styles.buttonContainer}>
+            <Text style={styles.youCanAdd}>
+              {t('Ви можете додати до трьох автомобілів')}
+            </Text>
+            <UsualButton
+              title={t('Додати авто')}
+              onPress={addCar}
+              disabled={cars?.length > 2}
+            />
+          </View>
+        </>
       ) : (
         <ListEmptyComponent />
       )}
@@ -66,7 +81,7 @@ const Cars: React.FC<TProps> = ({dispatch}) => {
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  // reducer: state.reducer
+  cars: state.cars.data,
 });
 
 export default connect(mapStateToProps)(Cars);
