@@ -14,6 +14,7 @@ export const colors = {
   green_27A74C: '#27A74C',
   green_007E26: '#007E26',
   green_41BB4E: '#41BB4E',
+  green_EBFCF0: '#EBFCF0',
   green_00AE36: '#00AE36',
   white_FFFFFF: '#FFFFFF',
 };

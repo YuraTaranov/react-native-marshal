@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Bonuses} from '@screens';
+import {Bonuses, LoyaltyTerms} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -24,6 +24,14 @@ const BonusesStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Бонуси'),
+        }}
+      />
+      <BonusesStack.Screen
+        name="LoyaltyTerms"
+        component={LoyaltyTerms}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Умови лояльності'),
         }}
       />
     </BonusesStack.Navigator>
