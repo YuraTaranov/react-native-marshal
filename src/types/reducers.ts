@@ -1,4 +1,4 @@
-import {TCar, TCarModel, TCarProp, TProfile} from './components';
+import {TCar, TCarModel, TCarProp, TProfile, TPromotion} from './components';
 
 export type TGlobalState = {
   appGlobalState: {
@@ -34,6 +34,15 @@ export type TGlobalState = {
     models: TCarModel[];
     tank: TCarProp[];
     loading: false;
+  };
+  promotions: {
+    data: TPromotion[];
+    lazyLoading: boolean;
+    finishLoading: boolean;
+    refreshing: boolean;
+  };
+  promotion: {
+    data: TPromotion;
   };
 };
 

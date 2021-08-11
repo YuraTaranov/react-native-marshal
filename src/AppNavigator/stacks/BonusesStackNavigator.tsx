@@ -23,7 +23,7 @@ const BonusesStackNavigator: React.FC<TProps> = ({}) => {
         component={Bonuses}
         options={{
           headerTitleAlign: 'center',
-          title: 'Bonuses',
+          title: t('Бонуси'),
         }}
       />
     </BonusesStack.Navigator>

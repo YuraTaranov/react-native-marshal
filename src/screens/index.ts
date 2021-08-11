@@ -11,6 +11,7 @@ export {default as Onboarding} from './Onboarding';
 export {default as ProfileEdit} from './ProfileEdit/ProfileEdit';
 export {default as Profile} from './Profile';
 export {default as Promotions} from './Promotions';
+export {default as Promotion} from './Promotion/Promotion';
 export {default as Registration} from './Registration';
 export {default as Settings} from './Settings/Settings';
 export {default as NotificationSettings} from './NotificationSettings/NotificationSettings';

@@ -9,5 +9,7 @@ export default combineReducers({
   purchases: require('./purchases').default,
   cars: require('./cars').default,
   addCar: require('./addCar').default,
+  promotions: require('./promotions').default,
+  promotion: require('./promotion').default,
   // ADD NEW REDUCER
 });

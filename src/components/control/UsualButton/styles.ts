@@ -17,5 +17,7 @@ export default StyleSheet.create({
   btnStyle: {
     width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: 54,
   },
 });

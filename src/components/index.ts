@@ -1,3 +1,4 @@
+export {default as PromotionView} from './dataview/PromotionView';
 export {default as ProfileUpdate} from './dataview/ProfileUpdate';
 export {
   View,
@@ -30,6 +31,7 @@ export {default as QRCodeScanner} from 'react-native-qrcode-scanner';
 export {default as QRCode} from 'react-native-qrcode-svg';
 export {formatWithMask} from 'react-native-mask-input';
 export {default as OpenAppSettings} from 'react-native-app-settings';
+export {default as moment} from 'moment';
 
 // TYPOGRAPHY
 export {default as Text} from './typography/Text';

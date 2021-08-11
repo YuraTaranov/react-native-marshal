@@ -12,7 +12,7 @@ type TProps = {};
 const <%=h.changeCase.pascal(name)%>: React.FC<TProps> = ({}) => {
     const {t} = useTranslation();
 
-	return <View></View>;
+	return <View style={styles.container}></View>;
 	};
 
 	export default <%=h.changeCase.pascal(name)%>;
