@@ -3,8 +3,6 @@ to: src/reducers/<%=h.changeCase.camelCase(name)%>.ts
 ---
 import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
-import {Alert} from 'react-native';
-import i18next from 'i18next';
 import {httpGet, httpPost, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
 

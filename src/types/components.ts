@@ -41,3 +41,15 @@ export type TProfile = {
   phone: string;
   bearer_token?: string;
 };
+
+export type TPromotion = {
+  id: number;
+  type: number;
+  angle?: number;
+  start?: string;
+  end?: string;
+  title: string;
+  text?: string;
+  price_new?: string;
+  price_old?: string;
+};

@@ -14,4 +14,5 @@ export const urls = {
   getBrands: 'car/brands',
   getModels: 'car/models',
   getTank: 'car/tanks',
+  gePromotions: 'profile/actions',
 };

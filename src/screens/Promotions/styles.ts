@@ -1,8 +1,10 @@
 import {StyleSheet} from '@components';
-import {colors} from '@constants'
+import {colors} from '@constants';
 
 export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
   },
 });

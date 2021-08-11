@@ -9,4 +9,7 @@ export const assets = {
   NO_CARS: require('./images/no_cars.png'),
   NO_PURCHASES: require('./images/no_purchases.png'),
   NO_CARDS: require('./images/no_cards.png'),
+  PROMOTION_BG_GREEN: require('./images/promotion_bg_green.png'),
+  PROMOTION_BG_BLUE: require('./images/promotion_bg_blue.png'),
+  PROMOTION_BG_RED: require('./images/promotion_bg_red.png'),
 };

@@ -31,6 +31,7 @@ module.exports = [
       'StationsList',
       'MapScreen',
       'Purchases',
+      'Promotion',
       //ADD MORE SCREENS
     ],
   },
