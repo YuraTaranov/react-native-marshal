@@ -1,5 +1,6 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
 import {setIsUserAuthorized, setToken} from './appGlobalState';
+import {resetProfile} from './profile';
 
 const LOGOUT = '[logout] GET_LOGOUT';
 
@@ -21,6 +22,7 @@ export function* watchLogout() {
 export function* logoutAsync() {
   yield put(setIsUserAuthorized(false));
   yield put(setToken(''));
+  yield put(resetProfile());
   try {
     // const body = yield call(() => httpPost(urls.logout));
   } catch (e) {

@@ -1,5 +1,5 @@
 import {StyleSheet} from '@components';
-import {colors, fonts} from '@constants';
+import {colors, fonts, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -60,5 +60,8 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 16,
     paddingBottom: 16,
+    position: 'absolute',
+    bottom: 0,
+    width: width,
   },
 });

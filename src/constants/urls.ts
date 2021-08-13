@@ -6,6 +6,7 @@ export const urls = {
   login: 'login',
   logout: 'logout',
   profileUpdate: 'profile/update',
+  addCardOld: 'marshal-card/add-card',
   addCardNew: 'marshal-card/new-card',
   purchases: 'purchases',
   cars: 'profile/user-cars',

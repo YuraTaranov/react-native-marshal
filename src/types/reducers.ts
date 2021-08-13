@@ -7,6 +7,7 @@ export type TGlobalState = {
     accessToken: string;
     loader: boolean;
     isUserAuthorized: boolean;
+    bonusesOnBoarding: boolean;
   };
   modalController: {
     support: boolean;

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useTranslation,
-  useState,
-} from '@hooks';
+import {useCallback, useMemo, useTranslation} from '@hooks';
 import {
   View,
   Text,
@@ -34,10 +28,12 @@ type TProps = {
 const Bonuses: React.FC<TProps> = ({referrals}) => {
   const {t} = useTranslation();
 
-  const onPressInvite = useCallback(() => {}, []);
-
   const onPressTerms = useCallback(() => {
     navigate('LoyaltyTerms');
+  }, []);
+
+  const onPressInviteFriends = useCallback(() => {
+    navigate('InviteFriends');
   }, []);
 
   const bonusesValue = useMemo(() => {
@@ -76,7 +72,10 @@ const Bonuses: React.FC<TProps> = ({referrals}) => {
         <Icon size={24} name="right" />
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <UsualButton title={t('Запросити друзів')} onPress={onPressInvite} />
+        <UsualButton
+          title={t('Запросити друзів')}
+          onPress={onPressInviteFriends}
+        />
       </View>
     </View>
   );

@@ -32,6 +32,8 @@ module.exports = [
       'MapScreen',
       'Purchases',
       'Promotion',
+      'InviteFriends',
+      'BonusesOnBoarding',
       //ADD MORE SCREENS
     ],
   },

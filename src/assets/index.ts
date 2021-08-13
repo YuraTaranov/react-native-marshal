@@ -13,4 +13,5 @@ export const assets = {
   PROMOTION_BG_BLUE: require('./images/promotion_bg_blue.png'),
   PROMOTION_BG_RED: require('./images/promotion_bg_red.png'),
   BONUSES_GIFT: require('./images/bonuses_gift.png'),
+  BONUSES_ONBOARDING: require('./images/bonuses_onboarding.png'),
 };

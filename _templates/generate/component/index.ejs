@@ -2,7 +2,7 @@
 to: src/components/<%= folder %>/<%= h.changeCase.pascal(name) %>/index.tsx
 ---
 import React from 'react'
-import { useCallback, useMemo } from '@hooks'
+import { useCallback, useMemo, useTranslation } from '@hooks'
 import { View, Text, Image } from '@components'
 import styles from './styles'
 
@@ -11,6 +11,8 @@ type TProps = {
 }
 
 const <%= h.changeCase.pascal(name) %>: React.FC<TProps> = ({}) => {
+	const {t} = useTranslation();
+
 	return (
 	<View style={styles.container}>
 
