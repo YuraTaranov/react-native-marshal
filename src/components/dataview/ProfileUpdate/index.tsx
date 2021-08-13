@@ -15,11 +15,11 @@ import {
 } from '@components';
 import styles from './styles';
 import moment from 'moment';
-import {navigate, errorHandler, httpPost} from '@services';
+import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
 import {urls, ios, colors, darkMode} from '@constants';
 import {connect} from 'react-redux';
-import {TGlobalState} from '@types';
+import {TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
 import {Alert} from 'react-native';
 
@@ -27,7 +27,7 @@ type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
   dispatch: Dispatch;
   isRegistration: boolean;
-  profile: TGlobalState['profile'];
+  profile: TProfile;
 };
 
 // FIXME:
@@ -143,15 +143,18 @@ const ProfileUpdate: React.FC<TProps> = ({
             surname: surnameValue,
             birthday: birthdayValue,
             gender,
-            phone: phoneValue,
+            phone: `+380${phoneValue.replace(/ /g, '')}`,
           };
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
       if (body.status === 200) {
         dispatch(setProfile(body.data.data));
-        isRegistration
-          ? navigate('BonusCardCheck')
-          : Alert.alert('', t('Дані профілю оновлені'));
+        if (isRegistration) {
+          navigate('BonusCardCheck');
+        } else {
+          Alert.alert('', t('Дані профілю оновлені'));
+          goBack();
+        }
       }
     } catch (error) {
       setLoading(false);
@@ -181,7 +184,7 @@ const ProfileUpdate: React.FC<TProps> = ({
         !surnameValue ||
         birthdayValue === maximumDate ||
         !genderValue.name ||
-        phoneValue.length !== 12 ||
+        phoneValue.length < 9 ||
         loading
       );
     }

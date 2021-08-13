@@ -1,10 +1,11 @@
 import React from 'react';
 import {useCallback} from '@hooks';
-import {Text, TouchableOpacity} from '@components';
+import {Icon, TouchableOpacity} from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {setSupport} from '@reducers/modalController';
+import {colors} from '@constants';
 
 type TProps = {
   dispatch: Dispatch;
@@ -17,7 +18,7 @@ const QuestionButton: React.FC<TProps> = ({dispatch}) => {
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>?</Text>
+      <Icon size={24} name="support" color={colors.white_FFFFFF} />
     </TouchableOpacity>
   );
 };

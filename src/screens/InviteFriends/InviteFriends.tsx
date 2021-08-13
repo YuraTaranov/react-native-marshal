@@ -38,7 +38,7 @@ const InviteFriends: React.FC<TProps> = ({}) => {
 
   const onPressCopy = useCallback(() => {
     Clipboard.setString(fakeLink);
-    toastRef?.current?.show('Реквізити скопійовані', 2000);
+    toastRef?.current?.show('Посилання скопійовано', 2000);
   }, []);
 
   return (

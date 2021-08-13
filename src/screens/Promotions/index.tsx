@@ -29,7 +29,6 @@ const fakeData: TPromotion[] = [
   {
     id: 1,
     type: 1,
-    angle: 1,
     end: '2021-08-21',
     title: 'Хот-дог у подарунок',
     text: 'Заправляй машину та не забудь перекусити',
@@ -37,7 +36,6 @@ const fakeData: TPromotion[] = [
   {
     id: 2,
     type: 2,
-    angle: 2,
     end: '2021-09-25',
     title: 'Хот-дог та Coca-Cola 0.5 л',
     price_new: '69',
@@ -46,7 +44,6 @@ const fakeData: TPromotion[] = [
   {
     id: 3,
     type: 3,
-    angle: 1,
     title: 'Знижка -10%',
     text: 'На першу заправку',
   },

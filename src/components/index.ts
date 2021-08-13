@@ -28,6 +28,7 @@ export {default as Modal} from 'react-native-modal';
 export {default as LinearGradient} from 'react-native-linear-gradient';
 export {default as ConfirmationCodeField} from 'react-native-confirmation-code-field';
 export {default as SnapCarousel} from 'react-native-snap-carousel';
+export {Pagination} from 'react-native-snap-carousel';
 export {default as DateTimePicker} from '@react-native-community/datetimepicker';
 export {default as CheckBox} from '@react-native-community/checkbox';
 export {default as QRCodeScanner} from 'react-native-qrcode-scanner';

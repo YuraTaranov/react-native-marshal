@@ -1,14 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {colors, fonts, ios} from '@constants';
+import {colors, fonts} from '@constants';
 
 export default StyleSheet.create({
   container: {
     width: 24,
     height: 24,
-    borderRadius: 22,
-    backgroundColor: colors.green_41BB4E,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   text: {
     fontFamily: fonts.interBold_700,

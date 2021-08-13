@@ -2,15 +2,15 @@ import {Platform} from 'react-native';
 
 export const shadowBlock = Platform.select({
   ios: {
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0.2,
-      height: 2,
+      width: 0,
+      height: 0,
     },
     shadowColor: 'gray',
-    shadowRadius: 4,
+    shadowRadius: 2,
   },
   android: {
-    elevation: 4,
+    elevation: 1.5,
   },
 });
