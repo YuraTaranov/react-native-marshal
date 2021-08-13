@@ -11,10 +11,13 @@ export const colors = {
   gray_E1E1E8: '#E1E1E8',
   gray_6D6F79: '#6D6F79',
   gray_F3F5FA: '#F3F5FA',
+  gray_E5E5E5: '#E5E5E5',
   green_27A74C: '#27A74C',
   green_007E26: '#007E26',
   green_41BB4E: '#41BB4E',
   green_EBFCF0: '#EBFCF0',
+  green_009F30: '#009F30',
+  green_46C16B: '#46C16B',
   green_00AE36: '#00AE36',
   white_FFFFFF: '#FFFFFF',
 };

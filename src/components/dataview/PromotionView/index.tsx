@@ -23,7 +23,7 @@ const PromotionView: React.FC<TProps> = ({
   item,
   onPress,
   bgBorderRadius,
-  disabled,
+  disabled = false,
 }) => {
   const {t} = useTranslation();
 
@@ -63,6 +63,7 @@ const PromotionView: React.FC<TProps> = ({
     <TouchableOpacity
       style={styles.container}
       onPress={onPress && onPress(item.id)}
+      activeOpacity={0.9}
       disabled={disabled}>
       <Image source={{uri: fakeImageUri}} style={borderRadiusStyles.image} />
       <Image source={background} style={borderRadiusStyles.background} />

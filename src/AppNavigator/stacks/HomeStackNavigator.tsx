@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home} from '@screens';
+import {Home, Promotion} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -23,7 +23,15 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
         component={Home}
         options={{
           headerTitleAlign: 'center',
-          title: 'Home',
+          title: 'Marshal',
+        }}
+      />
+      <HomeStack.Screen
+        name="Promotion"
+        component={Promotion}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Умови акції'),
         }}
       />
     </HomeStack.Navigator>

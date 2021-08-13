@@ -31,7 +31,7 @@ export default StyleSheet.create({
     color: colors.white_FFFFFF,
     fontFamily: fonts.interSemiBold_600,
     marginTop: 16,
-    width: 170,
+    width: 175,
   },
   description: {
     fontSize: 16,
