@@ -8,6 +8,7 @@ const SET_LANG = '[appGlobalState] SET_LANG';
 const SET_TOKEN = '[appGlobalState] SET_TOKEN';
 const SET_ONBOARDING = '[appGlobalState] SET_ONBOARDING';
 const SET_IS_USER_AUTHORIZED = '[appGlobalState] SET_IS_USER_AUTHORIZED';
+const SET_BONUSES_ON_BOARDING = '[appGlobalState] SET_BONUSES_ON_BOARDING';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
 
 const initialstate: TGlobalState['appGlobalState'] = {
@@ -16,6 +17,7 @@ const initialstate: TGlobalState['appGlobalState'] = {
   lang: 'uk',
   loader: false,
   onBoarding: true,
+  bonusesOnBoarding: true,
 };
 
 export default (state = initialstate, action: any) => {
@@ -30,6 +32,8 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, {...state, isUserAuthorized: action.data});
     case SET_LOADER:
       return Object.assign({}, {...state, loader: action.data});
+    case SET_BONUSES_ON_BOARDING:
+      return Object.assign({}, {...state, bonusesOnBoarding: action.data});
     case RESET_APP_GLOBAL_STATE:
       return initialstate;
     default:
@@ -49,6 +53,10 @@ export const setIsUserAuthorized = (data: boolean) => ({
   type: SET_IS_USER_AUTHORIZED,
 });
 export const changeLang = (lang: TLang) => ({lang, type: CHANGE_LANG});
+export const setBonusesOnBoarding = (lang: boolean) => ({
+  lang,
+  type: SET_BONUSES_ON_BOARDING,
+});
 export const resetAppGlobalState = () => ({type: RESET_APP_GLOBAL_STATE});
 
 export function* watchAppGlobalState() {

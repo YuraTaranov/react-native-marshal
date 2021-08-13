@@ -4,6 +4,8 @@ import {colors, fonts} from '@constants';
 const styles = StyleSheet.create({
   headerStyle: {
     backgroundColor: colors.green_27A74C,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   headerRightContainerStyle: {
     marginRight: 17,

@@ -21,3 +21,5 @@ export {default as UseTerms} from './UseTerms/UseTerms';
 export {default as StationsList} from './StationsList/StationsList';
 export {default as Stations} from './Stations';
 export {default as Purchases} from './Purchases/Purchases';
+export {default as InviteFriends} from './InviteFriends/InviteFriends';
+export {default as BonusesOnBoarding} from './BonusesOnBoarding/BonusesOnBoarding';

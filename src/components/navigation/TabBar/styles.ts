@@ -1,13 +1,13 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default StyleSheet.create({
   container: {
     // paddingBottom: ios ? bottom : longScreen ? 8 : 0,
     justifyContent: 'space-around',
     flexDirection: 'row',
-    paddingVertical: 10
+    paddingVertical: 10,
     // ...shadowBlock,
   },
   eachScreen: {
@@ -22,6 +22,5 @@ export default StyleSheet.create({
     // lineHeight: ,
     // marginTop: 4,
   },
-  textActive: {
-  },
+  textActive: {},
 });

@@ -73,41 +73,25 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
 
   const submit = useCallback(async () => {
     setLoading(true);
-
     setTimeout(() => {
       setLoading(false);
       dispatch(setIsUserAuthorized(true));
     }, 1000);
-
-    //   FIXME:
-    if (cardType.type === 1) {
-      // try {
-      //   const body = await httpPost(urls.addCardOld, {
-      //     card: cardNumber,
-      //   });
-      //   setLoading(false);
-      //   if (body.status === 200) {
-      //     dispatch(setProfile(body.data.data));
-      // 	dispatch(setIsUserAuthorized(true))
-      //   }
-      // } catch (error) {
-      //   setLoading(false);
-      //   errorHandler(error, 'add card old error');
-      // }
-    } else {
-      try {
-        const body = await httpPost(urls.addCardNew, {
-          card: cardNumber.replace(/ /g, ''),
-        });
-        setLoading(false);
-        if (body.status === 200) {
-          dispatch(setProfile(body.data.data));
-          dispatch(setIsUserAuthorized(true));
-        }
-      } catch (error) {
-        setLoading(false);
-        errorHandler(error, 'add card new error');
+    try {
+      const body =
+        cardType.type === 1
+          ? await httpPost(urls.addCardOld, {
+              card: cardNumber.replace(/ /g, ''),
+            })
+          : await httpPost(urls.addCardNew);
+      setLoading(false);
+      if (body.status === 200) {
+        dispatch(setProfile(body.data.data));
+        dispatch(setIsUserAuthorized(true));
       }
+    } catch (error) {
+      setLoading(false);
+      errorHandler(error, 'add card old error');
     }
   }, [cardNumber, cardType.type]);
 

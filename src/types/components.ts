@@ -53,3 +53,10 @@ export type TPromotion = {
   price_new?: string;
   price_old?: string;
 };
+
+export type TReferrals = {
+  activeReferrals: number;
+  bonuses: number;
+  bonusesUsed: number;
+  referralLink: string;
+};
