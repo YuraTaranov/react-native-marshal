@@ -13,6 +13,8 @@ export default StyleSheet.create({
     height: 54,
     flexDirection: 'row',
     backgroundColor: colors.white_FFFFFF,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   blackFond: {
     backgroundColor: colors.black_000000,
@@ -22,13 +24,11 @@ export default StyleSheet.create({
     fontFamily: fonts.interSemiBold_600,
   },
   left: {
-    flex: 3,
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingRight: 8,
   },
   right: {
-    flex: 5,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },

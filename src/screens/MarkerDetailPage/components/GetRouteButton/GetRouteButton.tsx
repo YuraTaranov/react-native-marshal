@@ -21,7 +21,7 @@ export const GetRouteButton: React.FC<TProps> = ({
       <View style={styles.left}>
         <Icon
           name={iconName}
-          size={28}
+          size={26}
           color={black ? colors.white_FFFFFF : colors.black_1E1A1A}
         />
       </View>

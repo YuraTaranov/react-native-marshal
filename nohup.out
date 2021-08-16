@@ -692,3 +692,4 @@ emulator: Revoking microphone permissions for Google App.
 emulator: INFO: QtLogger.cpp:68: Critical: Uncaught TypeError: Cannot read property 'update' of undefined (qrc:/html/js/location-mock-web-channel.js:130, (null))
 
 
+emulator: Saving state on exit with session uptime 15758547 ms

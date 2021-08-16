@@ -49,7 +49,7 @@ export const Search: React.FC<TProps> = ({onKeyPress, onClear}) => {
         />
       </View>
       <TouchableOpacity style={styles.cleanView} onPressIn={onClean}>
-        <Icon size={10} name="Union" color={colors.gray_8D909D} />
+        <Icon size={20} name="x" color={colors.gray_8D909D} />
       </TouchableOpacity>
     </TouchableOpacity>
   );

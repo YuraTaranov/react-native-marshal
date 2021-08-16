@@ -1,15 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {Dispatch} from 'redux';
+
 import {useEffect, useCallback, useTranslation, useState} from '@hooks';
-import {View, Text, ScrollView, Geolocation, Linking} from '@components';
+import {View, Text, ScrollView, Geolocation, Linking, Icon} from '@components';
 import {GetRouteButton} from './components';
 import {getUrlForRoute} from '@helpers';
+import {assets} from '@assets';
+const {SVG_Icons} = assets;
 
 import {connect} from 'react-redux';
 import styles from './styles';
 
 //Type
 import {TGlobalState, TPetrolStation} from '@types';
+import {colors} from '@constants';
+import {Dispatch} from 'redux';
 type TRoute = {
   params?: {
     markerId?: number;
@@ -56,8 +61,8 @@ const MarkerDetailPage: React.FC<TProps> = ({
         const urlForRoute = getUrlForRoute({
           startLatitude: position?.coords?.latitude || 0,
           startLongitude: position?.coords?.longitude || 0,
-          endLatitude: stationDetails?.lat,
-          endLongitude: stationDetails?.long,
+          endLatitude: stationDetails?.lat || 0,
+          endLongitude: stationDetails?.long || 0,
         });
         Linking.openURL(urlForRoute);
       },
@@ -75,19 +80,34 @@ const MarkerDetailPage: React.FC<TProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.addressView}>
-        <Text style={styles.addressText}>{stationDetails.address}</Text>
+        <View style={styles.iconView}>
+          <SVG_Icons height={22} fill={colors.green_41BB4E} name="pin2" />
+        </View>
+        <View style={styles.addressTextView}>
+          <Text style={styles.addressText}>{`${stationDetails.address}`}</Text>
+        </View>
       </View>
+
       <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>{t('Fuel')}</Text>
+        </View>
         {stationDetails.fuels.map(item => (
-          <View key={`__${item?.id}__`}>
-            <Text>{item.name}</Text>
+          <View key={`__${item?.id}__`} style={styles.itemView}>
+            <View style={styles.leftView}>
+              <Text style={styles.leftText}>{`${item.name}`}</Text>
+            </View>
+            <View style={styles.rightView}>
+              <Text style={styles.rightText}>{`${item?.price || ''}`}</Text>
+            </View>
           </View>
         ))}
       </ScrollView>
+
       <View style={styles.buttonView}>
         <GetRouteButton
           iconName="route"
-          label={t('Route')}
+          label={t('Get directions')}
           onPress={openingRoute}
           black
         />

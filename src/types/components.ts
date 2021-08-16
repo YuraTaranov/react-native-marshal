@@ -64,6 +64,7 @@ export type TReferrals = {
 export type TFuel = {
   id: number;
   name: string;
+  price: string;
 };
 
 export type TFullMarker = {

@@ -24,8 +24,8 @@ import {TGlobalState, TPetrolStation, TFullMarker} from '@types';
 const {getCurrentPosition} = Geolocation;
 
 const initRegion = {
-  latitude: 50.42,
-  longitude: 30.61,
+  latitude: 49.9882292,
+  longitude: 36.2258057,
   latitudeDelta: 0.015,
   longitudeDelta: 0.0121,
 };
@@ -231,7 +231,7 @@ const MapScreen: React.FC<TProps> = ({markers}) => {
         region={{...region}}
         loadingEnabled
         mapType="standard"
-        maxZoomLevel={18}
+        // maxZoomLevel={18}
         minZoomLevel={5}
         moveOnMarkerPress
         //

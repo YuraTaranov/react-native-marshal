@@ -103,7 +103,7 @@ export const MarkerModal: React.FC<TProps> = ({isVisible, data, cb}) => {
             />
           </View>
           <TouchableOpacity onPress={closeModal} style={[styles.eject]}>
-            <Icon name="Union" size={17} color={colors.black_1E1A1A} />
+            <Icon name="x" size={24} color={colors.black_1E1A1A} />
           </TouchableOpacity>
         </View>
       </View>

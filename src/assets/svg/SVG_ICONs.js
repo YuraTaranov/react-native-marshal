@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Svg, {G, Path} from 'react-native-svg';
+import Svg, {G, Path, Circle} from 'react-native-svg';
 import _ from 'lodash';
 import {colors} from '@constants';
 
@@ -36,11 +36,25 @@ const SVG = ({name, fill, width, height}: TIconParam) => {
         </G>
       ),
     },
+    pin2: {
+      width: 20,
+      height: 20,
+      content: (
+        <G>
+          <Path
+            d="M10 20a10 10 0 1110-10 10 10 0 01-10 10zm0-18a8 8 0 108 8 8 8 0 00-8-8z"
+            fill={fill || '#52a962'}
+          />
+          <Circle cx="10" cy="10" r="3" fill={fill || '#52a962'} />
+        </G>
+      ),
+    },
   };
 
   const viewBoxWidth = graphics[name].width;
   const viewBoxHeight = graphics[name].height;
   const viewBoxRatio = viewBoxWidth / viewBoxHeight;
+
   return (
     <Svg
       width={width || (height && _.parseInt(height * viewBoxRatio)) || 100}
