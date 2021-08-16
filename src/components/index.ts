@@ -40,6 +40,7 @@ export {default as QRCodeScanner} from 'react-native-qrcode-scanner';
 export {default as QRCode} from 'react-native-qrcode-svg';
 export {default as SnapCarousel} from 'react-native-snap-carousel';
 export {default as TextInputMask} from 'react-native-text-input-mask';
+export {default as moment} from 'moment';
 export {formatWithMask} from 'react-native-mask-input';
 export {request, PERMISSIONS} from 'react-native-permissions';
 

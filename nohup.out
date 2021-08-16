@@ -663,3 +663,32 @@ emulator: INFO: QtLogger.cpp:68: Warning: Failed to get QCocoaScreen for NSObjec
 
 
 emulator: Saving state on exit with session uptime 8381121 ms
+handleCpuAcceleration: feature check for hvf
+cannot add library /Users/bobby/Library/Android/sdk/emulator/qemu/darwin-x86_64/lib64/vulkan/libvulkan.dylib: failed
+added library /Users/bobby/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib
+emulator: WARNING: Crash service did not start
+
+emulator: WARNING: Your AVD has been configured with an in-guest renderer, but the system image does not support guest rendering.Falling back to 'swiftshader_indirect' mode.
+emulator: INFO: GrpcServices.cpp:315: Started GRPC server at 127.0.0.1:8554, security: Local
+emulator: INFO: EmulatorAdvertisement.cpp:93: Advertising in: /Users/bobby/Library/Caches/TemporaryItems/avd/running/pid_2950.ini
+Your emulator is out of date, please update by launching Android Studio:
+ - Start Android Studio
+ - Select menu "Tools > Android > SDK Manager"
+ - Click "SDK Tools" tab
+ - Check "Android Emulator" checkbox
+ - Click "OK"
+
+emulator: ERROR: AdbHostServer.cpp:102: Unable to connect to adb daemon on port: 5037
+eglMakeCurrent failed in binding subwindow!
+eglMakeCurrent failed in binding subwindow!
+eglMakeCurrent failed in binding subwindow!
+eglMakeCurrent failed in binding subwindow!
+eglMakeCurrent failed in binding subwindow!
+qemu: unsupported keyboard cmd=0x84
+emulator: INFO: boot completed
+emulator: INFO: boot time 292731 ms
+emulator: Increasing screen off timeout, logcat buffer size to 2M.
+emulator: Revoking microphone permissions for Google App.
+emulator: INFO: QtLogger.cpp:68: Critical: Uncaught TypeError: Cannot read property 'update' of undefined (qrc:/html/js/location-mock-web-channel.js:130, (null))
+
+

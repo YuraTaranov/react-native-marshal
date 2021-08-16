@@ -52,10 +52,6 @@ const Home: React.FC<TProps> = ({dispatch}) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getPromotions({page: 1}));
-  }, []);
-
-  useEffect(() => {
     setOptions({
       headerLeft: () => <QuestionButton />,
       headerRight: () => (
@@ -64,6 +60,7 @@ const Home: React.FC<TProps> = ({dispatch}) => {
         </TouchableOpacity>
       ),
     });
+    dispatch(getPromotions({page: 1}));
     dispatch(getPetrolStations());
   }, []);
 
