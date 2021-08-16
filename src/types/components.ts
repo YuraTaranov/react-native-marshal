@@ -60,3 +60,31 @@ export type TReferrals = {
   bonusesUsed: number;
   referralLink: string;
 };
+
+export type TFuel = {
+  id: number;
+  name: string;
+};
+
+export type TFullMarker = {
+  id: number;
+  long: string;
+  lat: string;
+  citi: string;
+  name: string;
+  region: string;
+  address: string;
+};
+
+export type TPetrolStation = TFullMarker & {
+  image: string;
+  fuels: Array<TFuel>;
+};
+
+export type TGetPetrolStationResponseGenerator = {
+  data: {
+    data: Array<TPetrolStation>;
+  };
+  statusText: string;
+  status: number;
+};

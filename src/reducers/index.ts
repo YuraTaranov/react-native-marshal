@@ -11,5 +11,6 @@ export default combineReducers({
   addCar: require('./addCar').default,
   promotions: require('./promotions').default,
   promotion: require('./promotion').default,
+  petrolStations: require('./petrolStations').default,
   // ADD NEW REDUCER
 });

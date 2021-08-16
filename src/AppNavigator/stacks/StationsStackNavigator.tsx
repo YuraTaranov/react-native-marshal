@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Stations, FilterPage} from '@screens';
+import {Stations, FilterPage, MarkerDetailPage} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {defaultStackOptions} from '../options';
@@ -19,13 +19,20 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         name="Stations"
         component={Stations}
         options={{
-          headerTitleAlign: 'center',
-          title: 'Stations',
+          headerShown: false,
         }}
       />
       <StationsStack.Screen
         name="FilterPage"
         component={FilterPage}
+        options={{
+          headerTitleAlign: 'center',
+          title: 'Stations',
+        }}
+      />
+      <StationsStack.Screen
+        name="MarkerDetail"
+        component={MarkerDetailPage}
         options={{
           headerTitleAlign: 'center',
           title: 'Stations',

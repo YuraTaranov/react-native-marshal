@@ -4,13 +4,18 @@ import {SafeAreaView, StatusBar, useWindowDimensions} from 'react-native';
 import {MapScreen, StationsList} from '@screens';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {connect} from 'react-redux';
-import {useTranslation, useCallback, useState} from '@hooks';
+import {
+  useCallback,
+  useEffect,
+  useNavigation,
+  useState,
+  useTranslation,
+} from '@hooks';
 import {colors} from '@constants';
 import {navigate} from '@services';
 import styles from './styles';
 import {TGlobalState} from '@types';
 import ButtonCustom from './components/ButtonCustom/ButtonCustom';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 type TProps = {};
 
@@ -51,15 +56,16 @@ const Stations: React.FC<TProps> = ({}) => {
     [],
   );
 
-  // убрал отступ для кнопки фильтра потому что у нас только потретный вид будет, по идее она должна всегда находится в одном месте на всех устройствах
-
   const navigateToFilter = useCallback(() => {
     navigate('FilterPage');
   }, []);
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={colors.white_FFFFFF}
+      />
       <TabView
         renderTabBar={renderTabBar}
         navigationState={{index, routes}}

@@ -1,4 +1,5 @@
 export const colors = {
+  red_F10000: '#F10000',
   black_000000: '#000000',
   black_1B1B1B: '#1B1B1B',
   black_1E1A1A: '#1E1A1A',
@@ -9,6 +10,7 @@ export const colors = {
   gray_404353: '#404353',
   gray_8D909D: '#8D909D',
   gray_E1E1E8: '#E1E1E8',
+  gray_E1E1E1: '#E1E1E1',
   gray_6D6F79: '#6D6F79',
   gray_F3F5FA: '#F3F5FA',
   gray_E5E5E5: '#E5E5E5',

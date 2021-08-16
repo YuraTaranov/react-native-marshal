@@ -1,4 +1,4 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put} from 'redux-saga/effects';
 import {setIsUserAuthorized, setToken} from './appGlobalState';
 import {resetProfile} from './profile';
 

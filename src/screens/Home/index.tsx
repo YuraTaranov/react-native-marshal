@@ -7,6 +7,7 @@ import {
   useState,
   useNavigation,
 } from '@hooks';
+
 import {
   View,
   Text,
@@ -15,21 +16,26 @@ import {
   BonusCardModal,
   Icon,
 } from '@components';
-import {TGlobalState} from '@types';
+
 import {connect} from 'react-redux';
-import styles from './styles';
-import {Dispatch} from 'redux';
+import {resetAppGlobalState} from '@reducers/appGlobalState';
+
 import {getPromotions} from '@reducers/promotions';
 import {colors} from '@constants';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
+import {getPetrolStations} from '@reducers/petrolStations';
+import styles from './styles';
+
+//Type
+import {Dispatch} from 'redux';
+import {TGlobalState} from '@types';
+type TProps = {
+  dispatch: Dispatch;
+};
 
 const fakeData = {
   bonuses: 250,
   fuel: 80,
-};
-
-type TProps = {
-  dispatch: Dispatch;
 };
 
 const Home: React.FC<TProps> = ({dispatch}) => {
@@ -58,6 +64,7 @@ const Home: React.FC<TProps> = ({dispatch}) => {
         </TouchableOpacity>
       ),
     });
+    dispatch(getPetrolStations());
   }, []);
 
   return (
@@ -100,6 +107,7 @@ const Home: React.FC<TProps> = ({dispatch}) => {
     </View>
   );
 };
+
 const mapStateToProps = (state: TGlobalState) => ({});
 
 export default connect(mapStateToProps)(Home);

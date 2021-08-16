@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {isIphoneX, ios} from '@constants';
 
 export default StyleSheet.create({
   buttonFilter: {
@@ -8,5 +9,6 @@ export default StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    top: isIphoneX ? 46 : ios ? 23 : 2,
   },
 });

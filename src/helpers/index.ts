@@ -1,3 +1,5 @@
-export { animation } from './animation'
-export { shadowBlock } from './shadow'
-export * from './scaling'
+export {animation} from './animation';
+export {shadowBlock} from './shadow';
+export {getUrlForRoute} from './url_coder';
+
+export * from './scaling';
