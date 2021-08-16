@@ -73,5 +73,13 @@
     "Route": "Route",
     "Search": "Search",
     "Get directions": "Get directions",
-    "Fuel" : "Fuel"
+    "Fuel" : "Fuel",
+    "Regions": "Regions",
+    "Filters": "Filters",
+    "All": "All",
+    "Show result": "Show result",
+    "Choose": "Choose",
+    "reg": "reg.",
+    "and_further": "and further",
+    "Cleaning": "Cleaning"
   }

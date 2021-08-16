@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {useEffect, useState, useRef, useCallback} from '@hooks';
+import {useEffect, useState, useRef} from '@hooks';
 import {
   Geolocation,
   MapView,
@@ -15,11 +16,12 @@ import {connect} from 'react-redux';
 import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import {useIsFocused} from '@react-navigation/core';
+import {getFilteredPetrolStationList} from '@helpers';
 import styles from './styles';
 
 // Types
-import {TGlobalState, TPetrolStation, TFullMarker} from '@types';
-// import {Dispatch} from 'redux';
+import {TGlobalState, TPetrolStation, TFullMarker, TFilters} from '@types';
+import {Dispatch} from 'redux';
 
 const {getCurrentPosition} = Geolocation;
 
@@ -40,6 +42,7 @@ type TRegion = {
 type TProps = {
   // dispatch: Dispatch;
   markers: Array<TPetrolStation>;
+  filters: TFilters;
 };
 type Tcoords = {
   longitude: number;
@@ -90,7 +93,7 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
   );
 }
 
-const MapScreen: React.FC<TProps> = ({markers}) => {
+const MapScreen: React.FC<TProps> = ({markers, filters}) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
     formatMarkerData(markers),
@@ -195,10 +198,20 @@ const MapScreen: React.FC<TProps> = ({markers}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setAllMarkers(
+      formatMarkerData(
+        getFilteredPetrolStationList({
+          stations: markers,
+          filters,
+        }),
+      ),
+    );
+  }, [filters, markers]);
+
   if (!useIsFocused()) {
     return null;
   }
-  console.log('++++++++++++++ RENDERING ++++++++++++', AllMarkers);
   return (
     <View style={styles.container}>
       <MapView
@@ -279,6 +292,7 @@ const MapScreen: React.FC<TProps> = ({markers}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   markers: state.petrolStations,
+  filters: state.filters,
 });
 
 export default connect(mapStateToProps)(MapScreen);

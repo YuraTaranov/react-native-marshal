@@ -1,9 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
-import {useEffect, useCallback, useTranslation, useState} from '@hooks';
-import {View, Text, ScrollView, Geolocation, Linking, Icon} from '@components';
+import {
+  useEffect,
+  useCallback,
+  useTranslation,
+  useState,
+  useNavigation,
+} from '@hooks';
+
+import {View, Text, ScrollView, Geolocation, Linking} from '@components';
 import {GetRouteButton} from './components';
+import {ios} from '@constants';
 import {getUrlForRoute} from '@helpers';
 import {assets} from '@assets';
 const {SVG_Icons} = assets;
@@ -25,19 +33,16 @@ type TProps = {
   dispatch: Dispatch;
   petrolStations: Array<TPetrolStation>;
   route: TRoute;
-  navigation: {
-    setOptions: Function;
-  };
 };
 //markerId
 
 const MarkerDetailPage: React.FC<TProps> = ({
   dispatch,
   route,
-  navigation,
   petrolStations,
 }) => {
   const {t} = useTranslation();
+  const {setOptions} = useNavigation();
 
   const [stationId, setStationId] = useState<number | null>(
     route?.params?.markerId || null,
@@ -46,9 +51,14 @@ const MarkerDetailPage: React.FC<TProps> = ({
 
   const setHeadear = useCallback(() => {
     if (stationDetails && stationDetails?.name) {
-      navigation.setOptions({title: stationDetails.name});
+      setOptions({
+        title: stationDetails.name,
+        headerTitleStyle: {
+          marginLeft: ios ? 0 : 15,
+        },
+      });
     }
-  }, [navigation, stationDetails]);
+  }, [setOptions, stationDetails]);
 
   useEffect(() => {
     setStationDetail(petrolStations.filter(i => i.id === stationId)[0] || null);

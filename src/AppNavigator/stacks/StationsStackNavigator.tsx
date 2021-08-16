@@ -1,6 +1,7 @@
 import React from 'react';
+import {ios} from '@constants';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Stations, FilterPage, MarkerDetailPage} from '@screens';
+import {Stations, FilterPage, MarkerDetailPage, RegionsPage} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {defaultStackOptions} from '../options';
@@ -23,25 +24,34 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         }}
       />
       <StationsStack.Screen
-        name="FilterPage"
-        component={FilterPage}
-        options={{
-          headerTitleAlign: 'center',
-          title: 'Stations',
-        }}
-      />
-      <StationsStack.Screen
         name="MarkerDetail"
         component={MarkerDetailPage}
         options={{
           headerTitleAlign: 'center',
-          title: 'Stations',
+          title: 'Detail',
+        }}
+      />
+      <StationsStack.Screen
+        name="FilterPage"
+        component={FilterPage}
+        options={{
+          headerTitleAlign: 'center',
+          animationEnabled: ios,
+        }}
+      />
+      <StationsStack.Screen
+        name="RegionsPage"
+        component={RegionsPage}
+        options={{
+          headerTitleAlign: 'center',
+          animationEnabled: ios,
         }}
       />
     </StationsStack.Navigator>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+// const mapStateToProps = (state: TGlobalState) => ({});
 
-export default connect(mapStateToProps)(StationsStackNavigator);
+// export default connect(mapStateToProps)(StationsStackNavigator);
+export default StationsStackNavigator;

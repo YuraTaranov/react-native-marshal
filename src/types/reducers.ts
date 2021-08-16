@@ -6,6 +6,7 @@ import {
   TProfile,
   TPromotion,
   TPetrolStation,
+  TFilters,
 } from './components';
 
 export type TGlobalState = {
@@ -54,6 +55,7 @@ export type TGlobalState = {
     data: TPromotion;
   };
   petrolStations: TPetrolStation[];
+  filters: TFilters;
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

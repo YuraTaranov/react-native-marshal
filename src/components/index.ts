@@ -52,6 +52,7 @@ export {default as Text} from './typography/Text';
 // CONTAINER
 
 // CONTROLL
+
 export {default as BonusCardModal} from './control/BonusCardModal';
 export {default as CheckBoxCustom} from './control/CheckBoxCustom';
 export {default as ConfirmModal} from './control/ConfirmModal';
@@ -64,6 +65,9 @@ export {default as QuestionButton} from './control/QuestionButton';
 export {default as RadioButtonCustom} from './control/RadioButtonCustom';
 export {default as SwitchCustom} from './control/SwitchCustom';
 export {default as UsualButton} from './control/UsualButton';
+export {ListItem} from './control/ListItem/ListItem';
+export {FilterButton} from './control/FiltersButton/Button';
+export {RightButton} from './control/RightButton';
 
 // NAVIGATION
 export {default as TabBar} from './navigation/TabBar';

@@ -1,23 +1,22 @@
 import React from 'react';
-import {Dispatch} from 'redux';
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useTranslation,
-  useState,
-} from '@hooks';
-import {View, Text, ScrollView, Geolocation, Linking} from '@components';
+
+import {useEffect, useCallback, useState} from '@hooks';
+import {View, ScrollView, Geolocation, Linking} from '@components';
 import {Search, StationListItem} from './components';
-import {TGlobalState, TPetrolStation} from '@types';
 import {connect} from 'react-redux';
 import {navigate} from '@services';
 import {getUrlForRoute} from '@helpers';
 import styles from './styles';
+import {getFilteredPetrolStationList} from '@helpers';
+
+//Type
+import {TFilters, TGlobalState, TPetrolStation} from '@types';
+import {Dispatch} from 'redux';
 
 type TProps = {
   dispatch: Dispatch;
   petrolStations: TPetrolStation[];
+  filters: TFilters;
 };
 
 type TSelected = number | null;
@@ -39,10 +38,18 @@ const isSearch = (item: TPetrolStation, search: string): boolean => {
   );
 };
 
-const StationsList: React.FC<TProps> = ({dispatch, petrolStations}) => {
-  // const [selectedId, setSelectedId] = useState<TSelected>(null);
+const StationsList: React.FC<TProps> = ({
+  dispatch,
+  petrolStations,
+  filters,
+}) => {
   const [textOfSearch, setTextOfSerch] = useState('');
-  const [stations, setStations] = useState(petrolStations);
+  const [stations, setStations] = useState(
+    getFilteredPetrolStationList({
+      stations: petrolStations,
+      filters,
+    }),
+  );
 
   const onKeySearch = (e: any) => {
     if (e?.nativeEvent?.key) {
@@ -64,15 +71,22 @@ const StationsList: React.FC<TProps> = ({dispatch, petrolStations}) => {
   }, [textOfSearch, petrolStations]);
 
   useEffect(() => {
-    console.log('textOfSearch', textOfSearch);
     changeStationArray();
   }, [changeStationArray, textOfSearch]);
+
+  useEffect(() => {
+    setStations(
+      getFilteredPetrolStationList({
+        stations: petrolStations,
+        filters,
+      }),
+    );
+  }, [filters, petrolStations]);
 
   const openDetailOfStation = (id: number): void => {
     if (!id) {
       return;
     }
-    // setSelectedId(id);
     navigate('MarkerDetail', {markerId: id});
   };
 
@@ -127,6 +141,7 @@ const StationsList: React.FC<TProps> = ({dispatch, petrolStations}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   petrolStations: state.petrolStations,
+  filters: state.filters,
 });
 
 export default connect(mapStateToProps)(StationsList);

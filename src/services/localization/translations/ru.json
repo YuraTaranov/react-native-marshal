@@ -73,5 +73,13 @@
     "Route": "Маршрут",
     "Search": "Поиск",
     "Get directions": "Проложить маршрут",
-    "Fuel" : "Пальне"
+    "Fuel" : "Пальне",
+    "Regions": "Oбласти",
+    "Filters": "Фильтры",
+    "All": "Все",
+    "Show result": "Показать результат",
+    "Choose": "Вибрать",
+    "reg": "обл.",
+    "and_further": "и еще",
+    "Cleaning": "Очистить"
   }

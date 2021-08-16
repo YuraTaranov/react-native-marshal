@@ -24,3 +24,4 @@ export {default as Purchases} from './Purchases/Purchases';
 export {default as InviteFriends} from './InviteFriends/InviteFriends';
 export {default as BonusesOnBoarding} from './BonusesOnBoarding/BonusesOnBoarding';
 export {default as MarkerDetailPage} from './MarkerDetailPage/MarkerDetailPage';
+export {default as RegionsPage} from './RegionsPage/RegionsPage';

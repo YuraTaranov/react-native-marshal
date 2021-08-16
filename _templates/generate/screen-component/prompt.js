@@ -35,6 +35,7 @@ module.exports = [
       'InviteFriends',
       'BonusesOnBoarding',
       'MarkerDetailPage',
+      'RegionsPage',
       //ADD MORE SCREENS
     ],
   },

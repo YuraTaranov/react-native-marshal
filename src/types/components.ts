@@ -89,3 +89,16 @@ export type TGetPetrolStationResponseGenerator = {
   statusText: string;
   status: number;
 };
+
+export type TStatus = 'none' | 'potential' | 'selected';
+export type TListItem = {
+  title: string;
+  status: TStatus;
+};
+
+export type TRegions = string[];
+export type TFuelTypes = string[];
+export type TFilters = {
+  regions: TRegions;
+  fuelTypes: TFuelTypes;
+};

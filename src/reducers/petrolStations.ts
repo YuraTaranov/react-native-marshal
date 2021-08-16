@@ -21,6 +21,10 @@ const filterDuplicatest = (
   newData.forEach(i => {
     newMap.set(i.id, i);
   });
+  console.log(
+    'filterDuplicatest',
+    [...newMap].map(i => i[1] || null).filter(i => !!i),
+  );
   return [...newMap].map(i => i[1] || null).filter(i => !!i);
 };
 
