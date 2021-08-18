@@ -123,25 +123,32 @@ const ProfileUpdate: React.FC<TProps> = ({
   }, []);
 
   const gender = useMemo(() => {
-    if (genderValue.type === 1) return 'male';
-    if (genderValue.type === 2) return 'female';
-    if (genderValue.type === 3) return '';
+    if (genderValue.type === 1) {
+      return 'male';
+    }
+    if (genderValue.type === 2) {
+      return 'female';
+    }
+    if (genderValue.type === 3) {
+      return '';
+    }
   }, [genderValue.type]);
 
   const submit = useCallback(async () => {
     setLoading(true);
+
     try {
       const data = isRegistration
         ? {
             name: nameValue,
             surname: surnameValue,
-            birthday: birthdayValue,
+            birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
         : {
             name: nameValue,
             surname: surnameValue,
-            birthday: birthdayValue,
+            birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
             phone: `+380${phoneValue.replace(/ /g, '')}`,
           };

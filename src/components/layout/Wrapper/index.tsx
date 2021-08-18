@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import {View, SafeAreaView, Support} from '@components';
+import {View, Support} from '@components';
 import {TGlobalState} from '@types';
 import styles from './styles';
 // import { useHeaderHeight } from '@react-navigation';

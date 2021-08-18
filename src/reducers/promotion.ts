@@ -29,6 +29,7 @@ export function* watchPromotion() {
 }
 
 export function* getPromotionAsync(action: any) {
+  console.log(">>>> ACT", action);
   yield put(setLoader(true));
   try {
     const body = yield call(() =>

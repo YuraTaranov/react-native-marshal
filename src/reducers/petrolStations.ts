@@ -21,10 +21,6 @@ const filterDuplicatest = (
   newData.forEach(i => {
     newMap.set(i.id, i);
   });
-  console.log(
-    'filterDuplicatest',
-    [...newMap].map(i => i[1] || null).filter(i => !!i),
-  );
   return [...newMap].map(i => i[1] || null).filter(i => !!i);
 };
 
@@ -52,7 +48,7 @@ export function* watchPetrolStations() {
 
 export function* getPetrolStationsAsync() {
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' ? 'ua' : lang;  /// До выяснения этой не состыковки
 
   try {
     const body: TGetPetrolStationResponseGenerator = yield call(() =>
