@@ -126,5 +126,12 @@
   "Choose": "Oбрати",
   "reg": "обл.",
   "and_further": "і ще",
-  "Cleaning": "Очистити"
+  "Cleaning": "Очистити",
+  "Add_Card": "Додати картку",
+  "Save": "Зберегти",
+  "You_have_not_added_any_cards_yet": "Ви ще не додали жодної картки",
+  "add_card_to_sreen_text": "Додайте картку, щоб вона відображалася на цьому екрані",
+  "To check the card, UAH 1 will be temporarily blocked on it": "Для перевірки карти на ній тимчасово буде заблоковано 1 грн",
+  "NumberOfCreditCard": "Номер картки",
+  "ValidityPeriod": "Tермін дії"
 }

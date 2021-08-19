@@ -1,5 +1,6 @@
 import {all} from 'redux-saga/effects';
 // ADD IMPORT
+import { watchCreditCards } from './creditCards'
 import {watchFilters} from './filters';
 import {watchAddCar} from './addCar';
 import {watchAppGlobalState} from './appGlobalState';

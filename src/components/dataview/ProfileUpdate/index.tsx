@@ -1,5 +1,11 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
+import {
+  useCallback,
+  useMemo,
+  useTranslation,
+  useState,
+  useEffect,
+} from '@hooks';
 import {
   View,
   Text,
@@ -124,10 +130,10 @@ const ProfileUpdate: React.FC<TProps> = ({
 
   const gender = useMemo(() => {
     if (genderValue.type === 1) {
-      return 'male';
+      return 'female';
     }
     if (genderValue.type === 2) {
-      return 'female';
+      return 'male';
     }
     if (genderValue.type === 3) {
       return '';
@@ -136,7 +142,7 @@ const ProfileUpdate: React.FC<TProps> = ({
 
   const submit = useCallback(async () => {
     setLoading(true);
-
+    const phone = phoneValue.replace(/ /g, '');
     try {
       const data = isRegistration
         ? {
@@ -145,12 +151,19 @@ const ProfileUpdate: React.FC<TProps> = ({
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
+        : phone
+        ? {
+            name: nameValue,
+            surname: surnameValue,
+            birthday: moment(birthdayValue).format('YYYY-MM-DD'),
+            gender,
+            phone: `+380${phone}`,
+          }
         : {
             name: nameValue,
             surname: surnameValue,
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
-            phone: `+380${phoneValue.replace(/ /g, '')}`,
           };
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
@@ -167,7 +180,16 @@ const ProfileUpdate: React.FC<TProps> = ({
       setLoading(false);
       errorHandler(error, 'registration error');
     }
-  }, [nameValue, surnameValue, birthdayValue, genderValue, phoneValue]);
+  }, [
+    phoneValue,
+    isRegistration,
+    nameValue,
+    surnameValue,
+    birthdayValue,
+    gender,
+    dispatch,
+    t,
+  ]);
 
   const formatPhone = formatWithMask({
     text: phoneValue,
@@ -191,18 +213,18 @@ const ProfileUpdate: React.FC<TProps> = ({
         !surnameValue ||
         birthdayValue === maximumDate ||
         !genderValue.name ||
-        phoneValue.length < 9 ||
+        // phoneValue.length < 9 ||
         loading
       );
     }
   }, [
+    isRegistration,
     nameValue,
     surnameValue,
     birthdayValue,
-    genderValue,
+    genderValue.name,
     consentPersonalData,
     agreeLoyaltyProgram,
-    phoneValue,
     loading,
   ]);
 

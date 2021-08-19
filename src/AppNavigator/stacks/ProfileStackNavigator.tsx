@@ -1,20 +1,23 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
-  Profile,
-  Cars,
-  AddCar,
-  Settings,
-  ProfileEdit,
-  NotificationSettings,
   AboutApp,
+  AddCar,
+  AddCard,
+  Cars,
   LoyaltyTerms,
-  UseTerms,
+  MyCards,
+  NotificationSettings,
+  Profile,
+  ProfileEdit,
   Purchases,
+  Settings,
+  UseTerms,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState, TProfile} from '@types';
 import {useTranslation} from '@hooks';
+import {ios} from '@constants';
 import {defaultStackOptions} from '../options';
 
 type TProps = {
@@ -109,6 +112,24 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Мої покупки'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="MyCards"
+        component={MyCards}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Мої картки'),
+          animationEnabled: ios,
+        }}
+      />
+      <ProfileStack.Screen
+        name="AddCard"
+        component={AddCard}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Add_Card'),
+          animationEnabled: ios,
         }}
       />
     </ProfileStack.Navigator>

@@ -1,12 +1,10 @@
 import React from 'react';
 import {useCallback, useMemo, useTranslation, useState} from '@hooks';
 import {View, Text, Icon, TouchableHighlight} from '@components';
-import {assets} from '@assets';
+import {SVG_Icons} from '@assets';
 import styles from './styles';
 import {colors} from '@constants';
 import {TPetrolStation} from '@types';
-
-const {SVG_Icons} = assets;
 
 type TProps = {
   item: TPetrolStation;

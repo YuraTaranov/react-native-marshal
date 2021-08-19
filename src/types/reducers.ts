@@ -3,10 +3,11 @@ import {
   TCar,
   TCarModel,
   TCarProp,
+  TCreditCard,
+  TFilters,
+  TPetrolStation,
   TProfile,
   TPromotion,
-  TPetrolStation,
-  TFilters,
 } from './components';
 
 export type TGlobalState = {
@@ -56,6 +57,7 @@ export type TGlobalState = {
   };
   petrolStations: TPetrolStation[];
   filters: TFilters;
+  creditCards: TCreditCard[];
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

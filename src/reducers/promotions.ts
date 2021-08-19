@@ -58,7 +58,7 @@ type TAnswer = {
 };
 export function* getPromotionsAsync(action: any) {
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang; /// До выяснения этой не состыковки
+  const locale = lang === 'uk' ? 'ua' : lang; /// До выяснения этой несостыковки
 
   try {
     const body: TAnswer = yield call(() =>

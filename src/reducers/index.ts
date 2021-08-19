@@ -13,5 +13,6 @@ export default combineReducers({
   promotion: require('./promotion').default,
   petrolStations: require('./petrolStations').default,
   filters: require('./filters').default,
+  creditCards: require('./creditCards').default,
   // ADD NEW REDUCER
 });

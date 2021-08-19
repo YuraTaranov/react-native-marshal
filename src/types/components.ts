@@ -102,3 +102,11 @@ export type TFilters = {
   regions: TRegions;
   fuelTypes: TFuelTypes;
 };
+
+export type TCreditCard = {
+  number: string;
+  expiry: string;
+  cvc: string;
+  type: string;
+  selected?: boolean;
+};

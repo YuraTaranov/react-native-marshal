@@ -1,4 +1,4 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
 import {httpGet, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
@@ -29,11 +29,12 @@ export function* watchPromotion() {
 }
 
 export function* getPromotionAsync(action: any) {
-  console.log(">>>> ACT", action);
-  yield put(setLoader(true));
+  // yield put(setLoader(true));
+  const {lang} = yield select(state => state.appGlobalState);
+  const locale = lang === 'uk' ? 'ua' : lang; /// До выяснения этой несостыковки
   try {
     const body = yield call(() =>
-      httpGet(`${urls.gePromotions}/${action.data}`),
+      httpGet(`${urls.gePromotions}/${action.data}/?locale=${locale}`),
     );
     yield put(setLoader(false));
     if (body.data.data) {

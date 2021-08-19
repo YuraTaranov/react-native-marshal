@@ -36,6 +36,8 @@ module.exports = [
       'BonusesOnBoarding',
       'MarkerDetailPage',
       'RegionsPage',
+      'MyCards',
+      'AddCard',
       //ADD MORE SCREENS
     ],
   },

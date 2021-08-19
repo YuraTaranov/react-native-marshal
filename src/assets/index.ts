@@ -1,4 +1,6 @@
-import SVG_Icons from './svg/SVG_ICONs';
+export {default as SVG_Icons} from './svg/SVG_ICONs';
+export {default as SVG_Img} from './svg/SVG_Img';
+
 export const assets = {
   BONUSES_GIFT: require('./images/bonuses_gift.png'),
   BONUSES_ONBOARDING: require('./images/bonuses_onboarding.png'),
@@ -14,7 +16,8 @@ export const assets = {
   PROMOTION_BG_GREEN: require('./images/promotion_bg_green.png'),
   PROMOTION_BG_RED: require('./images/promotion_bg_red.png'),
   QR_SCAN: require('./images/qr_scan.png'),
-  SVG_Icons,
   TELEGRAM: require('./images/Telegram.png'),
   VIBER: require('./images/Viber.png'),
+  CARD_FRONT: require('./images/card/card-front.png'),
+  CARD_BACK: require('./images/card/card-back.png'),
 };

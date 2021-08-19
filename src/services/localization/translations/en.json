@@ -81,5 +81,12 @@
     "Choose": "Choose",
     "reg": "reg.",
     "and_further": "and further",
-    "Cleaning": "Cleaning"
+    "Cleaning": "Cleaning",
+    "Add_Card": "Add Card",
+    "Save": "Save",
+    "You_have_not_added_any_cards_yet": "You haven't added any cards yet",
+    "add_card_to_sreen_text": "Add a card so that it appears on this screen",
+    "To check the card, UAH 1 will be temporarily blocked on it": "To check the card, UAH 1 will be temporarily blocked on it",
+    "NumberOfCreditCard": "Card number",
+    "ValidityPeriod": "Validity period"
   }
