@@ -34,6 +34,7 @@ module.exports = [
       'Promotion',
       'InviteFriends',
       'BonusesOnBoarding',
+      'SplashScreenAnimation',
       //ADD MORE SCREENS
     ],
   },

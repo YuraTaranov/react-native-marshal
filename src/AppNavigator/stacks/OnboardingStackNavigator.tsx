@@ -1,26 +1,20 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import { Onboarding } from '@screens';
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Onboarding} from '@screens';
 
-type TProps = {
-}
+type TProps = {};
 
 const OnboardingStack = createStackNavigator();
 
-const OnboardingStackNavigator: React.FC<TProps> = ({ }) => {
-    return (
-        <OnboardingStack.Navigator screenOptions={{
-            headerShown: false,
-
-        }}>
-            <OnboardingStack.Screen
-                name="Onboarding"
-                component={Onboarding}
-            />
-        </OnboardingStack.Navigator>
-    );
+const OnboardingStackNavigator: React.FC<TProps> = ({}) => {
+  return (
+    <OnboardingStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <OnboardingStack.Screen name="Onboarding" component={Onboarding} />
+    </OnboardingStack.Navigator>
+  );
 };
 
-
-
-export default OnboardingStackNavigator
+export default OnboardingStackNavigator;
