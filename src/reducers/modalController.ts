@@ -8,7 +8,7 @@ const initialstate = {
 export default (state = initialstate, action: any) => {
   switch (action.type) {
     case SET_SUPPORT:
-      return Object.assign({}, { ...state, support: action.data });
+      return Object.assign({}, {...state, support: action.data});
     case RESET_MODAL_CONTROLLER:
       return initialstate;
     default:
@@ -16,5 +16,5 @@ export default (state = initialstate, action: any) => {
   }
 };
 
-export const setSupport = (data: boolean | any) => ({ data, type: SET_SUPPORT });
-export const resetModalController = () => ({ type: RESET_MODAL_CONTROLLER });
+export const setSupport = (data: boolean | any) => ({data, type: SET_SUPPORT});
+export const resetModalController = () => ({type: RESET_MODAL_CONTROLLER});

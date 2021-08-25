@@ -60,3 +60,53 @@ export type TReferrals = {
   bonusesUsed: number;
   referralLink: string;
 };
+
+export type TFuel = {
+  id: number;
+  name: string;
+  price: string;
+};
+
+export type TFullMarker = {
+  id: number;
+  long: string;
+  lat: string;
+  citi: string;
+  name: string;
+  region: string;
+  address: string;
+};
+
+export type TPetrolStation = TFullMarker & {
+  image: string;
+  fuels: Array<TFuel>;
+};
+
+export type TGetPetrolStationResponseGenerator = {
+  data: {
+    data: Array<TPetrolStation>;
+  };
+  statusText: string;
+  status: number;
+};
+
+export type TStatus = 'none' | 'potential' | 'selected';
+export type TListItem = {
+  title: string;
+  status: TStatus;
+};
+
+export type TRegions = string[];
+export type TFuelTypes = string[];
+export type TFilters = {
+  regions: TRegions;
+  fuelTypes: TFuelTypes;
+};
+
+export type TCreditCard = {
+  number: string;
+  expiry: string;
+  cvc: string;
+  type: string;
+  selected?: boolean;
+};

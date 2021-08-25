@@ -12,9 +12,8 @@ type TProps = {
 
 const Promotion: React.FC<TProps> = ({promotion}) => {
   const {t} = useTranslation();
-
   const date = useMemo(() => {
-    return `${t('Акція до')} ${moment(promotion.end)
+    return `${t('Акція до')} ${moment(promotion?.end)
       .format('LL')
       .slice(0, -2)}`;
   }, [promotion.end]);

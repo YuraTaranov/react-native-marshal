@@ -14,11 +14,12 @@ export const errorHandler = (error: any, method?: string) => {
 
   let resultString = '';
 
-  const errors = error?.data?.errors || [];
-  // const resultString = `${message}\n${errors.join('\n')}`;
-  if (errors.length) {
-    resultString = `${errors.join('\n')}`;
-  } else {
+  Object.values(Object.assign({}, error?.data?.errors)).forEach(e => {
+    if (Array.isArray(e) && e.length > 0) {
+      resultString = resultString + `${e[0]}\n` || '';
+    }
+  });
+  if (!resultString.trim()) {
     resultString = error.data?.message || '-';
   }
   Alert.alert('', resultString);

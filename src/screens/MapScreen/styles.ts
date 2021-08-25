@@ -1,9 +1,28 @@
 import {StyleSheet} from '@components';
-import {colors} from '@constants';
 
 export default StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
-    backgroundColor: 'lightgreen',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  buttonsBlock: {
+    position: 'absolute',
+    height: 190,
+    width: 60,
+    bottom: 70,
+    right: 30,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  mapPadding: {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
 });

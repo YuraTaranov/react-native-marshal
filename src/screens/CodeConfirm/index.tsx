@@ -26,6 +26,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import {SafeAreaView, TextInput} from 'react-native';
+import {ios} from '@constants';
 import {verticalScale} from '@helpers';
 import {setLoading, checkCode, checkPhone} from '@reducers/login';
 import {Dispatch} from 'redux';
@@ -103,6 +104,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <KeyboardAvoidingView
         keyboardVerticalOffset={verticalScale(100)}
+        behavior={ios ? 'padding' : 'height'}
         style={styles.container}>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>

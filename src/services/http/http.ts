@@ -40,6 +40,7 @@ const sendRequest = async ({
     const response = await instance(OPTIONS);
     return formatResponse(response);
   } catch (error) {
+    console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // TEMP
     if (error.response?.status === 408 || error.code === 'ECONNABORTED') {
       throw formatResponse({
         status: 408,

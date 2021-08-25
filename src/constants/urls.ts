@@ -16,4 +16,5 @@ export const urls = {
   getModels: 'car/models',
   getTank: 'car/tanks',
   gePromotions: 'profile/actions',
+  getPetrolStations: 'azs/search-azs',
 };

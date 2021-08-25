@@ -35,6 +35,10 @@ module.exports = [
       'InviteFriends',
       'BonusesOnBoarding',
       'SplashScreenAnimation',
+      'MarkerDetailPage',
+      'RegionsPage',
+      'MyCards',
+      'AddCard',
       //ADD MORE SCREENS
     ],
   },

@@ -1,4 +1,14 @@
-import {TCar, TCarModel, TCarProp, TProfile, TPromotion} from './components';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  TCar,
+  TCarModel,
+  TCarProp,
+  TCreditCard,
+  TFilters,
+  TPetrolStation,
+  TProfile,
+  TPromotion,
+} from './components';
 
 export type TGlobalState = {
   appGlobalState: {
@@ -45,6 +55,9 @@ export type TGlobalState = {
   promotion: {
     data: TPromotion;
   };
+  petrolStations: TPetrolStation[];
+  filters: TFilters;
+  creditCards: TCreditCard[];
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

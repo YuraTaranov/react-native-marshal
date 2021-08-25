@@ -24,3 +24,7 @@ export {default as Purchases} from './Purchases/Purchases';
 export {default as InviteFriends} from './InviteFriends/InviteFriends';
 export {default as BonusesOnBoarding} from './BonusesOnBoarding/BonusesOnBoarding';
 export {default as SplashScreenAnimation} from './SplashScreenAnimation/SplashScreenAnimation';
+export {default as MarkerDetailPage} from './MarkerDetailPage/MarkerDetailPage';
+export {default as RegionsPage} from './RegionsPage/RegionsPage';
+export {default as MyCards} from './MyCards/MyCards';
+export {default as AddCard} from './AddCard/AddCard';

@@ -15,5 +15,6 @@ export default StyleSheet.create({
   },
   barTitle: {
     marginRight: 50,
+    shadowColor: colors.white_FFFFFF,
   },
 });
