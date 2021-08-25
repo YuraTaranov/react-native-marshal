@@ -37,6 +37,7 @@ export {formatWithMask} from 'react-native-mask-input';
 export {default as OpenAppSettings} from 'react-native-app-settings';
 export {default as moment} from 'moment';
 export {default as Toast} from 'react-native-easy-toast';
+export {default as LottieView} from 'lottie-react-native';
 
 // TYPOGRAPHY
 export {default as Text} from './typography/Text';

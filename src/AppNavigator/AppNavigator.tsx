@@ -6,12 +6,11 @@ import i18next from 'i18next';
 import {connect} from 'react-redux';
 import {useEffect} from '@hooks';
 import {TGlobalState} from '@types';
-import AuthStackNavigator from './stacks/AuthStackNavigator';
-import TabNavigator from './TabNavigator';
-import OnboardingStackNavigator from './stacks/OnboardingStackNavigator';
 import {navigationRef, onStateChange} from '@services';
+import {SplashScreenAnimation} from '@screens';
+import RootStackNavigator from './stacks/RootStackNavigator';
 
-const RootStack = createStackNavigator();
+const InitialStack = createStackNavigator();
 
 const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
   useEffect(() => {
@@ -20,25 +19,17 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
 
   return (
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
-      <RootStack.Navigator
-        headerMode="none"
-        screenOptions={{
-          gestureEnabled: false,
-        }}>
-        {appGlobalState.onBoarding ? (
-          <RootStack.Screen
-            name={'Onboarding'}
-            component={OnboardingStackNavigator}
-          />
-        ) : !appGlobalState.isUserAuthorized ? (
-          <RootStack.Screen
-            name="AuthNavigator"
-            component={AuthStackNavigator}
-          />
-        ) : (
-          <RootStack.Screen name="TabNavigator" component={TabNavigator} />
-        )}
-      </RootStack.Navigator>
+      <InitialStack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
+        <InitialStack.Screen
+          name="SplashScreenAnimation"
+          component={SplashScreenAnimation}
+        />
+        <InitialStack.Screen
+          name="RootStackNavigator"
+          component={RootStackNavigator}
+        />
+      </InitialStack.Navigator>
     </NavigationContainer>
   );
 };

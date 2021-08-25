@@ -23,3 +23,4 @@ export {default as Stations} from './Stations';
 export {default as Purchases} from './Purchases/Purchases';
 export {default as InviteFriends} from './InviteFriends/InviteFriends';
 export {default as BonusesOnBoarding} from './BonusesOnBoarding/BonusesOnBoarding';
+export {default as SplashScreenAnimation} from './SplashScreenAnimation/SplashScreenAnimation';
