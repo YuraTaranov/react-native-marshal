@@ -13,8 +13,7 @@ import {View, Text, ScrollView, Geolocation, Linking} from '@components';
 import {GetRouteButton} from './components';
 import {ios} from '@constants';
 import {getUrlForRoute} from '@helpers';
-import {assets} from '@assets';
-const {SVG_Icons} = assets;
+import {SVG_Icons} from '@assets';
 
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -108,7 +107,9 @@ const MarkerDetailPage: React.FC<TProps> = ({
               <Text style={styles.leftText}>{`${item.name}`}</Text>
             </View>
             <View style={styles.rightView}>
-              <Text style={styles.rightText}>{`${item?.price || ''}`}</Text>
+              <Text style={styles.rightText}>{`${
+                item?.price || ''
+              } ₴ / л`}</Text>
             </View>
           </View>
         ))}

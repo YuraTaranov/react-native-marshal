@@ -45,6 +45,8 @@ export {default as Toast} from 'react-native-easy-toast';
 export {default as LottieView} from 'lottie-react-native';
 export {formatWithMask} from 'react-native-mask-input';
 export {request, PERMISSIONS} from 'react-native-permissions';
+export {default as ReactNativeBiometrics} from 'react-native-biometrics';
+export {default as DeviceInfo} from 'react-native-device-info';
 
 // TYPOGRAPHY
 export {default as Icon} from './typography/Icon';

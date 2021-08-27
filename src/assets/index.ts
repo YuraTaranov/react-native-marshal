@@ -20,4 +20,6 @@ export const assets = {
   VIBER: require('./images/Viber.png'),
   CARD_FRONT: require('./images/card/card-front.png'),
   CARD_BACK: require('./images/card/card-back.png'),
+  BIO_TOUCH: require('./images/bio_touch.png'),
+  BIO_FACE: require('./images/bio_face.png'),
 };

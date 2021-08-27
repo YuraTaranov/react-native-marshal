@@ -39,6 +39,7 @@ module.exports = [
       'RegionsPage',
       'MyCards',
       'AddCard',
+      'Biometrics',
       //ADD MORE SCREENS
     ],
   },

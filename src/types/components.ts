@@ -110,3 +110,5 @@ export type TCreditCard = {
   type: string;
   selected?: boolean;
 };
+
+export type TBiometricsType = 'touchId' | 'faceId' | 'fingerprint' | 'none';

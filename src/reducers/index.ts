@@ -14,5 +14,7 @@ export default combineReducers({
   petrolStations: require('./petrolStations').default,
   filters: require('./filters').default,
   creditCards: require('./creditCards').default,
+  biometrics: require('./biometrics').default,
+  searchStations: require('./searchStations').default,
   // ADD NEW REDUCER
 });

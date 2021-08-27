@@ -38,14 +38,13 @@ export default StyleSheet.create({
   },
   text: {
     overflow: 'visible',
-    fontFamily: fonts.interExtraLight_200,
-    fontSize: 17,
+    fontSize: 16,
     lineHeight: 20,
-    color: colors.gray_2D2D2D,
+    color: colors.black_1B1B1B,
     textAlignVertical: 'bottom',
     padding: 0,
     margin: 0,
-    paddingLeft: 2,
+    width: '100%',
   },
   ITView: {
     overflow: 'visible',
