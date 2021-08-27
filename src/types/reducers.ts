@@ -8,6 +8,7 @@ import {
   TPetrolStation,
   TProfile,
   TPromotion,
+  TBiometricsType,
 } from './components';
 
 export type TGlobalState = {
@@ -58,6 +59,12 @@ export type TGlobalState = {
   petrolStations: TPetrolStation[];
   filters: TFilters;
   creditCards: TCreditCard[];
+  biometrics: {
+    biometricsType: TBiometricsType;
+  };
+  searchStations: {
+    textOfSearch: string;
+  };
 };
 
 export type TLang = 'uk' | 'ru' | 'en';

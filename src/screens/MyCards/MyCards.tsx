@@ -48,7 +48,7 @@ const MyCards: React.FC<TProps> = ({dispatch, creditCards}) => {
         ) : (
           <ScrollView
             contentContainerStyle={styles.contentContainer}
-            keyboardShouldPersistTaps
+            keyboardShouldPersistTaps="always"
             bounces>
             {creditCards.map(item => (
               <CardItem

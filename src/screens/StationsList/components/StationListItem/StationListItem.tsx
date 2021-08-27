@@ -1,6 +1,6 @@
 import React from 'react';
 import {useCallback, useMemo, useTranslation, useState} from '@hooks';
-import {View, Text, Icon, TouchableHighlight} from '@components';
+import {View, Text, Icon, TouchableOpacity} from '@components';
 import {SVG_Icons} from '@assets';
 import styles from './styles';
 import {colors} from '@constants';
@@ -20,11 +20,16 @@ export const StationListItem: React.FC<TProps> = ({
   getRoute,
 }) => {
   const {t} = useTranslation();
+
+  const onPressItem = useCallback(() => {
+    onShowDetails(item.id);
+  }, [item.id]);
+  const onPressRoute = useCallback(() => {
+    getRoute(item.id);
+  }, [item.id]);
+
   return (
-    <TouchableHighlight
-      activeOpacity={0.4}
-      underlayColor={colors.gray_DADBDF}
-      onPress={() => onShowDetails(item.id)}>
+    <TouchableOpacity onPress={onPressItem}>
       <View style={styles.container}>
         <View style={styles.leftIconView}>
           <View style={styles.leftIcon}>
@@ -43,11 +48,7 @@ export const StationListItem: React.FC<TProps> = ({
             <Text style={styles.textAddress}>{item.address}</Text>
           </View>
         </View>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          style={styles.touch}
-          underlayColor={colors.gray_DADBDF}
-          onPress={() => getRoute(item.id)}>
+        <TouchableOpacity style={styles.touch} onPress={onPressRoute}>
           <View style={styles.rightIconView}>
             <View style={styles.iconView}>
               <Icon
@@ -60,8 +61,8 @@ export const StationListItem: React.FC<TProps> = ({
               <Text style={styles.iconText}>{`${t('Route')}`}</Text>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };

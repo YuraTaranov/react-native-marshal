@@ -1,6 +1,12 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {CodeConfirm, Login, Registration, BonusCardCheck} from '@screens';
+import {
+  CodeConfirm,
+  Login,
+  Registration,
+  BonusCardCheck,
+  Biometrics,
+} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -19,6 +25,7 @@ const AuthStackNavigator: React.FC<TProps> = ({}) => {
     <Wrapper>
       <AuthStack.Navigator
         initialRouteName={'Login'}
+        // initialRouteName={'Biometrics'}
         screenOptions={{
           ...defaultStackOptions,
           headerBackImage: () => (
@@ -52,6 +59,14 @@ const AuthStackNavigator: React.FC<TProps> = ({}) => {
         <AuthStack.Screen
           name="BonusCardCheck"
           component={BonusCardCheck}
+          options={{
+            headerTitleAlign: 'center',
+            title: t('screen.title.gettingStarted'),
+          }}
+        />
+        <AuthStack.Screen
+          name="Biometrics"
+          component={Biometrics}
           options={{
             headerTitleAlign: 'center',
             title: t('screen.title.gettingStarted'),

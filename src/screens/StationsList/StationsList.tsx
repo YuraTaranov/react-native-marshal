@@ -5,7 +5,7 @@ import {View, ScrollView, Geolocation, Linking} from '@components';
 import {Search, StationListItem} from './components';
 import {connect} from 'react-redux';
 import {navigate} from '@services';
-import {getUrlForRoute} from '@helpers';
+import {getUrlForRoute, animation, isSearch} from '@helpers';
 import styles from './styles';
 import {getFilteredPetrolStationList} from '@helpers';
 
@@ -17,33 +17,17 @@ type TProps = {
   dispatch: Dispatch;
   petrolStations: TPetrolStation[];
   filters: TFilters;
+  textOfSearch: string;
 };
 
 type TSelected = number | null;
-
-const isSearch = (item: TPetrolStation, search: string): boolean => {
-  console.log('START', search, item);
-  if (!search || !search.trim()) {
-    return true;
-  }
-  console.log(
-    'RESULT',
-    item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-      item.address.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
-  );
-
-  return (
-    item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-    item.address.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  );
-};
 
 const StationsList: React.FC<TProps> = ({
   dispatch,
   petrolStations,
   filters,
+  textOfSearch,
 }) => {
-  const [textOfSearch, setTextOfSerch] = useState('');
   const [stations, setStations] = useState(
     getFilteredPetrolStationList({
       stations: petrolStations,
@@ -51,22 +35,8 @@ const StationsList: React.FC<TProps> = ({
     }),
   );
 
-  const onKeySearch = (e: any) => {
-    if (e?.nativeEvent?.key) {
-      console.log('KEY', e.nativeEvent.key);
-      if (e.nativeEvent.key === 'Backspace') {
-        setTextOfSerch(textOfSearch.slice(0, -1));
-      } else {
-        setTextOfSerch(`${textOfSearch}${e.nativeEvent.key}`);
-      }
-    }
-  };
-
-  const onClearSearch = () => {
-    setTextOfSerch('');
-  };
-
   const changeStationArray = useCallback(() => {
+    animation();
     setStations(petrolStations.filter(i => isSearch(i, textOfSearch)));
   }, [textOfSearch, petrolStations]);
 
@@ -119,15 +89,15 @@ const StationsList: React.FC<TProps> = ({
 
   return (
     <View style={styles.container}>
-      <Search onKeyPress={onKeySearch} onClear={onClearSearch} />
+      <Search textOfSearch={textOfSearch} />
       <ScrollView
         contentContainerStyle={styles.contentContainer}
-        keyboardShouldPersistTaps
+        keyboardShouldPersistTaps="always"
         bounces>
         {stations.map(item => (
           <StationListItem
             item={item}
-            key={'{$item.id}'}
+            key={`${item.id}`}
             // selected={item.id === selectedId}
             onShowDetails={openDetailOfStation}
             getRoute={getRoute}
@@ -142,6 +112,7 @@ const StationsList: React.FC<TProps> = ({
 const mapStateToProps = (state: TGlobalState) => ({
   petrolStations: state.petrolStations,
   filters: state.filters,
+  textOfSearch: state.searchStations.textOfSearch,
 });
 
 export default connect(mapStateToProps)(StationsList);

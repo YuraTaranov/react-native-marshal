@@ -20,20 +20,21 @@ import {
   Image,
   UsualButton,
 } from '@components';
-import {TGlobalState} from '@types';
+import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors, hitSlop, urls} from '@constants';
 import {assets} from '@assets';
-import {httpPost, errorHandler} from '@services';
+import {httpPost, errorHandler, navigate} from '@services';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
 import {setProfile} from '@reducers/profile';
 
 type TProps = {
   dispatch: Dispatch;
+  biometricsType: TBiometricsType;
 };
 
-const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
+const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardType, setCardType] = useState<{type: number; name: string}>({
@@ -73,10 +74,6 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
 
   const submit = useCallback(async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      dispatch(setIsUserAuthorized(true));
-    }, 1000);
     try {
       const body =
         cardType.type === 1
@@ -87,13 +84,15 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
       setLoading(false);
       if (body.status === 200) {
         dispatch(setProfile(body.data.data));
-        dispatch(setIsUserAuthorized(true));
+        biometricsType !== 'none'
+          ? navigate('Biometrics')
+          : dispatch(setIsUserAuthorized(true));
       }
     } catch (error) {
       setLoading(false);
       errorHandler(error, 'add card old error');
     }
-  }, [cardNumber, cardType.type]);
+  }, [cardNumber, cardType.type, biometricsType]);
 
   return (
     <View style={styles.container}>
@@ -168,6 +167,8 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  biometricsType: state.biometrics.biometricsType,
+});
 
 export default connect(mapStateToProps)(BonusCardCheck);

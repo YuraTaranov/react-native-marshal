@@ -16,7 +16,7 @@ import {connect} from 'react-redux';
 import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import {useIsFocused} from '@react-navigation/core';
-import {getFilteredPetrolStationList} from '@helpers';
+import {getFilteredPetrolStationList, isSearch} from '@helpers';
 import styles from './styles';
 
 // Types
@@ -43,6 +43,7 @@ type TProps = {
   // dispatch: Dispatch;
   markers: Array<TPetrolStation>;
   filters: TFilters;
+  textOfSearch: string;
 };
 type Tcoords = {
   longitude: number;
@@ -93,7 +94,7 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
   );
 }
 
-const MapScreen: React.FC<TProps> = ({markers, filters}) => {
+const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
     formatMarkerData(markers),
@@ -103,6 +104,8 @@ const MapScreen: React.FC<TProps> = ({markers, filters}) => {
 
   useEffect(() => {
     setAllMarkers(formatMarkerData(markers));
+    // TODO:
+    // setAllMarkers(AllMarkers.filter(i => isSearch(i, textOfSearch)));
   }, [markers]);
 
   const animateToRegion = (Region: TRegion): void => {
@@ -293,6 +296,7 @@ const MapScreen: React.FC<TProps> = ({markers, filters}) => {
 const mapStateToProps = (state: TGlobalState) => ({
   markers: state.petrolStations,
   filters: state.filters,
+  textOfSearch: state.searchStations.textOfSearch,
 });
 
 export default connect(mapStateToProps)(MapScreen);

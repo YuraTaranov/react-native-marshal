@@ -17,4 +17,6 @@ export const urls = {
   getTank: 'car/tanks',
   gePromotions: 'profile/actions',
   getPetrolStations: 'azs/search-azs',
+  biometricsAdd: 'biometric/add',
+  biometricsLogin: 'biometric/login',
 };

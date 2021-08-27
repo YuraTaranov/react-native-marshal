@@ -1,18 +1,25 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState, useRef} from '@hooks';
+import {useTranslation, useRef} from '@hooks';
 import {View, Icon, TouchableOpacity} from '@components';
 import {TextInput} from 'react-native';
 import {colors} from '@constants';
 import styles from './styles';
+import {resetSearchStations, setTextOfSearch} from '@reducers/searchStations';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
 type TProps = {
-  onKeyPress: (e: any) => void;
-  onClear: () => void;
+  dispatch: Dispatch;
+  textOfSearch: string;
 };
 
-export const Search: React.FC<TProps> = ({onKeyPress, onClear}) => {
+const Search: React.FC<TProps> = ({dispatch, textOfSearch}) => {
   const {t} = useTranslation();
   const inputEl = useRef(null);
+
+  const onChangeText = (text: string) => {
+    dispatch(setTextOfSearch(text));
+  };
 
   const focusToTextInput = (): void => {
     if (inputEl?.current) {
@@ -24,7 +31,7 @@ export const Search: React.FC<TProps> = ({onKeyPress, onClear}) => {
     if (inputEl?.current) {
       //@ts-ignore
       inputEl?.current?.clear();
-      onClear();
+      dispatch(resetSearchStations());
     }
   };
 
@@ -39,18 +46,23 @@ export const Search: React.FC<TProps> = ({onKeyPress, onClear}) => {
       <View style={styles.blockInput}>
         <TextInput
           ref={inputEl}
+          value={textOfSearch}
+          onChangeText={onChangeText}
           allowFontScaling={false}
           autoCorrect={false}
           autoCapitalize="none"
           style={[styles.text, styles.ITView]}
           placeholder={t('Search')}
           placeholderTextColor={colors.gray_2D2D2D}
-          onKeyPress={onKeyPress}
         />
       </View>
-      <TouchableOpacity style={styles.cleanView} onPressIn={onClean}>
-        <Icon size={20} name="x" color={colors.gray_8D909D} />
-      </TouchableOpacity>
+      {textOfSearch ? (
+        <TouchableOpacity style={styles.cleanView} onPressIn={onClean}>
+          <Icon size={20} name="x" color={colors.black_000000} />
+        </TouchableOpacity>
+      ) : null}
     </TouchableOpacity>
   );
 };
+
+export default connect()(Search);

@@ -28,3 +28,4 @@ export {default as MarkerDetailPage} from './MarkerDetailPage/MarkerDetailPage';
 export {default as RegionsPage} from './RegionsPage/RegionsPage';
 export {default as MyCards} from './MyCards/MyCards';
 export {default as AddCard} from './AddCard/AddCard';
+export {default as Biometrics} from './Biometrics/Biometrics';

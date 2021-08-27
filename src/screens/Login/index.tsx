@@ -20,6 +20,7 @@ import {
   Icon,
   TouchableOpacity,
   Keyboard,
+  ReactNativeBiometrics,
 } from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
@@ -27,6 +28,7 @@ import styles from './styles';
 import {colors} from '@constants';
 import {verticalScale} from '@helpers';
 import {setPhone, checkPhone} from '@reducers/login';
+import {setBiometricsType} from '@reducers/biometrics';
 
 type TProps = {
   dispatch: Dispatch;
@@ -39,6 +41,19 @@ const Login: React.FC<TProps> = ({dispatch, phone, loading}) => {
   const textInputMaskRef = useRef<TextInput>(null);
   const {setOptions} = useNavigation();
   const [textInputFocus, setTextInputFocus] = useState<boolean>(false);
+
+  ReactNativeBiometrics.isSensorAvailable().then(resultObject => {
+    const {available, biometryType} = resultObject;
+    if (available && biometryType === ReactNativeBiometrics.TouchID) {
+      dispatch(setBiometricsType('touchId'));
+    } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+      dispatch(setBiometricsType('faceId'));
+    } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+      dispatch(setBiometricsType('fingerprint'));
+    } else {
+      dispatch(setBiometricsType('none'));
+    }
+  });
 
   useEffect(() => {
     textInputMaskRef.current?.focus();
