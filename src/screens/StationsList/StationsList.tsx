@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import {useEffect, useCallback, useState} from '@hooks';
@@ -5,7 +6,7 @@ import {View, ScrollView, Geolocation, Linking} from '@components';
 import {Search, StationListItem} from './components';
 import {connect} from 'react-redux';
 import {navigate} from '@services';
-import {getUrlForRoute, animation, isSearch} from '@helpers';
+import {getUrlForRoute, animation} from '@helpers';
 import styles from './styles';
 import {getFilteredPetrolStationList} from '@helpers';
 
@@ -23,7 +24,6 @@ type TProps = {
 type TSelected = number | null;
 
 const StationsList: React.FC<TProps> = ({
-  dispatch,
   petrolStations,
   filters,
   textOfSearch,
@@ -32,26 +32,19 @@ const StationsList: React.FC<TProps> = ({
     getFilteredPetrolStationList({
       stations: petrolStations,
       filters,
+      textOfSearch,
     }),
   );
-
-  const changeStationArray = useCallback(() => {
-    animation();
-    setStations(petrolStations.filter(i => isSearch(i, textOfSearch)));
-  }, [textOfSearch, petrolStations]);
-
-  useEffect(() => {
-    changeStationArray();
-  }, [changeStationArray, textOfSearch]);
 
   useEffect(() => {
     setStations(
       getFilteredPetrolStationList({
         stations: petrolStations,
         filters,
+        textOfSearch,
       }),
     );
-  }, [filters, petrolStations]);
+  }, [filters, petrolStations, textOfSearch]);
 
   const openDetailOfStation = (id: number): void => {
     if (!id) {
@@ -94,15 +87,18 @@ const StationsList: React.FC<TProps> = ({
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="always"
         bounces>
-        {stations.map(item => (
-          <StationListItem
-            item={item}
-            key={`${item.id}`}
-            // selected={item.id === selectedId}
-            onShowDetails={openDetailOfStation}
-            getRoute={getRoute}
-          />
-        ))}
+        {stations.map(item => {
+          animation();
+          return (
+            <StationListItem
+              item={item}
+              key={`${item.id}`}
+              // selected={item.id === selectedId}
+              onShowDetails={openDetailOfStation}
+              getRoute={getRoute}
+            />
+          );
+        })}
         <View style={styles.footer} />
       </ScrollView>
     </View>
