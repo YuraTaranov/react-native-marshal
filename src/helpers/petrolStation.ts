@@ -3,6 +3,7 @@ import {TFilters, TPetrolStation} from '@types';
 
 type FuncParams = {
   filters: TFilters;
+  textOfSearch?: string;
   stations: TPetrolStation[];
 };
 
@@ -19,8 +20,9 @@ export const isSearch = (item: TPetrolStation, search: string): boolean => {
 export const getFilteredPetrolStationList = ({
   filters,
   stations,
+  textOfSearch = '',
 }: FuncParams): TPetrolStation[] => {
-  return stations.filter(s => {
+  const result = stations.filter(s => {
     let isRegionSelected = true;
     if (filters.regions.length > 0) {
       isRegionSelected = filters.regions.includes(s.region);
@@ -32,6 +34,16 @@ export const getFilteredPetrolStationList = ({
         filters.fuelTypes.includes(`${x.name}`),
       );
     }
-    return isRegionSelected && hasAllSelectedTypeOfFuel;
+    let hasSearchTextIntoStationData = true;
+    if (textOfSearch?.trim().length > 0) {
+      hasSearchTextIntoStationData = isSearch(s, textOfSearch);
+    }
+
+    return (
+      isRegionSelected &&
+      hasAllSelectedTypeOfFuel &&
+      hasSearchTextIntoStationData
+    );
   });
+  return result;
 };

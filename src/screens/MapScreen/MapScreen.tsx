@@ -97,16 +97,16 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
 const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
-    formatMarkerData(markers),
+    formatMarkerData(
+      getFilteredPetrolStationList({
+        filters,
+        stations: markers,
+        textOfSearch,
+      }),
+    ),
   );
   const [region, setRegion] = useState(initRegion);
   const mapRef = useRef();
-
-  useEffect(() => {
-    setAllMarkers(formatMarkerData(markers));
-    // TODO:
-    // setAllMarkers(AllMarkers.filter(i => isSearch(i, textOfSearch)));
-  }, [markers]);
 
   const animateToRegion = (Region: TRegion): void => {
     if (!!Region && !!mapRef?.current) {
@@ -205,12 +205,13 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
     setAllMarkers(
       formatMarkerData(
         getFilteredPetrolStationList({
-          stations: markers,
           filters,
+          stations: markers,
+          textOfSearch,
         }),
       ),
     );
-  }, [filters, markers]);
+  }, [filters, markers, textOfSearch]);
 
   if (!useIsFocused()) {
     return null;
