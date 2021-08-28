@@ -1,9 +1,10 @@
 export {colors} from './colors';
-export {sizes} from './sizes';
-export {languages} from './languages';
+export {default as declension} from './declension';
 export {fonts} from './fonts';
+export {googleGeocodingKey} from './google';
+export {ios, android, longScreen, darkMode, isIphoneX} from './platform';
+export {languages} from './languages';
+export {regions} from './regions';
+export {sizes} from './sizes';
 export {urls} from './urls';
 export {width, height, top, bottom, hitSlop} from './safeSpaces';
-export {regions} from './regions';
-export {ios, android, longScreen, darkMode, isIphoneX} from './platform';
-export {default as declension} from './declension';

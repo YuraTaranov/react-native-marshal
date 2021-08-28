@@ -29,6 +29,7 @@ import styles from './styles';
 //Type
 import {Dispatch} from 'redux';
 import {TGlobalState} from '@types';
+import {navigate} from '@services';
 type TProps = {
   dispatch: Dispatch;
 };
@@ -83,7 +84,9 @@ const Home: React.FC<TProps> = ({dispatch}) => {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.buttonContainerCalc}>
+        <TouchableOpacity
+          style={styles.buttonContainerCalc}
+          onPress={() => navigate('FuelCalculator')}>
           <Icon
             size={24}
             name="calculator-duotone"

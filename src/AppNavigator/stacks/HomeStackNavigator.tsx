@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Promotion} from '@screens';
+import {Home, Promotion, FuelCalculator} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -10,11 +10,12 @@ type TProps = {};
 
 const HomeStack = createStackNavigator();
 
-const HomeStackNavigator: React.FC<TProps> = ({}) => {
+const HomeStackNavigator: React.FC<TProps> = ({ }) => {
   const {t} = useTranslation();
 
   return (
     <HomeStack.Navigator
+      // initialRouteName="FuelCalculator"
       screenOptions={{
         ...defaultStackOptions,
       }}>
@@ -32,6 +33,14 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Умови акції'),
+        }}
+      />
+      <HomeStack.Screen
+        name="FuelCalculator"
+        component={FuelCalculator}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('FuelCalculator'),
         }}
       />
     </HomeStack.Navigator>

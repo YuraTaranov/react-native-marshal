@@ -40,6 +40,7 @@ module.exports = [
       'MyCards',
       'AddCard',
       'Biometrics',
+      'FuelCalculator',
       //ADD MORE SCREENS
     ],
   },

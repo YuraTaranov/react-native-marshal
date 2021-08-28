@@ -65,13 +65,13 @@ const StationsList: React.FC<TProps> = ({
 
     Geolocation.getCurrentPosition(
       position => {
-        const urlForROute = getUrlForRoute({
+        const urlForRoute = getUrlForRoute({
           startLatitude: position?.coords?.latitude || 0,
           startLongitude: position?.coords?.longitude || 0,
           endLatitude: data?.lat,
           endLongitude: data?.long,
         });
-        Linking.openURL(urlForROute);
+        Linking.openURL(urlForRoute);
       },
       error => {
         console.log(error.code, error.message);

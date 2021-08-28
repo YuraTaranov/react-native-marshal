@@ -12,8 +12,8 @@ const SET_BONUSES_ON_BOARDING = '[appGlobalState] SET_BONUSES_ON_BOARDING';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
 
 const initialstate: TGlobalState['appGlobalState'] = {
-  accessToken: '',
-  isUserAuthorized: false,
+  accessToken: '8|W8u7eidvZrdiq00hk47GS0ZnIs…0JeMqHmv0',
+  isUserAuthorized: true,
   lang: 'uk',
   loader: false,
   onBoarding: true,
@@ -42,6 +42,7 @@ export default (state = initialstate, action: any) => {
 };
 
 export const setLang = (lang: TLang) => ({lang, type: SET_LANG});
+export const getLang = (lang: TLang) => (lang === 'uk' ? 'ua' : lang);
 export const setToken = (token: string) => ({token, type: SET_TOKEN});
 export const setOnboarding = (onBoarding: boolean) => ({
   onBoarding,

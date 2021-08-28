@@ -34,6 +34,7 @@ const MaterialInput: React.FC<TProps> = ({
   formatText,
   disabled,
   error,
+  tintColor,
 }) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
@@ -66,7 +67,7 @@ const MaterialInput: React.FC<TProps> = ({
       maxLength={maxLength}
       labelTextStyle={styles.lableStyle}
       style={styles.textInputStyle}
-      tintColor={colors.black_000000}
+      tintColor={tintColor ? tintColor : colors.black_000000}
       baseColor={baseColor}
       lineWidth={lineWidth}
       activeLineWidth={activeLineWidth}
@@ -111,4 +112,5 @@ type TProps = {
   prefix?: string;
   disabled?: boolean;
   error?: string;
+  tintColor?: string;
 };

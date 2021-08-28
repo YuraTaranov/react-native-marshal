@@ -31,6 +31,7 @@ export {default as DateTimePicker} from '@react-native-community/datetimepicker'
 export {default as FilledTextField} from 'rn-material-ui-textfield';
 export {default as Geolocation} from 'react-native-geolocation-service';
 export {default as GoogleMaps} from 'react-native-maps';
+export {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export {default as Image} from 'react-native-fast-image';
 export {default as LinearGradient} from 'react-native-linear-gradient';
 export {default as MapView} from 'react-native-map-clustering';
@@ -49,6 +50,7 @@ export {default as ReactNativeBiometrics} from 'react-native-biometrics';
 export {default as DeviceInfo} from 'react-native-device-info';
 
 // TYPOGRAPHY
+export {default as Autocomplete} from './typography/GooglePlacesAutocomplete';
 export {default as Icon} from './typography/Icon';
 export {default as TextInput} from './typography/TextInput';
 export {default as Text} from './typography/Text';
