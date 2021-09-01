@@ -10,7 +10,7 @@ import {navigate} from '@services';
 import styles from './styles';
 import {TFilters, TGlobalState} from '@types';
 import ButtonCustom from './components/ButtonCustom/ButtonCustom';
-import filters from '@reducers/filters';
+// import filters from '@reducers/filters';
 
 type TProps = {
   filters: TFilters;

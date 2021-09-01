@@ -152,7 +152,13 @@
 	"l/100km": "л/100 км",
 	"Calculate": "Розрахувати",
 	"BuyFuel": "Купити пальне",
-	"l": "л"
-
-
-}
+	"l": "л",
+	"BuyYourself": "Купити собі",
+	"BuyForFriend": "Купити другові",
+	"FuelPurchase": "Покупка пального",
+	"PayForFuel": "Oплатити",
+	"FuelAmountByLiters": "Кількість палива в літрах",
+	"Recipients_phone_number": "Номер телефона одержувача",
+	"PaymentMethod": "Спосіб оплати",
+	"currency": "₴"
+ }

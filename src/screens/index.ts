@@ -30,3 +30,4 @@ export {default as SplashScreenAnimation} from './SplashScreenAnimation/SplashSc
 export {default as StationsList} from './StationsList/StationsList';
 export {default as Stations} from './Stations';
 export {default as UseTerms} from './UseTerms/UseTerms';
+export {default as FuelPurchase} from './FuelPurchase/FuelPurchase';

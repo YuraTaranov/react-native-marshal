@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Promotion, FuelCalculator} from '@screens';
+import {Home, Promotion, FuelCalculator, FuelPurchase} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
@@ -41,6 +41,14 @@ const HomeStackNavigator: React.FC<TProps> = ({ }) => {
         options={{
           headerTitleAlign: 'center',
           title: t('FuelCalculator'),
+        }}
+      />
+      <HomeStack.Screen
+        name="FuelPurchase"
+        component={FuelPurchase}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('FuelPurchase'),
         }}
       />
     </HomeStack.Navigator>

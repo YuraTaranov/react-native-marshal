@@ -7,4 +7,4 @@ export {languages} from './languages';
 export {regions} from './regions';
 export {sizes} from './sizes';
 export {urls} from './urls';
-export {width, height, top, bottom, hitSlop} from './safeSpaces';
+export {width, height, top, bottom, hitSlop, padding} from './safeSpaces';

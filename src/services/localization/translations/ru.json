@@ -88,5 +88,6 @@
     "add_card_to_sreen_text": "Добавьте карточку, чтобы она отображалась на этом экране",
     "To check the card, UAH 1 will be temporarily blocked on it": "Для проверки карты на ней будет временно заблокирована 1 грн.",
     "NumberOfCreditCard": "Номер карты",
-    "ValidityPeriod": "Cрок Действия"
+    "ValidityPeriod": "Cрок Действия",
+    "currency": "₽"
   }

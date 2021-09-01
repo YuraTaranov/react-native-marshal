@@ -94,7 +94,9 @@ const Home: React.FC<TProps> = ({dispatch}) => {
           />
           <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainerFuel}>
+        <TouchableOpacity
+          style={styles.buttonContainerFuel}
+          onPress={() => navigate('FuelPurchase')}>
           <Icon size={24} name="gas" color={colors.green_009F30} />
           <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
         </TouchableOpacity>

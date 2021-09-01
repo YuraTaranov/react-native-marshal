@@ -15,6 +15,7 @@ export {
   SafeAreaView,
   ScrollView,
   Share,
+  StatusBar,
   StyleSheet,
   Switch,
   TouchableHighlight,

@@ -41,6 +41,7 @@ module.exports = [
       'AddCard',
       'Biometrics',
       'FuelCalculator',
+      'FuelPurchase',
       //ADD MORE SCREENS
     ],
   },
