@@ -25,7 +25,6 @@ const AuthStackNavigator: React.FC<TProps> = ({}) => {
     <Wrapper>
       <AuthStack.Navigator
         initialRouteName={'Login'}
-        // initialRouteName={'Biometrics'}
         screenOptions={{
           ...defaultStackOptions,
           headerBackImage: () => (

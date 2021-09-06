@@ -28,14 +28,12 @@ import {
 const fakeData: TPromotion[] = [
   {
     id: 1,
-    type: 1,
     end: '2021-08-21',
     title: 'Хот-дог у подарунок',
-    text: 'Заправляй машину та не забудь перекусити',
+    description: 'Заправляй машину та не забудь перекусити',
   },
   {
     id: 2,
-    type: 2,
     end: '2021-09-25',
     title: 'Хот-дог та Coca-Cola 0.5 л',
     price_new: '69',
@@ -43,14 +41,14 @@ const fakeData: TPromotion[] = [
   },
   {
     id: 3,
-    type: 3,
     title: 'Знижка -10%',
-    text: 'На першу заправку',
+    description: 'На першу заправку',
   },
 ];
 
 type TProps = {
   dispatch: Dispatch;
+  promotions: TPromotion[];
   finishLoading: boolean;
   lazyLoading: boolean;
   refreshing: boolean;
@@ -58,6 +56,7 @@ type TProps = {
 
 const Promotions: React.FC<TProps> = ({
   dispatch,
+  promotions,
   finishLoading,
   lazyLoading,
   refreshing,
@@ -107,11 +106,11 @@ const Promotions: React.FC<TProps> = ({
     [lazyLoading],
   );
 
-  //   FIXME:
+  //   FIXME: add dynamic
   return (
     <View style={styles.container}>
       <FlatList
-        data={fakeData}
+        data={promotions}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         //   style={styles.flatList}
@@ -134,6 +133,7 @@ const Promotions: React.FC<TProps> = ({
   );
 };
 const mapStateToProps = (state: TGlobalState) => ({
+  promotions: state.promotions.data,
   finishLoading: state.promotions.finishLoading,
   lazyLoading: state.promotions.lazyLoading,
   refreshing: state.promotions.refreshing,

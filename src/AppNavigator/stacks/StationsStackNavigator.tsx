@@ -36,7 +36,7 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         component={FilterPage}
         options={{
           headerTitleAlign: 'center',
-          animationEnabled: ios,
+          //   animationEnabled: ios,
         }}
       />
       <StationsStack.Screen
@@ -44,7 +44,7 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         component={RegionsPage}
         options={{
           headerTitleAlign: 'center',
-          animationEnabled: ios,
+          //   animationEnabled: ios,
         }}
       />
     </StationsStack.Navigator>

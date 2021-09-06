@@ -53,8 +53,11 @@ const AddCarModal: React.FC<TProps> = ({
   const years = useMemo(() => {
     let tempYears = [];
     const selectedModel = models.find(item => item.id === car.model.id);
+    const endYear = selectedModel?.year_end
+      ? selectedModel.year_end
+      : new Date().getFullYear();
     if (selectedModel?.year_start) {
-      for (let i = selectedModel.year_start; i < selectedModel.year_end; i++) {
+      for (let i = selectedModel.year_start; i <= endYear; i++) {
         tempYears.push(i);
       }
       return tempYears.map(item => {

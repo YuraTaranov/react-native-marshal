@@ -49,6 +49,7 @@ export const resetPromotions = () => ({type: RESET_PROMOTIONS});
 export function* watchPromotions() {
   yield takeLatest(GET_PROMOTIONS, getPromotionsAsync);
 }
+
 type TAnswer = {
   data: {
     data: Array<Object>;
@@ -56,6 +57,7 @@ type TAnswer = {
   status: number;
   statusText: string;
 };
+
 export function* getPromotionsAsync(action: any) {
   const {lang} = yield select(state => state.appGlobalState);
   const locale = lang === 'uk' ? 'ua' : lang; /// До выяснения этой несостыковки
@@ -64,7 +66,6 @@ export function* getPromotionsAsync(action: any) {
     const body: TAnswer = yield call(() =>
       httpGet(`${urls.gePromotions}/?locale=${locale}`),
     );
-
     if (body.data.data) {
       yield put(setPromotions(body.data.data));
     }

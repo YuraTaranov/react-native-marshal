@@ -29,3 +29,4 @@ export {default as RegionsPage} from './RegionsPage/RegionsPage';
 export {default as MyCards} from './MyCards/MyCards';
 export {default as AddCard} from './AddCard/AddCard';
 export {default as Biometrics} from './Biometrics/Biometrics';
+export {default as Notifications} from './Notifications/Notifications';

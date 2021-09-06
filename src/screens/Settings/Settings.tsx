@@ -16,6 +16,7 @@ import {
   FlatList,
   OpenAppSettings,
   SwitchCustom,
+  ConfirmModal,
 } from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
@@ -37,9 +38,19 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
 
   const onPressLogout = useCallback(() => {
+    setLogoutModalVisible(true);
+  }, []);
+
+  const closeLogoutModal = useCallback(() => {
+    setLogoutModalVisible(false);
+  }, []);
+
+  const onLogout = useCallback(() => {
     dispatch(logout());
+    setLogoutModalVisible(false);
   }, []);
 
   const toggleBiometricsSwitch = useCallback(() => {
@@ -97,6 +108,14 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
 
   return (
     <View style={styles.container}>
+      <ConfirmModal
+        isVisible={logoutModalVisible}
+        closeModal={closeLogoutModal}
+        rightButtonOnPress={onLogout}
+        title={t('Впевнені, що хочете вийти з акаунта?')}
+        rightButtonText={t('Так, вийти')}
+        leftButtonText={t('Не зараз')}
+      />
       <SwitchCustom
         value={isBiometricsActive}
         onValueChange={toggleBiometricsSwitch}

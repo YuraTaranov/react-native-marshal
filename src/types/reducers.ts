@@ -61,9 +61,15 @@ export type TGlobalState = {
   creditCards: TCreditCard[];
   biometrics: {
     biometricsType: TBiometricsType;
+    faceIdActiveLocal: boolean;
+    user_key: string;
   };
   searchStations: {
     textOfSearch: string;
+  };
+  //   FIXME:
+  notifications: {
+    data: [];
   };
 };
 

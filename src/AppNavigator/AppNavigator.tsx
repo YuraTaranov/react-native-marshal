@@ -22,7 +22,7 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
       <InitialStack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: false}}
         // FIXME:
-        initialRouteName="RootStackNavigator">
+        initialRouteName="SplashScreenAnimation">
         <InitialStack.Screen
           name="SplashScreenAnimation"
           component={SplashScreenAnimation}

@@ -48,7 +48,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
   );
   const [stationDetails, setStationDetail] = useState<TPetrolStation | null>();
 
-  const setHeadear = useCallback(() => {
+  const setHeader = useCallback(() => {
     if (stationDetails && stationDetails?.name) {
       setOptions({
         title: stationDetails.name,
@@ -61,8 +61,8 @@ const MarkerDetailPage: React.FC<TProps> = ({
 
   useEffect(() => {
     setStationDetail(petrolStations.filter(i => i.id === stationId)[0] || null);
-    setHeadear();
-  }, [stationId, petrolStations, setHeadear]);
+    setHeader();
+  }, [stationId, petrolStations, setHeader]);
 
   const openingRoute = () => {
     Geolocation.getCurrentPosition(

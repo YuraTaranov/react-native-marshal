@@ -1,5 +1,6 @@
 import {all} from 'redux-saga/effects';
 // ADD IMPORT
+import { watchNotifications } from './notifications'
 import {watchAddCar} from './addCar';
 import {watchAppGlobalState} from './appGlobalState';
 import {watchCars} from './cars';
@@ -14,6 +15,7 @@ import {watchPurchases} from './purchases';
 export default function* rootSaga() {
   yield all([
     // ADD WATCHER
+		watchNotifications(),
     watchAddCar(),
     watchAppGlobalState(),
     watchCars(),

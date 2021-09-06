@@ -69,7 +69,7 @@ const CheckBoxCustom: React.FC<TProps> = ({
           />
           <RadioButtonCustom
             text={t('Не вказувати')}
-            active={genderValue.type === 3}
+            active={genderValue.type === 0}
             onChangeGender={onChangeGender}
             type={3}
           />

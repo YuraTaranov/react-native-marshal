@@ -1,6 +1,6 @@
-import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
-import {View, Text, SnapCarousel, Pagination, PromotionView} from '@components';
+import React, {useEffect} from 'react';
+import {useCallback, useTranslation, useState, useMemo} from '@hooks';
+import {View, SnapCarousel, Pagination, PromotionView} from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {width} from '@constants';
@@ -34,15 +34,17 @@ type TProps = {
   promotions: TPromotion[];
 };
 
-// type TCarouselItem = {
-//   id: number;
-//   title: string;
-//   description: string;
-// };
-
 const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [data, setData] = useState<TPromotion[]>([]);
+
+  useEffect(() => {
+    // чтобы избежать бага с рендером слайдов после логаут-логина
+    setTimeout(() => {
+      setData(promotions?.length ? promotions.slice(0, 3) : []);
+    }, 10);
+  }, [promotions]);
 
   const onPressItem = useCallback(
     id => () => {
@@ -62,7 +64,7 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   return (
     <View style={styles.container}>
       <SnapCarousel
-        data={fakeData}
+        data={data}
         renderItem={renderItem}
         sliderWidth={width}
         itemWidth={width - 32}
@@ -70,18 +72,18 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         activeAnimationType="spring"
-        //   autoplay
-        //   loop={true}
-        //   autoplayDelay={1000}
-        //   autoplayInterval={4000}
         lockScrollWhileSnapping={true}
         lockScrollTimeoutDuration={350}
         shouldOptimizeUpdates={true}
         removeClippedSubviews={true}
         enableMomentum={true}
+        //   autoplay
+        //   loop={true}
+        //   autoplayDelay={1000}
+        //   autoplayInterval={4000}
       />
       <Pagination
-        dotsLength={fakeData.length}
+        dotsLength={data?.length}
         activeDotIndex={activeIndex}
         containerStyle={styles.dotsContainer}
         dotStyle={styles.dotStyle}
@@ -93,8 +95,8 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
-  promotion: state.promotions.data,
-});
+// const mapStateToProps = (state: TGlobalState) => ({
+//   promotions: state.promotions.data,
+// });
 
-export default connect(mapStateToProps)(HomeCarousel);
+export default connect()(HomeCarousel);

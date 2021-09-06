@@ -17,20 +17,20 @@ export const CardItem: React.FC<TProps> = ({cardData, onSelected}) => {
     if (!cardData?.number) {
       return '';
     }
-    return cardData.number
+    return String(cardData.number)
       .replace(/\D/, '')
       .replace(/(\d{4})(\d{2})\d{6}(\d{4})/, '$1 $2** **** $3');
   }, [cardData.number]);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onSelected}>
-      <View style={styles.cardIconView}>
+      <View>
         <SVG_Icons height={24} name="creditcard" />
       </View>
       <View style={styles.cardNumberView}>
         <Text style={styles.cardNumberText}>{formatCardNumber()}</Text>
       </View>
-      <View style={styles.checkIconView}>
+      <View>
         <Icon
           size={26}
           name="check_active"

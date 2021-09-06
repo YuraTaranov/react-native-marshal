@@ -5,28 +5,17 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: 0,
+    paddingHorizontal: 16,
     margin: 0,
-    paddingVertical: 20,
+    height: 56,
     width,
-    justifyContent: 'center',
     alignItems: 'center',
-    borderBottomColor: colors.gray_DADBDF,
-    borderBottomWidth: 1.75,
-  },
-  cardIconView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderBottomColor: colors.gray_E1E1E8,
+    borderBottomWidth: 1,
   },
   cardNumberView: {
-    flex: 3,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  checkIconView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 16,
   },
   cardNumberText: {
     fontFamily: fonts.interRegular_400,

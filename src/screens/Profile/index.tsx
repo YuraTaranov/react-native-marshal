@@ -8,7 +8,7 @@ import {
   useState,
 } from '@hooks';
 import {View, TouchableOpacity, Icon, BonusCardModal} from '@components';
-import {TGlobalState} from '@types';
+import {TGlobalState, TProfile} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors, declension} from '@constants';
@@ -21,6 +21,7 @@ import {getCars} from '@reducers/cars';
 
 type TProps = {
   dispatch: Dispatch;
+  profile: TProfile;
 };
 
 type TMenuItem = {
@@ -29,7 +30,7 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Profile: React.FC<TProps> = ({dispatch}) => {
+const Profile: React.FC<TProps> = ({dispatch, profile}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [bonusCardModelVisible, setBonusCardModelVisible] =
@@ -78,9 +79,17 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
     ];
   }, []);
 
+  const cardNumber = useMemo(() => {
+    if (profile?.card) {
+      return String(profile?.card)
+        .replace(/\D/, '')
+        .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, 'XXXX XXXX XXXX $4');
+    } else return 'XXXX XXXX XXXX XXXX';
+  }, [profile?.card]);
+
   const newNotificationsLength = useMemo(() => {
     //   FIXME:
-    return `${2} ${declension(Number(2), [
+    return `${4} ${declension(Number(2), [
       'сповіщення',
       'сповіщення',
       'сповіщень',
@@ -115,9 +124,10 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
       <ProfileMenuItem
         item={item}
         newNotificationsLength={newNotificationsLength}
+        cardNumber={cardNumber}
       />
     ),
-    [],
+    [newNotificationsLength, cardNumber],
   );
   const keyExtractor: (item: TMenuItem) => string = useCallback(
     item => item.icon,
@@ -138,6 +148,8 @@ const Profile: React.FC<TProps> = ({dispatch}) => {
     </View>
   );
 };
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  profile: state.profile.data,
+});
 
 export default connect(mapStateToProps)(Profile);

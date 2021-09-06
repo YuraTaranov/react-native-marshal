@@ -44,14 +44,16 @@ export type TProfile = {
 
 export type TPromotion = {
   id: number;
-  type: number;
-  angle?: number;
+  type: 'new' | 'discount' | 'action';
+  image: string;
+  discount_percentage?: number;
   start?: string;
   end?: string;
   title: string;
+  description?: string;
   text?: string;
-  price_new?: string;
-  price_old?: string;
+  new_price?: string;
+  old_price?: string;
 };
 
 export type TReferrals = {
@@ -112,3 +114,10 @@ export type TCreditCard = {
 };
 
 export type TBiometricsType = 'touchId' | 'faceId' | 'fingerprint' | 'none';
+
+export type TNotification = {
+  id: number;
+  isRead: boolean;
+  title: string;
+  date: Date;
+};

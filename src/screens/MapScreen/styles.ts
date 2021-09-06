@@ -1,4 +1,5 @@
 import {StyleSheet} from '@components';
+import {height} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -9,6 +10,7 @@ export default StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+    height: height - 145,
   },
   buttonsBlock: {
     position: 'absolute',

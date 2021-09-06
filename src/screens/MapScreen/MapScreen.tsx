@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
-import {useEffect, useState, useRef} from '@hooks';
+import React, {useCallback} from 'react';
+import {useEffect, useState, useRef, useMemo} from '@hooks';
 import {
   Geolocation,
   MapView,
@@ -28,8 +28,10 @@ const {getCurrentPosition} = Geolocation;
 const initRegion = {
   latitude: 49.9882292,
   longitude: 36.2258057,
-  latitudeDelta: 0.015,
-  longitudeDelta: 0.0121,
+  //   latitudeDelta: 0.015,
+  latitudeDelta: 0.05,
+  //   longitudeDelta: 0.0121,
+  longitudeDelta: 0.05,
 };
 const K = 2.0;
 
@@ -45,12 +47,12 @@ type TProps = {
   filters: TFilters;
   textOfSearch: string;
 };
-type Tcoords = {
+type TCoords = {
   longitude: number;
   latitude: number;
 };
 type TPosition = {
-  coords: Tcoords;
+  coords: TCoords;
 };
 export type TMarker = {
   id: number;
@@ -66,15 +68,17 @@ type TPoint = {
   longitude: number;
 };
 
-function formatLatLong(position: TPosition): Tcoords | object {
+function formatLatLong(position: TPosition): TCoords {
   if (!position?.coords) {
-    return {};
+    // return {};
+    return initRegion;
   }
   const {latitude, longitude} = position.coords;
   return {latitude, longitude};
 }
 
 function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
+  //   console.log('formatMarkerData');
   if (!ArrayMarkers) {
     return [];
   }
@@ -96,6 +100,7 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
 
 const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
+
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
     formatMarkerData(
       getFilteredPetrolStationList({
@@ -107,36 +112,57 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   );
   const [region, setRegion] = useState(initRegion);
   const mapRef = useRef();
+  const isFocused = useIsFocused();
 
-  const animateToRegion = (Region: TRegion): void => {
-    if (!!Region && !!mapRef?.current) {
-      // @ts-ignore
-      mapRef.current.animateToRegion(Region, 300);
-    }
-  };
+  const animateToRegion = useCallback(
+    (Region: TRegion, speed: number = 300): void => {
+      //   console.log('animateToRegion', Region);
+      if (!!Region && !!mapRef?.current) {
+        // @ts-ignore
+        mapRef.current.animateToRegion(Region, speed);
+      }
+    },
+    [mapRef],
+  );
 
-  function onRegionChangeComplete(props: any) {
+  const onRegionChangeComplete = useCallback((props: any) => {
+    // console.log('onRegionChangeComplete');
     setRegion({...props});
-  }
+  }, []);
 
-  function setParams(granted: string) {
-    if (granted !== 'granted') {
-      return;
-    }
-    getCurrentPosition(
-      (position: TPosition) => {
-        animateToRegion({...region, ...formatLatLong(position)});
-      },
-      error => {
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
-  }
+  const setParams = useCallback(
+    (granted: string) => {
+      if (granted !== 'granted') {
+        return;
+      }
+      getCurrentPosition(
+        (position: TPosition) => {
+          //   console.log('setParams', position);
+          //   animateToRegion({...region, ...formatLatLong(position)});
+          animateToRegion(
+            {
+              ...initRegion,
+              ...formatLatLong(position),
+            },
+            500,
+          );
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    },
+    [region],
+  );
 
-  const onMapReady = (): void => {
+  const onMapReady = useCallback((): void => {
+    // console.log('onMapReady');
     if (ios) {
-      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then(granted => {
+      request(
+        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE || PERMISSIONS.IOS.LOCATION_ALWAYS,
+      ).then(granted => {
+        // console.log('granted', granted);
         setParams(granted);
       });
     } else {
@@ -146,45 +172,65 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
         setParams(granted);
       });
     }
-  };
+  }, []);
 
-  const onZoomPlus = () => {
+  const onZoomPlus = useCallback(() => {
     animateToRegion({
       ...region,
       longitudeDelta: region.longitudeDelta / K,
       latitudeDelta: region.latitudeDelta / K,
     });
-  };
+  }, [region]);
 
-  const onZoomMinus = () => {
+  const onZoomMinus = useCallback(() => {
     animateToRegion({
       ...region,
       longitudeDelta: region.longitudeDelta * K,
       latitudeDelta: region.latitudeDelta * K,
     });
-  };
+  }, [region]);
 
-  const goToNewPosition = (newPoint: TPoint) => {
-    const longitude = newPoint.longitude;
-    const latitude = newPoint.latitude;
-    animateToRegion({...region, longitude, latitude});
-  };
+  const goToNewPosition = useCallback(
+    (newPoint: TPoint) => {
+      //   console.log(newPoint, 'goToNewPosition');
+      const longitude = newPoint.longitude;
+      const latitude = newPoint.latitude;
+      animateToRegion({
+        // ...region,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+        longitude,
+        latitude,
+      });
+      //   animateToRegion({
+      //     longitude,
+      //     latitude,
+      //     latitudeDelta: 0.015,
+      //     longitudeDelta: 0.02,
+      //   });
+    },
+    [region],
+  );
 
-  const openMarker = (data: TMarker) => {
-    if (!data || JSON.stringify(data) === JSON.stringify(selectedMarker)) {
-      setSelectedMarker(null);
-    } else {
-      goToNewPosition(data);
-      if (data.showDetails) {
+  const openMarker = useCallback(
+    (data: TMarker) => {
+      if (!data || JSON.stringify(data) === JSON.stringify(selectedMarker)) {
         setSelectedMarker(null);
-        navigate('MarkerDetail', {markerId: data.id});
       } else {
-        setSelectedMarker(data);
+        goToNewPosition(data);
+        if (data.showDetails) {
+          setSelectedMarker(null);
+          navigate('MarkerDetail', {markerId: data.id});
+        } else {
+          setSelectedMarker(data);
+        }
       }
-    }
-  };
+    },
+    [selectedMarker],
+  );
 
-  const goToUserLocate = () => {
+  const goToUserLocate = useCallback(() => {
+    // console.log('goToUserLocate');
     getCurrentPosition(
       position => {
         animateToRegion({...region, ...formatLatLong(position)});
@@ -194,12 +240,12 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
-  };
+  }, [region]);
 
-  useEffect(() => {
-    goToUserLocate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   useEffect(() => {
+  //     goToUserLocate();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, []);
 
   useEffect(() => {
     setAllMarkers(
@@ -213,39 +259,41 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
     );
   }, [filters, markers, textOfSearch]);
 
-  if (!useIsFocused()) {
-    return null;
-  }
+  const renderCluster = useCallback(cluster => {
+    const {id, geometry, onPress, properties} = cluster;
+    const points = properties.point_count;
+
+    return (
+      <Marker
+        key={`cluster-${id}`}
+        coordinate={{
+          longitude: geometry.coordinates[0],
+          latitude: geometry.coordinates[1],
+        }}
+        onPress={onPress}>
+        <ClusterMarker counter={points} />
+      </Marker>
+    );
+  }, []);
+
+  //   if (isFocused) {
+  //     return null;
+  //   }
   return (
     <View style={styles.container}>
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={[styles.map, styles.mapPadding]}
-        animationEnabled
+        // animationEnabled
         //
         clusterColor={colors.green_41BB4E}
-        renderCluster={cluster => {
-          const {id, geometry, onPress, properties} = cluster;
-          const points = properties.point_count;
-
-          return (
-            <Marker
-              key={`cluster-${id}`}
-              coordinate={{
-                longitude: geometry.coordinates[0],
-                latitude: geometry.coordinates[1],
-              }}
-              onPress={onPress}>
-              <ClusterMarker counter={points} />
-            </Marker>
-          );
-        }}
+        renderCluster={renderCluster}
         //
         cacheEnabled
         followsUserLocation
         initialRegion={initRegion}
-        region={{...region}}
+        // region={region}
         loadingEnabled
         mapType="standard"
         // maxZoomLevel={18}
@@ -268,17 +316,19 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
         //
         onMapReady={onMapReady}
         onRegionChangeComplete={onRegionChangeComplete}>
-        {AllMarkers.map(m => (
-          <Marker
-            key={`${m?.id}`}
-            onPress={() => openMarker(m)}
-            coordinate={{
-              latitude: m?.latitude || 0,
-              longitude: m?.longitude || 0,
-            }}>
-            <MarkerItem selected={selectedMarker?.id === m?.id} />
-          </Marker>
-        ))}
+        {/* {isFocused && */}
+        {true &&
+          AllMarkers.map(m => (
+            <Marker
+              key={`${m?.id}`}
+              onPress={() => openMarker(m)}
+              coordinate={{
+                latitude: m?.latitude || 0,
+                longitude: m?.longitude || 0,
+              }}>
+              <MarkerItem selected={selectedMarker?.id === m?.id} />
+            </Marker>
+          ))}
       </MapView>
       <View style={styles.buttonsBlock}>
         <MapButton onPress={onZoomPlus} />

@@ -11,22 +11,24 @@ type TProps = {
     onPress: () => void;
   };
   newNotificationsLength: string;
+  cardNumber: string;
 };
 
-// FIXME:
-const bonusCard = 'ХХХХ ХХХХ ХХХХ 1234';
-
-const ProfileMenuItem: React.FC<TProps> = ({item, newNotificationsLength}) => {
+const ProfileMenuItem: React.FC<TProps> = ({
+  item,
+  newNotificationsLength,
+  cardNumber,
+}) => {
   const additionalText = useMemo(() => {
     if (item.icon === 'creditcard') {
-      return <Text style={styles.bonusCardNumber}>{bonusCard}</Text>;
+      return <Text style={styles.bonusCardNumber}>{cardNumber}</Text>;
     }
     if (item.icon === 'bell') {
       return (
         <Text style={styles.notificationsText}>{newNotificationsLength}</Text>
       );
     }
-  }, [item.icon]);
+  }, [item.icon, newNotificationsLength]);
 
   return (
     <>

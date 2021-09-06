@@ -42,7 +42,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
   const codeFieldRef = useRef<TextInput>(null);
   const [value, setValue] = useState('');
   const [needRefreshTimer, setNeedRefreshTimer] = useState<boolean>(false);
-  const [counter, setCounter] = useState<number>(5);
+  const [counter, setCounter] = useState<number>(60);
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -68,8 +68,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
   const resendCode = useCallback(() => {
     dispatch(checkPhone({needNavigate: false}));
     setNeedRefreshTimer(!needRefreshTimer);
-    // FIXME:
-    setCounter(5);
+    setCounter(60);
   }, [needRefreshTimer]);
 
   const submit = useCallback(async () => {

@@ -56,6 +56,8 @@ export {default as Text} from './typography/Text';
 // CONTAINER
 
 // CONTROLL
+export {default as NotificationsManager} from './control/NotificationsManager';
+export {default as DeepLinksManager} from './control/DeepLinksManager';
 
 export {default as BonusCardModal} from './control/BonusCardModal';
 export {default as CheckBoxCustom} from './control/CheckBoxCustom';

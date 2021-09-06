@@ -6,6 +6,7 @@ import {
   useTranslation,
   useState,
   useNavigation,
+  useMemo,
 } from '@hooks';
 import {
   View,
@@ -44,11 +45,18 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const [cardNumber, setCardNumber] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isCardNumberReadByQR, setIsCardNumberReadByQR] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setOptions({
       headerRight: () => <QuestionButton />,
     });
+  }, []);
+
+  const onChangeCardNumber = useCallback(text => {
+    setIsCardNumberReadByQR(false);
+    setCardNumber(text);
   }, []);
 
   const onChangeGender = useCallback(value => {
@@ -65,12 +73,35 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
 
   const onReadQR: (e: any) => void = useCallback((e: any) => {
     if (e.data) {
-      setCardNumber(e.rawData);
+      setCardNumber(e.data);
+      setIsCardNumberReadByQR(true);
       setTimeout(() => {
         closeModal();
       }, 700);
     }
   }, []);
+
+  const isButtonNextDisabled = useMemo(() => {
+    //   FIXME: номер карты может быть с пробелами, проверить
+    if (
+      cardType.type === 1 &&
+      !isCardNumberReadByQR &&
+      cardNumber.length !== 19
+    ) {
+      return true;
+    }
+    if (
+      cardType.type === 1 &&
+      isCardNumberReadByQR &&
+      cardNumber.length !== 16
+    ) {
+      return true;
+    }
+    if (cardType.type === 2) {
+      return true;
+    }
+    return false;
+  }, [cardType, isCardNumberReadByQR, cardNumber]);
 
   const submit = useCallback(async () => {
     setLoading(true);
@@ -111,7 +142,7 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
           returnKeyType="done"
           value={cardNumber}
           mask={'[0000] [0000] [0000] [0000]'}
-          onChangeText={setCardNumber}
+          onChangeText={onChangeCardNumber}
           placeholder="XXXX XXXX XXXX XXXX"
           placeholderTextColor={colors.gray_8D909D}
         />
@@ -130,7 +161,7 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
           title={t('button.title.continue')}
           loading={loading}
           dark={loading}
-          disabled={cardType.type === 1 && cardNumber.length !== 19}
+          disabled={isButtonNextDisabled}
           onPress={submit}
         />
       </View>

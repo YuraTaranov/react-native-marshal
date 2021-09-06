@@ -9,7 +9,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomColor: colors.gray_DADBDF,
-    borderBottomWidth: 1.75,
+    borderBottomWidth: 1,
     paddingHorizontal: 20,
   },
   textView: {
