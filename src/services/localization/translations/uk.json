@@ -160,5 +160,9 @@
 	"FuelAmountByLiters": "Кількість палива в літрах",
 	"Recipients_phone_number": "Номер телефона одержувача",
 	"PaymentMethod": "Спосіб оплати",
+	"Select": "Обрати",
+	"CheckPaymentMethod": "Оберіть спосіб оплати",
+	"BuyBalls": "Купити за бали",
+	"AddPaymentCard": "Додати платіжну картку",
 	"currency": "₴"
  }

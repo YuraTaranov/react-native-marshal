@@ -1,5 +1,12 @@
 import React from 'react';
-import {useTranslation, useState, useEffect} from '@hooks';
+import {
+  useCallback,
+  useEffect,
+  useNavigation,
+  useRoute,
+  useState,
+  useTranslation,
+} from '@hooks';
 import {
   KeyboardAvoidingView,
   MaterialInput,
@@ -8,13 +15,24 @@ import {
   UsualButton,
   View,
 } from '@components';
+
+import {connect} from 'react-redux';
+import {InputPhone, ItemPrice, WayToPayItem, PayTypeModal} from '..';
 import styles from './styles';
-import {InputPhone, ItemPrice, WayToPayItem} from '..';
 
 //Type
-import {TPrice} from '@types';
+import type {
+  FuelPurchaseRouteProp,
+  TGlobalState,
+  TPrice,
+  TCreditCard,
+  TPaySystemContent,
+} from '@types';
+import {Dispatch} from 'redux';
+
 type TProps = {
   index: number;
+  creditCards: TCreditCard[];
 };
 
 const mopData: TPrice[] = [
@@ -40,14 +58,93 @@ const mopData: TPrice[] = [
   },
 ];
 
-const InnerPage: React.FC<TProps> = ({index}) => {
+const sortById = (a: TPaySystemContent, b: TPaySystemContent): number => {
+  if (a.id < b.id) {
+    return -1;
+  } else if (a.id > b.id) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
+
+const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
   const {t} = useTranslation();
+  const {setParams, navigate} = useNavigation();
+  const {params} = useRoute<FuelPurchaseRouteProp>();
+
+  const paySystemsInit: TPaySystemContent[] = [
+    // {
+    //   id: 1,
+    //   action: () => {},
+    //   title: '1234 12 ** **** 1234',
+    //   icon: 'creditcard',
+    // },
+    {
+      id: 98,
+      action: () => {},
+      title: 'Google Pay',
+      icon: 'googlePay',
+    },
+    {
+      id: 99,
+      action: () => {},
+      title: t('BuyBalls'),
+      icon: 'gift',
+    },
+    {
+      id: 100,
+      action: () => navigate('AddCard'),
+      title: t('AddPaymentCard'),
+      icon: 'plus',
+    },
+  ];
+
   const [fuelCouner, setFuelAmount] = useState<number | null>(null);
   const [prices, setPrices] = useState<TPrice[]>(mopData);
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
   const [phoneNumber, setPhone] = useState('');
   const [FullCostOfFuel, setFullCostOfFuel] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [paySystems, setPaySystems] =
+    useState<Array<TPaySystemContent>>(paySystemsInit);
+
+  const addCreditCard = useCallback(() => {
+    const newMap: Map<number, TPaySystemContent> = new Map();
+    const newArray: TPaySystemContent[] = [];
+
+    creditCards.forEach((card, ind) => {
+      const id = ind + 1;
+      newMap.set(id, {
+        id,
+        action: () => {},
+        title: card.number,
+        icon: 'creditcard',
+      });
+    });
+
+    paySystems.forEach(item => {
+      newMap.set(item.id, item);
+    });
+
+    newMap.forEach(card => {
+      newArray.push(card);
+    });
+
+    setPaySystems(newArray.sort(sortById));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [creditCards]);
+
+  useEffect(() => {
+    addCreditCard();
+  }, [addCreditCard, creditCards]);
+
+  useEffect(() => {
+    if (params?.openModal) {
+      setIsVisible(true);
+      setParams({openModal: false});
+    }
+  }, [params, setParams]);
 
   const showModal = () => {
     setIsVisible(true);
@@ -74,6 +171,31 @@ const InnerPage: React.FC<TProps> = ({index}) => {
       setFullCostOfFuel(0);
     }
   }, [fuelCouner, selectedPriceId, prices]);
+
+  const onChoose = () => {
+    console.log("START onChoose");
+    const selectedPaySystem: TPaySystemContent[] = paySystems.filter(
+      i => !!i.selected,
+    );
+    if (Array.isArray(selectedPaySystem) && selectedPaySystem.length > 0) {
+      hidenModal();
+      selectedPaySystem[0].action();
+    }
+  };
+
+  const onSelect = (id: number) => {
+    setPaySystems(
+      paySystems.map(l => {
+        const obj = {...l};
+        if (obj.id === id) {
+          obj.selected = true;
+        } else {
+          obj.selected = false;
+        }
+        return obj;
+      }),
+    );
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
@@ -120,8 +242,19 @@ const InnerPage: React.FC<TProps> = ({index}) => {
         buttonStyle={styles.usualButton}
         onPress={PayForFuel}
       />
+      <PayTypeModal
+        closeModal={hidenModal}
+        isVisible={isVisible}
+        onChoose={onChoose}
+        onSelect={onSelect}
+        paySystems={paySystems}
+      />
     </KeyboardAvoidingView>
   );
 };
 
-export default InnerPage;
+const mapStateToProps = (state: TGlobalState) => ({
+  creditCards: state.creditCards,
+});
+
+export default connect(mapStateToProps)(InnerPage);

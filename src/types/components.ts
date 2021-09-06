@@ -112,3 +112,11 @@ export type TCreditCard = {
 };
 
 export type TBiometricsType = 'touchId' | 'faceId' | 'fingerprint' | 'none';
+
+export type TPaySystemContent = {
+  id: number;
+  action: () => void;
+  title: string;
+  icon: string;
+  selected?: boolean;
+};

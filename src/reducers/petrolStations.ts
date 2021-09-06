@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
-import {Alert} from 'react-native';
-import i18next from 'i18next';
-import {httpGet, httpPost, navigate, errorHandler} from '@services';
-import {urls, languages} from '@constants';
+// import i18next from 'i18next';
+import {httpPost, errorHandler} from '@services';
+import {urls} from '@constants';
 import {TPetrolStation, TGetPetrolStationResponseGenerator} from '@types';
-import {map} from '_templates/generate/component/prompt';
+// import {map} from '_templates/generate/component/prompt';
 
 const GET_PETROL_STATIONS = '[petrolStations] GET_PETROL_STATIONS';
 const SET_PETROL_STATIONS = '[petrolStations] SET_PETROL_STATIONS';
@@ -48,7 +47,7 @@ export function* watchPetrolStations() {
 
 export function* getPetrolStationsAsync() {
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;  /// До выяснения этой не состыковки
+  const locale = lang === 'uk' ? 'ua' : lang;
 
   try {
     const body: TGetPetrolStationResponseGenerator = yield call(() =>

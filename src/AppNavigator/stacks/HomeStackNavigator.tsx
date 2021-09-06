@@ -1,9 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Promotion, FuelCalculator, FuelPurchase} from '@screens';
+import {Home, Promotion, FuelCalculator, FuelPurchase, AddCard} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
+import {ios} from '@components';
 import {defaultStackOptions} from '../options';
 
 type TProps = {};
@@ -49,6 +50,15 @@ const HomeStackNavigator: React.FC<TProps> = ({ }) => {
         options={{
           headerTitleAlign: 'center',
           title: t('FuelPurchase'),
+        }}
+      />
+      <HomeStack.Screen
+        name="AddCard"
+        component={AddCard}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Add_Card'),
+          animationEnabled: ios,
         }}
       />
     </HomeStack.Navigator>
