@@ -15,18 +15,19 @@ import {
   Icon,
   FlatList,
   OpenAppSettings,
-  SwitchCustom,
   ConfirmModal,
 } from '@components';
-import {TGlobalState} from '@types';
+import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors} from '@constants';
 import {navigate} from '@services';
 import {logout} from '@reducers/logout';
+import BioAuthSwitch from './components/BioAuthSwitch/BioAuthSwitch';
 
 type TProps = {
   dispatch: Dispatch;
+  biometricsType: TBiometricsType;
 };
 
 type TMenuItem = {
@@ -34,10 +35,10 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Settings: React.FC<TProps> = ({dispatch}) => {
+const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-  const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(false);
+
   const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
 
   const onPressLogout = useCallback(() => {
@@ -52,10 +53,6 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
     dispatch(logout());
     setLogoutModalVisible(false);
   }, []);
-
-  const toggleBiometricsSwitch = useCallback(() => {
-    setIsBiometricsActive(!isBiometricsActive);
-  }, [isBiometricsActive]);
 
   useEffect(() => {
     setOptions({
@@ -116,11 +113,7 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
         rightButtonText={t('Так, вийти')}
         leftButtonText={t('Не зараз')}
       />
-      <SwitchCustom
-        value={isBiometricsActive}
-        onValueChange={toggleBiometricsSwitch}
-        title={t('Вхід за відбитком')}
-      />
+      {biometricsType !== 'none' ? <BioAuthSwitch /> : null}
       <FlatList
         data={menuItems}
         renderItem={renderItem}
@@ -130,6 +123,8 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  biometricsType: state.biometrics.biometricsType,
+});
 
 export default connect(mapStateToProps)(Settings);

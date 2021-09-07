@@ -40,6 +40,14 @@ export type TProfile = {
   card: string | null;
   phone: string;
   bearer_token?: string;
+  count_bonus?: number;
+  count_spent_bonus?: number;
+  //   FIXME: type
+  fuels?: [];
+  setting_affiliate_program: '0' | '1';
+  setting_bio_auth: '0' | '1';
+  setting_message_dev: '0' | '1';
+  setting_action: '0' | '1';
 };
 
 export type TPromotion = {
@@ -120,4 +128,10 @@ export type TNotification = {
   isRead: boolean;
   title: string;
   date: Date;
+};
+
+export type TSettingsText = {
+  text: string;
+  title: string;
+  type: 'about_the_application' | 'loyalty_conditions' | 'terms_of_use';
 };

@@ -8,24 +8,18 @@ import {
   UsualButton,
   TouchableOpacity,
 } from '@components';
-import {TGlobalState, TReferrals} from '@types';
+import {TGlobalState, TProfile} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {assets} from '@assets';
 import {declension} from '@constants';
 import {navigate} from '@services';
 
-const fakeData = {
-  activeReferrals: 5,
-  bonusesUsed: 50,
-  bonuses: 250,
-};
-
 type TProps = {
-  referrals: TReferrals;
+  profile: TProfile;
 };
 
-const Bonuses: React.FC<TProps> = ({referrals}) => {
+const Bonuses: React.FC<TProps> = ({profile}) => {
   const {t} = useTranslation();
 
   const onPressTerms = useCallback(() => {
@@ -37,15 +31,12 @@ const Bonuses: React.FC<TProps> = ({referrals}) => {
   }, []);
 
   const bonusesValue = useMemo(() => {
-    return `${fakeData.bonuses} балів`;
+    return `${profile?.count_bonus} балів`;
   }, []);
 
   const activeReferrals = useMemo(() => {
-    return `${fakeData.activeReferrals} ${declension(fakeData.activeReferrals, [
-      'особа',
-      'особи',
-      'осіб',
-    ])}`;
+    //   FIXME: number of referrals
+    return `${5} ${declension(5, ['особа', 'особи', 'осіб'])}`;
   }, []);
 
   return (
@@ -64,7 +55,7 @@ const Bonuses: React.FC<TProps> = ({referrals}) => {
       <View style={styles.borderBottomView}>
         <Text style={styles.borderBottomViewTitle}>{t('Використано:')}</Text>
         <Text style={styles.borderBottomViewValue}>{`${
-          fakeData.bonusesUsed
+          profile?.count_spent_bonus
         } ${t('балів')}`}</Text>
       </View>
       <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>
@@ -81,7 +72,7 @@ const Bonuses: React.FC<TProps> = ({referrals}) => {
   );
 };
 const mapStateToProps = (state: TGlobalState) => ({
-  //   referrals: state.referrals.data,
+  profile: state.profile.data,
 });
 
 export default connect(mapStateToProps)(Bonuses);

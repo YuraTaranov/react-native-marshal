@@ -9,6 +9,7 @@ import {
   TProfile,
   TPromotion,
   TBiometricsType,
+  TSettingsText,
 } from './components';
 
 export type TGlobalState = {
@@ -70,6 +71,9 @@ export type TGlobalState = {
   //   FIXME:
   notifications: {
     data: [];
+  };
+  settings: {
+    data: TSettingsText[];
   };
 };
 

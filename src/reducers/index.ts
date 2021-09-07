@@ -17,5 +17,6 @@ export default combineReducers({
   biometrics: require('./biometrics').default,
   searchStations: require('./searchStations').default,
   notifications: require('./notifications').default,
+  settings: require('./settings').default,
   // ADD NEW REDUCER
 });

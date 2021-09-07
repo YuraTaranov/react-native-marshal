@@ -20,4 +20,5 @@ export const urls = {
   getPetrolStations: 'azs/search-azs',
   biometricsAdd: 'biometric/add',
   biometricsLogin: 'biometric/login',
+  getSettingsText: 'profile/static-text',
 };

@@ -259,7 +259,6 @@ const ProfileUpdate: React.FC<TProps> = ({
             </Text>
           ) : null}
           <MaterialInput
-            keyboardType={'ascii-capable'}
             returnKeyType={'default'}
             value={nameValue}
             onChangeText={setNameValue}
@@ -267,7 +266,6 @@ const ProfileUpdate: React.FC<TProps> = ({
             label={t('textInput.name')}
           />
           <MaterialInput
-            keyboardType={'ascii-capable'}
             returnKeyType={'default'}
             value={surnameValue}
             lineWidth={0.5}

@@ -19,7 +19,7 @@ import {
 } from '@components';
 
 import {connect} from 'react-redux';
-import {resetAppGlobalState} from '@reducers/appGlobalState';
+import {resetAppGlobalState, setLoader} from '@reducers/appGlobalState';
 
 import {getPromotions} from '@reducers/promotions';
 import {colors} from '@constants';
@@ -31,6 +31,7 @@ import styles from './styles';
 import {Dispatch} from 'redux';
 import {TGlobalState, TPromotion} from '@types';
 import {getProfile} from '@reducers/profile';
+import {getSettings} from '@reducers/settings';
 
 type TProps = {
   dispatch: Dispatch;
@@ -67,6 +68,8 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
     dispatch(getPromotions({page: 1}));
     dispatch(getPetrolStations());
     dispatch(getProfile());
+    dispatch(getSettings());
+    // dispatch(setLoader(false));
   }, []);
 
   return (
