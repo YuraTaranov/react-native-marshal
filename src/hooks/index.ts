@@ -12,6 +12,8 @@ export {
   useDebugValue,
 } from 'react';
 
+export {useWindowDimensions} from 'react-native';
+
 // https://github.com/react-navigation/react-navigation-hooks#docs
 export {
   useNavigation, // const { navigate, push, goBack } = useNavigation();

@@ -4,7 +4,17 @@ module.exports = {
     [
       'module-resolver',
       {
-        extensions: ['.ios.js', '.android.js', '.ios.tsx', '.android.tsx', '.js', '.jsx', '.ts', '.tsx', '.json'],
+        extensions: [
+          '.ios.js',
+          '.android.js',
+          '.ios.tsx',
+          '.android.tsx',
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+          '.json',
+        ],
         alias: {
           '@assets': ['./src/assets'],
           '@components': ['./src/components'],
@@ -15,19 +25,24 @@ module.exports = {
           '@screens': ['./src/screens'],
           '@services': ['./src/services'],
           '@types': ['./src/types'],
-          '@httpServices': ["./src/services/http/services"],
+          '@httpServices': ['./src/services/http/services'],
+          '@libs': ['./src/libs'],
         },
         cwd: 'packagejson',
       },
     ],
-    ["module:react-native-dotenv", {
-      "moduleName": "@env",
-      "path": ".env",
-      "blocklist": null,
-      "allowlist": null,
-      "safe": false,
-      "allowUndefined": true,
-      "verbose": false
-    }]
+    [
+      'module:react-native-dotenv',
+      {
+        moduleName: '@env',
+        path: '.env',
+        blocklist: null,
+        allowlist: null,
+        safe: false,
+        allowUndefined: true,
+        verbose: false,
+      },
+    ],
+    'react-native-reanimated/plugin',
   ],
 };

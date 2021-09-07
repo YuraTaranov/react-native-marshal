@@ -37,14 +37,14 @@ export const MarkerModal: React.FC<TProps> = ({isVisible, data, cb}) => {
     if (data) {
       Geolocation.getCurrentPosition(
         position => {
-          const urlForROute = getUrlForRoute({
+          const urlForRoute = getUrlForRoute({
             startLatitude: position?.coords?.latitude || 0,
             startLongitude: position?.coords?.longitude || 0,
             endLatitude: data?.latitude,
             endLongitude: data?.longitude,
           });
-          Linking.openURL(urlForROute);
-          console.log('POS', urlForROute);
+          Linking.openURL(urlForRoute);
+          console.log('POS', urlForRoute);
         },
         error => {
           console.log(error.code, error.message);

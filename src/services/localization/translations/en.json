@@ -88,5 +88,6 @@
     "add_card_to_sreen_text": "Add a card so that it appears on this screen",
     "To check the card, UAH 1 will be temporarily blocked on it": "To check the card, UAH 1 will be temporarily blocked on it",
     "NumberOfCreditCard": "Card number",
-    "ValidityPeriod": "Validity period"
+    "ValidityPeriod": "Validity period",
+    "currency": "$"
   }

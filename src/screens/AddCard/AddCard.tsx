@@ -6,6 +6,7 @@ import {
   useTranslation,
   useState,
   useNavigation,
+  useRoute,
 } from '@hooks';
 
 import {assets} from '@assets';
@@ -15,9 +16,9 @@ import {connect} from 'react-redux';
 import styles from './styles';
 
 //Type
-import {TGlobalState, TCreditCard} from '@types';
+import {TGlobalState, TCreditCard, AddCardRouteProp} from '@types';
 import {Dispatch} from 'redux';
-import {colors} from '@constants';
+import {colors, height, width} from '@constants';
 import {setCreditCards} from '@reducers/creditCards';
 
 type TProps = {
@@ -36,7 +37,9 @@ type TForm = {
 };
 
 const AddCard: React.FC<TProps> = ({dispatch}) => {
-  const {goBack} = useNavigation();
+  const {goBack, navigate} = useNavigation();
+  const {params} = useRoute<AddCardRouteProp>();
+
   const {t} = useTranslation();
   const [isValidForm, setIsValidForm] = useState(false);
   const [newCreditCard, setNewCreditCard] = useState<TCreditCard | null>(null);
@@ -62,7 +65,11 @@ const AddCard: React.FC<TProps> = ({dispatch}) => {
 
   const submit = () => {
     dispatch(setCreditCards(newCreditCard as TCreditCard));
-    goBack();
+    if (params?.openModal) {
+      navigate('FuelPurchase', {openModal: true});
+    } else {
+      goBack();
+    }
   };
   const onChange = (x: TForm): void => {
     setIsValidForm(x.valid);
@@ -78,6 +85,7 @@ const AddCard: React.FC<TProps> = ({dispatch}) => {
       Keyboard.dismiss();
     }
   }, [isValidForm]);
+
   return (
     <View style={styles.container}>
       <View style={styles.mainView}>
@@ -90,7 +98,7 @@ const AddCard: React.FC<TProps> = ({dispatch}) => {
           onChange={onChange}
           placeholderColor={colors.gray_8D909D}
           placeholders={getPlaceholders()}
-          showCardTop
+          showCardTop={height / width > 1.8}
           // showCardBottom
         />
       </View>

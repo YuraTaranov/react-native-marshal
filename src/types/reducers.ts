@@ -78,3 +78,9 @@ export type TGlobalState = {
 };
 
 export type TLang = 'uk' | 'ru' | 'en';
+
+export type TPrice = {
+  title: string;
+  cost: number;
+  id: number;
+};

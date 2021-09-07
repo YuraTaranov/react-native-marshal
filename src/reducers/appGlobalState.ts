@@ -42,6 +42,7 @@ export default (state = initialstate, action: any) => {
 };
 
 export const setLang = (lang: TLang) => ({lang, type: SET_LANG});
+export const getLang = (lang: TLang) => (lang === 'uk' ? 'ua' : lang);
 export const setToken = (token: string) => ({token, type: SET_TOKEN});
 export const setOnboarding = (onBoarding: boolean) => ({
   onBoarding,

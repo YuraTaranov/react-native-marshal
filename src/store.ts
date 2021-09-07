@@ -5,6 +5,7 @@ import reducers from './reducers';
 import rootSaga from './reducers/sagas';
 import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
+import petrolStations from '@reducers/petrolStations';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,7 +13,7 @@ const persistConfig = {
   timeout: 10000,
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['appGlobalState', 'biometrics'], // ADD WHITE LIST IF YOU NEED
+  whitelist: ['appGlobalState', 'biometrics', createStore, petrolStations], // ADD WHITE LIST IF YOU NEED
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -2,8 +2,6 @@ import React from 'react';
 import {ios} from '@constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Stations, FilterPage, MarkerDetailPage, RegionsPage} from '@screens';
-import {connect} from 'react-redux';
-import {TGlobalState} from '@types';
 import {defaultStackOptions} from '../options';
 
 type TProps = {};
@@ -51,7 +49,4 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
   );
 };
 
-// const mapStateToProps = (state: TGlobalState) => ({});
-
-// export default connect(mapStateToProps)(StationsStackNavigator);
 export default StationsStackNavigator;

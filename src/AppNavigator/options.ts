@@ -27,7 +27,6 @@ export const headerStyle = {
   headerTitleAlign: 'center',
   headerStyle: defaultStackOptions.headerStyle,
   headerTitleStyle: defaultStackOptions.headerTitleStyle,
-  // headerTintColor: 'red'
 };
 
 export const cardStyle = styles.cardStyle;

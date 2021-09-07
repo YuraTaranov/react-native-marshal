@@ -8,7 +8,11 @@ const uk = require('./translations/uk.json');
 const en = require('./translations/en.json');
 
 const languageCodes = localize.getLocales().map(locale => locale.languageCode);
-const {languageTag}: any = localize.findBestAvailableLanguage(languageCodes);
+
+export const deviceLanguageAndRegion =
+  localize.getLocales()[0].languageTag || null;
+export const {languageTag}: any =
+  localize.findBestAvailableLanguage(languageCodes);
 
 const defaultLanguage = languages.UK;
 
