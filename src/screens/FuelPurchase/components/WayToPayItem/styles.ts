@@ -28,4 +28,15 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.interRegular_400,
   },
+  textTop: {
+    color: colors.gray_8D909D,
+    fontSize: 12,
+    fontFamily: fonts.interRegular_400,
+  },
+  textDown: {
+    color: colors.black_000000,
+    fontSize: 16,
+    fontFamily: fonts.interRegular_400,
+    marginVertical: 5,
+  },
 });

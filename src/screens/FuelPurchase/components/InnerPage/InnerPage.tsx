@@ -98,6 +98,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
   const [fuelCouner, setFuelAmount] = useState<number | null>(null);
   const [prices, setPrices] = useState<TPrice[]>(mopData);
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
+  const [selectedPayType, setSelectedPayType] = useState('');
   const [phoneNumber, setPhone] = useState('');
   const [fullCostOfFuel, setFullCostOfFuel] = useState(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -196,6 +197,15 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     }
   }, [fuelCouner, selectedPriceId, prices]);
 
+  useEffect(() => {
+    const newArray: TPaySystemContent[] = paySystems.filter(
+      item => !!item?.selected,
+    );
+    if (Array.isArray(newArray) && newArray.length > 0){
+      setSelectedPayType(newArray[0].title);
+    }
+  }, [paySystems]);
+
   const onSelect = (id: number) => {
     setPaySystems(
       paySystems.map(l => {
@@ -246,7 +256,11 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
           </View>
         </View>
         <View style={styles.row}>
-          <WayToPayItem onPress={showModal} isVisible={isVisible} />
+          <WayToPayItem
+            onPress={showModal}
+            isVisible={isVisible}
+            selectedPayType={selectedPayType}
+          />
         </View>
       </ScrollView>
       <UsualButton

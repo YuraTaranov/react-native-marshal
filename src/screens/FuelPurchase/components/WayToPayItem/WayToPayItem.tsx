@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTranslation, useState, useRef} from '@hooks';
+import {useTranslation, useState} from '@hooks';
 import {TouchableOpacity, Text, View, Icon} from '@components';
 import {colors} from '@constants';
 import styles from './styles';
@@ -7,19 +7,31 @@ import styles from './styles';
 type TProps = {
   onPress: () => void;
   isVisible: boolean;
+  selectedPayType: string;
 };
 
-export const WayToPayItem: React.FC<TProps> = ({onPress, isVisible}) => {
+export const WayToPayItem: React.FC<TProps> = ({
+  onPress,
+  isVisible,
+  selectedPayType,
+}) => {
   const {t} = useTranslation();
 
-  const Ref = useRef();
+  console.log('selectedPayType', selectedPayType);
 
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View style={styles.textView}>
-          <Text style={styles.text}>{t('PaymentMethod')}</Text>
-        </View>
+        {selectedPayType ? (
+          <View style={styles.textView}>
+            <Text style={styles.textTop}>{t('PaymentMethod')}</Text>
+            <Text style={styles.textDown}>{selectedPayType}</Text>
+          </View>
+        ) : (
+          <View style={styles.textView}>
+            <Text style={styles.text}>{t('PaymentMethod')}</Text>
+          </View>
+        )}
         <View style={styles.iconView}>
           <Icon
             name={isVisible ? 'arrow-down' : 'right'}
