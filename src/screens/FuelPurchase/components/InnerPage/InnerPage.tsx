@@ -98,7 +98,8 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
   const [fuelCouner, setFuelAmount] = useState<number | null>(null);
   const [prices, setPrices] = useState<TPrice[]>(mopData);
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
-  const [selectedPayType, setSelectedPayType] = useState('');
+  const [selectedPayType, setSelectedPayType] =
+    useState<TPaySystemContent | null>(null);
   const [phoneNumber, setPhone] = useState('');
   const [fullCostOfFuel, setFullCostOfFuel] = useState(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -158,6 +159,20 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [creditCards]);
 
+  const onSelect = (id: number) => {
+    setPaySystems(
+      paySystems.map(l => {
+        const obj = {...l};
+        if (obj.id === id) {
+          obj.selected = true;
+        } else {
+          obj.selected = false;
+        }
+        return obj;
+      }),
+    );
+  };
+
   const PayForFuel = () => {
     // eslint-disable-next-line no-alert
     alert('Запуск процесса оплаты');
@@ -201,24 +216,12 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     const newArray: TPaySystemContent[] = paySystems.filter(
       item => !!item?.selected,
     );
-    if (Array.isArray(newArray) && newArray.length > 0){
-      setSelectedPayType(newArray[0].title);
+    if (Array.isArray(newArray) && newArray.length > 0) {
+      setSelectedPayType(newArray[0]);
+    } else {
+      setSelectedPayType(null);
     }
   }, [paySystems]);
-
-  const onSelect = (id: number) => {
-    setPaySystems(
-      paySystems.map(l => {
-        const obj = {...l};
-        if (obj.id === id) {
-          obj.selected = true;
-        } else {
-          obj.selected = false;
-        }
-        return obj;
-      }),
-    );
-  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
