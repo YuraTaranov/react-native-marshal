@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTranslation, useState, useRef} from '@hooks';
+import {useTranslation, useState, useRef, useEffect} from '@hooks';
 import {MaterialInput, Platform} from '@components';
 import {animation} from '@helpers';
 import {colors} from '@constants';
@@ -33,9 +33,17 @@ export const InputPhone: React.FC<TProps> = ({setPhone}) => {
       setPhoneNumber(phoneNumber.replace(re, '+$1 $2 $3 $4 $5'));
     }
   };
+
   const onFocusPhone = () => {
     setPhoneNumber(phoneNumber.replace(/\D/g, ''));
   };
+
+  useEffect(() => {
+    if (phoneNumber.length === 12) {
+      setPhone(phoneNumber);
+    }
+  }, [phoneNumber, setPhone]);
+
   animation(Platform.OS as TPlatformName);
   return (
     <MaterialInput

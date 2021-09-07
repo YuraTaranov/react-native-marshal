@@ -8,6 +8,7 @@ import {
   useTranslation,
 } from '@hooks';
 import {
+  Alert,
   KeyboardAvoidingView,
   MaterialInput,
   ScrollView,
@@ -28,7 +29,7 @@ import type {
   TCreditCard,
   TPaySystemContent,
 } from '@types';
-import {Dispatch} from 'redux';
+// import {Dispatch} from 'redux';
 
 type TProps = {
   index: number;
@@ -68,18 +69,12 @@ const sortById = (a: TPaySystemContent, b: TPaySystemContent): number => {
   }
 };
 
-const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
+const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
   const {t} = useTranslation();
   const {setParams, navigate} = useNavigation();
   const {params} = useRoute<FuelPurchaseRouteProp>();
 
   const paySystemsInit: TPaySystemContent[] = [
-    // {
-    //   id: 1,
-    //   action: () => {},
-    //   title: '1234 12 ** **** 1234',
-    //   icon: 'creditcard',
-    // },
     {
       id: 98,
       action: () => {},
@@ -104,10 +99,37 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
   const [prices, setPrices] = useState<TPrice[]>(mopData);
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
   const [phoneNumber, setPhone] = useState('');
-  const [FullCostOfFuel, setFullCostOfFuel] = useState(0);
+  const [fullCostOfFuel, setFullCostOfFuel] = useState(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [paySystems, setPaySystems] =
     useState<Array<TPaySystemContent>>(paySystemsInit);
+  const [isDisabledButton, setIsDisabledButton] = useState(true);
+
+  const showModal = () => {
+    setIsVisible(true);
+  };
+
+  const hidenModal = () => {
+    setIsVisible(false);
+  };
+
+  const onChoose = () => {
+    const selectedPaySystem: TPaySystemContent[] = paySystems.filter(
+      i => !!i.selected,
+    );
+    if (Array.isArray(selectedPaySystem) && selectedPaySystem.length > 0) {
+      hidenModal();
+      selectedPaySystem[0].action();
+    }
+  };
+
+  const onSelectedPrice = (id: number) => {
+    setSelectedPriceId(id);
+  };
+
+  const onChangeFuelAmount = (str: string) => {
+    setFuelAmount(+str || null);
+  };
 
   const addCreditCard = useCallback(() => {
     const newMap: Map<number, TPaySystemContent> = new Map();
@@ -135,6 +157,23 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [creditCards]);
 
+  const PayForFuel = () => {
+    // eslint-disable-next-line no-alert
+    alert('Запуск процесса оплаты');
+  };
+
+  useEffect(() => {
+    if (
+      fullCostOfFuel > 0 &&
+      paySystems.some(item => !!item?.selected) &&
+      (!index || !!phoneNumber)
+    ) {
+      setIsDisabledButton(false);
+    } else {
+      setIsDisabledButton(true);
+    }
+  }, [paySystems, fullCostOfFuel, index, phoneNumber]);
+
   useEffect(() => {
     addCreditCard();
   }, [addCreditCard, creditCards]);
@@ -146,21 +185,6 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
     }
   }, [params, setParams]);
 
-  const showModal = () => {
-    setIsVisible(true);
-  };
-  const hidenModal = () => {
-    setIsVisible(false);
-  };
-
-  const PayForFuel = () => {};
-  const onSelectedPrice = (id: number) => {
-    setSelectedPriceId(id);
-  };
-  const onChangeFuelAmount = (str: string) => {
-    setFuelAmount(+str || null);
-  };
-
   useEffect(() => {
     const cost = selectedPriceId
       ? prices.filter(i => i.id === selectedPriceId)[0].cost
@@ -171,17 +195,6 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
       setFullCostOfFuel(0);
     }
   }, [fuelCouner, selectedPriceId, prices]);
-
-  const onChoose = () => {
-    console.log("START onChoose");
-    const selectedPaySystem: TPaySystemContent[] = paySystems.filter(
-      i => !!i.selected,
-    );
-    if (Array.isArray(selectedPaySystem) && selectedPaySystem.length > 0) {
-      hidenModal();
-      selectedPaySystem[0].action();
-    }
-  };
 
   const onSelect = (id: number) => {
     setPaySystems(
@@ -229,7 +242,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
           <View style={styles.curView}>
             <Text style={styles.curText}>{`${t(
               'currency',
-            )} ${FullCostOfFuel.toFixed(2)}`}</Text>
+            )} ${fullCostOfFuel.toFixed(2)}`}</Text>
           </View>
         </View>
         <View style={styles.row}>
@@ -238,7 +251,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards, state}) => {
       </ScrollView>
       <UsualButton
         title={t('PayForFuel')}
-        disabled={!phoneNumber}
+        disabled={isDisabledButton}
         buttonStyle={styles.usualButton}
         onPress={PayForFuel}
       />

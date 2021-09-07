@@ -89,7 +89,7 @@ const MaterialInput: React.FC<TProps> = ({
 export default MaterialInput;
 
 type TProps = {
-  value: string;
+  value: string | number | null;
   onChangeText?: (value: string) => void;
   onRef?: (ref: TextField) => void;
   onFocus?: () => void;
