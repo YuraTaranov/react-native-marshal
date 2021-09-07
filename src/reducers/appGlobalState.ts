@@ -13,7 +13,7 @@ const SET_LOADER = '[appGlobalState] SET_LOADER';
 
 const initialstate: TGlobalState['appGlobalState'] = {
   accessToken: '',
-  isUserAuthorized: true,
+  isUserAuthorized: false,
   lang: 'uk',
   loader: false,
   onBoarding: true,
