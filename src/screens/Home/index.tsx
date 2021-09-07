@@ -33,6 +33,7 @@ import {TGlobalState, TPromotion} from '@types';
 import {getProfile} from '@reducers/profile';
 import {getSettings} from '@reducers/settings';
 
+import {navigate} from '@services';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
@@ -92,7 +93,9 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.buttonContainerCalc}>
+        <TouchableOpacity
+          style={styles.buttonContainerCalc}
+          onPress={() => navigate('FuelCalculator')}>
           <Icon
             size={24}
             name="calculator-duotone"
@@ -100,7 +103,9 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
           />
           <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainerFuel}>
+        <TouchableOpacity
+          style={styles.buttonContainerFuel}
+          onPress={() => navigate('FuelPurchase')}>
           <Icon size={24} name="gas" color={colors.green_009F30} />
           <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
         </TouchableOpacity>

@@ -135,3 +135,11 @@ export type TSettingsText = {
   title: string;
   type: 'about_the_application' | 'loyalty_conditions' | 'terms_of_use';
 };
+
+export type TPaySystemContent = {
+  id: number;
+  action: () => void;
+  title: string;
+  icon: string;
+  selected?: boolean;
+};
