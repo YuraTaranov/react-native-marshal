@@ -12,7 +12,7 @@ const SET_BONUSES_ON_BOARDING = '[appGlobalState] SET_BONUSES_ON_BOARDING';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
 
 const initialstate: TGlobalState['appGlobalState'] = {
-  accessToken: '8|W8u7eidvZrdiq00hk47GS0ZnIs…0JeMqHmv0',
+  accessToken: '',
   isUserAuthorized: true,
   lang: 'uk',
   loader: false,
