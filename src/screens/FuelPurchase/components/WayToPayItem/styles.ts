@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {colors, fonts, width, padding} from '@constants';
 
 const WRow = width - padding * 2;
-const WIcon = 150;
+const WIcon = 100;
 const WText = WRow - WIcon;
 
 export default StyleSheet.create({

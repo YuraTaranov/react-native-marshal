@@ -3,11 +3,12 @@ import {useTranslation, useState} from '@hooks';
 import {TouchableOpacity, Text, View, Icon} from '@components';
 import {colors} from '@constants';
 import styles from './styles';
+import {TPaySystemContent} from '@types';
 
 type TProps = {
   onPress: () => void;
   isVisible: boolean;
-  selectedPayType: string;
+  selectedPayType: TPaySystemContent | null;
 };
 
 export const WayToPayItem: React.FC<TProps> = ({
@@ -19,13 +20,26 @@ export const WayToPayItem: React.FC<TProps> = ({
 
   console.log('selectedPayType', selectedPayType);
 
+  const getTitle = () => {
+    if (selectedPayType) {
+      const {icon, title} = selectedPayType;
+      return icon === 'creditcard'
+        ? title.replace(
+            /(\d{4}\s+\d{2})\d{2}\s+\d{4}(\s+\d{4})/s,
+            '$1** ****$2',
+          )
+        : title;
+    }
+    return '';
+  };
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        {selectedPayType ? (
+        {selectedPayType?.title ? (
           <View style={styles.textView}>
             <Text style={styles.textTop}>{t('PaymentMethod')}</Text>
-            <Text style={styles.textDown}>{selectedPayType}</Text>
+            <Text style={styles.textDown}>{getTitle()}</Text>
           </View>
         ) : (
           <View style={styles.textView}>
