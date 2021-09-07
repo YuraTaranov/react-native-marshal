@@ -1,23 +1,22 @@
-import { colors } from '@constants';
+import {colors} from '@constants';
 import PropTypes from 'prop-types';
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  ViewPropTypes
-} from "react-native";
+  ViewPropTypes,
+} from 'react-native';
 
 import styles from './styles';
 
 const s = StyleSheet.create({
   baseInputStyle: {
-    color: "black",
-    flex: 1
+    color: 'black',
+    flex: 1,
   },
-
 });
 
 export default class CCInput extends Component {
@@ -94,6 +93,7 @@ export default class CCInput extends Component {
           <TextInput
             ref="input"
             keyboardType={keyboardType}
+            returnKeyType="done"
             autoCapitalise="words"
             autoCorrect={false}
             style={[

@@ -1,8 +1,5 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {setLoader} from './appGlobalState';
-import {Alert} from 'react-native';
-import i18next from 'i18next';
-import {httpGet, httpPost, navigate, errorHandler} from '@services';
+import {httpGet, errorHandler} from '@services';
 import {urls} from '@constants';
 
 const GET_PROFILE = '[profile] GET_PROFILE';
@@ -31,17 +28,12 @@ export function* watchProfile() {
 }
 
 export function* getProfileAsync() {
-  // const { accessToken } = yield select(state => state.profile)
-  yield put(setLoader(true));
   try {
-    const body = yield call(() => httpGet(urls.url));
-    yield put(setLoader(false));
-    if (body.data) {
-      yield put(setProfile(body.data));
-      // navigate('Route');
+    const body = yield call(() => httpGet(urls.getProfile));
+    if (body.data.data) {
+      yield put(setProfile(body.data.data));
     }
   } catch (e) {
-    yield put(setLoader(false));
     errorHandler(e, 'getProfileAsync');
   }
 }

@@ -9,6 +9,8 @@ export default StyleSheet.create({
   contentContainer: {
     padding: 16,
     zIndex: 2,
+    justifyContent: 'space-between',
+    flex: 1,
   },
   image: {
     height: '100%',
@@ -19,7 +21,7 @@ export default StyleSheet.create({
   background: {
     zIndex: 1,
     height: '100%',
-    width: 230,
+    width: 285,
     position: 'absolute',
   },
   date: {

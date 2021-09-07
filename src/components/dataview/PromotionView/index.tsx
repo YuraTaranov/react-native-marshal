@@ -7,11 +7,6 @@ import {fonts} from '@constants';
 import 'moment/locale/uk';
 import {assets} from '@assets';
 
-// FIXME:
-const fakeImageUri = 'https://foodman.club/wp-content/uploads/2017/10/11-7.jpg';
-const fakePriceNew = '69';
-const fakePriceOld = '89';
-
 type TProps = {
   item: TPromotion;
   onPress?: (id: number) => () => void;
@@ -32,9 +27,9 @@ const PromotionView: React.FC<TProps> = ({
   }, [item.end]);
 
   const titleStyles = useMemo(() => {
-    if (item.type === 2) {
+    if (item.type === 'action') {
       return [styles.title, {fontSize: 16, fontFamily: fonts.interRegular_400}];
-    } else if (item.type === 3) {
+    } else if (item.type === 'discount') {
       return [styles.title, {marginTop: 40}];
     } else {
       return styles.title;
@@ -43,9 +38,9 @@ const PromotionView: React.FC<TProps> = ({
 
   const background = useMemo(() => {
     switch (item.type) {
-      case 1:
+      case 'new':
         return assets.PROMOTION_BG_RED;
-      case 2:
+      case 'action':
         return assets.PROMOTION_BG_BLUE;
       default:
         return assets.PROMOTION_BG_GREEN;
@@ -65,22 +60,33 @@ const PromotionView: React.FC<TProps> = ({
       onPress={onPress && onPress(item.id)}
       activeOpacity={0.9}
       disabled={disabled}>
-      <Image source={{uri: fakeImageUri}} style={borderRadiusStyles.image} />
+      <Image source={{uri: item.image}} style={borderRadiusStyles.image} />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
-        {item.type !== 3 ? (
+        {item.type !== 'discount' ? (
           <Text style={styles.date}>{promoEndDate}</Text>
         ) : null}
         <Text style={titleStyles} numberOfLines={2} ellipsizeMode="tail">
-          {item.title}
+          {item.type === 'discount'
+            ? `${item.title} -${item.discount_percentage}%`
+            : item.title}
         </Text>
-        <Text style={styles.description} numberOfLines={2} ellipsizeMode="tail">
-          {item.text}
-        </Text>
-        {item.type === 2 ? (
+        {item.type !== 'action' ? (
+          <Text
+            style={styles.description}
+            numberOfLines={2}
+            ellipsizeMode="tail">
+            {item.description}
+          </Text>
+        ) : null}
+        {item.type === 'action' ? (
           <View style={styles.priceContainer}>
-            <Text style={styles.priceNew}>{`${fakePriceNew} ${t('грн')}`}</Text>
-            <Text style={styles.priceOld}>{`${fakePriceOld} ${t('грн')}`}</Text>
+            <Text style={styles.priceNew}>{`${item.new_price} ${t(
+              'грн',
+            )}`}</Text>
+            <Text style={styles.priceOld}>{`${item.old_price} ${t(
+              'грн',
+            )}`}</Text>
           </View>
         ) : null}
       </View>

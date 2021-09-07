@@ -72,6 +72,7 @@ export const MarkerModal: React.FC<TProps> = ({isVisible, data, cb}) => {
       isVisible={visible}
       animationIn="fadeInUp"
       onBackdropPress={closeModal}
+      backdropTransitionOutTiming={0}
       backdropColor="#0000">
       <View style={styles.container}>
         <View style={styles.inContainer}>

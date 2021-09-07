@@ -1,48 +1,59 @@
 import React from 'react';
 import {Dispatch} from 'redux';
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useTranslation,
-  useState,
-} from '@hooks';
-import {View, Text} from '@components';
-import {TGlobalState} from '@types';
+import {useEffect, useMemo, useTranslation, useState} from '@hooks';
+import {View, Text, DeviceInfo} from '@components';
+import {TGlobalState, TSettingsText} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
+// import VersionCheck from 'react-native-version-check';
 
 type TProps = {
   dispatch: Dispatch;
+  settings: TSettingsText[];
 };
 
-const AboutApp: React.FC<TProps> = ({dispatch}) => {
+const AboutApp: React.FC<TProps> = ({dispatch, settings}) => {
   const {t} = useTranslation();
+  const [isNeedUpdate, setIsNeedUpdate] = useState<boolean>(false);
+  const appVersion = DeviceInfo.getVersion();
 
-  const appVersion = '1.01';
+  //   FIXME: add logic after release
+  //   VersionCheck.needUpdate()
+  //     .then(async (res: any) => {
+  //       //   if (res.isNeeded) {
+  //       //     // setIsNeedUpdate(res.storeUrl);
+  //       //     setIsNeedUpdate(true);
+  //       //   }
+  //     })
+  //     .catch((err: any) => console.log('VersionCheck error', err));
+
+  //   useEffect(() => {
+  //     isNeedUpdate &&
+  //       Alert.alert('', t('Для коректної роботи додатку необхідно оновлення'), [
+  //         {text: t('Оновити'), onPress: () => Linking.openURL(isNeedUpdate), style: 'cancel'},
+  //         {text: t('Відміна'), onPress: () => {}, style: 'destructive'},
+  //       ]);
+  //   }, [isNeedUpdate]);
+
+  const data = useMemo(() => {
+    return settings.find(item => item.type === 'about_the_application');
+  }, [settings]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        {/* FIXME: */}
         {`${t('Версія додатку:')} ${appVersion}`}
       </Text>
       <Text style={styles.description}>
-        {/* FIXME: */}
-        {t('Доступна версія для оновлення')}
+        {isNeedUpdate ? t('Доступна версія для оновлення') : null}
       </Text>
-      <Text style={styles.content}>
-        {/* FIXME: */}
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        }
-      </Text>
+      <Text style={styles.content}>{data?.text}</Text>
     </View>
   );
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  // reducer: state.reducer
+  settings: state.settings.data,
 });
 
 export default connect(mapStateToProps)(AboutApp);

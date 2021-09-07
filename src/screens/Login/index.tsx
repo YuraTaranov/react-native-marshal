@@ -29,14 +29,21 @@ import {colors} from '@constants';
 import {verticalScale} from '@helpers';
 import {setPhone, checkPhone} from '@reducers/login';
 import {setBiometricsType} from '@reducers/biometrics';
+import BiometricsLoginModal from './components/BiometricsLoginModal/BiometricsLoginModal';
 
 type TProps = {
   dispatch: Dispatch;
   phone: string;
   loading: boolean;
+  faceIdActiveLocal: boolean;
 };
 
-const Login: React.FC<TProps> = ({dispatch, phone, loading}) => {
+const Login: React.FC<TProps> = ({
+  dispatch,
+  phone,
+  loading,
+  faceIdActiveLocal,
+}) => {
   const {t} = useTranslation();
   const textInputMaskRef = useRef<TextInput>(null);
   const {setOptions} = useNavigation();
@@ -103,6 +110,7 @@ const Login: React.FC<TProps> = ({dispatch, phone, loading}) => {
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
+      {faceIdActiveLocal ? <BiometricsLoginModal /> : null}
       <KeyboardAvoidingView
         keyboardVerticalOffset={verticalScale(90)}
         style={styles.container}>
@@ -145,6 +153,7 @@ const Login: React.FC<TProps> = ({dispatch, phone, loading}) => {
 const mapStateToProps = (state: TGlobalState) => ({
   phone: state.login.phone,
   loading: state.login.loading,
+  faceIdActiveLocal: state.biometrics.faceIdActiveLocal,
 });
 
 export default connect(mapStateToProps)(Login);

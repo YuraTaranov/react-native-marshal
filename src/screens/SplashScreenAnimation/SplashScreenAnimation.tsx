@@ -21,7 +21,7 @@ const SplashScreenAnimation: React.FC<TProps> = ({}) => {
         autoPlay
         loop={false}
         onAnimationFinish={onAnimationFinish}
-        speed={0.5}
+        speed={0.2}
       />
     </View>
   );

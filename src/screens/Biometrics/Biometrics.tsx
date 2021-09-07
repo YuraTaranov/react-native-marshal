@@ -5,7 +5,6 @@ import {
   useCallback,
   useMemo,
   useTranslation,
-  useState,
   useNavigation,
 } from '@hooks';
 import {
@@ -16,17 +15,17 @@ import {
   GhostButton,
   Image,
   DeviceInfo,
-  Alert,
   ReactNativeBiometrics,
 } from '@components';
 import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {assets} from '@assets';
-import {setIsUserAuthorized} from '@reducers/appGlobalState';
+import {setIsUserAuthorized, setLoader} from '@reducers/appGlobalState';
 import {httpPost, errorHandler} from '@services';
 import {urls} from '@constants';
-import {setFaceIdActiveLocal} from '@reducers/biometrics';
+import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
+import {getProfile} from '@reducers/profile';
 
 type TProps = {
   dispatch: Dispatch;
@@ -45,24 +44,22 @@ const Biometrics: React.FC<TProps> = ({dispatch, biometricsType}) => {
   }, []);
 
   const createKeys = async () => {
-    //   FIXME: check method
-    // setIsLoading(true);
+    dispatch(setLoader(true));
     try {
       const res = await ReactNativeBiometrics.createKeys();
       const body = await httpPost(urls.biometricsAdd, {
-        // value,
-        // timestamp: String(timestamp),
         public_key: res.publicKey,
         device_id,
       });
-      if (body.data) {
-        // setIsLoading(false);
-        // dispatch(setFaceIdActiveLocal(true));
-        // dispatch(setTimeStamp(timestamp));
-        // dispatch(getProfile());
+      dispatch(setLoader(false));
+      if (body.data.data.user_key) {
+        dispatch(setIsUserAuthorized(true));
+        dispatch(setFaceIdActiveLocal(true));
+        dispatch(setUserKey(body.data.data.user_key));
+        dispatch(getProfile());
       }
     } catch (e) {
-      //   setIsLoading(false);
+      dispatch(setLoader(false));
       errorHandler('createKeys error biometrics reg');
     }
   };

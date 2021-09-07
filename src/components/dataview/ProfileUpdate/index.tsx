@@ -60,7 +60,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   );
   //   FIXME: типы пола
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
-    type: profile?.gender ? (profile?.gender === 'male' ? 1 : 2) : 0,
+    type: profile?.gender ? (profile?.gender === 'female' ? 1 : 2) : 0,
     name: profile?.gender
       ? profile?.gender === 'male'
         ? 'Чоловіча'
@@ -142,6 +142,7 @@ const ProfileUpdate: React.FC<TProps> = ({
 
   const submit = useCallback(async () => {
     setLoading(true);
+    const initialPhone = profile?.phone.slice(4);
     const phone = phoneValue.replace(/ /g, '');
     try {
       const data = isRegistration
@@ -151,19 +152,19 @@ const ProfileUpdate: React.FC<TProps> = ({
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
-        : phone
+        : initialPhone === phone
         ? {
             name: nameValue,
             surname: surnameValue,
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
-            phone: `+380${phone}`,
           }
         : {
             name: nameValue,
             surname: surnameValue,
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
+            phone: `+380${phone}`,
           };
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
@@ -189,6 +190,7 @@ const ProfileUpdate: React.FC<TProps> = ({
     gender,
     dispatch,
     t,
+    profile?.phone,
   ]);
 
   const formatPhone = formatWithMask({
@@ -257,7 +259,6 @@ const ProfileUpdate: React.FC<TProps> = ({
             </Text>
           ) : null}
           <MaterialInput
-            keyboardType={'ascii-capable'}
             returnKeyType={'default'}
             value={nameValue}
             onChangeText={setNameValue}
@@ -265,7 +266,6 @@ const ProfileUpdate: React.FC<TProps> = ({
             label={t('textInput.name')}
           />
           <MaterialInput
-            keyboardType={'ascii-capable'}
             returnKeyType={'default'}
             value={surnameValue}
             lineWidth={0.5}

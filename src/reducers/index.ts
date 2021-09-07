@@ -16,5 +16,7 @@ export default combineReducers({
   creditCards: require('./creditCards').default,
   biometrics: require('./biometrics').default,
   searchStations: require('./searchStations').default,
+  notifications: require('./notifications').default,
+  settings: require('./settings').default,
   // ADD NEW REDUCER
 });

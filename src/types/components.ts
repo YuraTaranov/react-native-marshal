@@ -40,18 +40,28 @@ export type TProfile = {
   card: string | null;
   phone: string;
   bearer_token?: string;
+  count_bonus?: number;
+  count_spent_bonus?: number;
+  //   FIXME: type
+  fuels?: [];
+  setting_affiliate_program: '0' | '1';
+  setting_bio_auth: '0' | '1';
+  setting_message_dev: '0' | '1';
+  setting_action: '0' | '1';
 };
 
 export type TPromotion = {
   id: number;
-  type: number;
-  angle?: number;
+  type: 'new' | 'discount' | 'action';
+  image: string;
+  discount_percentage?: number;
   start?: string;
   end?: string;
   title: string;
+  description?: string;
   text?: string;
-  price_new?: string;
-  price_old?: string;
+  new_price?: string;
+  old_price?: string;
 };
 
 export type TReferrals = {
@@ -112,3 +122,16 @@ export type TCreditCard = {
 };
 
 export type TBiometricsType = 'touchId' | 'faceId' | 'fingerprint' | 'none';
+
+export type TNotification = {
+  id: number;
+  isRead: boolean;
+  title: string;
+  date: Date;
+};
+
+export type TSettingsText = {
+  text: string;
+  title: string;
+  type: 'about_the_application' | 'loyalty_conditions' | 'terms_of_use';
+};

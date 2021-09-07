@@ -13,6 +13,7 @@ import {
   Purchases,
   Settings,
   UseTerms,
+  Notifications,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState, TProfile} from '@types';
@@ -130,6 +131,14 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
           headerTitleAlign: 'center',
           title: t('Add_Card'),
           animationEnabled: ios,
+        }}
+      />
+      <ProfileStack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Сповіщення'),
         }}
       />
     </ProfileStack.Navigator>

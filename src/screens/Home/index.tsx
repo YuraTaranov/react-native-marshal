@@ -15,10 +15,11 @@ import {
   QuestionButton,
   BonusCardModal,
   Icon,
+  NotificationsManager,
 } from '@components';
 
 import {connect} from 'react-redux';
-import {resetAppGlobalState} from '@reducers/appGlobalState';
+import {resetAppGlobalState, setLoader} from '@reducers/appGlobalState';
 
 import {getPromotions} from '@reducers/promotions';
 import {colors} from '@constants';
@@ -28,9 +29,13 @@ import styles from './styles';
 
 //Type
 import {Dispatch} from 'redux';
-import {TGlobalState} from '@types';
+import {TGlobalState, TPromotion} from '@types';
+import {getProfile} from '@reducers/profile';
+import {getSettings} from '@reducers/settings';
+
 type TProps = {
   dispatch: Dispatch;
+  promotions: TPromotion[];
 };
 
 const fakeData = {
@@ -38,7 +43,7 @@ const fakeData = {
   fuel: 80,
 };
 
-const Home: React.FC<TProps> = ({dispatch}) => {
+const Home: React.FC<TProps> = ({dispatch, promotions}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
@@ -62,10 +67,14 @@ const Home: React.FC<TProps> = ({dispatch}) => {
     });
     dispatch(getPromotions({page: 1}));
     dispatch(getPetrolStations());
+    dispatch(getProfile());
+    dispatch(getSettings());
+    // dispatch(setLoader(false));
   }, []);
 
   return (
     <View style={styles.container}>
+      <NotificationsManager />
       <View style={styles.headerContentContainer}>
         <View style={styles.balanceContainer}>
           <View style={styles.bonusesContainer}>
@@ -96,7 +105,7 @@ const Home: React.FC<TProps> = ({dispatch}) => {
           <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
         </TouchableOpacity>
       </View>
-      <HomeCarousel />
+      {promotions ? <HomeCarousel promotions={promotions} /> : null}
       <BonusCardModal
         isVisible={cardModalVisible}
         closeModal={closeCardModal}
@@ -105,6 +114,8 @@ const Home: React.FC<TProps> = ({dispatch}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  promotions: state.promotions.data,
+});
 
 export default connect(mapStateToProps)(Home);

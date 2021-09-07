@@ -36,7 +36,7 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     borderBottomColor: colors.gray_DADBDF,
-    borderBottomWidth: 1.75,
+    borderBottomWidth: 1,
     paddingHorizontal: 20,
   },
   headerText: {
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomColor: colors.gray_DADBDF,
-    borderBottomWidth: 1.75,
+    borderBottomWidth: 1,
     paddingHorizontal: 20,
   },
   leftView: {

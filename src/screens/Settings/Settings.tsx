@@ -15,17 +15,19 @@ import {
   Icon,
   FlatList,
   OpenAppSettings,
-  SwitchCustom,
+  ConfirmModal,
 } from '@components';
-import {TGlobalState} from '@types';
+import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors} from '@constants';
 import {navigate} from '@services';
 import {logout} from '@reducers/logout';
+import BioAuthSwitch from './components/BioAuthSwitch/BioAuthSwitch';
 
 type TProps = {
   dispatch: Dispatch;
+  biometricsType: TBiometricsType;
 };
 
 type TMenuItem = {
@@ -33,18 +35,24 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Settings: React.FC<TProps> = ({dispatch}) => {
+const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-  const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(false);
+
+  const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
 
   const onPressLogout = useCallback(() => {
-    dispatch(logout());
+    setLogoutModalVisible(true);
   }, []);
 
-  const toggleBiometricsSwitch = useCallback(() => {
-    setIsBiometricsActive(!isBiometricsActive);
-  }, [isBiometricsActive]);
+  const closeLogoutModal = useCallback(() => {
+    setLogoutModalVisible(false);
+  }, []);
+
+  const onLogout = useCallback(() => {
+    dispatch(logout());
+    setLogoutModalVisible(false);
+  }, []);
 
   useEffect(() => {
     setOptions({
@@ -97,11 +105,15 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
 
   return (
     <View style={styles.container}>
-      <SwitchCustom
-        value={isBiometricsActive}
-        onValueChange={toggleBiometricsSwitch}
-        title={t('Вхід за відбитком')}
+      <ConfirmModal
+        isVisible={logoutModalVisible}
+        closeModal={closeLogoutModal}
+        rightButtonOnPress={onLogout}
+        title={t('Впевнені, що хочете вийти з акаунта?')}
+        rightButtonText={t('Так, вийти')}
+        leftButtonText={t('Не зараз')}
       />
+      {biometricsType !== 'none' ? <BioAuthSwitch /> : null}
       <FlatList
         data={menuItems}
         renderItem={renderItem}
@@ -111,6 +123,8 @@ const Settings: React.FC<TProps> = ({dispatch}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  biometricsType: state.biometrics.biometricsType,
+});
 
 export default connect(mapStateToProps)(Settings);

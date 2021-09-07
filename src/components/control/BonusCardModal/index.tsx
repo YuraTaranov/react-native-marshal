@@ -1,19 +1,27 @@
 import React from 'react';
-import {useTranslation} from '@hooks';
+import {useTranslation, useMemo} from '@hooks';
 import {View, Modal, Text, Icon, TouchableOpacity, QRCode} from '@components';
 import styles from './styles';
 import {colors, hitSlop} from '@constants';
+import {connect} from 'react-redux';
+import {TGlobalState, TProfile} from '@types';
 
 type TProps = {
   isVisible: boolean;
   closeModal: () => void;
+  profile: TProfile;
 };
 
-// FIXME:
-const bonusCard = 'XXXX XXXX XXXX XXXX';
-
-const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal}) => {
+const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal, profile}) => {
   const {t} = useTranslation();
+
+  const cardNumber = useMemo(() => {
+    if (!!profile?.card) {
+      return String(profile.card)
+        .replace(/\D/, '')
+        .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4');
+    } else return '';
+  }, [profile?.card]);
 
   return (
     <Modal
@@ -30,17 +38,20 @@ const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal}) => {
             <Icon name="x" size={24} color={colors.black_000000} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.bonusCard}>{bonusCard}</Text>
+        {profile?.card ? (
+          <Text style={styles.bonusCard}>{cardNumber}</Text>
+        ) : null}
         <View style={styles.qrCodeContainer}>
-          <QRCode
-            size={160}
-            // FIXME:
-            // value={}
-          />
+          {/* FIXME: узнать нужны ли пробелы */}
+          <QRCode size={160} value={profile?.card || ''} />
         </View>
       </View>
     </Modal>
   );
 };
 
-export default BonusCardModal;
+const mapStateToProps = (state: TGlobalState) => ({
+  profile: state.profile.data,
+});
+
+export default connect(mapStateToProps)(BonusCardModal);

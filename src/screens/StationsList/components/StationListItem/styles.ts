@@ -9,7 +9,7 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     borderBottomColor: colors.gray_DADBDF,
-    borderBottomWidth: 1.75,
+    borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 19,
   },

@@ -7,6 +7,7 @@ import {
   useTranslation,
   useState,
   useNavigation,
+  useMemo,
 } from '@hooks';
 
 import {
@@ -38,8 +39,6 @@ type TProps = {
 const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
   const {t} = useTranslation();
   const {setOptions, navigate, goBack} = useNavigation();
-  const [regionsLabel, setRegionsLabel] = useState('');
-  const [showResultCounter, setShowResultCounter] = useState(0);
   const [FuelTypesList, setFuelTypesList] = useState<Array<TListItem>>([]);
 
   const getListFuelTypes = useCallback(() => {
@@ -73,32 +72,36 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
     goBack();
   };
   const goToRegionsPage = () => navigate('RegionsPage');
-  const onChangeSelected = (title: string) => () => {
-    const List: TListItem[] =
-      FuelTypesList.map(el => {
-        if (el.title === title && el.status === 'selected') {
-          return {...el, status: 'potential'};
-        } else if (el.title === title && el.status === 'potential') {
-          return {...el, status: 'selected'};
-        }
-        return el;
-      }) || [];
+  const onChangeSelected = useCallback(
+    (title: string) => () => {
+      const List: TListItem[] =
+        FuelTypesList.map(el => {
+          if (el.title === title && el.status === 'selected') {
+            return {...el, status: 'potential'};
+          } else if (el.title === title && el.status === 'potential') {
+            return {...el, status: 'selected'};
+          }
+          return el;
+        }) || [];
 
-    setFuelTypesList(List);
-    dispatch(
-      setFilters({
-        ...filters,
-        fuelTypes: List.filter(i => i.status === 'selected').map(i => i.title),
-      }),
-    );
-  };
+      setFuelTypesList(List);
+      dispatch(
+        setFilters({
+          ...filters,
+          fuelTypes: List.filter(i => i.status === 'selected').map(
+            i => i.title,
+          ),
+        }),
+      );
+    },
+    [FuelTypesList, filters],
+  );
 
-  const getCounerOfResult = useCallback(() => {
-    const FilteredPetrolStationList = getFilteredPetrolStationList({
+  const counterOfResult = useMemo(() => {
+    return getFilteredPetrolStationList({
       filters,
       stations: petrolStations,
-    });
-    setShowResultCounter(FilteredPetrolStationList.length);
+    }).length;
   }, [filters, petrolStations]);
 
   const cleaning = useCallback(() => {
@@ -109,23 +112,17 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
     setFuelTypesList(getListFuelTypes());
   }, [getListFuelTypes, filters]);
 
-  useEffect(() => {
+  const regionsLabel = useMemo(() => {
     if (filters.regions.length > 3) {
-      setRegionsLabel(
-        `${filters.regions[0]}, ${filters.regions[1]} ${t('and_further')} ${
-          filters.regions.length - 2
-        }...}`,
-      );
+      return `${filters.regions[0]}, ${filters.regions[1]} ${t(
+        'and_further',
+      )} ${filters.regions.length - 2}...}`;
     } else if (filters.regions.length > 0) {
-      setRegionsLabel(filters.regions.join(', '));
+      return filters.regions.join(', ');
     } else {
-      setRegionsLabel('');
+      return '';
     }
-  }, [filters, t]);
-
-  useEffect(() => {
-    getCounerOfResult();
-  }, [filters, getCounerOfResult]);
+  }, [filters]);
 
   useEffect(() => {
     setOptions({
@@ -168,7 +165,7 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
 
       <View style={styles.buttonView}>
         <FilterButton
-          label={`${t('Show result')} (${showResultCounter})`}
+          label={`${t('Show result')} (${counterOfResult})`}
           onPress={onPressButton}
         />
       </View>
