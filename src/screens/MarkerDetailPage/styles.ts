@@ -1,6 +1,5 @@
 import {StyleSheet} from '@components';
 import {colors, width, ios, isIphoneX, fonts} from '@constants';
-import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 
 export default StyleSheet.create({
   container: {

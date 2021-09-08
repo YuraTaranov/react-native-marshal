@@ -90,7 +90,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
     <View style={styles.container}>
       <View style={styles.addressView}>
         <View style={styles.iconView}>
-          <SVG_Icons height={22} fill={colors.green_41BB4E} name="pin2" />
+          <SVG_Icons height={22} fill={colors.green_41BB4E} name="point" />
         </View>
         <View style={styles.addressTextView}>
           <Text style={styles.addressText}>{`${stationDetails.address}`}</Text>
