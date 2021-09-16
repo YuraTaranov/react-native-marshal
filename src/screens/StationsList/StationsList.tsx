@@ -3,7 +3,7 @@ import React from 'react';
 
 import {useEffect, useCallback, useState} from '@hooks';
 import {View, ScrollView, Geolocation, Linking} from '@components';
-import {Search, StationListItem} from './components';
+import {Search, StationListItem, NothingFoundItem} from './components';
 import {connect} from 'react-redux';
 import {navigate} from '@services';
 import {getUrlForRoute, animation} from '@helpers';
@@ -99,6 +99,9 @@ const StationsList: React.FC<TProps> = ({
             />
           );
         })}
+        {!stations.length && (
+          <NothingFoundItem />
+        )}
         <View style={styles.footer} />
       </ScrollView>
     </View>
