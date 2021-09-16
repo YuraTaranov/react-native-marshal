@@ -32,16 +32,17 @@ export default StyleSheet.create({
   },
   header: {
     width,
-    height: 60,
+    height: 68,
     alignItems: 'flex-start',
     justifyContent: 'center',
     borderBottomColor: colors.gray_DADBDF,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
+    paddingTop: 10,
   },
   headerText: {
     fontFamily: fonts.interMedium_500,
-    fontSize: 18.5,
+    fontSize: 19,
     fontWeight: '500',
   },
   itemView: {
@@ -53,6 +54,7 @@ export default StyleSheet.create({
     borderBottomColor: colors.gray_DADBDF,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
+    marginBottom: 9,
   },
   leftView: {
     flex: 5,
@@ -66,11 +68,11 @@ export default StyleSheet.create({
   },
   leftText: {
     fontFamily: fonts.interRegular_400,
-    fontSize: 16,
+    fontSize: 16.4,
   },
   rightText: {
     fontFamily: fonts.interMedium_500,
-    fontSize: 16,
+    fontSize: 16.4,
   },
   buttonView: {
     width,
