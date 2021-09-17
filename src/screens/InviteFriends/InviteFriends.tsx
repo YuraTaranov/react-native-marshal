@@ -17,28 +17,32 @@ import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {hitSlop} from '@constants';
 
-const fakeLink = 'www.xxxxxxxxxxx.xxx/xxxx';
+type TProps = {
+  referralLink: string;
+};
 
-type TProps = {};
-
-const InviteFriends: React.FC<TProps> = ({}) => {
+const InviteFriends: React.FC<TProps> = ({referralLink}) => {
   const {t} = useTranslation();
   const toastRef = useRef(null);
 
   const onPressShare = useCallback(async () => {
-    try {
-      const result = await Share.share({
-        title: t('Поділіться своїм посиланням'),
-        message: fakeLink,
-      });
-    } catch (error) {
-      Alert.alert(error.message);
+    if (referralLink) {
+      try {
+        const result = await Share.share({
+          title: t('Поділіться своїм посиланням'),
+          message: referralLink,
+        });
+      } catch (error) {
+        Alert.alert(error.message);
+      }
     }
   }, []);
 
   const onPressCopy = useCallback(() => {
-    Clipboard.setString(fakeLink);
-    toastRef?.current?.show('Посилання скопійовано', 2000);
+    if (referralLink) {
+      Clipboard.setString(referralLink);
+      toastRef?.current?.show('Посилання скопійовано', 2000);
+    }
   }, []);
 
   return (
@@ -55,7 +59,12 @@ const InviteFriends: React.FC<TProps> = ({}) => {
       <View style={styles.borderViewContainer}>
         <View style={styles.linkContainer}>
           <Text style={styles.referralTitle}>{t('Реферальне посилання')}</Text>
-          <Text style={styles.referralValue}>{fakeLink}</Text>
+          <Text
+            style={styles.referralValue}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            {referralLink}
+          </Text>
         </View>
         <TouchableOpacity onPress={onPressCopy} hitSlop={hitSlop}>
           <Icon size={24} name="copy" />
@@ -72,6 +81,8 @@ const InviteFriends: React.FC<TProps> = ({}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  referralLink: state.referral.link,
+});
 
 export default connect(mapStateToProps)(InviteFriends);

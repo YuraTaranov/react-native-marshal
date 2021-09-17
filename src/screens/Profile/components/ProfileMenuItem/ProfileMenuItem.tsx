@@ -10,7 +10,7 @@ type TProps = {
     name: string;
     onPress: () => void;
   };
-  newNotificationsLength: string;
+  newNotificationsLength: string | null;
   cardNumber: string;
 };
 
@@ -23,7 +23,7 @@ const ProfileMenuItem: React.FC<TProps> = ({
     if (item.icon === 'creditcard') {
       return <Text style={styles.bonusCardNumber}>{cardNumber}</Text>;
     }
-    if (item.icon === 'bell') {
+    if (item.icon === 'bell' && newNotificationsLength) {
       return (
         <Text style={styles.notificationsText}>{newNotificationsLength}</Text>
       );

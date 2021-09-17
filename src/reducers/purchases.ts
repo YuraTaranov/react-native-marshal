@@ -51,20 +51,21 @@ export function* watchPurchases() {
 }
 
 export function* getPurchasesAsync(action: any) {
-  const purchases = yield select(state => state.profile.purchases.data);
+  const purchases = yield select(state => state.purchases.data);
   try {
     const body = yield call(() =>
-      httpGet(`${urls.purchases}?page=${action.data.page}`),
+      httpGet(`${urls.getPurchases}?page=${action.data.page}`),
     );
-    if (body.data.length < 20) {
+    if (body.data.data.length < 10) {
       yield put(setFinishLoading(true));
     } else {
       yield put(setFinishLoading(false));
     }
     if (action.data.page === 1) {
-      yield put(setPurchases(body.data));
+      yield put(setPurchases(body.data.data));
     } else {
-      yield body.data.length && put(setPurchases([...purchases, ...body.data]));
+      yield body.data.length &&
+        put(setPurchases([...purchases, ...body.data.data]));
     }
     yield put(setLazyLoading(false));
     yield put(setRefreshing(false));

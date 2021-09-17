@@ -14,43 +14,17 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from '@components';
-import {TGlobalState} from '@types';
+import {TGlobalState, TPurchase} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {declension, colors} from '@constants';
 import {setLazyLoading, getPurchases, setRefreshing} from '@reducers/purchases';
 import ListEmptyComponent from './components/ListEmptyComponent/ListEmptyComponent';
-
-const fakeData: TPurchase[] = [
-  {
-    id: 1,
-    fuel_name: 'А95',
-    volume: '55',
-    price: '1 429,85',
-    date: '12.08.2021 09:48',
-    card: '1234',
-  },
-  {
-    id: 2,
-    fuel_name: 'А95',
-    volume: '55',
-    price: '1 429,85',
-    date: '12.08.2021 09:48',
-    card: '1234',
-  },
-];
-
-type TPurchase = {
-  id: number;
-  fuel_name: string;
-  volume: string;
-  price: string;
-  date: string;
-  card: string;
-};
+import moment from 'moment';
 
 type TProps = {
   dispatch: Dispatch;
+  purchases: TPurchase[];
   lazyLoading: boolean;
   finishLoading: boolean;
   refreshing: boolean;
@@ -58,6 +32,7 @@ type TProps = {
 
 const Purchases: React.FC<TProps> = ({
   dispatch,
+  purchases,
   lazyLoading,
   finishLoading,
   refreshing,
@@ -66,7 +41,7 @@ const Purchases: React.FC<TProps> = ({
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    // dispatch(getPurchases({page: 1}));
+    dispatch(getPurchases({page: 1}));
   }, []);
 
   const fuelVolume = useCallback(volume => {
@@ -77,18 +52,29 @@ const Purchases: React.FC<TProps> = ({
     ])}`;
   }, []);
 
+  const parseDate = useCallback(date => {
+    return moment(date).format('DD.MM.YYYY hh:mm');
+  }, []);
+
+  const parseFuel = useCallback(fuelId => {
+    if (fuelId === 1) return t('ДТ');
+    if (fuelId === 2) return 'А95';
+    if (fuelId === 3) return 'А98';
+    return 'А98+';
+  }, []);
+
   const renderItem: ({item}: {item: TPurchase}) => JSX.Element = useCallback(
     ({item}) => (
       <View style={styles.itemContainer}>
         <View>
-          <Text style={styles.itemName}>{`${t('Паливо')} ${
-            item.fuel_name
-          } • ${fuelVolume(item.volume)}`}</Text>
-          <Text style={styles.itemDate}>{item.date}</Text>
+          <Text style={styles.itemName}>{`${t('Паливо')} ${parseFuel(
+            item.fuel_id,
+          )} • ${fuelVolume(item.liters)}`}</Text>
+          <Text style={styles.itemDate}>{parseDate(item.created_at)}</Text>
         </View>
         <View>
-          <Text style={styles.itemPrice}>{`${item.price} ₴/л`}</Text>
-          <Text style={styles.itemCard}>{`** ${item.card}`}</Text>
+          <Text style={styles.itemPrice}>{`${item.many} ₴`}</Text>
+          <Text style={styles.itemCard}>{`** ${item.credit_card}`}</Text>
         </View>
       </View>
     ),
@@ -102,17 +88,17 @@ const Purchases: React.FC<TProps> = ({
 
   const onEndReached = useCallback(() => {
     if (!lazyLoading && !finishLoading) {
-      // dispatch(setLazyLoading(true));
-      //   const newPage = page + 1;
-      //   setPage(newPage);
-      // dispatch(getPurchases({page: newPage}));
+      dispatch(setLazyLoading(true));
+      const newPage = page + 1;
+      setPage(newPage);
+      dispatch(getPurchases({page: newPage}));
     }
   }, [page, lazyLoading]);
 
   const onRefresh = useCallback(() => {
-    // dispatch(setRefreshing(true));
-    // setPage(1);
-    // dispatch(getPurchases({page: 1}));
+    dispatch(setRefreshing(true));
+    setPage(1);
+    dispatch(getPurchases({page: 1}));
   }, [page]);
 
   const lazyLoader = useMemo(
@@ -126,7 +112,7 @@ const Purchases: React.FC<TProps> = ({
   return (
     <View style={styles.container}>
       <FlatList
-        data={fakeData}
+        data={purchases}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         style={styles.flatList}
@@ -139,7 +125,7 @@ const Purchases: React.FC<TProps> = ({
             size={24}
           />
         }
-        initialNumToRender={20}
+        initialNumToRender={10}
         onEndReachedThreshold={1}
         onEndReached={onEndReached}
         ListEmptyComponent={<ListEmptyComponent />}
@@ -150,6 +136,7 @@ const Purchases: React.FC<TProps> = ({
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
+  purchases: state.purchases.data,
   finishLoading: state.purchases.finishLoading,
   lazyLoading: state.purchases.lazyLoading,
   refreshing: state.purchases.refreshing,

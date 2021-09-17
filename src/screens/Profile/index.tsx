@@ -8,7 +8,7 @@ import {
   useState,
 } from '@hooks';
 import {View, TouchableOpacity, Icon, BonusCardModal} from '@components';
-import {TGlobalState, TProfile} from '@types';
+import {TGlobalState, TProfile, TNotification} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {colors, declension} from '@constants';
@@ -20,6 +20,7 @@ import {navigate} from '@services';
 import {getCars} from '@reducers/cars';
 
 type TProps = {
+  notifications: TNotification[];
   dispatch: Dispatch;
   profile: TProfile;
 };
@@ -30,7 +31,7 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Profile: React.FC<TProps> = ({dispatch, profile}) => {
+const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [bonusCardModelVisible, setBonusCardModelVisible] =
@@ -84,17 +85,24 @@ const Profile: React.FC<TProps> = ({dispatch, profile}) => {
       return String(profile?.card)
         .replace(/\D/, '')
         .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, 'XXXX XXXX XXXX $4');
+      // .replace(/(\d{4})(\d{6})/, 'XXXX $2');
     } else return 'XXXX XXXX XXXX XXXX';
+    // } else return 'XXXX XXXXXX';
   }, [profile?.card]);
 
+  const unreadNotificationsCount = useMemo(() => {
+    return notifications.filter(item => !item.isRead).length;
+  }, [notifications]);
+
   const newNotificationsLength = useMemo(() => {
-    //   FIXME:
-    return `${4} ${declension(Number(2), [
-      'сповіщення',
-      'сповіщення',
-      'сповіщень',
-    ])}`;
-  }, []);
+    return unreadNotificationsCount
+      ? `${unreadNotificationsCount} ${declension(Number(2), [
+          'сповіщення',
+          'сповіщення',
+          'сповіщень',
+        ])}`
+      : null;
+  }, [unreadNotificationsCount]);
 
   const onPressSupport = useCallback(() => {
     dispatch(setSupport(true));
@@ -150,6 +158,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile}) => {
 };
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
+  notifications: state.notifications.data,
 });
 
 export default connect(mapStateToProps)(Profile);

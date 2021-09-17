@@ -43,6 +43,7 @@ module.exports = [
       'Notifications',
       'FuelCalculator',
       'FuelPurchase',
+      'Languages',
       //ADD MORE SCREENS
     ],
   },

@@ -60,7 +60,7 @@ const PromotionView: React.FC<TProps> = ({
       onPress={onPress && onPress(item.id)}
       activeOpacity={0.9}
       disabled={disabled}>
-      <Image source={{uri: item.image}} style={borderRadiusStyles.image} />
+      <Image source={{uri: item?.image}} style={borderRadiusStyles.image} />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
         {item.type !== 'discount' ? (

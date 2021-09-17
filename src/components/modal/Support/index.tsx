@@ -24,7 +24,7 @@ const swipeDirection:
   | Direction[]
   | undefined = ['down', 'up'];
 
-//   FIXME:
+//   FIXME: tel
 const tel = '+38 (050) 123 12 12';
 
 const Support: React.FC<TProps> = ({support, dispatch}) => {
@@ -43,7 +43,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   }, []);
 
   const onPressMessenger = useCallback(() => {
-    //   FIXME:
+    //   FIXME: add messenger link
     try {
       Linking.openURL(`http://m.me/sport24live`);
     } catch (error) {
@@ -52,16 +52,16 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   }, []);
 
   const onPressViber = useCallback(() => {
-    //   FIXME:
+    //   FIXME: add viber link
     try {
-      Linking.openURL('viber://contact?number=%2B0734701124');
+      Linking.openURL('viber://contact?number=%+380734701124');
     } catch (error) {
       console.log('onPressViber error', error);
     }
   }, []);
 
   const onPressTelegram = useCallback(() => {
-    //   FIXME:
+    //   FIXME: add telegram link
     const url = 'tg://resolve?domain=dmitry_ilchenko';
     try {
       Linking.openURL(url).catch(err => {

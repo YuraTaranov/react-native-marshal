@@ -233,7 +233,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
                 {...priceData}
                 onSelected={onSelectedPrice}
                 selectedId={selectedPriceId}
-                key={prices?.id}
+                key={priceData?.id}
               />
             );
           })}

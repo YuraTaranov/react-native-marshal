@@ -29,13 +29,20 @@ import {assets} from '@assets';
 import {httpPost, errorHandler, navigate} from '@services';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
 import {setProfile} from '@reducers/profile';
+import {setReferralUserId} from '@reducers/referral';
+import {resetLogin} from '@reducers/login';
 
 type TProps = {
   dispatch: Dispatch;
   biometricsType: TBiometricsType;
+  referralUserId: string;
 };
 
-const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
+const BonusCardCheck: React.FC<TProps> = ({
+  dispatch,
+  biometricsType,
+  referralUserId,
+}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardType, setCardType] = useState<{type: number; name: string}>({
@@ -82,7 +89,6 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
   }, []);
 
   const isButtonNextDisabled = useMemo(() => {
-    //   FIXME: номер карты может быть с пробелами, проверить
     if (
       cardType.type === 1 &&
       !isCardNumberReadByQR &&
@@ -105,16 +111,20 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
 
   const submit = useCallback(async () => {
     setLoading(true);
+    const refUserId = referralUserId ? referralUserId : '';
     try {
       const body =
         cardType.type === 1
           ? await httpPost(urls.addCardOld, {
               card: cardNumber.replace(/ /g, ''),
+              parent_user_id: refUserId,
             })
-          : await httpPost(urls.addCardNew);
+          : await httpPost(urls.addCardNew, {parent_user_id: refUserId});
       setLoading(false);
       if (body.status === 200) {
         dispatch(setProfile(body.data.data));
+        dispatch(setReferralUserId(''));
+        dispatch(resetLogin());
         biometricsType !== 'none'
           ? navigate('Biometrics')
           : dispatch(setIsUserAuthorized(true));
@@ -123,7 +133,7 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
       setLoading(false);
       errorHandler(error, 'add card old error');
     }
-  }, [cardNumber, cardType.type, biometricsType]);
+  }, [cardNumber, cardType.type, biometricsType, referralUserId]);
 
   return (
     <View style={styles.container}>
@@ -141,10 +151,13 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
           keyboardType={'number-pad'}
           returnKeyType="done"
           value={cardNumber}
+          //   mask={'[0000] [000000]'}
           mask={'[0000] [0000] [0000] [0000]'}
           onChangeText={onChangeCardNumber}
+          //   placeholder="XXXX XXXXXX"
           placeholder="XXXX XXXX XXXX XXXX"
           placeholderTextColor={colors.gray_8D909D}
+          editable={cardType.type === 1}
         />
         <TouchableOpacity style={styles.iconContainer} onPress={openModal}>
           <Icon name="scan" size={24} />
@@ -200,6 +213,7 @@ const BonusCardCheck: React.FC<TProps> = ({dispatch, biometricsType}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   biometricsType: state.biometrics.biometricsType,
+  referralUserId: state.referral.userId,
 });
 
 export default connect(mapStateToProps)(BonusCardCheck);

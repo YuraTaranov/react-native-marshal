@@ -1,5 +1,5 @@
 import {StyleSheet} from '@components';
-import {colors, bottom} from '@constants';
+import {colors, bottom, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -27,6 +27,7 @@ export default StyleSheet.create({
     color: colors.black_000000,
     fontSize: 16,
     marginTop: 2,
+    width: width - 80,
   },
   buttonContainer: {
     flex: 1,

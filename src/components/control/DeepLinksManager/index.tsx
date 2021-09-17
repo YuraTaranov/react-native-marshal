@@ -1,20 +1,22 @@
 import React from 'react';
 import {useEffect} from '@hooks';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
+import dynamicLinks, {
+  FirebaseDynamicLinksTypes,
+} from '@react-native-firebase/dynamic-links';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
+import {setReferralUserId} from '@reducers/referral';
 
 type TProps = {
   dispatch: Dispatch;
 };
 
-const fakeLink = 'https://dev.marshal.myapp.com.ua/referral?parent_user_id=123';
-
 const DeepLinksManager: React.FC<TProps> = ({dispatch}) => {
-  const handleDynamicLink = (link: any) => {
+  const handleDynamicLink = (link: FirebaseDynamicLinksTypes.DynamicLink) => {
     // console.log('LINK foreground ===', link);
-    if (link?.url === 'https://marshalukraine.page.link/test') {
-      // dispatch()
+    if (link?.url) {
+      const userId = link?.url?.split('=')[1];
+      dispatch(setReferralUserId(userId));
     }
   };
 
@@ -27,10 +29,11 @@ const DeepLinksManager: React.FC<TProps> = ({dispatch}) => {
   useEffect(() => {
     dynamicLinks()
       .getInitialLink()
-      .then((link: any) => {
+      .then((link: FirebaseDynamicLinksTypes.DynamicLink | null) => {
         // console.log('LINK background ===', link);
-        if (link?.url === 'https://marshalukraine.page.link/test') {
-          // dispatch()
+        if (link?.url) {
+          const userId = link?.url?.split('=')[1];
+          dispatch(setReferralUserId(userId));
         }
       });
   }, []);

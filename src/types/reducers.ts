@@ -10,6 +10,9 @@ import {
   TPromotion,
   TBiometricsType,
   TSettingsText,
+  TLang,
+  TPurchase,
+  TNotification,
 } from './components';
 
 export type TGlobalState = {
@@ -33,8 +36,7 @@ export type TGlobalState = {
     data: TProfile;
   };
   purchases: {
-    //   FIXME:
-    data: [];
+    data: TPurchase[];
     lazyLoading: boolean;
     finishLoading: boolean;
     refreshing: boolean;
@@ -68,19 +70,14 @@ export type TGlobalState = {
   searchStations: {
     textOfSearch: string;
   };
-  //   FIXME:
   notifications: {
-    data: [];
+    data: TNotification[];
   };
   settings: {
     data: TSettingsText[];
   };
-};
-
-export type TLang = 'uk' | 'ru' | 'en';
-
-export type TPrice = {
-  title: string;
-  cost: number;
-  id: number;
+  referral: {
+    link: string;
+    userId: string;
+  };
 };

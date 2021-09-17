@@ -35,8 +35,11 @@ const Bonuses: React.FC<TProps> = ({profile}) => {
   }, []);
 
   const activeReferrals = useMemo(() => {
-    //   FIXME: number of referrals
-    return `${5} ${declension(5, ['особа', 'особи', 'осіб'])}`;
+    return `${profile.count_referral} ${declension(5, [
+      'особа',
+      'особи',
+      'осіб',
+    ])}`;
   }, []);
 
   return (

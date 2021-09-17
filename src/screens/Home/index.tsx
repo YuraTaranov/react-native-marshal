@@ -34,6 +34,8 @@ import {getProfile} from '@reducers/profile';
 import {getSettings} from '@reducers/settings';
 
 import {navigate} from '@services';
+import {getReferralLink} from '@reducers/referral';
+import {getPurchases} from '@reducers/purchases';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
@@ -70,6 +72,8 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
     dispatch(getPetrolStations());
     dispatch(getProfile());
     dispatch(getSettings());
+    dispatch(getReferralLink());
+    dispatch(getPurchases({page: 1}));
     // dispatch(setLoader(false));
   }, []);
 

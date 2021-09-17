@@ -5,6 +5,7 @@ import {View, Text} from '@components';
 import {TGlobalState, TSettingsText} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
+import moment from 'moment';
 
 type TProps = {
   dispatch: Dispatch;
@@ -18,9 +19,10 @@ const LoyaltyTerms: React.FC<TProps> = ({dispatch, settings}) => {
     return settings.find(item => item.type === 'loyalty_conditions');
   }, [settings]);
 
-  // FIXME: дата должна приходить с бэка
-  //   const lastUpdate = data?.date
-  const lastUpdate = '24.05.2021';
+  const lastUpdate = useMemo(
+    () => moment(data?.updated_at).format('DD.MM.YYYY'),
+    [data?.updated_at],
+  );
 
   return (
     <View style={styles.container}>

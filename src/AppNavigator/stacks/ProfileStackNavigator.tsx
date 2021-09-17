@@ -14,6 +14,7 @@ import {
   Settings,
   UseTerms,
   Notifications,
+  Promotion,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState, TProfile} from '@types';
@@ -139,6 +140,14 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Сповіщення'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="Promotion"
+        component={Promotion}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Умови акції'),
         }}
       />
     </ProfileStack.Navigator>

@@ -42,8 +42,8 @@ export type TProfile = {
   bearer_token?: string;
   count_bonus?: number;
   count_spent_bonus?: number;
-  //   FIXME: type
-  fuels?: [];
+  count_referral?: number;
+  fuels?: TFuel[];
   setting_affiliate_program: '0' | '1';
   setting_bio_auth: '0' | '1';
   setting_message_dev: '0' | '1';
@@ -72,8 +72,8 @@ export type TReferrals = {
 };
 
 export type TFuel = {
-  id: number;
-  name: string;
+  id: 1 | 2 | 3 | 4;
+  name: 'ДТ' | '95' | '98' | '98+';
   price: string;
 };
 
@@ -127,6 +127,10 @@ export type TNotification = {
   id: number;
   isRead: boolean;
   title: string;
+  message: string;
+  body: string;
+  data_id: string;
+  type: 'action' | 'text';
   date: Date;
 };
 
@@ -134,6 +138,7 @@ export type TSettingsText = {
   text: string;
   title: string;
   type: 'about_the_application' | 'loyalty_conditions' | 'terms_of_use';
+  updated_at: Date;
 };
 
 export type TPaySystemContent = {
@@ -142,4 +147,24 @@ export type TPaySystemContent = {
   title: string;
   icon: string;
   selected?: boolean;
+};
+
+export type TLang = 'uk' | 'ru' | 'en';
+
+export type TPrice = {
+  title: string;
+  cost: number;
+  id: number;
+};
+
+export type TPurchase = {
+  bonuses: number;
+  created_at: Date;
+  credit_card: number;
+  fuel_id: 1 | 2 | 3 | 4;
+  id: number;
+  liters: number;
+  many: string; // money
+  type: 'gift' | 'bonuses' | 'many';
+  user_id: number;
 };
