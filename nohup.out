@@ -732,3 +732,6 @@ Your emulator is out of date, please update by launching Android Studio:
  - Click "OK"
 
 emulator: Saving state on exit with session uptime 1336961 ms
+emulator: ERROR: Running multiple emulators with the same AVD is an experimental feature.
+Please use -read-only flag to enable this feature.
+
