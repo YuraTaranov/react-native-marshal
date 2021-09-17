@@ -118,7 +118,7 @@
   "Route": "Маршрут",
   "Search": "Пошук",
   "Get directions": "Прокласти маршрут",
-  "Fuel": "Пальне",
+  "Fuel": "Типи пального", //"Пальне",
   "Regions": "Oбласті",
   "Filters": "Фільтри",
   "All": "Всі",
@@ -169,5 +169,6 @@
   "CheckPaymentMethod": "Оберіть спосіб оплати",
   "BuyBalls": "Купити за бали",
   "AddPaymentCard": "Додати платіжну картку",
+  "NothingFound": "Ничего не найдено",
   "currency": "₴"
 }
