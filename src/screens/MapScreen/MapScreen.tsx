@@ -113,6 +113,7 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   const [region, setRegion] = useState(initRegion);
   const mapRef = useRef();
   const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(new Date().getTime().toString());
 
   const animateToRegion = useCallback(
     (Region: TRegion, speed: number = 300): void => {
@@ -248,6 +249,12 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   //   }, []);
 
   useEffect(() => {
+    if (!ios && isFocused) {
+      setRefresh(new Date().getTime().toString());
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
     setAllMarkers(
       formatMarkerData(
         getFilteredPetrolStationList({
@@ -276,12 +283,10 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
     );
   }, []);
 
-  //   if (isFocused) {
-  //     return null;
-  //   }
   return (
     <View style={styles.container}>
       <MapView
+        key={refresh}
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={[styles.map, styles.mapPadding]}
@@ -316,8 +321,7 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
         //
         onMapReady={onMapReady}
         onRegionChangeComplete={onRegionChangeComplete}>
-        {/* {isFocused && */}
-        {true &&
+        {isFocused &&
           AllMarkers.map(m => (
             <Marker
               key={`${m?.id}`}
