@@ -1,13 +1,6 @@
 import React from 'react';
 import {Dispatch} from 'redux';
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useTranslation,
-  useState,
-  useNavigation,
-} from '@hooks';
+import {useEffect, useCallback, useTranslation, useNavigation} from '@hooks';
 import {View, Text, FlatList, TouchableOpacity, Icon} from '@components';
 import {TGlobalState, TNotification} from '@types';
 import {connect} from 'react-redux';
@@ -15,38 +8,9 @@ import styles from './styles';
 import {colors} from '@constants';
 import {navigate} from '@services';
 import moment from 'moment';
-
-// FIXME: delete
-const fakeData = [
-  {
-    id: 1,
-    title:
-      'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod..',
-    date: new Date(),
-    isRead: false,
-  },
-  {
-    id: 2,
-    title:
-      'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod..',
-    date: new Date(),
-    isRead: false,
-  },
-  {
-    id: 3,
-    title:
-      'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod..',
-    date: new Date(),
-    isRead: true,
-  },
-  {
-    id: 4,
-    title:
-      'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod..',
-    date: new Date(),
-    isRead: true,
-  },
-];
+import {setNotifications} from '@reducers/notifications';
+import {animation} from '@helpers';
+import {getPromotion} from '@reducers/promotion';
 
 type TProps = {
   dispatch: Dispatch;
@@ -71,6 +35,26 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     });
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      const hasUnread = notifications.find(item => !item.isRead);
+      if (hasUnread) {
+        const notificationsRead = notifications.map(item => {
+          return {...item, isRead: true};
+        });
+        animation();
+        dispatch(setNotifications(notificationsRead));
+      }
+    }, 5000);
+  }, [notifications]);
+
+  const onPressNotification = useCallback(
+    item => () => {
+      if (item.type === 'action') dispatch(getPromotion(item.data_id));
+    },
+    [],
+  );
+
   const getDate = useCallback((item: Date) => {
     const date = moment(item).format('DD.MM.YYYY');
     const time = moment(item).format('HH:MM');
@@ -82,17 +66,21 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
       ({item}) => (
         <TouchableOpacity
           style={styles.itemContainer}
-          //   FIXME: как помечать пуши прочитанными?
-          // onPress={}
-        >
+          onPress={onPressNotification(item)}
+          disabled={item.type === 'text'}>
           <View>
             <Icon size={24} color={colors.black_000000} name="bell" />
             {!item.isRead ? <View style={styles.newMessageCircle} /> : null}
           </View>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+              {item.title}
+            </Text>
             <Text style={styles.date}>{getDate(item.date)}</Text>
           </View>
+          {item.type === 'action' ? (
+            <Icon size={24} name="right" color={colors.black_000000} />
+          ) : null}
         </TouchableOpacity>
       ),
       [],
@@ -106,8 +94,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        // data={notifications}
-        data={fakeData}
+        data={notifications}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
       />

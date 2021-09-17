@@ -24,6 +24,7 @@ import {colors} from '@constants';
 import {navigate} from '@services';
 import {logout} from '@reducers/logout';
 import BioAuthSwitch from './components/BioAuthSwitch/BioAuthSwitch';
+import LanguageModal from './components/LanguageModal/LanguageModal';
 
 type TProps = {
   dispatch: Dispatch;
@@ -38,8 +39,9 @@ type TMenuItem = {
 const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-
   const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
+  const [languageModalVisible, setLanguageModalVisible] =
+    useState<boolean>(false);
 
   const onPressLogout = useCallback(() => {
     setLogoutModalVisible(true);
@@ -52,6 +54,14 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const onLogout = useCallback(() => {
     dispatch(logout());
     setLogoutModalVisible(false);
+  }, []);
+
+  const onPressLang = useCallback(() => {
+    setLanguageModalVisible(true);
+  }, []);
+
+  const closeLangModal = useCallback(() => {
+    setLanguageModalVisible(false);
   }, []);
 
   useEffect(() => {
@@ -86,6 +96,10 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
         name: t('Умови використання'),
         onPress: () => navigate('UseTerms'),
       },
+      {
+        name: t('Мова'),
+        onPress: () => onPressLang(),
+      },
     ];
   }, []);
 
@@ -118,6 +132,10 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
         data={menuItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+      />
+      <LanguageModal
+        isVisible={languageModalVisible}
+        closeModal={closeLangModal}
       />
     </View>
   );

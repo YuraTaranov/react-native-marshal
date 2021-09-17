@@ -39,27 +39,26 @@ export function* watchNotifications() {
   yield takeLatest(REG_DEVICE_TOKEN, regDeviceTokenAsync);
 }
 
-// FIXME: узнать будет ли храниться список пушей на бэке
 export function* getNotificationsAsync() {
-  // const { accessToken } = yield select(state => state.profile)
-  yield put(setLoader(true));
-  try {
-    const body = yield call(() => httpGet(urls.getNotifications));
-    yield put(setLoader(false));
-    if (body.data) {
-      yield put(setNotifications(body.data));
-      // navigate('Route');
-    }
-  } catch (e) {
-    yield put(setLoader(false));
-    errorHandler(e, 'getNotificationsAsync');
-  }
+  //   // const { accessToken } = yield select(state => state.profile)
+  //   yield put(setLoader(true));
+  //   try {
+  //     const body = yield call(() => httpGet(urls.getNotifications));
+  //     yield put(setLoader(false));
+  //     if (body.data) {
+  //       yield put(setNotifications(body.data));
+  //       // navigate('Route');
+  //     }
+  //   } catch (e) {
+  //     yield put(setLoader(false));
+  //     errorHandler(e, 'getNotificationsAsync');
+  //   }
 }
 
 export function* regDeviceTokenAsync(action: any) {
   try {
     const body = yield call(() =>
-      httpPost(urls.regDeviceToken, {token: action.data}),
+      httpPost(urls.sendFcmToken, {notification_id: action.data}),
     );
   } catch (e) {
     console.log('regDeviceTokenAsync', e);

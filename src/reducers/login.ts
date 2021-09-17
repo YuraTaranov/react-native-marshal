@@ -92,11 +92,11 @@ export function* checkCodeAsync(action: any) {
       yield put(setToken(body.data.data.bearer_token));
       if (body.data.data.card) {
         yield put(setIsUserAuthorized(true));
+        yield put(resetLogin());
       } else {
         navigate('Registration');
       }
     }
-    yield put(resetLogin());
   } catch (e) {
     yield put(setLoading(false));
     errorHandler(e, 'checkCodeAsync');

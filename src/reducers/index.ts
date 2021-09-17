@@ -18,5 +18,6 @@ export default combineReducers({
   searchStations: require('./searchStations').default,
   notifications: require('./notifications').default,
   settings: require('./settings').default,
+  referral: require('./referral').default,
   // ADD NEW REDUCER
 });

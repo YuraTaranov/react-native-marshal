@@ -21,7 +21,6 @@ const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
       <InitialStack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: false}}
-        // FIXME:
         initialRouteName="SplashScreenAnimation">
         <InitialStack.Screen
           name="SplashScreenAnimation"

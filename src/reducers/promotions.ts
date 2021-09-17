@@ -69,21 +69,6 @@ export function* getPromotionsAsync(action: any) {
     if (body.data.data) {
       yield put(setPromotions(body.data.data));
     }
-
-    // FIXME:
-    // const body = yield call(() => httpGet(`${urls.gePromotions}?page=${action.data.page}`));
-    // if (body.data.length < 20) {
-    // 	yield put(setFinishLoading(true));
-    //   } else {
-    // 	yield put(setFinishLoading(false));
-    //   }
-    //   if (action.data.page === 1) {
-    // 	yield put(setPromotions(body.data));
-    //   } else {
-    // 	yield body.data.length && put(setPromotions([...promotions, ...body.data]));
-    //   }
-    //   yield put(setLazyLoading(false));
-    //   yield put(setRefreshing(false));
   } catch (e) {
     errorHandler(e, 'getPromotionsAsync');
   }

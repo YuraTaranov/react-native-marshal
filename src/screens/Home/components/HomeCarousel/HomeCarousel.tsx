@@ -42,7 +42,7 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   useEffect(() => {
     // чтобы избежать бага с рендером слайдов после логаут-логина
     setTimeout(() => {
-      setData(promotions?.length ? promotions.slice(0, 3) : []);
+      setData(promotions?.length ? promotions.slice(0, 5) : []);
     }, 10);
   }, [promotions]);
 
@@ -63,34 +63,38 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
 
   return (
     <View style={styles.container}>
-      <SnapCarousel
-        data={data}
-        renderItem={renderItem}
-        sliderWidth={width}
-        itemWidth={width - 32}
-        onBeforeSnapToItem={setActiveIndex}
-        inactiveSlideOpacity={1}
-        inactiveSlideScale={1}
-        activeAnimationType="spring"
-        lockScrollWhileSnapping={true}
-        lockScrollTimeoutDuration={350}
-        shouldOptimizeUpdates={true}
-        removeClippedSubviews={true}
-        enableMomentum={true}
-        //   autoplay
-        //   loop={true}
-        //   autoplayDelay={1000}
-        //   autoplayInterval={4000}
-      />
-      <Pagination
-        dotsLength={data?.length}
-        activeDotIndex={activeIndex}
-        containerStyle={styles.dotsContainer}
-        dotStyle={styles.dotStyle}
-        inactiveDotStyle={styles.dotsStyleInactive}
-        inactiveDotOpacity={1}
-        inactiveDotScale={1}
-      />
+      {data?.length ? (
+        <>
+          <SnapCarousel
+            data={data}
+            renderItem={renderItem}
+            sliderWidth={width}
+            itemWidth={width - 32}
+            onBeforeSnapToItem={setActiveIndex}
+            inactiveSlideOpacity={1}
+            inactiveSlideScale={1}
+            activeAnimationType="spring"
+            lockScrollWhileSnapping={true}
+            lockScrollTimeoutDuration={350}
+            shouldOptimizeUpdates={true}
+            removeClippedSubviews={true}
+            enableMomentum={true}
+            //   autoplay
+            //   loop={true}
+            //   autoplayDelay={1000}
+            //   autoplayInterval={4000}
+          />
+          <Pagination
+            dotsLength={data?.length}
+            activeDotIndex={activeIndex}
+            containerStyle={styles.dotsContainer}
+            dotStyle={styles.dotStyle}
+            inactiveDotStyle={styles.dotsStyleInactive}
+            inactiveDotOpacity={1}
+            inactiveDotScale={1}
+          />
+        </>
+      ) : null}
     </View>
   );
 };

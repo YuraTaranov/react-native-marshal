@@ -7,6 +7,7 @@ export default StyleSheet.create({
   },
   itemContainer: {
     padding: 16,
+    paddingRight: 8,
     borderBottomWidth: 1,
     borderColor: colors.gray_E1E1E8,
     flexDirection: 'row',
@@ -23,11 +24,12 @@ export default StyleSheet.create({
   },
   titleContainer: {
     marginLeft: 16,
+    flex: 1,
   },
   title: {
     fontFamily: fonts.interSemiBold_600,
     fontSize: 16,
-    width: width - 72,
+    width: width - 100,
   },
   date: {
     marginTop: 4,

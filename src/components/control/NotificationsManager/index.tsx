@@ -6,14 +6,18 @@ import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 // import {ios} from '@constants';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 import {setNotifications, regDeviceToken} from '@reducers/notifications';
+import {Dispatch} from 'redux';
 
 type TProps = {
+  dispatch: Dispatch;
   isUserAuthorized: boolean;
   notifications: TNotification[];
 };
 
 const NotificationsManager: React.FC<TProps> = ({
+  dispatch,
   notifications,
   isUserAuthorized,
 }) => {
@@ -24,13 +28,39 @@ const NotificationsManager: React.FC<TProps> = ({
   }, [isUserAuthorized]);
 
   const handleNotification: (item: TNotification, badge: number) => null =
-    useCallback((item, badge) => {
-      // проверить
-      // if (ios && badge) {
-      //   PushNotificationIOS.setApplicationIconBadgeNumber(Number(badge));
-      // }
-      return null;
-    }, []);
+    useCallback(
+      (item, badge) => {
+        PushNotification.getDeliveredNotifications(data => {
+          if (data.length) {
+            const modifiedNotifications = data.map(item => {
+              return {
+                id: item.userInfo.id,
+                title: item.userInfo.title,
+                message: item.userInfo.message,
+                body: item.userInfo.body,
+                type: item.userInfo.type,
+                date: item.userInfo.date,
+                data_id: item.userInfo.data_id,
+                isRead: false,
+              };
+            });
+            dispatch(
+              setNotifications(
+                [...modifiedNotifications, ...notifications].slice(0, 40),
+              ),
+            );
+            PushNotification.removeAllDeliveredNotifications();
+          }
+          console.log('111', data);
+        });
+        // проверить
+        // if (ios && badge) {
+        //   PushNotificationIOS.setApplicationIconBadgeNumber(Number(badge));
+        // }
+        return null;
+      },
+      [notifications],
+    );
 
   useEffect(() => {
     const unsubscribe = firebase
@@ -39,10 +69,13 @@ const NotificationsManager: React.FC<TProps> = ({
         console.log('Foreground push data', remoteMessage.data);
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
-          isChecked: false,
           isRead: false,
         };
-        setNotifications([modifiedNotification, ...notifications].slice(0, 40));
+        dispatch(
+          setNotifications(
+            [modifiedNotification, ...notifications].slice(0, 40),
+          ),
+        );
       });
 
     return unsubscribe;
@@ -54,12 +87,13 @@ const NotificationsManager: React.FC<TProps> = ({
         console.log('Trey push data', remoteMessage.data);
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
-          isChecked: false,
           isRead: true,
         };
         setTimeout(() => {
-          setNotifications(
-            [modifiedNotification, ...notifications].slice(0, 40),
+          dispatch(
+            setNotifications(
+              [modifiedNotification, ...notifications].slice(0, 40),
+            ),
           );
           handleNotification(modifiedNotification, remoteMessage.badge);
         }, 1000);
@@ -77,13 +111,14 @@ const NotificationsManager: React.FC<TProps> = ({
           console.log('Quit push data', remoteMessage.data);
           const modifiedNotification: TNotification = {
             ...remoteMessage.data,
-            isChecked: false,
             isRead: true,
           };
           if (notifications[0].id !== modifiedNotification.id) {
             setTimeout(() => {
-              setNotifications(
-                [modifiedNotification, ...notifications].slice(0, 40),
+              dispatch(
+                setNotifications(
+                  [modifiedNotification, ...notifications].slice(0, 40),
+                ),
               );
               handleNotification(modifiedNotification, remoteMessage.badge);
             }, 1000);
@@ -94,7 +129,7 @@ const NotificationsManager: React.FC<TProps> = ({
   }, [notifications]);
 
   //   useEffect(() => {
-  // 	  // to ignore warning
+  //     // to ignore warning
   //     const test = firebase
   //       .messaging()
   //       .setBackgroundMessageHandler(async () => {});

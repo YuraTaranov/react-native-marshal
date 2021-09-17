@@ -1,6 +1,5 @@
-import {colors, fonts} from '@constants';
 import {StyleSheet} from 'react-native';
-
+import {colors} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -18,6 +17,5 @@ export default StyleSheet.create({
   },
   textActive: {
     color: colors.green_00AE36,
-    fontFamily: fonts.interSemiBold_600,
   },
 });

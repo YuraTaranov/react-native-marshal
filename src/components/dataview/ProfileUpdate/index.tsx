@@ -36,7 +36,7 @@ type TProps = {
   profile: TProfile;
 };
 
-// FIXME:
+// FIXME: loyaltyUrl
 const loyaltyUrl = 'https://google.com';
 const minimumDate = new Date(Date.now() - 3849948144000); // 122 years in ms
 const maximumDate = new Date(Date.now() - 568080000000); // 18 years in ms
@@ -58,7 +58,6 @@ const ProfileUpdate: React.FC<TProps> = ({
   const [phoneValue, setPhoneValue] = useState<string>(
     profile?.phone.slice(4) || '',
   );
-  //   FIXME: типы пола
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
     type: profile?.gender ? (profile?.gender === 'female' ? 1 : 2) : 0,
     name: profile?.gender
