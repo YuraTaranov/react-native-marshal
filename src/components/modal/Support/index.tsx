@@ -45,7 +45,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   const onPressMessenger = useCallback(() => {
     //   FIXME:
     try {
-      Linking.openURL(`http://m.me/sport24live`);
+      Linking.openURL('http://m.me/sport24live');
     } catch (error) {
       console.log('onPressMessenger error', error);
     }
@@ -54,7 +54,27 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   const onPressViber = useCallback(() => {
     //   FIXME:
     try {
-      Linking.openURL('viber://contact?number=%2B0734701124');
+      const contactNumber = '380937838541';
+      /* // contact inf
+      Linking.openURL(`viber://contact?number=${contactNumber}`);
+      */
+
+      // contact chat
+      Linking.openURL(`viber://chat?number=${contactNumber}`);
+
+      /* // -- viber bot
+      const ViberChatURI = 'mbzjzWXWGxxMLe14eorwxQ==';
+      const YourContext = 'YourContext';
+      const YourText = 'YourText';
+
+      if (ViberChatURI) {
+        Linking.openURL(
+          `viber://pa?chatURI=${ViberChatURI}${
+            !!YourContext && '&context=' + YourContext
+          }${!!YourText && '&text=' + YourText}`,
+        );
+      }
+      */
     } catch (error) {
       console.log('onPressViber error', error);
     }
@@ -65,8 +85,9 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
     const url = 'tg://resolve?domain=dmitry_ilchenko';
     try {
       Linking.openURL(url).catch(err => {
-        if (err.message === `Unable to open URL: ${url}`)
+        if (err.message === `Unable to open URL: ${url}`) {
           Linking.openURL('http://t.me/dmitry_ilchenko');
+        }
       });
     } catch (error) {
       console.log('onPressTelegram error', error);
