@@ -10,6 +10,7 @@ export {
   goBack,
   reset,
   resetSeveral,
+  replace,
 } from './route';
 export {httpGet, httpPost, httpDel, httpPut} from './http/http';
 export {errorHandler} from './errorHandlers/httpErrorHandler';

@@ -5,8 +5,9 @@ import {NavigationContainerRef} from '@react-navigation/core';
 
 export let currentRouteName: string = '';
 
-export const navigationRef: React.RefObject<NavigationContainerRef> = React.createRef();
-export const onStateChange: TOnStateChange = (state) => {
+export const navigationRef: React.RefObject<NavigationContainerRef> =
+  React.createRef();
+export const onStateChange: TOnStateChange = state => {
   currentRouteName = parseRoute(state);
 };
 
@@ -25,6 +26,9 @@ export function resetSeveral(routes: any) {
 export function push(name: string, params?: any) {
   navigationRef?.current?.dispatch(StackActions.push(name, params));
 }
+export function replace(name: string, params?: any) {
+  navigationRef?.current?.dispatch(StackActions.replace(name, params));
+}
 export function pop(index: number) {
   navigationRef?.current?.dispatch(StackActions.pop(index));
 }
@@ -32,7 +36,7 @@ export function popToTop() {
   navigationRef?.current?.dispatch(StackActions.popToTop());
 }
 
-export const parseRoute: TParseRoute = (initialState) => {
+export const parseRoute: TParseRoute = initialState => {
   const state = initialState?.routes[0]?.state || undefined;
   const name = initialState?.routes[0]?.name || 'No Screen Name';
   if (state) {
@@ -42,5 +46,9 @@ export const parseRoute: TParseRoute = (initialState) => {
   return name;
 };
 
-type TOnStateChange = ((state: NavigationState | undefined) => void) | undefined;
-type TParseRoute = (state: NavigationState | PartialState<NavigationState> | undefined) => string;
+type TOnStateChange =
+  | ((state: NavigationState | undefined) => void)
+  | undefined;
+type TParseRoute = (
+  state: NavigationState | PartialState<NavigationState> | undefined,
+) => string;

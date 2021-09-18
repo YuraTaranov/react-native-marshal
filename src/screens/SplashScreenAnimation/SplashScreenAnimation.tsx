@@ -4,13 +4,13 @@ import {View, LottieView} from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {navigate} from '@services';
+import {replace} from '@services';
 
 type TProps = {};
 
 const SplashScreenAnimation: React.FC<TProps> = ({}) => {
   const onAnimationFinish = useCallback(() => {
-    navigate('RootStackNavigator');
+    replace('RootStackNavigator');
   }, []);
 
   return (
