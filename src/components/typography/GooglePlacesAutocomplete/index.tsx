@@ -191,6 +191,7 @@ const Autocomplete: React.FC<TProps> = ({
           numberOfLines: 1,
           dataDetectorTypes: 'address',
           enablesReturnKeyAutomatically: true,
+          multiline: true,
         }}
       />
       {!setRoute && (!!inputText || useCurrentPosition) && (

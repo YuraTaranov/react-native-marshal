@@ -770,3 +770,33 @@ emulator: INFO: QtLogger.cpp:68: Warning: Failed to get QCocoaScreen for NSObjec
 
 
 emulator: Saving state on exit with session uptime 8138726 ms
+2021-09-18 16:36:32.986 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering beacon
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering beacon_swarm
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering car_kit
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering classic
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering keyboard
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering remote_loopback
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering scripted_beacon
+2021-09-18 16:36:32.987 bluetooth - /Volumes/Android/buildbot/src/android/emu-master-dev/system/bt/vendor_libs/test_vendor_lib/model/setup/device_boutique.cc:33 - Register: Registering sniffer
+handleCpuAcceleration: feature check for hvf
+cannot add library /Users/bobby/Library/Android/sdk/emulator/qemu/darwin-x86_64/lib64/vulkan/libvulkan.dylib: failed
+added library /Users/bobby/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib
+emulator: WARNING: Your AVD has been configured with an in-guest renderer, but the system image does not support guest rendering.Falling back to 'swiftshader_indirect' mode.
+emulator: INFO: GrpcServices.cpp:315: Started GRPC server at 127.0.0.1:8554, security: Local
+emulator: INFO: EmulatorAdvertisement.cpp:93: Advertising in: /Users/bobby/Library/Caches/TemporaryItems/avd/running/pid_33310.ini
+Your emulator is out of date, please update by launching Android Studio:
+ - Start Android Studio
+ - Select menu "Tools > Android > SDK Manager"
+ - Click "SDK Tools" tab
+ - Check "Android Emulator" checkbox
+ - Click "OK"
+
+qemu-system-x86_64: VQ 0 size 0x80 Guest index 0x0 inconsistent with Host index 0x3ed1: delta 0xc12f
+qemu-system-x86_64: Failed to load virtio-blk:virtio
+qemu-system-x86_64: error while loading state for instance 0x0 of device '0000:00:03.0/virtio-blk'
+deleteSnapshot: for default_boot
+qemu-system-x86_64: virtio: zero sized buffers are not allowed
+emulator: INFO: QtLogger.cpp:68: Warning: Failed to get QCocoaScreen for NSObject(0x0) ((null):0, (null))
+
+
+emulator: Saving state on exit with session uptime 594695 ms

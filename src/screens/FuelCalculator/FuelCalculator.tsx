@@ -57,7 +57,7 @@ const FuelCalculator: React.FC<TProps> = ({dispatch, lang, navigation}) => {
   });
   const [routes, writeDownTheRoutes] = useState<Array<TRoute>>([]);
   const [isBuy, setStatusPage] = useState(false);
-  const [refresh, setRefresh] = useState(new Date());
+  const [refresh, setRefresh] = useState(new Date().getTime().toString());
   const [fuelConsumptionCouner, setFuelConsumptionCouner] = useState<
     number | null
   >(null);
@@ -79,11 +79,11 @@ const FuelCalculator: React.FC<TProps> = ({dispatch, lang, navigation}) => {
     setStatusPage(false);
     writeDownTheRoutes([]);
     setFuelConsumptionCouner(fuelConsumptionCouner);
-    setRefresh(new Date());
+    setRefresh(new Date().getTime().toString());
   }, [fuelConsumptionCouner]);
 
   useEffect(() => {
-    // console.log('geoCoordinates:\n', geoCoordinates);
+    console.log('geoCoordinates:\n', geoCoordinates);
     // console.log('routes:\n', routes);
     // console.log('isBay:\n', isBuy);
   }, [geoCoordinates, isBuy, routes]);

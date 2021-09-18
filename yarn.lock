@@ -6344,10 +6344,10 @@ react-native-flip-card@^3.5.6:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-flipper@^0.105.0:
-  version "0.105.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.105.0.tgz#9f437e8149e170f0b9cc9925ddabb8b65f186c97"
-  integrity sha512-qiaUljC68hMSTXm49bxhMzr9G4FTtkLGvcRqrLCoYo1UPToHup5KvGBFol+R1P1X3Waeg486iCkX3zvhV9+ZbQ==
+react-native-flipper@^0.110.0:
+  version "0.110.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.110.0.tgz#d32975d1d2df3f55f234222a7f53b4d9ea70e450"
+  integrity sha512-VhHodD04j3SQoPUxHoSHV4jHZyxsdRn7svgA2XteAmw03kF/GF1/ytrcelq9yR/VvWXeUtdrJJ99az0b1nXLjQ==
 
 react-native-geolocation-service@^5.3.0-beta.1:
   version "5.3.0-beta.1"

@@ -13,7 +13,7 @@ import type {Dispatch, SetStateAction} from 'react';
 type TProps = {
   cb: (n: number | null) => void;
   setRoute: boolean;
-  counter?: number | undefined | null;
+  counter?: number | undefined | null | string;
 };
 type TLabeProps = {
   title: string;
@@ -54,10 +54,22 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
       REF?.current?.inputRef?.current?.clear();
       setFuelConsumption('');
       setRefresh(new Date().toString());
+      cb(0);
     }
   };
   useEffect(() => {
-    cb(+parseFloat(fuelConsumption).toFixed(1) || 0);
+    let num = '';
+    if (typeof fuelConsumption === 'string') {
+      num = fuelConsumption.toString();
+    }
+    cb(
+      //@ts-ignore
+      num
+        .replace(/^\D/, '0.')
+        .replace(/[\D]+/g, '.')
+        .replace(/^0([^\.])+/, '0.$1')
+        .replace(/^(.{3})(\.)$/g, '$10'),
+    );
   }, [cb, fuelConsumption]);
 
   return (
