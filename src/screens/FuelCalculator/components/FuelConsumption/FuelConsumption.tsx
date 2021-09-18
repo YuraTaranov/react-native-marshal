@@ -13,6 +13,7 @@ import type {Dispatch, SetStateAction} from 'react';
 type TProps = {
   cb: (n: number | null) => void;
   setRoute: boolean;
+  counter?: number | undefined | null;
 };
 type TLabeProps = {
   title: string;
@@ -31,7 +32,7 @@ const Label: React.FC<TLabeProps> = ({title}) => {
   );
 };
 
-export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
+export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
   const {t} = useTranslation();
   const REF = useRef();
   const [showClearIcon, setShowClearIcon] = useState(false);
@@ -69,19 +70,20 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
             key={refresh}
             //@ts-ignore
             onRef={REF}
-            rightClear
-            renderRightAccessory={showClearIcon}
-            rightAccessoryName={'x'}
-            returnKeyType={'done'}
-            onPressAccessory={onClear}
-            onChangeText={setFuelConsumption}
-            tintColor={colors.gray_6D6F79}
-            lineWidth={setRoute ? 0 : 1}
             activeLineWidth={1}
-            label={t('FuelConsumption')}
-            keyboardType={'decimal-pad'}
-            maxLength={4}
             inputContainerStyle={{...styles.inputContainer}}
+            keyboardType={'decimal-pad'}
+            label={t('FuelConsumption')}
+            lineWidth={setRoute ? 0 : 1}
+            maxLength={4}
+            onChangeText={setFuelConsumption}
+            onPressAccessory={onClear}
+            renderRightAccessory={showClearIcon}
+            returnKeyType={'done'}
+            rightAccessoryName={'x'}
+            rightClear
+            tintColor={colors.gray_6D6F79}
+            value={counter}
           />
           <View style={styles.fuelConsumptionView}>
             <Text style={styles.fuelConsumptionText}>{t('l/100km')}</Text>
