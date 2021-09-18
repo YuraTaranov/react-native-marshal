@@ -39,7 +39,7 @@ export default StyleSheet.create({
     paddingRight: 77,
   },
   textInput: {
-    // height: 44,
+    height: 44,
     flex: 1,
     marginLeft: -10,
     fontFamily: fonts.interRegular_400,
@@ -51,7 +51,7 @@ export default StyleSheet.create({
   powered: {},
   listView: {},
   row: {
-    // height: 44,
+    height: 44,
     flexDirection: 'row',
   },
   separator: {
