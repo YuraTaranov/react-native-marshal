@@ -79,7 +79,7 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
             lineWidth={setRoute ? 0 : 1}
             activeLineWidth={1}
             label={t('FuelConsumption')}
-            keyboardType={'number-pad'}
+            keyboardType={'decimal-pad'}
             maxLength={4}
             inputContainerStyle={{...styles.inputContainer}}
           />
