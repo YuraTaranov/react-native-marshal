@@ -8,7 +8,7 @@ export default StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     paddingTop: ios ? 7 : 4,
-    width: 80,
+    width: 70,
     alignContent: 'center',
     justifyContent: 'space-between',
     position: 'absolute',
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     borderBottomColor: colors.gray_8D909D,
     borderBottomWidth: 1,
     backgroundColor: 'transparent',
-    paddingRight: 57,
+    paddingRight: 77,
   },
   textInput: {
     height: 44,
