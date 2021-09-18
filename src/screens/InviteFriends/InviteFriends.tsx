@@ -29,7 +29,7 @@ const InviteFriends: React.FC<TProps> = ({referralLink}) => {
     if (referralLink) {
       try {
         const result = await Share.share({
-          title: t('Поділіться своїм посиланням'),
+          title: t('Приєднуйтесь до найкращої мережі автозаправок - Marshal'),
           message: referralLink,
         });
       } catch (error) {
