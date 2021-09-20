@@ -18,7 +18,7 @@ export const RouteItem: React.FC<TProps> = ({fuelCouner, data}) => {
   const {summary, legs} = data;
   const {distance, end_location, start_location} = legs[0];
   const fuelQuantity = fuelCouner
-    ? ((fuelCouner * distance.value) / 100000).toFixed(1)
+    ? ((fuelCouner * distance.value) / 100000).toFixed(2)
     : 0;
 
   const openRouteInMap = () => {

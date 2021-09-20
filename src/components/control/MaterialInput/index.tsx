@@ -12,29 +12,29 @@ import {Icon} from '@components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const MaterialInput: React.FC<TProps> = ({
-  value,
   onFocus,
   onBlur,
   onChangeText,
   onSubmit,
   onRef,
-  label,
-  baseColor = colors.gray_8D909D,
-  keyboardType = 'default',
-  renderRightAccessory,
-  returnKeyType = 'done',
-  rightAccessoryName,
-  rightAccessoryColor = colors.black_000000,
-  onPressAccessory,
-  maxLength,
-  inputContainerStyle,
-  lineWidth = 2,
   activeLineWidth = 2,
-  prefix,
-  formatText,
+  baseColor = colors.gray_8D909D,
   disabled,
   error,
+  formatText,
+  inputContainerStyle,
+  keyboardType = 'default',
+  label,
+  lineWidth = 2,
+  maxLength,
+  onPressAccessory,
+  prefix,
+  renderRightAccessory,
+  returnKeyType = 'done',
+  rightAccessoryColor = colors.black_000000,
+  rightAccessoryName,
   tintColor,
+  value,
 }) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
@@ -59,7 +59,7 @@ const MaterialInput: React.FC<TProps> = ({
       ref={onRef}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={value}
+      value={value ? `${value}` : undefined}
       onChangeText={onChangeText}
       label={label}
       keyboardType={keyboardType}
@@ -89,7 +89,7 @@ const MaterialInput: React.FC<TProps> = ({
 export default MaterialInput;
 
 type TProps = {
-  value: string | number | null;
+  value: string | number | null | undefined;
   onChangeText?: (value: string) => void;
   onRef?: (ref: TextField) => void;
   onFocus?: () => void;

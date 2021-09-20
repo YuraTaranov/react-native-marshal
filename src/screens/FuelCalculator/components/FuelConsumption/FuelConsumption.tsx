@@ -13,6 +13,7 @@ import type {Dispatch, SetStateAction} from 'react';
 type TProps = {
   cb: (n: number | null) => void;
   setRoute: boolean;
+  counter?: number | undefined | null | string;
 };
 type TLabeProps = {
   title: string;
@@ -31,7 +32,7 @@ const Label: React.FC<TLabeProps> = ({title}) => {
   );
 };
 
-export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
+export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
   const {t} = useTranslation();
   const REF = useRef();
   const [showClearIcon, setShowClearIcon] = useState(false);
@@ -53,10 +54,22 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
       REF?.current?.inputRef?.current?.clear();
       setFuelConsumption('');
       setRefresh(new Date().toString());
+      cb(0);
     }
   };
   useEffect(() => {
-    cb(+parseFloat(fuelConsumption).toFixed(1) || 0);
+    let num = '';
+    if (typeof fuelConsumption === 'string') {
+      num = fuelConsumption.toString();
+    }
+    cb(
+      //@ts-ignore
+      num
+        .replace(/^\D/, '0.')
+        .replace(/[\D]+/g, '.')
+        .replace(/^0([^\.])+/, '0.$1')
+        .replace(/^(.{3})(\.)$/g, '$10'),
+    );
   }, [cb, fuelConsumption]);
 
   return (
@@ -69,19 +82,20 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb}) => {
             key={refresh}
             //@ts-ignore
             onRef={REF}
-            rightClear
-            renderRightAccessory={showClearIcon}
-            rightAccessoryName={'x'}
-            returnKeyType={'done'}
-            onPressAccessory={onClear}
-            onChangeText={setFuelConsumption}
-            tintColor={colors.gray_6D6F79}
-            lineWidth={setRoute ? 0 : 1}
             activeLineWidth={1}
-            label={t('FuelConsumption')}
-            keyboardType={'number-pad'}
-            maxLength={4}
             inputContainerStyle={{...styles.inputContainer}}
+            keyboardType={'decimal-pad'}
+            label={t('FuelConsumption')}
+            lineWidth={setRoute ? 0 : 1}
+            maxLength={4}
+            onChangeText={setFuelConsumption}
+            onPressAccessory={onClear}
+            renderRightAccessory={showClearIcon}
+            returnKeyType={'done'}
+            rightAccessoryName={'x'}
+            rightClear
+            tintColor={colors.gray_6D6F79}
+            value={counter}
           />
           <View style={styles.fuelConsumptionView}>
             <Text style={styles.fuelConsumptionText}>{t('l/100km')}</Text>

@@ -14,7 +14,7 @@ target 'Marshal' do
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => false
+    :hermes_enabled => true
   )
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text', :modular_headers => true
 
@@ -34,7 +34,7 @@ target 'Marshal' do
     # Pods for testing
   end
 
-   use_flipper!({'Flipper' => '0.105.0', 'Flipper-Folly' => '2.6.7', 'Flipper-RSocket' => '1.4.3'})
+   use_flipper!({'Flipper' => '0.110.0', 'Flipper-Folly' => '2.6.7', 'Flipper-RSocket' => '1.4.3'})
 
   post_install do |installer|
     react_native_post_install(installer)

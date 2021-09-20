@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
-import {useEffect, useState} from '@hooks';
+import {useEffect, useState, useCallback, useLayoutEffect} from '@hooks';
 import {View, Text, Platform, ScrollView} from '@components';
 import {
   CalculateButton,
@@ -9,6 +9,7 @@ import {
   ArrivalPoint,
   DeparturePoint,
   RouteItem,
+  LeftButton,
 } from './components';
 
 import {animation} from '@helpers';
@@ -32,6 +33,10 @@ import type {TPlatformName} from 'src/helpers/animation';
 type TProps = {
   dispatch: Dispatch;
   lang: string;
+  navigation: {
+    setOptions: Function;
+    goBack: Function;
+  };
 };
 
 const GreenLine = () => {
@@ -45,13 +50,14 @@ const GreenLine = () => {
   );
 };
 
-const FuelCalculator: React.FC<TProps> = ({dispatch, lang}) => {
+const FuelCalculator: React.FC<TProps> = ({dispatch, lang, navigation}) => {
   const [geoCoordinates, setGeoCoordinates] = useState<TGeoCoordinates>({
     start: null,
     end: null,
   });
   const [routes, writeDownTheRoutes] = useState<Array<TRoute>>([]);
   const [isBuy, setStatusPage] = useState(false);
+  const [refresh, setRefresh] = useState(new Date().getTime().toString());
   const [fuelConsumptionCouner, setFuelConsumptionCouner] = useState<
     number | null
   >(null);
@@ -62,22 +68,46 @@ const FuelCalculator: React.FC<TProps> = ({dispatch, lang}) => {
 
   const onPress = async (bool: boolean | ((prevState: boolean) => boolean)) => {
     setStatusPage(bool);
+
     if (!!geoCoordinates.end && !!geoCoordinates.start) {
       //@ts-ignore
       writeDownTheRoutes(await getRouteData(geoCoordinates));
     }
   };
 
+  const onBackStep = useCallback(() => {
+    setStatusPage(false);
+    writeDownTheRoutes([]);
+    setFuelConsumptionCouner(fuelConsumptionCouner);
+    setRefresh(new Date().getTime().toString());
+  }, [fuelConsumptionCouner]);
+
   useEffect(() => {
-    // console.log('geoCoordinates:\n', geoCoordinates);
+    console.log('geoCoordinates:\n', geoCoordinates);
     // console.log('routes:\n', routes);
     // console.log('isBay:\n', isBuy);
   }, [geoCoordinates, isBuy, routes]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <LeftButton
+          onPress={
+            !!navigation?.goBack && !isBuy ? navigation.goBack : onBackStep
+          }
+        />
+      ),
+    });
+  }, [isBuy, navigation, onBackStep]);
+
   return (
     <View style={styles.container}>
       <View style={styles.containerUp}>
-        <FuelConsumption cb={setFuelConsumptionCouner} setRoute={isBuy} />
+        <FuelConsumption
+          cb={setFuelConsumptionCouner}
+          setRoute={isBuy}
+          counter={fuelConsumptionCouner}
+        />
         <ArrivalPoint
           getGeoCoordinates={getGeoCoordinates}
           geoCoordinates={geoCoordinates}
@@ -91,7 +121,7 @@ const FuelCalculator: React.FC<TProps> = ({dispatch, lang}) => {
         {isBuy && <GreenLine />}
       </View>
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} key={refresh}>
         {routes.map(r => (
           <RouteItem
             key={r.summary}
