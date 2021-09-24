@@ -32,9 +32,10 @@ import FuelBalance from './components/FuelBalance/FuelBalance';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
+  lang: string;
 };
 
-const Home: React.FC<TProps> = ({dispatch, promotions}) => {
+const Home: React.FC<TProps> = ({dispatch, promotions, lang}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
@@ -60,6 +61,12 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
     dispatch(getReferralLink());
     dispatch(getPurchases({page: 1}));
   }, []);
+
+  useEffect(() => {
+    dispatch(getPetrolStations());
+    dispatch(getSettings());
+    dispatch(getPromotions({page: 1}));
+  }, [lang]);
 
   return (
     <View style={styles.container}>
@@ -94,6 +101,7 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   promotions: state.promotions.data,
+  lang: state.appGlobalState.lang,
 });
 
 export default connect(mapStateToProps)(Home);
