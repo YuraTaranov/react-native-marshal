@@ -53,7 +53,7 @@ export type TGlobalState = {
   promotions: {
     data: TPromotion[];
     lazyLoading: boolean;
-    finishLoading: boolean;
+    endLoading: boolean;
     refreshing: boolean;
   };
   promotion: {

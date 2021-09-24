@@ -52,25 +52,25 @@ const CheckBoxCustom: React.FC<TProps> = ({
       return (
         <View style={styles.genderContainer}>
           <View style={styles.flexRow}>
-            <Text style={styles.genderTitle}>{t('Стать:')}</Text>
+            <Text style={styles.genderTitle}>{t('Стать')}:</Text>
             <Icon name="x" size={24} onPress={closeModal} />
           </View>
           <RadioButtonCustom
             text={t('Жіноча')}
             active={genderValue.type === 1}
-            onChangeGender={onChangeGender}
+            onChange={onChangeGender}
             type={1}
           />
           <RadioButtonCustom
             text={t('Чоловіча')}
             active={genderValue.type === 2}
-            onChangeGender={onChangeGender}
+            onChange={onChangeGender}
             type={2}
           />
           <RadioButtonCustom
             text={t('Не вказувати')}
-            active={genderValue.type === 0}
-            onChangeGender={onChangeGender}
+            active={genderValue.type === 3}
+            onChange={onChangeGender}
             type={3}
           />
         </View>

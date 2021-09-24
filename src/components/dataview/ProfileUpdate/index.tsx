@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  useCallback,
-  useMemo,
-  useTranslation,
-  useState,
-  useEffect,
-} from '@hooks';
+import {useCallback, useMemo, useTranslation, useState} from '@hooks';
 import {
   View,
   Text,
@@ -40,6 +34,7 @@ type TProps = {
 const loyaltyUrl = 'https://google.com';
 const minimumDate = new Date(Date.now() - 3849948144000); // 122 years in ms
 const maximumDate = new Date(Date.now() - 568080000000); // 18 years in ms
+const initialDate = new Date(Date.now() - 599184000000); // 19 years in ms
 
 const ProfileUpdate: React.FC<TProps> = ({
   dispatch,
@@ -53,19 +48,28 @@ const ProfileUpdate: React.FC<TProps> = ({
     profile?.surname || '',
   );
   const [birthdayValue, setBirthdayValue] = useState<Date>(
-    (profile?.birthday && new Date(profile?.birthday)) || maximumDate,
+    (profile?.birthday && new Date(profile?.birthday)) || initialDate,
   );
   const [phoneValue, setPhoneValue] = useState<string>(
     profile?.phone.slice(4) || '',
   );
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
-    type: profile?.gender ? (profile?.gender === 'female' ? 1 : 2) : 0,
+    type: profile?.gender
+      ? profile?.gender === 'female'
+        ? 1
+        : profile?.gender === 'male'
+        ? 2
+        : 3
+      : 0,
     name: profile?.gender
       ? profile?.gender === 'male'
-        ? 'Чоловіча'
-        : 'Жіноча'
-      : 'Не вказувати',
+        ? t('Чоловіча')
+        : profile?.gender === 'female'
+        ? t('Жіноча')
+        : t('Не вказувати')
+      : '',
   });
+
   const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);
   const [consentPersonalData, setConsentPersonalData] =
     useState<boolean>(false);
@@ -84,7 +88,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   }, []);
 
   const dateValue = useMemo(() => {
-    return birthdayValue !== maximumDate
+    return birthdayValue !== initialDate
       ? moment(birthdayValue).format('DD.MM.YYYY')
       : '';
   }, [birthdayValue]);
@@ -111,6 +115,8 @@ const ProfileUpdate: React.FC<TProps> = ({
     if (date) {
       setVisibleDatePicker(false);
       setBirthdayValue(date);
+    } else {
+      setVisibleDatePicker(false);
     }
   }, []);
 
@@ -240,7 +246,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   const loyaltyDataText = useMemo(() => {
     return (
       <Text style={styles.checkboxText} numberOfLines={2}>
-        {t('Погоджуюсь із правилами ')}
+        {t('Погоджуюсь із правилами')}{' '}
         <Text style={styles.checkBoxLink} onPress={onPressLoyalty}>
           {t('Програми лояльності')}
         </Text>
@@ -331,7 +337,7 @@ const ProfileUpdate: React.FC<TProps> = ({
           ) : null}
         </View>
       </View>
-      {visibleDatePicker && (
+      {visibleDatePicker ? (
         <DateTimePicker
           locale={appGlobalState.lang}
           value={birthdayValue}
@@ -342,7 +348,7 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
           themeVariant={darkMode ? 'dark' : 'light'}
         />
-      )}
+      ) : null}
       <View style={styles.buttonContainer}>
         <UsualButton
           title={

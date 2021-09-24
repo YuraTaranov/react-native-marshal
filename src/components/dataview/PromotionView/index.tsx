@@ -1,26 +1,30 @@
 import React from 'react';
 import {useMemo, useTranslation} from '@hooks';
-import {View, Text, Image, TouchableOpacity, moment} from '@components';
+import {View, Text, TouchableOpacity, moment, Image} from '@components';
 import styles from './styles';
-import {TPromotion} from '@types';
+import {TPromotion, TGlobalState} from '@types';
 import {fonts} from '@constants';
 import 'moment/locale/uk';
 import {assets} from '@assets';
+import {connect} from 'react-redux';
 
 type TProps = {
   item: TPromotion;
   onPress?: (id: number) => () => void;
   bgBorderRadius?: number;
   disabled?: boolean;
+  language: string;
 };
 
 const PromotionView: React.FC<TProps> = ({
   item,
   onPress,
   bgBorderRadius,
+  language,
   disabled = false,
 }) => {
   const {t} = useTranslation();
+  language === 'ru' ? moment.locale('ru') : moment.locale('uk');
 
   const promoEndDate = useMemo(() => {
     return `${t('Акція до')} ${moment(item.end).format('LL').slice(0, -2)}`;
@@ -60,7 +64,11 @@ const PromotionView: React.FC<TProps> = ({
       onPress={onPress && onPress(item.id)}
       activeOpacity={0.9}
       disabled={disabled}>
-      <Image source={{uri: item?.image}} style={borderRadiusStyles.image} />
+      <Image
+        source={{uri: item?.image}}
+        style={borderRadiusStyles.image}
+        fallback={true}
+      />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
         {item.type !== 'discount' ? (
@@ -94,4 +102,8 @@ const PromotionView: React.FC<TProps> = ({
   );
 };
 
-export default PromotionView;
+const mapStateToProps = (state: TGlobalState) => ({
+  language: state.appGlobalState.lang,
+});
+
+export default connect(mapStateToProps)(PromotionView);

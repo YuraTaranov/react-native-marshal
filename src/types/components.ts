@@ -43,7 +43,7 @@ export type TProfile = {
   count_bonus?: number;
   count_spent_bonus?: number;
   count_referral?: number;
-  fuels?: TFuel[];
+  fuels: TFuelProfile[];
   setting_affiliate_program: '0' | '1';
   setting_bio_auth: '0' | '1';
   setting_message_dev: '0' | '1';
@@ -75,6 +75,12 @@ export type TFuel = {
   id: 1 | 2 | 3 | 4;
   name: 'ДТ' | '95' | '98' | '98+';
   price: string;
+};
+
+export type TFuelProfile = {
+  id: 1 | 2 | 3 | 4;
+  name: 'ДТ' | '95' | '98' | '98+';
+  liters: number;
 };
 
 export type TFullMarker = {
@@ -164,7 +170,7 @@ export type TPurchase = {
   fuel_id: 1 | 2 | 3 | 4;
   id: number;
   liters: number;
-  many: string; // money
+  money: string; // money
   type: 'gift' | 'bonuses' | 'many';
   user_id: number;
 };

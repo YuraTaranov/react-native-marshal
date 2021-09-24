@@ -4,6 +4,7 @@ import {colors, fonts} from '@constants';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 24,
   },
   flatList: {},
   itemContainer: {
@@ -34,5 +35,8 @@ export default StyleSheet.create({
     color: colors.gray_6D6F79,
     marginTop: 4,
     textAlign: 'right',
+  },
+  activityIndicatorContainer: {
+    marginTop: 8,
   },
 });

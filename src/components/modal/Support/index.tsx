@@ -115,7 +115,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
       </View>
       <View style={styles.contentContainer}>
         <Text style={styles.boldText}>{t('Виникли питання?')}</Text>
-        <Text style={styles.boldText}>{t('Ми завжди раді допомогти:')}</Text>
+        <Text style={styles.boldText}>{t('Ми завжди раді допомогти')}:</Text>
         <Text style={styles.phone} onPress={onPressPhone}>
           {tel}
         </Text>

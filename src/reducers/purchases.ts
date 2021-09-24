@@ -64,8 +64,9 @@ export function* getPurchasesAsync(action: any) {
     if (action.data.page === 1) {
       yield put(setPurchases(body.data.data));
     } else {
-      yield body.data.length &&
-        put(setPurchases([...purchases, ...body.data.data]));
+      if (body.data.data.length) {
+        yield put(setPurchases([...purchases, ...body.data.data]));
+      }
     }
     yield put(setLazyLoading(false));
     yield put(setRefreshing(false));

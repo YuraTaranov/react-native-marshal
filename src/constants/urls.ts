@@ -16,7 +16,7 @@ export const urls = {
   getBrands: 'car/brands',
   getModels: 'car/models',
   getTank: 'car/tanks',
-  gePromotions: 'profile/actions',
+  getPromotions: 'profile/actions',
   getPetrolStations: 'azs/search-azs',
   biometricsAdd: 'biometric/add',
   biometricsLogin: 'biometric/login',

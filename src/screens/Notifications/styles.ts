@@ -36,4 +36,10 @@ export default StyleSheet.create({
     fontSize: 13,
     color: colors.gray_6D6F79,
   },
+  emptyTitle: {
+    marginTop: 24,
+    fontSize: 16,
+    fontFamily: fonts.interMedium_500,
+    textAlign: 'center',
+  },
 });

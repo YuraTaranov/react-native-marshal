@@ -2,12 +2,10 @@ import React from 'react';
 import {
   useEffect,
   useCallback,
-  useMemo,
   useTranslation,
   useState,
   useNavigation,
 } from '@hooks';
-
 import {
   View,
   Text,
@@ -17,33 +15,23 @@ import {
   Icon,
   NotificationsManager,
 } from '@components';
-
-import {connect} from 'react-redux';
-import {resetAppGlobalState, setLoader} from '@reducers/appGlobalState';
-
-import {getPromotions} from '@reducers/promotions';
-import {colors} from '@constants';
-import HomeCarousel from './components/HomeCarousel/HomeCarousel';
-import {getPetrolStations} from '@reducers/petrolStations';
 import styles from './styles';
-
-//Type
 import {Dispatch} from 'redux';
 import {TGlobalState, TPromotion} from '@types';
+import {connect} from 'react-redux';
+import {colors} from '@constants';
+import {navigate} from '@services';
+import {getPromotions} from '@reducers/promotions';
+import {getPetrolStations} from '@reducers/petrolStations';
 import {getProfile} from '@reducers/profile';
 import {getSettings} from '@reducers/settings';
-
-import {navigate} from '@services';
 import {getReferralLink} from '@reducers/referral';
 import {getPurchases} from '@reducers/purchases';
+import HomeCarousel from './components/HomeCarousel/HomeCarousel';
+import FuelBalance from './components/FuelBalance/FuelBalance';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
-};
-
-const fakeData = {
-  bonuses: 250,
-  fuel: 80,
 };
 
 const Home: React.FC<TProps> = ({dispatch, promotions}) => {
@@ -68,34 +56,15 @@ const Home: React.FC<TProps> = ({dispatch, promotions}) => {
         </TouchableOpacity>
       ),
     });
-    dispatch(getPromotions({page: 1}));
-    dispatch(getPetrolStations());
     dispatch(getProfile());
-    dispatch(getSettings());
     dispatch(getReferralLink());
     dispatch(getPurchases({page: 1}));
-    // dispatch(setLoader(false));
   }, []);
 
   return (
     <View style={styles.container}>
       <NotificationsManager />
-      <View style={styles.headerContentContainer}>
-        <View style={styles.balanceContainer}>
-          <View style={styles.bonusesContainer}>
-            <Text style={styles.balanceTitle}>{t('Баланс бонусів')}</Text>
-            <Text style={styles.balanceValue}>{`${fakeData.bonuses} ${t(
-              'балів',
-            )}`}</Text>
-          </View>
-          <View style={styles.fuelContainer}>
-            <Text style={styles.balanceTitle}>{t('Баланс палива')}</Text>
-            <Text style={styles.balanceValue}>{`${fakeData.fuel} ${t(
-              'літрів',
-            )}`}</Text>
-          </View>
-        </View>
-      </View>
+      <FuelBalance />
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={styles.buttonContainerCalc}

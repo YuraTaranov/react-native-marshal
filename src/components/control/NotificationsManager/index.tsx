@@ -128,15 +128,6 @@ const NotificationsManager: React.FC<TProps> = ({
       .catch((e: any) => console.log('getInitialNotification error', e));
   }, [notifications]);
 
-  //   useEffect(() => {
-  //     // to ignore warning
-  //     const test = firebase
-  //       .messaging()
-  //       .setBackgroundMessageHandler(async () => {});
-
-  //     return test;
-  //   }, []);
-
   const getToken = useCallback(async () => {
     const fcmToken = await messaging().getToken();
     // console.log('fcmToken', fcmToken);

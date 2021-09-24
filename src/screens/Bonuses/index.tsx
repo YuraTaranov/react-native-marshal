@@ -31,16 +31,14 @@ const Bonuses: React.FC<TProps> = ({profile}) => {
   }, []);
 
   const bonusesValue = useMemo(() => {
-    return `${profile?.count_bonus} балів`;
-  }, []);
+    return profile?.count_bonus ? `${profile.count_bonus} ${t('балів')}` : '';
+  }, [profile?.count_bonus]);
 
   const activeReferrals = useMemo(() => {
-    return `${profile.count_referral} ${declension(5, [
-      'особа',
-      'особи',
-      'осіб',
-    ])}`;
-  }, []);
+    return profile?.count_referral
+      ? `${profile.count_referral} ${declension(5, ['особа', 'особи', 'осіб'])}`
+      : '';
+  }, [profile?.count_referral]);
 
   return (
     <View style={styles.container}>
@@ -51,12 +49,12 @@ const Bonuses: React.FC<TProps> = ({profile}) => {
       </View>
       <View style={styles.borderBottomView}>
         <Text style={styles.borderBottomViewTitle}>
-          {t('Активні реферали:')}
+          {t('Активні реферали')}:
         </Text>
         <Text style={styles.borderBottomViewValue}>{activeReferrals}</Text>
       </View>
       <View style={styles.borderBottomView}>
-        <Text style={styles.borderBottomViewTitle}>{t('Використано:')}</Text>
+        <Text style={styles.borderBottomViewTitle}>{t('Використано')}:</Text>
         <Text style={styles.borderBottomViewValue}>{`${
           profile?.count_spent_bonus
         } ${t('балів')}`}</Text>
