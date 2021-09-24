@@ -9,9 +9,6 @@ import {TGlobalState} from '@types';
 import {navigationRef, onStateChange} from '@services';
 import {SplashScreenAnimation} from '@screens';
 import RootStackNavigator from './stacks/RootStackNavigator';
-import {getPetrolStations} from '@reducers/petrolStations';
-import {getSettings} from '@reducers/settings';
-import {getPromotions} from '@reducers/promotions';
 
 const InitialStack = createStackNavigator();
 
@@ -23,9 +20,6 @@ type TProps = {
 const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
   useEffect(() => {
     i18next.changeLanguage(appGlobalState.lang);
-    dispatch(getPetrolStations());
-    dispatch(getSettings());
-    dispatch(getPromotions({page: 1}));
   }, [appGlobalState.lang]);
 
   return (
