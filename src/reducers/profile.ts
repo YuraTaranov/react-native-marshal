@@ -6,7 +6,9 @@ const GET_PROFILE = '[profile] GET_PROFILE';
 const SET_PROFILE = '[profile] SET_PROFILE';
 const RESET_PROFILE = '[profile] RESET_PROFILE';
 
-const initialstate = {};
+const initialstate = {
+  data: [],
+};
 
 export default (state = initialstate, action: any) => {
   switch (action.type) {

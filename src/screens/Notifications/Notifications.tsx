@@ -91,12 +91,17 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     [],
   );
 
+  const ListEmptyComponent = useCallback(() => {
+    return <Text style={styles.emptyTitle}>{t('Нових сповіщень немає')}</Text>;
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
         data={notifications}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        ListEmptyComponent={ListEmptyComponent}
       />
     </View>
   );

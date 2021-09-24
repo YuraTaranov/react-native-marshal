@@ -57,7 +57,7 @@ const Purchases: React.FC<TProps> = ({
   }, []);
 
   const parseFuel = useCallback(fuelId => {
-    if (fuelId === 1) return t('ДТ');
+    if (fuelId === 1) return t('ДП');
     if (fuelId === 2) return 'А95';
     if (fuelId === 3) return 'А98';
     return 'А98+';
@@ -73,7 +73,7 @@ const Purchases: React.FC<TProps> = ({
           <Text style={styles.itemDate}>{parseDate(item.created_at)}</Text>
         </View>
         <View>
-          <Text style={styles.itemPrice}>{`${item.many} ₴`}</Text>
+          <Text style={styles.itemPrice}>{`${item.money} ₴`}</Text>
           <Text style={styles.itemCard}>{`** ${item.credit_card}`}</Text>
         </View>
       </View>
@@ -93,7 +93,7 @@ const Purchases: React.FC<TProps> = ({
       setPage(newPage);
       dispatch(getPurchases({page: newPage}));
     }
-  }, [page, lazyLoading]);
+  }, [page, lazyLoading, finishLoading]);
 
   const onRefresh = useCallback(() => {
     dispatch(setRefreshing(true));
@@ -104,7 +104,9 @@ const Purchases: React.FC<TProps> = ({
   const lazyLoader = useMemo(
     () =>
       lazyLoading ? (
-        <ActivityIndicator size={'large'} color={colors.green_27A74C} />
+        <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator size={'large'} color={colors.green_27A74C} />
+        </View>
       ) : null,
     [lazyLoading],
   );
@@ -126,7 +128,7 @@ const Purchases: React.FC<TProps> = ({
           />
         }
         initialNumToRender={10}
-        onEndReachedThreshold={1}
+        onEndReachedThreshold={0.5}
         onEndReached={onEndReached}
         ListEmptyComponent={<ListEmptyComponent />}
         ListFooterComponent={lazyLoader}

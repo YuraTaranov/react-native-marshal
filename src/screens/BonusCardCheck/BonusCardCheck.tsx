@@ -141,7 +141,7 @@ const BonusCardCheck: React.FC<TProps> = ({
       <RadioButtonCustom
         text={t('Так, я маю фізичну картку Marshal CardName')}
         active={cardType.type === 1}
-        onChangeGender={onChangeGender}
+        onChange={onChangeGender}
         type={1}
       />
       <View style={styles.inputContainer}>
@@ -166,7 +166,7 @@ const BonusCardCheck: React.FC<TProps> = ({
       <RadioButtonCustom
         text={t('Ні, я хочу отримати віртуальну картку Marshal CardName')}
         active={cardType.type === 3}
-        onChangeGender={onChangeGender}
+        onChange={onChangeGender}
         type={3}
       />
       <View style={styles.buttonContainer}>

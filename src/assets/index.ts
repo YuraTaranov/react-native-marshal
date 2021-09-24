@@ -23,4 +23,5 @@ export const assets = {
   BIO_TOUCH: require('./images/bio_touch.png'),
   BIO_FACE: require('./images/bio_face.png'),
   GOOGLE_PAY: require('./images/googlePay.png'),
+  LOGO: require('./images/logo.png'),
 };

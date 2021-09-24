@@ -9,15 +9,21 @@ export default StyleSheet.create({
   contentContainer: {
     paddingVertical: 24,
     paddingHorizontal: 16,
-    height: 150,
+    height: 200,
     width: width,
     backgroundColor: colors.white_FFFFFF,
     bottom: 0,
     position: 'absolute',
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   title: {
-    fontSize: 17,
-    fontFamily: fonts.interMedium_500,
+    color: colors.black_1B1B1B,
+    fontFamily: fonts.interSemiBold_600,
+    fontSize: 18,
     marginBottom: 24,
   },
 });

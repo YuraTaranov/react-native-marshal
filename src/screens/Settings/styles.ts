@@ -13,6 +13,18 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.gray_E1E1E8,
   },
+  langContainer: {
+    height: 80,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderColor: colors.gray_E1E1E8,
+  },
+  langValue: {
+    color: colors.gray_6D6F79,
+  },
   name: {
     flex: 1,
     color: colors.black_1B1B1B,

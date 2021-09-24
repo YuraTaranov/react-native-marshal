@@ -1,27 +1,45 @@
 import React from 'react';
 import {useCallback, useTranslation} from '@hooks';
-import {View, Text, Modal, TouchableOpacity} from '@components';
+import {
+  View,
+  Modal,
+  RadioButtonCustom,
+  TouchableOpacity,
+  Icon,
+  Text,
+} from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {changeLang} from '@reducers/appGlobalState';
 import {Dispatch} from 'redux';
+import {colors, hitSlop} from '@constants';
 
 type TProps = {
   dispatch: Dispatch;
   isVisible: boolean;
   closeModal: () => void;
+  language: string;
 };
 
-const LanguageModal: React.FC<TProps> = ({dispatch, isVisible, closeModal}) => {
+type TRadioButtonCBParams = {
+  type: number;
+  text: string;
+};
+
+const LanguageModal: React.FC<TProps> = ({
+  dispatch,
+  isVisible,
+  closeModal,
+  language,
+}) => {
   const {t} = useTranslation();
 
-  const onPressUk = useCallback(() => {
-    dispatch(changeLang('uk'));
-    closeModal();
-  }, []);
-
-  const onPressRu = useCallback(() => {
-    dispatch(changeLang('ru'));
+  const onPressLang = useCallback((params: TRadioButtonCBParams) => {
+    if (params.type === 1) {
+      dispatch(changeLang('uk'));
+    } else {
+      dispatch(changeLang('ru'));
+    }
     closeModal();
   }, []);
 
@@ -34,12 +52,24 @@ const LanguageModal: React.FC<TProps> = ({dispatch, isVisible, closeModal}) => {
       onBackdropPress={closeModal}
       style={styles.container}>
       <View style={styles.contentContainer}>
-        <TouchableOpacity onPress={onPressUk}>
-          <Text style={styles.title}>{t('Українська')}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressRu}>
-          <Text style={styles.title}>{t('Російська')}</Text>
-        </TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{t('Мова')}:</Text>
+          <TouchableOpacity onPress={closeModal} hitSlop={hitSlop}>
+            <Icon name="x" size={24} color={colors.black_000000} />
+          </TouchableOpacity>
+        </View>
+        <RadioButtonCustom
+          text={t('Українська')}
+          active={language === 'uk'}
+          onChange={onPressLang}
+          type={1}
+        />
+        <RadioButtonCustom
+          text={t('Російська')}
+          active={language === 'ru'}
+          onChange={onPressLang}
+          type={2}
+        />
       </View>
     </Modal>
   );

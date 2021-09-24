@@ -7,7 +7,7 @@ import {hitSlop} from '@constants';
 type TProps = {
   text: string;
   active: boolean;
-  onChangeGender: (value: any) => void;
+  onChange: (value: any) => void;
   type: number;
 };
 
@@ -15,10 +15,10 @@ const RadioButtonCustom: React.FC<TProps> = ({
   text,
   type,
   active,
-  onChangeGender,
+  onChange,
 }) => {
   const onPress = useCallback(() => {
-    onChangeGender({type, name: text});
+    onChange({type, name: text});
   }, [type, text]);
 
   const radioStyle = useMemo(() => {

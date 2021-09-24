@@ -9,13 +9,24 @@ import {TGlobalState} from '@types';
 import {navigationRef, onStateChange} from '@services';
 import {SplashScreenAnimation} from '@screens';
 import RootStackNavigator from './stacks/RootStackNavigator';
+import {getPetrolStations} from '@reducers/petrolStations';
+import {getSettings} from '@reducers/settings';
+import {getPromotions} from '@reducers/promotions';
 
 const InitialStack = createStackNavigator();
 
-const AppNavigator: React.FC<TProps> = ({appGlobalState}) => {
+type TProps = {
+  dispatch: Dispatch;
+  appGlobalState: TGlobalState['appGlobalState'];
+};
+
+const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
   useEffect(() => {
     i18next.changeLanguage(appGlobalState.lang);
-  }, [appGlobalState]);
+    dispatch(getPetrolStations());
+    dispatch(getSettings());
+    dispatch(getPromotions({page: 1}));
+  }, [appGlobalState.lang]);
 
   return (
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
@@ -40,8 +51,3 @@ const mapStateToProps = (state: TGlobalState) => ({
 });
 
 export default connect(mapStateToProps)(AppNavigator);
-
-type TProps = {
-  dispatch: Dispatch;
-  appGlobalState: TGlobalState['appGlobalState'];
-};

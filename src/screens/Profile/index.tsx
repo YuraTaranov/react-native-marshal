@@ -78,7 +78,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         onPress: () => navigate('ProfileEdit'),
       },
     ];
-  }, []);
+  }, [t]);
 
   const cardNumber = useMemo(() => {
     if (profile?.card) {

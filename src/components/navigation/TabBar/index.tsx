@@ -5,6 +5,7 @@ import styles from './styles';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {colors} from '@constants';
+import {i18n} from '@services';
 
 type TProps = {
   navigation: any;
@@ -16,6 +17,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
   if (route?.state?.index > 0) {
     return null;
   }
+
   const generalIndex: number = state?.index || 0;
 
   const jump = useCallback(
@@ -35,7 +37,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 0 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 0 && styles.textActive]}>
-          {'Наші АЗК'}
+          {i18n.t('Наші АЗК')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -48,7 +50,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 1 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 1 && styles.textActive]}>
-          {'Акції'}
+          {i18n.t('Акції')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -61,7 +63,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 2 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 2 && styles.textActive]}>
-          {'Головна'}
+          {i18n.t('Головна')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -74,7 +76,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 3 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 3 && styles.textActive]}>
-          {'Бонуси'}
+          {i18n.t('Бонуси')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -87,7 +89,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 4 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 4 && styles.textActive]}>
-          {'Профіль'}
+          {i18n.t('Профіль')}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

@@ -72,13 +72,12 @@ const Autocomplete: React.FC<TProps> = ({
 
   const onFail = (e: any) => {
     // eslint-disable-next-line no-alert
-    alert(t('SearchError'));
-    console.log('onFail', e);
+    Alert.alert(t('SearchError'));
   };
 
   const onNotFound = () => {
     // eslint-disable-next-line no-alert
-    alert(t('NotDefined'));
+    Alert.alert(t('NothingFound'));
   };
 
   useEffect(() => {
@@ -186,12 +185,13 @@ const Autocomplete: React.FC<TProps> = ({
           placeholderTextColor,
           editable: !setRoute,
           clearButtonMode: 'never',
-          clearTextOnFocus: true,
+          clearTextOnFocus: false,
+          //   multiline: setRoute ? true : false,
           multiline: false,
+          // numberOfLines: setRoute ? 2 : 1,
           numberOfLines: 1,
           dataDetectorTypes: 'address',
           enablesReturnKeyAutomatically: true,
-          multiline: true,
         }}
       />
       {!setRoute && (!!inputText || useCurrentPosition) && (

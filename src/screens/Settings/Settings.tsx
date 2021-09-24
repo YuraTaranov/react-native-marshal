@@ -29,6 +29,7 @@ import LanguageModal from './components/LanguageModal/LanguageModal';
 type TProps = {
   dispatch: Dispatch;
   biometricsType: TBiometricsType;
+  language: string;
 };
 
 type TMenuItem = {
@@ -36,7 +37,7 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
+const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
@@ -96,12 +97,12 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
         name: t('Умови використання'),
         onPress: () => navigate('UseTerms'),
       },
-      {
-        name: t('Мова'),
-        onPress: () => onPressLang(),
-      },
     ];
-  }, []);
+  }, [t]);
+
+  const langValue = useMemo(() => {
+    return language === 'uk' ? t('Українська') : t('Російська');
+  }, [language]);
 
   const renderItem: ({item}: {item: TMenuItem}) => JSX.Element = useCallback(
     ({item}) => (
@@ -128,6 +129,13 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
         leftButtonText={t('Не зараз')}
       />
       {biometricsType !== 'none' ? <BioAuthSwitch /> : null}
+      <TouchableOpacity style={styles.langContainer} onPress={onPressLang}>
+        <View>
+          <Text style={styles.name}>{t('Мова')}</Text>
+          <Text style={styles.langValue}>{langValue}</Text>
+        </View>
+        <Icon name="right" color={colors.black_1E1A1A} size={24} />
+      </TouchableOpacity>
       <FlatList
         data={menuItems}
         renderItem={renderItem}
@@ -136,6 +144,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
       <LanguageModal
         isVisible={languageModalVisible}
         closeModal={closeLangModal}
+        language={language}
       />
     </View>
   );
@@ -143,6 +152,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   biometricsType: state.biometrics.biometricsType,
+  language: state.appGlobalState.lang,
 });
 
 export default connect(mapStateToProps)(Settings);

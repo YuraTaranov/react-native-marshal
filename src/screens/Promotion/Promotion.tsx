@@ -8,10 +8,13 @@ import 'moment/locale/uk';
 
 type TProps = {
   promotion: TPromotion;
+  language: string;
 };
 
-const Promotion: React.FC<TProps> = ({promotion}) => {
+const Promotion: React.FC<TProps> = ({promotion, language}) => {
   const {t} = useTranslation();
+  language === 'ru' ? moment.locale('ru') : moment.locale('uk');
+
   const date = useMemo(() => {
     return `${t('Акція до')} ${moment(promotion?.end)
       .format('LL')
@@ -32,6 +35,7 @@ const Promotion: React.FC<TProps> = ({promotion}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   promotion: state.promotion.data,
+  language: state.appGlobalState.lang,
 });
 
 export default connect(mapStateToProps)(Promotion);

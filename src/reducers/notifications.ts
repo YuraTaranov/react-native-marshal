@@ -1,6 +1,5 @@
-import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {setLoader} from './appGlobalState';
-import {httpGet, httpPost, navigate, errorHandler} from '@services';
+import {takeLatest, put, call} from 'redux-saga/effects';
+import {httpPost} from '@services';
 import {urls} from '@constants';
 
 const GET_NOTIFICATIONS = '[notifications] GET_NOTIFICATIONS';
