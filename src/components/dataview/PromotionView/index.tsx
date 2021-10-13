@@ -5,6 +5,7 @@ import styles from './styles';
 import {TPromotion, TGlobalState} from '@types';
 import {fonts} from '@constants';
 import 'moment/locale/uk';
+import 'moment/locale/ru';
 import {assets} from '@assets';
 import {connect} from 'react-redux';
 
@@ -29,6 +30,21 @@ const PromotionView: React.FC<TProps> = ({
   const promoEndDate = useMemo(() => {
     return `${t('Акція до')} ${moment(item.end).format('LL').slice(0, -2)}`;
   }, [item.end]);
+
+  //   console.log(JSON.stringify(item, null, 2));
+
+  const prices = useMemo(() => {
+    return {
+      old:
+        item.old_price && item.old_price.split('.')[1] === '00'
+          ? Number(item.old_price).toFixed()
+          : item.old_price,
+      new:
+        item.new_price && item.new_price.split('.')[1] === '00'
+          ? Number(item.new_price).toFixed()
+          : item.new_price,
+    };
+  }, [item]);
 
   const titleStyles = useMemo(() => {
     if (item.type === 'action') {
@@ -89,12 +105,8 @@ const PromotionView: React.FC<TProps> = ({
         ) : null}
         {item.type === 'action' ? (
           <View style={styles.priceContainer}>
-            <Text style={styles.priceNew}>{`${item.new_price} ${t(
-              'грн',
-            )}`}</Text>
-            <Text style={styles.priceOld}>{`${item.old_price} ${t(
-              'грн',
-            )}`}</Text>
+            <Text style={styles.priceNew}>{`${prices.new} ${t('грн')}`}</Text>
+            <Text style={styles.priceOld}>{`${prices.old} ${t('грн')}`}</Text>
           </View>
         ) : null}
       </View>

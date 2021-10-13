@@ -4,13 +4,17 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
-    height: 60,
-    padding: 20,
     overflow: 'visible',
+    paddingTop: 48,
+  },
+  image: {
+    height: 208,
+    width: 208,
   },
   text: {
-    fontFamily: fonts.interMedium_500,
-    fontSize: 16,
-    color: colors.black_1E1A1A,
+    fontFamily: fonts.interSemiBold_600,
+    fontSize: 18,
+    color: colors.gray_8D909D,
+    marginTop: 32,
   },
 });

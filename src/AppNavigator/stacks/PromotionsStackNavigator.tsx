@@ -31,7 +31,6 @@ const PromotionsStackNavigator: React.FC<TProps> = ({}) => {
         component={Promotion}
         options={{
           headerTitleAlign: 'center',
-          title: t('Умови акції'),
         }}
       />
     </PromotionsStack.Navigator>

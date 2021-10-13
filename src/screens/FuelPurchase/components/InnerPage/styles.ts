@@ -31,7 +31,6 @@ export default StyleSheet.create({
   },
   priceContainer: {
     width: WRow,
-    height: 188,
     alignSelf: 'center',
     alignItems: 'center',
     alignContent: 'space-between',

@@ -9,6 +9,7 @@ import {TGlobalState} from '@types';
 import PushNotification from 'react-native-push-notification';
 import {setNotifications, regDeviceToken} from '@reducers/notifications';
 import {Dispatch} from 'redux';
+import {getPromotion} from '@reducers/promotion';
 
 type TProps = {
   dispatch: Dispatch;
@@ -51,8 +52,10 @@ const NotificationsManager: React.FC<TProps> = ({
             );
             PushNotification.removeAllDeliveredNotifications();
           }
-          console.log('111', data);
         });
+        if (item.type === 'action') {
+          dispatch(getPromotion(item.data_id));
+        }
         // проверить
         // if (ios && badge) {
         //   PushNotificationIOS.setApplicationIconBadgeNumber(Number(badge));
@@ -130,8 +133,8 @@ const NotificationsManager: React.FC<TProps> = ({
 
   const getToken = useCallback(async () => {
     const fcmToken = await messaging().getToken();
-    // console.log('fcmToken', fcmToken);
-    fcmToken && regDeviceToken(fcmToken);
+    console.log('fcmToken', fcmToken);
+    fcmToken && dispatch(regDeviceToken(fcmToken));
   }, []);
 
   const checkPermission = useCallback(async () => {

@@ -5,19 +5,19 @@ import styles from './styles';
 
 //Type
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type {TPrice} from '@types';
+import type {TFuel} from '@types';
 
-type TProps = TPrice & {
+type TProps = TFuel & {
   onSelected: (id: number) => void;
   selectedId: number | null;
 };
 
 export const ItemPrice: React.FC<TProps> = ({
-  cost,
+  price,
   id,
   onSelected,
   selectedId,
-  title,
+  name,
 }) => {
   const {t} = useTranslation();
   const [selected, setSelected] = useState(false);
@@ -39,10 +39,10 @@ export const ItemPrice: React.FC<TProps> = ({
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.itemPrice, selected && styles.selected]}>
         <Text style={[styles.title, selected && styles.titleSelected]}>
-          {title}
+          {name}
         </Text>
         <Text style={[styles.cost, selected && styles.costSelected]}>
-          {`${cost} ${t('currency')}/${t('l')}`}
+          {`${price} ${t('currency')}/${t('l')}`}
         </Text>
       </View>
     </TouchableOpacity>

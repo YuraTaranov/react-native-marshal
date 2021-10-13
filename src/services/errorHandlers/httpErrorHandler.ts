@@ -22,5 +22,9 @@ export const errorHandler = (error: any, method?: string) => {
   if (!resultString.trim()) {
     resultString = error.data?.message || '-';
   }
-  Alert.alert('', resultString);
+  if (error.data.message === 'Unauthenticated.') {
+    console.log('Unauthenticated');
+  } else {
+    Alert.alert('', resultString);
+  }
 };

@@ -1,42 +1,30 @@
 import React from 'react';
-
-import {useTranslation, useState, useRef, useEffect} from '@hooks';
-import styles, {withRoute} from './styles';
+import {
+  useTranslation,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from '@hooks';
+import styles from './styles';
 import {MaterialInput, Text, View} from '@components';
 import {colors} from '@constants';
-import {SVG_Icons} from '@assets';
-import {animation} from '@helpers';
+import {setFuelConsumption} from '@reducers/fuelCalculator';
+import {Dispatch} from 'redux';
+import {connect} from 'react-redux';
 
-//Type
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type {Dispatch, SetStateAction} from 'react';
 type TProps = {
   cb: (n: number | null) => void;
-  setRoute: boolean;
   counter?: number | undefined | null | string;
-};
-type TLabeProps = {
-  title: string;
-};
-
-const Label: React.FC<TLabeProps> = ({title}) => {
-  const {t} = useTranslation();
-  animation();
-  return (
-    <View style={withRoute.label}>
-      <View style={withRoute.leftIconView}>
-        <SVG_Icons height={25} fill={colors.green_00AE36} name="gas" />
-      </View>
-      <Text style={withRoute.labelText}>{`${title} ${t('l/100km')}`}</Text>
-    </View>
-  );
+  fuelConsumption: string;
+  dispatch: Dispatch;
 };
 
-export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
+const FuelConsumption: React.FC<TProps> = ({dispatch, cb, fuelConsumption}) => {
   const {t} = useTranslation();
   const REF = useRef();
   const [showClearIcon, setShowClearIcon] = useState(false);
-  const [fuelConsumption, setFuelConsumption] = useState('');
   const [refresh, setRefresh] = useState(new Date().toString());
 
   useEffect(() => {
@@ -52,7 +40,7 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
     if (showClearIcon) {
       //@ts-ignore
       REF?.current?.inputRef?.current?.clear();
-      setFuelConsumption('');
+      dispatch(setFuelConsumption(''));
       setRefresh(new Date().toString());
       cb(0);
     }
@@ -62,46 +50,54 @@ export const FuelConsumption: React.FC<TProps> = ({setRoute, cb, counter}) => {
     if (typeof fuelConsumption === 'string') {
       num = fuelConsumption.toString();
     }
-    cb(
-      //@ts-ignore
-      num
-        .replace(/^\D/, '0.')
-        .replace(/[\D]+/g, '.')
-        .replace(/^0([^\.])+/, '0.$1')
-        .replace(/^(.{3})(\.)$/g, '$10'),
+    dispatch(
+      cb(
+        //@ts-ignore
+        num
+          .replace(/^\D/, '0.')
+          .replace(/[\D]+/g, '.')
+          .replace(/^0([^\.])+/, '0.$1')
+          .replace(/^(.{3})(\.)$/g, '$10'),
+      ),
     );
   }, [cb, fuelConsumption]);
 
+  const maxLength = useMemo(() => {
+    return fuelConsumption.includes('.') ? 4 : 3;
+  }, [fuelConsumption]);
+
+  const onChangeText = useCallback(value => {
+    dispatch(setFuelConsumption(value));
+  }, []);
+
   return (
-    <View style={setRoute ? withRoute.container : styles.container}>
-      {setRoute ? (
-        <Label title={fuelConsumption} />
-      ) : (
-        <>
-          <MaterialInput
-            key={refresh}
-            //@ts-ignore
-            onRef={REF}
-            activeLineWidth={1}
-            inputContainerStyle={{...styles.inputContainer}}
-            keyboardType={'decimal-pad'}
-            label={t('FuelConsumption')}
-            lineWidth={setRoute ? 0 : 1}
-            maxLength={4}
-            onChangeText={setFuelConsumption}
-            onPressAccessory={onClear}
-            renderRightAccessory={showClearIcon}
-            returnKeyType={'done'}
-            rightAccessoryName={'x'}
-            rightClear
-            tintColor={colors.gray_6D6F79}
-            value={counter}
-          />
-          <View style={styles.fuelConsumptionView}>
-            <Text style={styles.fuelConsumptionText}>{t('l/100km')}</Text>
-          </View>
-        </>
-      )}
+    <View style={styles.container}>
+      <>
+        <MaterialInput
+          key={refresh}
+          //@ts-ignore
+          onRef={REF}
+          activeLineWidth={1}
+          inputContainerStyle={{...styles.inputContainer}}
+          keyboardType={'decimal-pad'}
+          label={t('FuelConsumption')}
+          lineWidth={1}
+          maxLength={maxLength}
+          onChangeText={onChangeText}
+          onPressAccessory={onClear}
+          renderRightAccessory={showClearIcon}
+          returnKeyType={'done'}
+          rightAccessoryName={'x'}
+          rightClear
+          tintColor={colors.gray_6D6F79}
+          value={fuelConsumption}
+        />
+        <View style={styles.fuelConsumptionView}>
+          <Text style={styles.fuelConsumptionText}>{t('l/100km')}</Text>
+        </View>
+      </>
     </View>
   );
 };
+
+export default connect()(FuelConsumption);

@@ -49,6 +49,7 @@ export {formatWithMask} from 'react-native-mask-input';
 export {request, PERMISSIONS} from 'react-native-permissions';
 export {default as ReactNativeBiometrics} from 'react-native-biometrics';
 export {default as DeviceInfo} from 'react-native-device-info';
+export {default as Geocoder} from 'react-native-geocoding';
 
 // TYPOGRAPHY
 export {default as Autocomplete} from './typography/GooglePlacesAutocomplete';

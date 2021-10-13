@@ -89,6 +89,7 @@ const generateOptions = ({method, url, data, params}: TGenerateOptions) => {
     params,
     headers: {
       ...defaultHeaders,
+      locale: appGlobalState.lang,
       ...(token ? authHeaders : {}),
     },
   };

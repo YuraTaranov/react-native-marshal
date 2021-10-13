@@ -6,6 +6,7 @@ import {
   useRoute,
   useState,
   useTranslation,
+  useMemo,
 } from '@hooks';
 import {
   Alert,
@@ -28,36 +29,16 @@ import type {
   TPrice,
   TCreditCard,
   TPaySystemContent,
+  TFuel,
 } from '@types';
 // import {Dispatch} from 'redux';
 
 type TProps = {
   index: number;
   creditCards: TCreditCard[];
+  fuelCountToBuy: string;
+  fuel: TFuel[];
 };
-
-const mopData: TPrice[] = [
-  {
-    title: 'Бензин A95',
-    cost: 29.85,
-    id: 1,
-  },
-  {
-    title: 'Бензин A98',
-    cost: 30.85,
-    id: 2,
-  },
-  {
-    title: 'Бензин A100',
-    cost: 36.5,
-    id: 3,
-  },
-  {
-    title: 'Бензин A76',
-    cost: 22.45,
-    id: 4,
-  },
-];
 
 const sortById = (a: TPaySystemContent, b: TPaySystemContent): number => {
   if (a.id < b.id) {
@@ -69,7 +50,12 @@ const sortById = (a: TPaySystemContent, b: TPaySystemContent): number => {
   }
 };
 
-const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
+const InnerPage: React.FC<TProps> = ({
+  index,
+  creditCards,
+  fuelCountToBuy,
+  fuel,
+}) => {
   const {t} = useTranslation();
   const {setParams, navigate} = useNavigation();
   const {params} = useRoute<FuelPurchaseRouteProp>();
@@ -95,8 +81,12 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     },
   ];
 
-  const [fuelCouner, setFuelAmount] = useState<number | null>(null);
-  const [prices, setPrices] = useState<TPrice[]>(mopData);
+  const fuelToBuyFormatted = useMemo(() => {
+    return fuelCountToBuy ? String(Math.ceil(+fuelCountToBuy)) : '';
+  }, [fuelCountToBuy]);
+
+  const [fuelCounter, setFuelAmount] = useState<string>(fuelToBuyFormatted);
+  const [prices, setPrices] = useState<TFuel[]>(fuel);
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
   const [selectedPayType, setSelectedPayType] =
     useState<TPaySystemContent | null>(null);
@@ -111,7 +101,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     setIsVisible(true);
   };
 
-  const hidenModal = () => {
+  const hiddenModal = () => {
     setIsVisible(false);
   };
 
@@ -120,7 +110,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
       i => !!i.selected,
     );
     if (Array.isArray(selectedPaySystem) && selectedPaySystem.length > 0) {
-      hidenModal();
+      hiddenModal();
       selectedPaySystem[0].action();
     }
   };
@@ -130,7 +120,9 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
   };
 
   const onChangeFuelAmount = (str: string) => {
-    setFuelAmount(+str || null);
+    if (str.startsWith('0')) return;
+    const formattedValue = str ? str.replace(/[^0-9]/g, '') : str;
+    setFuelAmount(formattedValue);
   };
 
   const addCreditCard = useCallback(() => {
@@ -180,6 +172,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
 
   useEffect(() => {
     if (
+      +fuelCounter > 9 &&
       fullCostOfFuel > 0 &&
       paySystems.some(item => !!item?.selected) &&
       (!index || !!phoneNumber)
@@ -188,7 +181,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     } else {
       setIsDisabledButton(true);
     }
-  }, [paySystems, fullCostOfFuel, index, phoneNumber]);
+  }, [paySystems, fullCostOfFuel, index, phoneNumber, fuelCounter]);
 
   useEffect(() => {
     addCreditCard();
@@ -202,15 +195,15 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
   }, [params, setParams]);
 
   useEffect(() => {
-    const cost = selectedPriceId
-      ? prices.filter(i => i.id === selectedPriceId)[0].cost
+    const price = selectedPriceId
+      ? prices.filter(i => i.id === selectedPriceId)[0].price
       : 0;
-    if (fuelCouner) {
-      setFullCostOfFuel(cost * fuelCouner);
+    if (fuelCounter) {
+      setFullCostOfFuel(+price * +fuelCounter);
     } else {
       setFullCostOfFuel(0);
     }
-  }, [fuelCouner, selectedPriceId, prices]);
+  }, [fuelCounter, selectedPriceId, prices]);
 
   useEffect(() => {
     const newArray: TPaySystemContent[] = paySystems.filter(
@@ -227,7 +220,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
     <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.priceContainer}>
-          {prices.map((priceData: TPrice) => {
+          {prices.map((priceData: TFuel) => {
             return (
               <ItemPrice
                 {...priceData}
@@ -245,13 +238,14 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
         )}
         <View style={styles.row}>
           <MaterialInput
-            keyboardType={'numeric'}
+            keyboardType={'number-pad'}
             returnKeyType={'default'}
-            value={fuelCouner}
+            value={fuelCounter}
             lineWidth={0.5}
             onChangeText={onChangeFuelAmount}
             label={t('FuelAmountByLiters')}
             inputContainerStyle={styles.inputRow}
+            maxLength={3}
           />
           <View style={styles.curView}>
             <Text style={styles.curText}>{`${t(
@@ -274,7 +268,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
         onPress={PayForFuel}
       />
       <PayTypeModal
-        closeModal={hidenModal}
+        closeModal={hiddenModal}
         isVisible={isVisible}
         onChoose={onChoose}
         onSelect={onSelect}
@@ -286,6 +280,7 @@ const InnerPage: React.FC<TProps> = ({index, creditCards}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   creditCards: state.creditCards,
+  fuel: state.fuel.data,
 });
 
 export default connect(mapStateToProps)(InnerPage);

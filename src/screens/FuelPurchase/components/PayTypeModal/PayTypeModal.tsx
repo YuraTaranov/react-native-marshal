@@ -43,8 +43,9 @@ const PayTypeModal: React.FC<TProps> = ({
 
   const onSelectedItem = (id: number) => () => {
     if (id === 100) {
-      navigate('AddCard', {openModal: true});
-      closeModal();
+      // FIXME: comment add card
+      //   navigate('AddCard', {openModal: true});
+      //   closeModal();
     } else {
       onSelect(id);
     }

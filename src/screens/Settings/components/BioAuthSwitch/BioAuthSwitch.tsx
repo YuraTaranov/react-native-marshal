@@ -9,6 +9,7 @@ import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import {getProfile} from '@reducers/profile';
 import {TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
+import {setBioTurnOffAfterLogout} from '@reducers/logout';
 
 type TProps = {
   dispatch: Dispatch;
@@ -32,6 +33,7 @@ const BioAuthSwitch: React.FC<TProps> = ({dispatch, profile}) => {
       dispatch(setLoader(false));
       if (body.data.data.user_key) {
         dispatch(setFaceIdActiveLocal(true));
+        dispatch(setBioTurnOffAfterLogout(false));
         dispatch(setUserKey(body.data.data.user_key));
         dispatch(getProfile());
       }

@@ -5,6 +5,7 @@ import {
   useTranslation,
   useState,
   useNavigation,
+  useMemo,
 } from '@hooks';
 import {
   View,
@@ -14,6 +15,7 @@ import {
   BonusCardModal,
   Icon,
   NotificationsManager,
+  RefreshControl,
 } from '@components';
 import styles from './styles';
 import {Dispatch} from 'redux';
@@ -29,13 +31,18 @@ import {getReferralLink} from '@reducers/referral';
 import {getPurchases} from '@reducers/purchases';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
+import {ScrollView} from 'react-native-gesture-handler';
+import {getPromotionsMain} from '@reducers/promotionsMain';
+import {setBioTurnOffAfterLogout} from '@reducers/logout';
+import {getFuel} from '@reducers/fuel';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
   lang: string;
+  refreshing: boolean;
 };
 
-const Home: React.FC<TProps> = ({dispatch, promotions, lang}) => {
+const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
@@ -65,32 +72,58 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang}) => {
   useEffect(() => {
     dispatch(getPetrolStations());
     dispatch(getSettings());
+    dispatch(getPromotionsMain());
+    dispatch(getFuel());
     dispatch(getPromotions({page: 1}));
   }, [lang]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setBioTurnOffAfterLogout(false));
+    }, 2000);
+  }, []);
+
+  const refreshPromotions = useCallback(() => {
+    dispatch(getPromotionsMain());
+  }, []);
+
+  const refreshControl = useMemo(() => {
+    return (
+      <RefreshControl
+        onRefresh={refreshPromotions}
+        refreshing={refreshing}
+        colors={[colors.green_27A74C]}
+        tintColor={colors.green_27A74C}
+        size={24}
+      />
+    );
+  }, []);
 
   return (
     <View style={styles.container}>
       <NotificationsManager />
       <FuelBalance />
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          style={styles.buttonContainerCalc}
-          onPress={() => navigate('FuelCalculator')}>
-          <Icon
-            size={24}
-            name="calculator-duotone"
-            color={colors.green_009F30}
-          />
-          <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonContainerFuel}
-          onPress={() => navigate('FuelPurchase')}>
-          <Icon size={24} name="gas" color={colors.green_009F30} />
-          <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
-        </TouchableOpacity>
-      </View>
-      {promotions ? <HomeCarousel promotions={promotions} /> : null}
+      <ScrollView refreshControl={refreshControl}>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.buttonContainerCalc}
+            onPress={() => navigate('FuelCalculator')}>
+            <Icon
+              size={24}
+              name="calculator-duotone"
+              color={colors.green_009F30}
+            />
+            <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonContainerFuel}
+            onPress={() => navigate('FuelPurchase')}>
+            <Icon size={24} name="gas" color={colors.green_009F30} />
+            <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
+          </TouchableOpacity>
+        </View>
+        {promotions ? <HomeCarousel promotions={promotions} /> : null}
+      </ScrollView>
       <BonusCardModal
         isVisible={cardModalVisible}
         closeModal={closeCardModal}
@@ -101,6 +134,7 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   promotions: state.promotions.data,
+  refreshing: state.promotionsMain.refreshing,
   lang: state.appGlobalState.lang,
 });
 

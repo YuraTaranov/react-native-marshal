@@ -33,3 +33,4 @@ export {default as Notifications} from './Notifications/Notifications';
 export {default as UseTerms} from './UseTerms/UseTerms';
 export {default as FuelPurchase} from './FuelPurchase/FuelPurchase';
 export {default as Languages} from './Languages/Languages';
+export {default as FuelCalculatorResult} from './FuelCalculatorResult/FuelCalculatorResult';

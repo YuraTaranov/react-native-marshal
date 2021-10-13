@@ -17,10 +17,12 @@ export const urls = {
   getModels: 'car/models',
   getTank: 'car/tanks',
   getPromotions: 'profile/actions',
+  getPromotionsMain: 'profile/action-main',
   getPetrolStations: 'azs/search-azs',
   biometricsAdd: 'biometric/add',
   biometricsLogin: 'biometric/login',
   getSettingsText: 'profile/static-text',
   getReferralLink: 'profile/get-referral-url',
   getPurchases: 'profile/get-purchase-history',
+  getFuel: 'azs/fuels',
 };

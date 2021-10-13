@@ -45,7 +45,8 @@ const CheckBoxCustom: React.FC<TProps> = ({
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           textColor={'#000000'}
-          themeVariant={darkMode ? 'dark' : 'light'}
+          // themeVariant={darkMode ? 'light' : 'dark'}
+          themeVariant={'light'}
         />
       );
     } else {

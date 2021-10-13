@@ -1,5 +1,8 @@
 import {all} from 'redux-saga/effects';
 // ADD IMPORT
+import { watchFuel } from './fuel'
+import { watchFuelCalculator } from './fuelCalculator'
+import { watchPromotionsMain } from './promotionsMain'
 import { watchReferral } from './referral'
 import { watchSettings } from './settings'
 import { watchNotifications } from './notifications'
@@ -17,6 +20,9 @@ import {watchPurchases} from './purchases';
 export default function* rootSaga() {
   yield all([
     // ADD WATCHER
+		watchFuel(),
+		watchFuelCalculator(),
+		watchPromotionsMain(),
 		watchReferral(),
 		watchSettings(),
 		watchNotifications(),

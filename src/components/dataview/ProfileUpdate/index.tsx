@@ -330,6 +330,8 @@ const ProfileUpdate: React.FC<TProps> = ({
               prefix="+380"
               onFocus={onPhoneFocus}
               onBlur={onPhoneBlur}
+              disabled={true}
+              textColor={colors.gray_8D909D}
               baseColor={
                 isPhoneFocus ? colors.black_000000 : colors.gray_8D909D
               }
@@ -346,7 +348,6 @@ const ProfileUpdate: React.FC<TProps> = ({
           minimumDate={minimumDate}
           maximumDate={maximumDate}
           textColor={'#000000'}
-          themeVariant={darkMode ? 'dark' : 'light'}
         />
       ) : null}
       <View style={styles.buttonContainer}>

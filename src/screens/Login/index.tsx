@@ -36,6 +36,7 @@ type TProps = {
   phone: string;
   loading: boolean;
   faceIdActiveLocal: boolean;
+  bioTurnOffAfterLogout: boolean;
 };
 
 const Login: React.FC<TProps> = ({
@@ -43,6 +44,7 @@ const Login: React.FC<TProps> = ({
   phone,
   loading,
   faceIdActiveLocal,
+  bioTurnOffAfterLogout,
 }) => {
   const {t} = useTranslation();
   const textInputMaskRef = useRef<TextInput>(null);
@@ -110,14 +112,18 @@ const Login: React.FC<TProps> = ({
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      {faceIdActiveLocal ? <BiometricsLoginModal /> : null}
+      {faceIdActiveLocal && !bioTurnOffAfterLogout ? (
+        <BiometricsLoginModal />
+      ) : null}
       <KeyboardAvoidingView
         keyboardVerticalOffset={verticalScale(90)}
         style={styles.container}>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t('text.enterYourPhoneNumber')}</Text>
           <View style={[styles.phoneNumberView, textInputBorderColor]}>
-            <Text style={styles.prefix}>+380 </Text>
+            <View style={styles.prefixContainer}>
+              <Text style={styles.prefix}>+380 </Text>
+            </View>
             <TextInputMask
               ref={textInputMaskRef}
               onFocus={setInputFocusTrue}
@@ -154,6 +160,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   phone: state.login.phone,
   loading: state.login.loading,
   faceIdActiveLocal: state.biometrics.faceIdActiveLocal,
+  bioTurnOffAfterLogout: state.logout.bioTurnOffAfterLogout,
 });
 
 export default connect(mapStateToProps)(Login);
