@@ -36,7 +36,7 @@ export default StyleSheet.create({
     borderBottomColor: colors.gray_8D909D,
     borderBottomWidth: 1,
     backgroundColor: 'transparent',
-    paddingRight: 77,
+    paddingRight: 60,
   },
   textInput: {
     height: 44,

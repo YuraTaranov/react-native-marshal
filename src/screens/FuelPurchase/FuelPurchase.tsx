@@ -6,6 +6,8 @@ import {
   useState,
   useTranslation,
   useWindowDimensions,
+  useRoute,
+  useMemo,
 } from '@hooks';
 
 import {View} from '@components';
@@ -30,14 +32,19 @@ type TRenderTabBarParams = {
   navigationState: object;
 };
 
-const FuelPurchase: React.FC<TProps> = ({dispatch}) => {
+const FuelPurchase: React.FC<TProps> = ({}) => {
   const {t} = useTranslation();
   const [index, setIndex] = useState(0);
+  const {params}: any = useRoute();
   const layout = useWindowDimensions();
   const [routes] = useState([
     {key: 'first', title: t('BuyYourself')},
     {key: 'second', title: t('BuyForFriend')},
   ]);
+
+  const fuelCountToBuy = params?.fuelCountToBuy;
+
+  useMemo(() => {}, [fuelCountToBuy]);
 
   const Empty = () => <View />;
   const renderScene = SceneMap({
@@ -69,13 +76,11 @@ const FuelPurchase: React.FC<TProps> = ({dispatch}) => {
         initialLayout={{width: layout.width}}
         keyboardDismissMode="auto"
       />
-      <InnerPage index={index} />
+      <InnerPage index={index} fuelCountToBuy={fuelCountToBuy} />
     </>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
-  // reducer: state.reducer
-});
+const mapStateToProps = (state: TGlobalState) => ({});
 
 export default connect(mapStateToProps)(FuelPurchase);

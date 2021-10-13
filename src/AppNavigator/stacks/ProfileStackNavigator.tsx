@@ -147,7 +147,6 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
         component={Promotion}
         options={{
           headerTitleAlign: 'center',
-          title: t('Умови акції'),
         }}
       />
     </ProfileStack.Navigator>

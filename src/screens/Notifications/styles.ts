@@ -11,6 +11,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.gray_E1E1E8,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   newMessageCircle: {
     height: 8,
@@ -36,10 +37,18 @@ export default StyleSheet.create({
     fontSize: 13,
     color: colors.gray_6D6F79,
   },
+  emptyContainer: {
+    paddingTop: 32,
+    alignItems: 'center',
+  },
+  emptyImage: {
+    height: 208,
+    width: 208,
+  },
   emptyTitle: {
-    marginTop: 24,
-    fontSize: 16,
-    fontFamily: fonts.interMedium_500,
-    textAlign: 'center',
+    marginTop: 32,
+    fontSize: 18,
+    fontFamily: fonts.interSemiBold_600,
+    color: colors.gray_8D909D,
   },
 });

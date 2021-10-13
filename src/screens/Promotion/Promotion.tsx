@@ -1,10 +1,11 @@
 import React from 'react';
-import {useMemo, useTranslation} from '@hooks';
-import {View, Text, PromotionView, moment} from '@components';
+import {useMemo, useTranslation, useLayoutEffect, useNavigation} from '@hooks';
+import {View, Text, PromotionView, moment, ScrollView} from '@components';
 import {TGlobalState, TPromotion} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import 'moment/locale/uk';
+import 'moment/locale/ru';
 
 type TProps = {
   promotion: TPromotion;
@@ -14,6 +15,18 @@ type TProps = {
 const Promotion: React.FC<TProps> = ({promotion, language}) => {
   const {t} = useTranslation();
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
+  const {setOptions} = useNavigation();
+
+  useLayoutEffect(() => {
+    setOptions({
+      title:
+        promotion.type === 'action'
+          ? t('Акція')
+          : promotion.type === 'discount'
+          ? t('Знижка')
+          : t('Новина'),
+    });
+  }, [promotion.type, t]);
 
   const date = useMemo(() => {
     return `${t('Акція до')} ${moment(promotion?.end)
@@ -24,11 +37,13 @@ const Promotion: React.FC<TProps> = ({promotion, language}) => {
   return (
     <View style={styles.container}>
       <PromotionView disabled={true} item={promotion} bgBorderRadius={0} />
-      <View style={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         <Text style={styles.title}>{promotion?.title}</Text>
         <Text style={styles.description}>{promotion?.text}</Text>
-        <Text style={styles.date}>{date}</Text>
-      </View>
+        {promotion.type === 'action' ? (
+          <Text style={styles.date}>{date}</Text>
+        ) : null}
+      </ScrollView>
     </View>
   );
 };

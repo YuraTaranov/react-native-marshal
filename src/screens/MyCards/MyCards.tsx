@@ -25,7 +25,8 @@ const MyCards: React.FC<TProps> = ({dispatch, creditCards}) => {
   const loading = false;
 
   const submit = () => {
-    navigate('AddCard');
+    //   FIXME: comment
+    // navigate('AddCard');
   };
 
   const onSelected = (num: string) => (): void => {

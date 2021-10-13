@@ -19,5 +19,8 @@ export default combineReducers({
   notifications: require('./notifications').default,
   settings: require('./settings').default,
   referral: require('./referral').default,
+  promotionsMain: require('./promotionsMain').default,
+  fuelCalculator: require('./fuelCalculator').default,
+  fuel: require('./fuel').default,
   // ADD NEW REDUCER
 });

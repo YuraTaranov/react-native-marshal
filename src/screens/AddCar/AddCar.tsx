@@ -84,6 +84,19 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
     );
   }, [car, carToEdit]);
 
+  const onChangeTank = useCallback(
+    val => {
+      if (val.startsWith('0')) return;
+      const formattedValue = val ? val.replace(/[^0-9.]/g, '') : val;
+      setCar({...car, tank: {id: '', name: formattedValue}});
+    },
+    [car],
+  );
+
+  const tankMaxLength = useMemo(() => {
+    return car.tank.name.includes('.') ? 4 : 3;
+  }, [car.tank.name]);
+
   const openDeleteModal = useCallback(() => {
     setIsDeleteModalVisible(true);
   }, []);
@@ -166,18 +179,21 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
         />
       </View>
       <View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.buttonTI}
           onPress={openModal('tank')}
           disabled={!car.year.name}
-        />
+        /> */}
         <MaterialInput
           renderRightAccessory
           rightAccessoryName={'arrow-down'}
+          keyboardType="decimal-pad"
           rightAccessoryColor={colors.gray_8D909D}
           value={car.tank.name}
+          onChangeText={onChangeTank}
           label={t('Об’єм баку, л')}
-          disabled
+          maxLength={tankMaxLength}
+          lineWidth={0.5}
         />
       </View>
       {car.brand.name && car.model.name && car.year.name && car.tank.name ? (

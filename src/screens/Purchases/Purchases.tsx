@@ -57,7 +57,7 @@ const Purchases: React.FC<TProps> = ({
   }, []);
 
   const parseFuel = useCallback(fuelId => {
-    if (fuelId === 1) return t('ДП');
+    if (fuelId === 1) return t('ДТ');
     if (fuelId === 2) return 'А95';
     if (fuelId === 3) return 'А98';
     return 'А98+';

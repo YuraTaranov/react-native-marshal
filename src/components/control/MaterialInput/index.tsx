@@ -23,6 +23,7 @@ const MaterialInput: React.FC<TProps> = ({
   error,
   formatText,
   inputContainerStyle,
+  textColor = colors.black_000000,
   keyboardType = 'default',
   label,
   lineWidth = 2,
@@ -59,17 +60,19 @@ const MaterialInput: React.FC<TProps> = ({
       ref={onRef}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={value ? `${value}` : undefined}
+      value={value}
       onChangeText={onChangeText}
       label={label}
       keyboardType={keyboardType}
       onSubmitEditing={onSubmit}
       maxLength={maxLength}
       labelTextStyle={styles.lableStyle}
-      style={styles.textInputStyle}
+      style={{...styles.textInputStyle, color: textColor}}
       tintColor={tintColor ? tintColor : colors.black_000000}
       baseColor={baseColor}
       lineWidth={lineWidth}
+      disabledLineWidth={0.5}
+      disabledLineType="solid"
       activeLineWidth={activeLineWidth}
       inputContainerStyle={{
         ...styles.inputContainerStyle,
@@ -108,6 +111,7 @@ type TProps = {
   inputContainerStyle?: ViewStyle;
   lineWidth?: number;
   activeLineWidth?: number;
+  textColor?: string;
   baseColor?: string;
   prefix?: string;
   disabled?: boolean;

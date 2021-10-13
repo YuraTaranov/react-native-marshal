@@ -1,7 +1,8 @@
 import React from 'react';
 import {useTranslation} from '@hooks';
-import {View, Text} from '@components';
+import {View, Text, Image} from '@components';
 import styles from './styles';
+import {assets} from '@assets';
 
 type TProps = {};
 
@@ -10,6 +11,7 @@ const NothingFoundItem: React.FC<TProps> = ({}) => {
 
   return (
     <View style={styles.container}>
+      <Image source={assets.NO_SEARCH} style={styles.image} />
       <Text style={styles.text}>{t('NothingFound')}</Text>
     </View>
   );

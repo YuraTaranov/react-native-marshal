@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dispatch} from 'redux';
 import {useEffect, useCallback, useTranslation, useNavigation} from '@hooks';
-import {View, Text, FlatList, TouchableOpacity, Icon} from '@components';
+import {View, Text, FlatList, TouchableOpacity, Icon, Image} from '@components';
 import {TGlobalState, TNotification} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -11,6 +11,7 @@ import moment from 'moment';
 import {setNotifications} from '@reducers/notifications';
 import {animation} from '@helpers';
 import {getPromotion} from '@reducers/promotion';
+import {assets} from '@assets';
 
 type TProps = {
   dispatch: Dispatch;
@@ -92,7 +93,12 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   );
 
   const ListEmptyComponent = useCallback(() => {
-    return <Text style={styles.emptyTitle}>{t('Нових сповіщень немає')}</Text>;
+    return (
+      <View style={styles.emptyContainer}>
+        <Image source={assets.NO_NOTIFICATIONS} style={styles.emptyImage} />
+        <Text style={styles.emptyTitle}>{t('Нових сповіщень немає')}</Text>
+      </View>
+    );
   }, []);
 
   return (

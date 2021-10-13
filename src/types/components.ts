@@ -135,7 +135,7 @@ export type TNotification = {
   title: string;
   message: string;
   body: string;
-  data_id: string;
+  data_id: number;
   type: 'action' | 'text';
   date: Date;
 };

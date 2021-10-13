@@ -11,7 +11,6 @@ import {UsualButton, Keyboard} from '@components';
 import styles from './styles';
 
 type TProps = {
-  isBuy: boolean;
   onPress: (bool: boolean) => void;
   disabled?: boolean;
 };
@@ -19,7 +18,6 @@ type TProps = {
 export const CalculateButton: React.FunctionComponent<TProps> = ({
   onPress,
   disabled = false,
-  isBuy,
 }) => {
   const {t} = useTranslation();
   const [keyboardIsShow, setKeyboardStatus] = useState(false);
@@ -61,7 +59,7 @@ export const CalculateButton: React.FunctionComponent<TProps> = ({
   return (
     <Animated.View style={[styles.buttonContainer, animatedStyles]}>
       <UsualButton
-        title={!isBuy ? t('Calculate') : t('BuyFuel')}
+        title={t('Calculate')}
         disabled={disabled}
         buttonStyle={styles.usualButton}
         onPress={Calculate}

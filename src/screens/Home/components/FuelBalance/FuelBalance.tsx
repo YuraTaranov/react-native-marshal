@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   RadioButtonCustom,
+  FlatList,
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
@@ -24,9 +25,10 @@ type TProps = {
 
 const FuelBalance: React.FC<TProps> = ({profile}) => {
   const {t} = useTranslation();
+
   const initialFuel: TFuelProfile = {
-    id: 1,
-    name: t('ДП'),
+    id: 2,
+    name: '95',
     liters: 0,
   };
   const [fuelType, setFuelType] = useState<TFuelProfile>(initialFuel);
@@ -44,7 +46,7 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
         setFuelType(profile.fuels[1]);
       }
     }
-  }, [fuelLength]);
+  }, [fuelLength, profile?.fuels]);
 
   const openModal = useCallback(() => {
     fuelLength && setIsModalVisible(true);
@@ -60,7 +62,25 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
       findFuelType && setFuelType(findFuelType);
       closeModal();
     },
-    [fuelLength],
+    [profile],
+  );
+
+  const renderItem: ({item}: {item: TFuelProfile}) => JSX.Element = useCallback(
+    ({item}) => (
+      <RadioButtonCustom
+        key={item.id}
+        text={item.name}
+        active={fuelType.id === item.id}
+        onChange={onChangeFuelType}
+        type={item.id}
+      />
+    ),
+    [fuelType.id, onChangeFuelType],
+  );
+
+  const keyExtractor: (item: TFuelProfile) => string = useCallback(
+    item => String(item.id),
+    [],
   );
 
   return (
@@ -74,7 +94,7 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
         <TouchableOpacity style={styles.fuelTypeContainer} onPress={openModal}>
           <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
           <View style={styles.fuelTypeValueContainer}>
-            <Text style={styles.fuelTypeValue}>{`${fuelType.name}`}</Text>
+            <Text style={styles.fuelTypeValue}>{`${t(fuelType.name)}`}</Text>
             <Icon name="arrow-down" size={24} color={colors.white_FFFFFF} />
           </View>
         </TouchableOpacity>
@@ -97,29 +117,10 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
               <Icon name="x" size={24} color={colors.black_000000} />
             </TouchableOpacity>
           </View>
-          <RadioButtonCustom
-            text={'95'}
-            active={fuelType.id === 2}
-            onChange={onChangeFuelType}
-            type={2}
-          />
-          <RadioButtonCustom
-            text={'98'}
-            active={fuelType.id === 3}
-            onChange={onChangeFuelType}
-            type={3}
-          />
-          <RadioButtonCustom
-            text={'98+'}
-            active={fuelType.id === 4}
-            onChange={onChangeFuelType}
-            type={4}
-          />
-          <RadioButtonCustom
-            text={t('ДП')}
-            active={fuelType.id === 1}
-            onChange={onChangeFuelType}
-            type={1}
+          <FlatList
+            data={profile?.fuels}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
           />
         </View>
       </Modal>

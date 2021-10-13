@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors, fonts} from '@constants';
+import {colors, fonts, android} from '@constants';
 
 export default StyleSheet.create({
   inputContainerStyle: {
@@ -18,5 +18,6 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.interRegular_400,
     color: colors.black_000000,
+    paddingTop: android ? 2 : 0,
   },
 });

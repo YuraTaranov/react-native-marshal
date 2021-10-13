@@ -1,6 +1,6 @@
 import React from 'react';
-import {useTranslation, useState, useRef, useEffect} from '@hooks';
-import {MaterialInput, Platform} from '@components';
+import {useTranslation, useState, useRef, useEffect, useCallback} from '@hooks';
+import {MaterialInput, Platform, formatWithMask} from '@components';
 import {animation} from '@helpers';
 import {colors} from '@constants';
 
@@ -17,15 +17,29 @@ export const InputPhone: React.FC<TProps> = ({setPhone}) => {
   const re = /^(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/;
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneRef = useRef();
+  const [isPhoneFocus, setIsPhoneFocus] = useState<boolean>(false);
+
+  const onPhoneFocus = useCallback(() => {
+    setIsPhoneFocus(true);
+  }, []);
+  const onPhoneBlur = useCallback(() => {
+    setIsPhoneFocus(false);
+  }, []);
 
   const phoneValidator = (str: string): void => {
-    let result = str.replace(/\D/, '');
-    setPhoneNumber(result);
-    if (result.length > 11 && !!phoneRef && !!phoneRef?.current) {
+    // let result = str.replace(/\D/, '');
+    setPhoneNumber(str);
+    if (str.length > 11 && !!phoneRef && !!phoneRef?.current) {
       //@ts-ignore
       phoneRef.current?.blur();
     }
   };
+
+  const formatPhone = formatWithMask({
+    text: phoneNumber,
+    mask: [/\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/],
+  });
+
   const onBlurPhone = () => {
     if (phoneNumber.length < 12) {
       setPhone('');
@@ -47,19 +61,21 @@ export const InputPhone: React.FC<TProps> = ({setPhone}) => {
   animation(Platform.OS as TPlatformName);
   return (
     <MaterialInput
-      //@ts-ignore
-      onRef={phoneRef}
-      keyboardType={'phone-pad'}
-      value={phoneNumber}
-      lineWidth={0.5}
+      keyboardType={'number-pad'}
+      returnKeyType={'done'}
+      value={formatPhone.masked}
       onChangeText={phoneValidator}
-      label={t('Recipients_phone_number')}
-      onBlur={onBlurPhone}
-      onFocus={onFocusPhone}
-      tintColor={
-        phoneNumber.length < 12 || phoneNumber.length > 12
-          ? colors.red_F10000
-          : colors.black_1B1B1B
+      lineWidth={0.5}
+      maxLength={12}
+      label={t('Номер телефону')}
+      prefix="+380"
+      onFocus={onPhoneFocus}
+      onBlur={onPhoneBlur}
+      //   textColor={isPhoneFocus ? colors.black_000000 : colors.gray_8D909D}
+      baseColor={
+        formatPhone.masked || isPhoneFocus
+          ? colors.black_000000
+          : colors.gray_8D909D
       }
     />
   );

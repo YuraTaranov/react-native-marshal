@@ -44,6 +44,7 @@ module.exports = [
       'FuelCalculator',
       'FuelPurchase',
       'Languages',
+      'FuelCalculatorResult',
       //ADD MORE SCREENS
     ],
   },

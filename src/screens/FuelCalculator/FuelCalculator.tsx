@@ -1,147 +1,91 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-
-import {useEffect, useState, useCallback, useLayoutEffect} from '@hooks';
-import {View, Text, Platform, ScrollView} from '@components';
+import {useState, useTranslation} from '@hooks';
+import {View} from '@components';
 import {
   CalculateButton,
   FuelConsumption,
   ArrivalPoint,
   DeparturePoint,
-  RouteItem,
-  LeftButton,
 } from './components';
-
-import {animation} from '@helpers';
 import {connect} from 'react-redux';
-import {getLang} from '@reducers/appGlobalState';
 import styles from './styles';
-
-import {getRouteData, getDistanceMatrix, getUrlForRoute} from '@helpers';
-
-//Type
+import {getRouteData} from '@helpers';
 import type {Dispatch} from 'redux';
-import type {
-  TFullGeoPoint,
-  TGeoCoordinates,
-  TGlobalState,
-  TPath,
-  TRoute,
-} from '@types';
-import type {TPlatformName} from 'src/helpers/animation';
+import type {TFullGeoPoint, TGeoCoordinates, TGlobalState, TPath} from '@types';
+import {
+  setArrivalPoint,
+  setDeparturePoint,
+  setRoutes,
+  setFuelConsumption,
+} from '@reducers/fuelCalculator';
+import {navigate} from '@services';
 
 type TProps = {
   dispatch: Dispatch;
-  lang: string;
+  arrivalPoint: string;
+  departurePoint: string;
+  fuelConsumption: string;
   navigation: {
     setOptions: Function;
     goBack: Function;
   };
 };
 
-const GreenLine = () => {
-  animation(Platform.OS as TPlatformName);
-  return (
-    <View style={styles.line}>
-      {[1, 2].map((key: number) => (
-        <View style={styles.circle} key={`_${key}_`} />
-      ))}
-    </View>
-  );
-};
-
-const FuelCalculator: React.FC<TProps> = ({dispatch, lang, navigation}) => {
+const FuelCalculator: React.FC<TProps> = ({
+  dispatch,
+  arrivalPoint,
+  departurePoint,
+  fuelConsumption,
+}) => {
   const [geoCoordinates, setGeoCoordinates] = useState<TGeoCoordinates>({
     start: null,
     end: null,
   });
-  const [routes, writeDownTheRoutes] = useState<Array<TRoute>>([]);
-  const [isBuy, setStatusPage] = useState(false);
-  const [refresh, setRefresh] = useState(new Date().getTime().toString());
-  const [fuelConsumptionCouner, setFuelConsumptionCouner] = useState<
-    number | null
-  >(null);
+  const {t} = useTranslation();
 
   const getGeoCoordinates = (type: TPath) => (x: TFullGeoPoint) => {
     setGeoCoordinates({...geoCoordinates, [type]: x});
   };
 
   const onPress = async (bool: boolean | ((prevState: boolean) => boolean)) => {
-    setStatusPage(bool);
-
     if (!!geoCoordinates.end && !!geoCoordinates.start) {
-      //@ts-ignore
-      writeDownTheRoutes(await getRouteData(geoCoordinates));
+      dispatch(setRoutes(await getRouteData(geoCoordinates)));
+      navigate('FuelCalculatorResult');
     }
   };
-
-  const onBackStep = useCallback(() => {
-    setStatusPage(false);
-    writeDownTheRoutes([]);
-    setFuelConsumptionCouner(fuelConsumptionCouner);
-    setRefresh(new Date().getTime().toString());
-  }, [fuelConsumptionCouner]);
-
-  useEffect(() => {
-    console.log('geoCoordinates:\n', geoCoordinates);
-    // console.log('routes:\n', routes);
-    // console.log('isBay:\n', isBuy);
-  }, [geoCoordinates, isBuy, routes]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <LeftButton
-          onPress={
-            !!navigation?.goBack && !isBuy ? navigation.goBack : onBackStep
-          }
-        />
-      ),
-    });
-  }, [isBuy, navigation, onBackStep]);
 
   return (
     <View style={styles.container}>
       <View style={styles.containerUp}>
         <FuelConsumption
-          cb={setFuelConsumptionCouner}
-          setRoute={isBuy}
-          counter={fuelConsumptionCouner}
+          cb={setFuelConsumption}
+          fuelConsumption={fuelConsumption}
         />
         <ArrivalPoint
           getGeoCoordinates={getGeoCoordinates}
-          geoCoordinates={geoCoordinates}
-          setRoute={isBuy}
+          textInputValue={arrivalPoint}
+          setTextInputValue={setArrivalPoint}
         />
         <DeparturePoint
           getGeoCoordinates={getGeoCoordinates}
-          geoCoordinates={geoCoordinates}
-          setRoute={isBuy}
+          textInputValue={departurePoint}
+          setTextInputValue={setDeparturePoint}
         />
-        {isBuy && <GreenLine />}
       </View>
-
-      <ScrollView style={styles.scrollView} key={refresh}>
-        {routes.map(r => (
-          <RouteItem
-            key={r.summary}
-            fuelCouner={fuelConsumptionCouner}
-            data={r}
-          />
-        ))}
-      </ScrollView>
-
       <CalculateButton
         onPress={onPress}
-        isBuy={isBuy}
-        disabled={!geoCoordinates?.end || !geoCoordinates?.start}
+        disabled={
+          !geoCoordinates?.end || !geoCoordinates?.start || !fuelConsumption
+        }
       />
     </View>
   );
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  lang: getLang(state.appGlobalState.lang),
+  arrivalPoint: state.fuelCalculator.arrivalPoint,
+  departurePoint: state.fuelCalculator.departurePoint,
+  fuelConsumption: state.fuelCalculator.fuelConsumption,
 });
 
 export default connect(mapStateToProps)(FuelCalculator);

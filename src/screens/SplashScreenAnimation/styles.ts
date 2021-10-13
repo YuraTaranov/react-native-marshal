@@ -6,16 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#009F30',
   },
-  //   lottie: {
-  //     flex: 1,
-  //     ...Platform.select({
-  //       android: {
-  //         transform: [{scaleX: 1.08}, {scaleY: 1.08}],
-  //         top: -27,
-  //       },
-  //       ios: {},
-  //     }),
-  //   },
   logoContainer: {
     flex: 1,
     alignItems: 'center',

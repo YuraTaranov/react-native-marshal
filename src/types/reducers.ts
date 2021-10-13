@@ -13,7 +13,9 @@ import {
   TLang,
   TPurchase,
   TNotification,
+  TFuel,
 } from './components';
+import {TRoute} from './geocode';
 
 export type TGlobalState = {
   appGlobalState: {
@@ -31,6 +33,9 @@ export type TGlobalState = {
     phone: string;
     code: string;
     loading: boolean;
+  };
+  logout: {
+    bioTurnOffAfterLogout: boolean;
   };
   profile: {
     data: TProfile;
@@ -54,6 +59,10 @@ export type TGlobalState = {
     data: TPromotion[];
     lazyLoading: boolean;
     endLoading: boolean;
+    refreshing: boolean;
+  };
+  promotionsMain: {
+    data: TPromotion[];
     refreshing: boolean;
   };
   promotion: {
@@ -80,4 +89,11 @@ export type TGlobalState = {
     link: string;
     userId: string;
   };
+  fuelCalculator: {
+    arrivalPoint: string;
+    departurePoint: string;
+    fuelConsumption: string;
+    routes: TRoute[];
+  };
+  fuel: {data: TFuel[]};
 };

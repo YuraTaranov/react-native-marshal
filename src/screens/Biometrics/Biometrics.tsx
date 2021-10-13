@@ -26,6 +26,7 @@ import {httpPost, errorHandler} from '@services';
 import {urls} from '@constants';
 import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import {getProfile} from '@reducers/profile';
+import {setBioTurnOffAfterLogout} from '@reducers/logout';
 
 type TProps = {
   dispatch: Dispatch;
@@ -55,6 +56,7 @@ const Biometrics: React.FC<TProps> = ({dispatch, biometricsType}) => {
       if (body.data.data.user_key) {
         dispatch(setIsUserAuthorized(true));
         dispatch(setFaceIdActiveLocal(true));
+        dispatch(setBioTurnOffAfterLogout(false));
         dispatch(setUserKey(body.data.data.user_key));
         dispatch(getProfile());
       }

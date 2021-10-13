@@ -1,45 +1,45 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// @ts-nocheck this disables checks for the file
 import React from 'react';
-
-import {googleGeocodingKey, colors, ios} from '@constants';
+import {googleGeocodingKey} from '@constants';
 import {
   Geolocation,
   GooglePlacesAutocomplete,
-  Icon,
-  Text,
-  TouchableOpacity,
   View,
-} from '../../';
-
-import {SVG_Icons} from '@assets';
-import {animation} from '@helpers';
+  Alert,
+  Geocoder,
+} from '@components';
 import {connect} from 'react-redux';
-import {useRef, useState, useEffect, useTranslation} from '@hooks';
+import {useRef, useState, useEffect, useTranslation, useCallback} from '@hooks';
 import styles from './styles';
-import stylesWithRoute from './stylesWithRoute';
 import RightMyButton from './RightMyButton';
-import LeftMyButton from './LeftMyButton';
 import Label from './Label';
 
 //TYPE
 import {
   GooglePlaceData,
   GooglePlaceDetail,
-  TFullGeoPoint,
   TGlobalState,
+  TGeoPoint,
 } from '@types';
+import {setArrivalPoint, setDeparturePoint} from '@reducers/fuelCalculator';
+import {Dispatch} from 'redux';
 
 type TLang = 'uk' | 'ua' | 'ru' | 'en';
 
 type TProps = {
-  cb: (obj: TFullGeoPoint) => void;
+  cb: (obj: TGeoPoint) => void;
   label: string;
   lang: TLang;
   placeholder: string;
   placeholderTextColor: string;
   showMyPositionButton?: boolean;
-  setRoute: boolean;
+  textInputValue: string;
+  setTextInputValue: (data: any) => {
+    data: any;
+    type: string;
+  };
+  type: 'arrival' | 'departure';
+  dispatch: Dispatch;
 };
 
 type TQuery = {
@@ -48,7 +48,6 @@ type TQuery = {
   components?: string;
 };
 
-const getLang = (lang: TLang) => (lang === 'uk' ? 'ua' : lang);
 const Autocomplete: React.FC<TProps> = ({
   cb,
   label,
@@ -56,13 +55,16 @@ const Autocomplete: React.FC<TProps> = ({
   placeholder,
   placeholderTextColor,
   showMyPositionButton,
-  setRoute,
+  textInputValue,
+  setTextInputValue,
+  dispatch,
+  type,
 }) => {
+  Geocoder.init(googleGeocodingKey, {language: lang});
   const ref = useRef(null);
   const {t} = useTranslation();
-  const [inputText, setText] = useState('');
   const [refresh, setRefresh] = useState(new Date().toString());
-  const [useCurrentPosition, setUseCurrentPosition] = useState(false);
+  const [myLocationLoading, setMyLocationLoading] = useState<boolean>(false);
 
   const query: TQuery = {
     key: googleGeocodingKey,
@@ -71,21 +73,35 @@ const Autocomplete: React.FC<TProps> = ({
   };
 
   const onFail = (e: any) => {
-    // eslint-disable-next-line no-alert
     Alert.alert(t('SearchError'));
   };
 
   const onNotFound = () => {
-    // eslint-disable-next-line no-alert
     Alert.alert(t('NothingFound'));
   };
 
   useEffect(() => {
     query.language = lang;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
 
+  const getMyLocationAddress = useCallback((lat, lng) => {
+    Geocoder.from(lat, lng)
+      .then(json => {
+        const address = json?.results[0]?.formatted_address;
+        if (address) {
+          type === 'arrival'
+            ? dispatch(setArrivalPoint(address))
+            : dispatch(setDeparturePoint(address));
+          setMyLocationLoading(false);
+        } else {
+          Alert.alert('', t('Неможливо визначити ваше місце розташування'));
+        }
+      })
+      .catch(error => console.warn(error));
+  }, []);
+
   const getCurrentLocation = () => {
+    setMyLocationLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position?.coords;
@@ -93,16 +109,9 @@ const Autocomplete: React.FC<TProps> = ({
           cb({
             latitude,
             longitude,
-            isCurrentPosition: true,
-            description: t('isCurrentPosition'),
-            place_id: null,
+            place_id: undefined,
           });
-          setUseCurrentPosition(true);
-
-          if (typeof ref?.current?.clear === 'function') {
-            ref.current?.clear();
-          }
-
+          getMyLocationAddress(latitude, longitude);
           if (typeof ref?.current?.blur === 'function') {
             ref.current?.blur();
           }
@@ -120,19 +129,14 @@ const Autocomplete: React.FC<TProps> = ({
     details: GooglePlaceDetail | null,
   ) => {
     const {place_id, description} = data;
+    dispatch(setTextInputValue(description));
     if (details?.geometry?.location) {
       const {lat = 0, lng = 0} = details.geometry.location;
       cb({
         latitude: +lat,
         longitude: +lng,
-        description,
         place_id,
-        isCurrentPosition: false,
       });
-
-      if (useCurrentPosition) {
-        setUseCurrentPosition(false);
-      }
     }
   };
 
@@ -142,18 +146,15 @@ const Autocomplete: React.FC<TProps> = ({
     cb(null);
   };
 
-  const Backspace = (event: any) => {
-    if (event.nativeEvent.key === 'Backspace') {
-      cb(inputText.slice(0, -1));
-    }
-  };
+  const onChangeText = useCallback(value => {
+    dispatch(setTextInputValue(value));
+  }, []);
 
   return (
-    <View styles={styles.container}>
+    <View style={styles.container}>
       <GooglePlacesAutocomplete
         key={refresh}
         ref={ref}
-        editable={false}
         query={query}
         placeholder={placeholder}
         onFail={onFail}
@@ -162,41 +163,31 @@ const Autocomplete: React.FC<TProps> = ({
         enablePoweredByContainer={false}
         predefinedPlacesAlwaysVisible
         onPress={onPress}
-        renderRightButton={() =>
-          setRoute ? null : (
-            <RightMyButton
-              onPress={getCurrentLocation}
-              onClear={onClean}
-              showMyPositionButton={!!showMyPositionButton}
-              showMyClearButton={!!inputText}
-            />
-          )
-        }
-        renderLeftButton={() =>
-          setRoute ? (
-            <LeftMyButton onPress={getCurrentLocation} showMyPositionButton />
-          ) : null
-        }
+        renderRightButton={() => (
+          <RightMyButton
+            onPress={getCurrentLocation}
+            onClear={onClean}
+            showMyPositionButton={!!showMyPositionButton}
+            showMyClearButton={!!textInputValue}
+            loading={myLocationLoading}
+          />
+        )}
         minLength={3}
-        styles={setRoute ? {...stylesWithRoute} : {...styles}}
+        styles={styles}
         textInputProps={{
-          onChangeText: (text: string) => setText(text),
-          onKeyPress: Backspace,
+          value: textInputValue,
+          onChangeText: onChangeText,
           placeholderTextColor,
-          editable: !setRoute,
+          editable: true,
           clearButtonMode: 'never',
           clearTextOnFocus: false,
-          //   multiline: setRoute ? true : false,
           multiline: false,
-          // numberOfLines: setRoute ? 2 : 1,
           numberOfLines: 1,
           dataDetectorTypes: 'address',
           enablesReturnKeyAutomatically: true,
         }}
       />
-      {!setRoute && (!!inputText || useCurrentPosition) && (
-        <Label title={label} />
-      )}
+      {!!textInputValue && <Label title={label} />}
     </View>
   );
 };

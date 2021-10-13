@@ -11,6 +11,7 @@ export default StyleSheet.create({
     borderColor: colors.gray_DADBDF,
     borderWidth: 1,
     borderRadius: 10,
+    marginBottom: 8,
   },
   selected: {
     backgroundColor: colors.green_00AE36,

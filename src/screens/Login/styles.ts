@@ -1,5 +1,5 @@
 import {StyleSheet} from '@components';
-import {colors, fonts} from '@constants';
+import {colors, fonts, android} from '@constants';
 
 export default StyleSheet.create({
   safeAreaContainer: {
@@ -13,21 +13,26 @@ export default StyleSheet.create({
   contentContainer: {
     flex: 1,
   },
-  prefix: {
-    fontSize: 16,
-    fontFamily: fonts.interRegular_400,
-  },
-  textInput: {
-    alignItems: 'center',
-    flex: 1,
-    fontSize: 16,
-    fontFamily: fonts.interRegular_400,
-  },
   phoneNumberView: {
     height: 56,
     borderBottomWidth: 2,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  prefixContainer: {
+    height: 54,
+    justifyContent: 'center',
+  },
+  prefix: {
+    fontSize: 16,
+    fontFamily: fonts.interRegular_400,
+  },
+  textInput: {
+    height: 54,
+    flex: 1,
+    fontSize: 16,
+    fontFamily: fonts.interRegular_400,
+    marginTop: android ? 1.5 : 0,
   },
   title: {
     fontSize: 18,
