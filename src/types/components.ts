@@ -81,6 +81,7 @@ export type TFuelProfile = {
   id: 1 | 2 | 3 | 4;
   name: 'ДТ' | '95' | '98' | '98+';
   liters: number;
+  price?: string;
 };
 
 export type TFullMarker = {

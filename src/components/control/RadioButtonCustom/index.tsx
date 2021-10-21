@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCallback, useMemo} from '@hooks';
+import {useCallback, useMemo, useTranslation} from '@hooks';
 import {View, TouchableOpacity, Text} from '@components';
 import styles from './styles';
 import {hitSlop} from '@constants';
@@ -17,6 +17,8 @@ const RadioButtonCustom: React.FC<TProps> = ({
   active,
   onChange,
 }) => {
+  const {t} = useTranslation();
+
   const onPress = useCallback(() => {
     onChange({type, name: text});
   }, [type, text]);
@@ -34,7 +36,7 @@ const RadioButtonCustom: React.FC<TProps> = ({
       onPress={onPress}
       hitSlop={hitSlop}>
       <View style={radioStyle} />
-      <Text style={styles.radioText}>{text}</Text>
+      <Text style={styles.radioText}>{t(text)}</Text>
     </TouchableOpacity>
   );
 };
