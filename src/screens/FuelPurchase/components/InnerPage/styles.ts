@@ -55,11 +55,12 @@ export default StyleSheet.create({
     borderBottomColor: colors.gray_8D909D,
   },
   inputRow: {
-    width: WInputText,
+    // width: WInputText,
+    width: width - 90,
     marginTop: 0,
   },
   curView: {
-    width: WIcon,
+    // width: WIcon,
     overflow: 'visible',
     alignItems: 'flex-end',
     justifyContent: 'flex-end',

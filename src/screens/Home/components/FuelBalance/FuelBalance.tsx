@@ -11,7 +11,7 @@ import {
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
-import {TProfile, TGlobalState, TFuelProfile} from '@types';
+import {TProfile, TGlobalState, TFuelProfile, TFuel} from '@types';
 import {colors, hitSlop} from '@constants';
 
 type TRadioButtonCBParams = {
@@ -21,9 +21,10 @@ type TRadioButtonCBParams = {
 
 type TProps = {
   profile: TProfile;
+  fuel: TFuel[];
 };
 
-const FuelBalance: React.FC<TProps> = ({profile}) => {
+const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
   const {t} = useTranslation();
 
   const initialFuel: TFuelProfile = {
@@ -34,23 +35,19 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
   const [fuelType, setFuelType] = useState<TFuelProfile>(initialFuel);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  const fuelLength = profile?.fuels?.length;
-
   useEffect(() => {
     // find and set the first type of fuel from the profile, the liters of which are not equal to 0, or type "95" if all 0
-    if (fuelLength) {
+    if (profile?.fuels?.length) {
       const fuelAvailable = profile.fuels.find(item => item.liters);
       if (fuelAvailable) {
         setFuelType(fuelAvailable);
-      } else {
-        setFuelType(profile.fuels[1]);
       }
     }
-  }, [fuelLength, profile?.fuels]);
+  }, [profile?.fuels]);
 
   const openModal = useCallback(() => {
-    fuelLength && setIsModalVisible(true);
-  }, [fuelLength]);
+    fuel?.length && setIsModalVisible(true);
+  }, [fuel]);
 
   const closeModal = useCallback(() => {
     setIsModalVisible(false);
@@ -58,14 +55,19 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
 
   const onChangeFuelType = useCallback(
     (params: TRadioButtonCBParams) => {
-      const findFuelType = profile.fuels.find(item => item.id === params.type);
-      findFuelType && setFuelType(findFuelType);
+      const findFuel = fuel.find(item => item.id === params.type);
+      if (findFuel) {
+        const findFuelInProfile = profile?.fuels.find(
+          pf => pf.id === findFuel?.id,
+        ) || {...findFuel, liters: 0};
+        setFuelType(findFuelInProfile);
+      }
       closeModal();
     },
-    [profile],
+    [profile, fuel],
   );
 
-  const renderItem: ({item}: {item: TFuelProfile}) => JSX.Element = useCallback(
+  const renderItem: ({item}: {item: TFuel}) => JSX.Element = useCallback(
     ({item}) => (
       <RadioButtonCustom
         key={item.id}
@@ -78,7 +80,7 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
     [fuelType.id, onChangeFuelType],
   );
 
-  const keyExtractor: (item: TFuelProfile) => string = useCallback(
+  const keyExtractor: (item: TFuel) => string = useCallback(
     item => String(item.id),
     [],
   );
@@ -118,7 +120,7 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={profile?.fuels}
+            data={fuel}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
           />
@@ -130,6 +132,7 @@ const FuelBalance: React.FC<TProps> = ({profile}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
+  fuel: state.fuel.data,
 });
 
 export default connect(mapStateToProps)(FuelBalance);
