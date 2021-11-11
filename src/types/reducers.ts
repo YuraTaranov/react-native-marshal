@@ -25,6 +25,7 @@ export type TGlobalState = {
     loader: boolean;
     isUserAuthorized: boolean;
     bonusesOnBoarding: boolean;
+    gps: boolean;
   };
   modalController: {
     support: boolean;

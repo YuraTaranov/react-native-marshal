@@ -3,6 +3,8 @@
 .DS_Store
 */nohup.out
 nohup.out
+/nohup.out
+**/nohup.out
 
 # Xcode
 #
@@ -71,3 +73,6 @@ buck-out/
 !debug.keystore
 
 package-lock.json
+
+#Project Info
+/INFO

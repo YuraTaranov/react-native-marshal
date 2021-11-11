@@ -1,12 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
-  Home,
-  Promotion,
-  FuelCalculator,
-  FuelPurchase,
   AddCard,
+  FuelCalculator,
   FuelCalculatorResult,
+  FuelPurchase,
+  Home,
+  PayForm,
+  Promotion,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
@@ -23,7 +24,7 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
 
   return (
     <HomeStack.Navigator
-      // initialRouteName="FuelCalculator"
+      // initialRouteName="PayForm"
       screenOptions={{
         ...defaultStackOptions,
       }}>
@@ -64,6 +65,14 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('FuelPurchase'),
+        }}
+      />
+      <HomeStack.Screen
+        name="PayForm"
+        component={PayForm}
+        options={{
+          headerTitleAlign: 'center',
+          // title: t('PayForm'),
         }}
       />
       <HomeStack.Screen

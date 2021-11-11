@@ -7,6 +7,7 @@ import {
   useTranslation,
   useState,
   useNavigation,
+  useRoute,
 } from '@hooks';
 
 import {View, Text, ScrollView, Geolocation, Linking} from '@components';
@@ -21,33 +22,36 @@ import styles from './styles';
 //Type
 import {TGlobalState, TPetrolStation} from '@types';
 import {colors} from '@constants';
-import {Dispatch} from 'redux';
+// import {Dispatch} from 'redux';
 type TRoute = {
   params?: {
-    markerId?: number;
+    markerId?: number | undefined;
+    isGPS: boolean;
   };
 };
 
 type TProps = {
-  dispatch: Dispatch;
+  // dispatch: Dispatch;
   petrolStations: Array<TPetrolStation>;
   route: TRoute;
 };
 //markerId
 
 const MarkerDetailPage: React.FC<TProps> = ({
-  dispatch,
-  route,
+  // dispatch,
+  // route,
   petrolStations,
 }) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
+  const {params} = useRoute();
+  const [showRouteButton, setShowRouteButton] = useState(false);
+  const [stationId, setStationId] = useState<number | undefined>(undefined);
 
-  const [stationId, setStationId] = useState<number | null>(
-    route?.params?.markerId || null,
-  );
+  // const [stationId, setStationId] = useState<number | null>(
+  //   route?.params?.markerId || null,
+  // );
   const [stationDetails, setStationDetail] = useState<TPetrolStation | null>();
-
   const setHeader = useCallback(() => {
     if (stationDetails && stationDetails?.name) {
       setOptions({
@@ -63,6 +67,17 @@ const MarkerDetailPage: React.FC<TProps> = ({
     setStationDetail(petrolStations.filter(i => i.id === stationId)[0] || null);
     setHeader();
   }, [stationId, petrolStations, setHeader]);
+
+  useEffect(() => {
+    if (params?.markerId){
+      setStationId(params.markerId);
+    }
+    if (params?.isGPS) {
+      setShowRouteButton(true);
+    } else {
+      setShowRouteButton(false);
+    }
+  }, [params]);
 
   const openingRoute = () => {
     Geolocation.getCurrentPosition(
@@ -116,12 +131,14 @@ const MarkerDetailPage: React.FC<TProps> = ({
       </ScrollView>
 
       <View style={styles.buttonView}>
-        <GetRouteButton
-          iconName="route"
-          label={t('Get directions')}
-          onPress={openingRoute}
-          black
-        />
+        {showRouteButton && (
+          <GetRouteButton
+            iconName="route"
+            label={t('Get directions')}
+            onPress={openingRoute}
+            black
+          />
+        )}
       </View>
     </View>
   );

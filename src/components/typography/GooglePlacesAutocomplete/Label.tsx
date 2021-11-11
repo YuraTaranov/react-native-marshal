@@ -12,7 +12,7 @@ type TPros = {
 };
 
 const Label = ({title}) => {
-  animation();
+  animation('ios');
   return (
     <View style={styles.label}>
       <Text style={styles.labelText}>{title}</Text>

@@ -89,5 +89,7 @@
 	"To check the card, UAH 1 will be temporarily blocked on it": "To check the card, UAH 1 will be temporarily blocked on it",
 	"NumberOfCreditCard": "Card number",
 	"ValidityPeriod": "Validity period",
+	"payThroughPaymentSystem": "Оплатить картой",
+	"ForPhone": "Для телефона",
 	"currency": "$"
 }

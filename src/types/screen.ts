@@ -8,10 +8,17 @@ type TParamOfAddCard = {
   openModal?: boolean;
 };
 
+export type TParamOfPayForm = {
+  liters: string;
+  fuel_id: string;
+  phone?: string;
+};
+
 export type HomeStackParamList = {
   // SCREEN PARAMS
   FuelPurchase: TParamOfFuelPurchase;
   AddCard: TParamOfAddCard;
+  PayForm: TParamOfPayForm;
 };
 
 export type FuelPurchaseRouteProp = RouteProp<
@@ -19,3 +26,4 @@ export type FuelPurchaseRouteProp = RouteProp<
   'FuelPurchase'
 >;
 export type AddCardRouteProp = RouteProp<HomeStackParamList, 'AddCard'>;
+export type PayFormRouteProp = RouteProp<HomeStackParamList, 'PayForm'>;

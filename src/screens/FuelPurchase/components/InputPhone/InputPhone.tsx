@@ -58,7 +58,7 @@ export const InputPhone: React.FC<TProps> = ({setPhone}) => {
     }
   }, [phoneNumber, setPhone]);
 
-  animation(Platform.OS as TPlatformName);
+  animation('ios');
   return (
     <MaterialInput
       keyboardType={'number-pad'}
