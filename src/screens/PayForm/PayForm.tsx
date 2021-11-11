@@ -10,13 +10,12 @@ import {FondyService} from '@httpServices';
 import {WebView} from 'react-native-webview';
 
 import styles from './styles';
-import {KeyboardAvoidingView} from '@components';
+import {Alert, KeyboardAvoidingView} from '@components';
 import ShowLoading from './components/ShowLoading/ShowLoading';
 
 //Types
 type TProps = {};
 import {PayFormRouteProp, TParamOfPayForm} from '@types';
-
 
 const userAgent =
   'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19';
@@ -28,16 +27,24 @@ const INJECTED_JAVASCRIPT = `(function() {
 const getFondyForm = async (
   args: TParamOfPayForm,
   setUriFunc: (uri: string) => void,
+  goBackFunc: () => void,
 ) => {
-  const {data} = await FondyService.getFondyForm(args);
-  setUriFunc(data);
+  try {
+    const {data} = await FondyService.getFondyForm(args);
+    setUriFunc(data);
+  } catch (e) {
+    if (typeof goBackFunc === 'function') {
+      Alert.alert('Ошибка связи');
+      goBackFunc();
+    }
+  }
 };
 
 const PayForm: React.FC<TProps> = ({}) => {
   const {t} = useTranslation();
   const [uri, setUri] = useState('');
   const {params} = useRoute<PayFormRouteProp>();
-  const {setOptions} = useNavigation();
+  const {setOptions, goBack} = useNavigation();
   const [isShowLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
@@ -47,9 +54,9 @@ const PayForm: React.FC<TProps> = ({}) => {
           title: `${t('ForPhone')}: ${params.phone}`,
         });
       }
-      getFondyForm(params, setUri);
+      getFondyForm(params, setUri, goBack);
     }
-  }, [params, setOptions, t]);
+  }, [goBack, params, setOptions, t]);
 
   const parserOnMessage = (data: any) => {
     if (data?.nativeEvent?.loading) {
