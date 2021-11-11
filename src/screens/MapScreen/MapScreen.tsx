@@ -17,6 +17,7 @@ import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import {useIsFocused} from '@react-navigation/core';
 import {getFilteredPetrolStationList, isSearch} from '@helpers';
+import {setGPS} from '@reducers/appGlobalState';
 import styles from './styles';
 
 // Types
@@ -42,10 +43,11 @@ type TRegion = {
   longitudeDelta: number;
 };
 type TProps = {
-  // dispatch: Dispatch;
+  dispatch: Dispatch;
   markers: Array<TPetrolStation>;
   filters: TFilters;
   textOfSearch: string;
+  isGPS: boolean;
 };
 type TCoords = {
   longitude: number;
@@ -78,7 +80,6 @@ function formatLatLong(position: TPosition): TCoords {
 }
 
 function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
-  //   console.log('formatMarkerData');
   if (!ArrayMarkers) {
     return [];
   }
@@ -98,7 +99,13 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
   );
 }
 
-const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
+const MapScreen: React.FC<TProps> = ({
+  dispatch,
+  filters,
+  isGPS,
+  markers,
+  textOfSearch,
+}) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
 
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
@@ -134,12 +141,12 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   const setParams = useCallback(
     (granted: string) => {
       if (granted !== 'granted') {
+        dispatch(setGPS(false));
         return;
       }
       getCurrentPosition(
         (position: TPosition) => {
-          //   console.log('setParams', position);
-          //   animateToRegion({...region, ...formatLatLong(position)});
+          dispatch(setGPS(true));
           animateToRegion(
             {
               ...initRegion,
@@ -149,6 +156,7 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
           );
         },
         error => {
+          dispatch(setGPS(false));
           console.log(error.code, error.message);
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
@@ -158,12 +166,10 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
   );
 
   const onMapReady = useCallback((): void => {
-    // console.log('onMapReady');
     if (ios) {
       request(
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE || PERMISSIONS.IOS.LOCATION_ALWAYS,
       ).then(granted => {
-        // console.log('granted', granted);
         setParams(granted);
       });
     } else {
@@ -221,7 +227,7 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
         goToNewPosition(data);
         if (data.showDetails) {
           setSelectedMarker(null);
-          navigate('MarkerDetail', {markerId: data.id});
+          navigate('MarkerDetail', {markerId: data.id, isGPS});
         } else {
           setSelectedMarker(data);
         }
@@ -234,9 +240,11 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
     // console.log('goToUserLocate');
     getCurrentPosition(
       position => {
+        dispatch(setGPS(true));
         animateToRegion({...region, ...formatLatLong(position)});
       },
       error => {
+        dispatch(setGPS(false));
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
@@ -337,12 +345,13 @@ const MapScreen: React.FC<TProps> = ({markers, filters, textOfSearch}) => {
       <View style={styles.buttonsBlock}>
         <MapButton onPress={onZoomPlus} />
         <MapButton onPress={onZoomMinus} name="minus" />
-        <MapButton onPress={goToUserLocate} green name="location" />
+        {isGPS && <MapButton onPress={goToUserLocate} green name="location" />}
       </View>
       <MarkerModal
         isVisible={!!selectedMarker}
         data={selectedMarker}
         cb={openMarker}
+        showRouteButton={isGPS}
       />
     </View>
   );
@@ -352,6 +361,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   markers: state.petrolStations,
   filters: state.filters,
   textOfSearch: state.searchStations.textOfSearch,
+  isGPS: state.appGlobalState.gps,
 });
 
 export default connect(mapStateToProps)(MapScreen);

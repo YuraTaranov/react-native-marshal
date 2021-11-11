@@ -26,7 +26,6 @@ import styles from './styles';
 import type {
   FuelPurchaseRouteProp,
   TGlobalState,
-  TPrice,
   TCreditCard,
   TPaySystemContent,
   TFuel,
@@ -62,23 +61,29 @@ const InnerPage: React.FC<TProps> = ({
 
   const paySystemsInit: TPaySystemContent[] = [
     {
-      id: 98,
+      id: 97,
       action: () => {},
-      title: 'Google Pay',
-      icon: 'googlePay',
+      title: t('payThroughPaymentSystem'),
+      icon: 'bonus_card',
     },
+    // {
+    //   id: 98,
+    //   action: () => {},
+    //   title: 'Google Pay',
+    //   icon: 'googlePay',
+    // },
     {
       id: 99,
       action: () => {},
       title: t('BuyBalls'),
       icon: 'gift',
     },
-    {
-      id: 100,
-      action: () => navigate('AddCard'),
-      title: t('AddPaymentCard'),
-      icon: 'plus',
-    },
+    // {
+    //   id: 100,
+    //   action: () => navigate('AddCard'),
+    //   title: t('AddPaymentCard'),
+    //   icon: 'plus',
+    // },
   ];
 
   const fuelToBuyFormatted = useMemo(() => {
@@ -120,7 +125,9 @@ const InnerPage: React.FC<TProps> = ({
   };
 
   const onChangeFuelAmount = (str: string) => {
-    if (str.startsWith('0')) return;
+    if (str.startsWith('0')) {
+      return;
+    }
     const formattedValue = str ? str.replace(/[^0-9]/g, '') : str;
     setFuelAmount(formattedValue);
   };
@@ -166,13 +173,29 @@ const InnerPage: React.FC<TProps> = ({
   };
 
   const PayForFuel = () => {
-    // eslint-disable-next-line no-alert
-    Alert.alert('Запуск процесса оплаты');
+    const payByBonus =
+      `${selectedPayType?.id}` === '99' || selectedPayType?.icon === 'gift';
+    const phone = '+380' + phoneNumber.replace(/\D/g, '');
+
+    if (payByBonus) {
+      Alert.alert('Покупка за бонус');
+    } else if (phone.length > 10) {
+      navigate('PayForm', {
+        phone,
+        fuel_id: selectedPriceId,
+        liters: fuelCounter,
+      });
+    } else {
+      navigate('PayForm', {
+        fuel_id: selectedPriceId,
+        liters: fuelCounter,
+      });
+    }
   };
 
   useEffect(() => {
     if (
-      +fuelCounter > 9 &&
+      +fuelCounter > 0 &&
       fullCostOfFuel > 0 &&
       paySystems.some(item => !!item?.selected) &&
       (!index || !!phoneNumber)

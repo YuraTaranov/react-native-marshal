@@ -11,13 +11,15 @@ type TProps = {
   selected?: boolean;
   onShowDetails: (id: number) => void;
   getRoute: (id: number) => void;
+  showRouteButton: boolean;
 };
 
 export const StationListItem: React.FC<TProps> = ({
-  item,
-  selected,
-  onShowDetails,
   getRoute,
+  item,
+  onShowDetails,
+  selected,
+  showRouteButton,
 }) => {
   const {t} = useTranslation();
 
@@ -48,20 +50,22 @@ export const StationListItem: React.FC<TProps> = ({
             <Text style={styles.textAddress}>{item.address}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.touch} onPress={onPressRoute}>
-          <View style={styles.rightIconView}>
-            <View style={styles.iconView}>
-              <Icon
-                name="route"
-                color={!selected ? colors.green_41BB4E : colors.red_F10000}
-                size={18}
-              />
+        {showRouteButton && (
+          <TouchableOpacity style={styles.touch} onPress={onPressRoute}>
+            <View style={styles.rightIconView}>
+              <View style={styles.iconView}>
+                <Icon
+                  name="route"
+                  color={!selected ? colors.green_41BB4E : colors.red_F10000}
+                  size={18}
+                />
+              </View>
+              <View style={styles.iconTextView}>
+                <Text style={styles.iconText}>{`${t('Route')}`}</Text>
+              </View>
             </View>
-            <View style={styles.iconTextView}>
-              <Text style={styles.iconText}>{`${t('Route')}`}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

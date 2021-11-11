@@ -1,6 +1,5 @@
 import {StyleSheet} from '@components';
 import {colors, width, ios, isIphoneX, fonts} from '@constants';
-import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 
 export default StyleSheet.create({
   container: {
@@ -10,6 +9,9 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     padding: 0,
     margin: 0,
+  },
+  containerScrollView: {
+    marginBottom: isIphoneX ? 120 : ios ? 100 : 100,
   },
   addressView: {
     flexDirection: 'row',

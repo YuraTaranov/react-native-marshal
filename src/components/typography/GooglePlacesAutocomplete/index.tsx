@@ -13,6 +13,7 @@ import {useRef, useState, useEffect, useTranslation, useCallback} from '@hooks';
 import styles from './styles';
 import RightMyButton from './RightMyButton';
 import Label from './Label';
+import {setGPS} from '@reducers/appGlobalState';
 
 //TYPE
 import {
@@ -106,6 +107,7 @@ const Autocomplete: React.FC<TProps> = ({
       position => {
         const {latitude, longitude} = position?.coords;
         if (latitude && longitude) {
+          dispatch(setGPS(true));
           cb({
             latitude,
             longitude,
@@ -118,6 +120,7 @@ const Autocomplete: React.FC<TProps> = ({
         }
       },
       error => {
+        dispatch(setGPS(false));
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},

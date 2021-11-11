@@ -19,12 +19,18 @@ import {getUrlForRoute} from '@helpers';
 import {TMarker} from '../../MapScreen';
 
 type TProps = {
-  isVisible: boolean;
-  data: TMarker;
   cb: Function;
+  data: TMarker;
+  isVisible: boolean;
+  showRouteButton: boolean;
 };
 
-export const MarkerModal: React.FC<TProps> = ({isVisible, data, cb}) => {
+export const MarkerModal: React.FC<TProps> = ({
+  isVisible,
+  data,
+  showRouteButton,
+  cb,
+}) => {
   const {t} = useTranslation();
   const [visible, setVisible] = useState(isVisible);
 
@@ -96,12 +102,14 @@ export const MarkerModal: React.FC<TProps> = ({isVisible, data, cb}) => {
               onPress={showDetails}
             />
             <View style={styles.divider} collapsable={false} />
-            <MarkerButton
-              iconName="route"
-              label={t('Route')}
-              onPress={openingRoute}
-              black
-            />
+            {showRouteButton && (
+              <MarkerButton
+                iconName="route"
+                label={t('Route')}
+                onPress={openingRoute}
+                black
+              />
+            )}
           </View>
           <TouchableOpacity onPress={closeModal} style={[styles.eject]}>
             <Icon name="x" size={24} color={colors.black_1E1A1A} />

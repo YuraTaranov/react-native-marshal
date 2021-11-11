@@ -46,6 +46,7 @@ export default StyleSheet.create({
     marginVertical: 4,
     paddingBottom: 20,
     borderBottomColor: colors.gray_8D909D,
+    justifyContent: 'space-between'
   },
   phoneRow: {
     width: WRow,
@@ -56,7 +57,7 @@ export default StyleSheet.create({
   },
   inputRow: {
     // width: WInputText,
-    width: width - 90,
+    width: width - 120,
     marginTop: 0,
   },
   curView: {
@@ -73,5 +74,6 @@ export default StyleSheet.create({
   },
   usualButton: {
     width: '100%',
+    marginBottom: 20,
   },
 });

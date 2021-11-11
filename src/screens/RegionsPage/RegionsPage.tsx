@@ -99,7 +99,7 @@ const RegionsPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.containerScrollView}>
         <View style={styles.header}>
           <Text style={styles.headerText}>{t('Regions')}</Text>
         </View>

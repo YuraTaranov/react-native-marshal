@@ -43,7 +43,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
         const notificationsRead = notifications.map(item => {
           return {...item, isRead: true};
         });
-        animation();
+        animation('ios');
         dispatch(setNotifications(notificationsRead));
       }
     }, 5000);

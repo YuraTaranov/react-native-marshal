@@ -1,6 +1,6 @@
 import {takeLatest, put} from 'redux-saga/effects';
 import i18next from 'i18next';
-import {TGlobalState, TLang} from '@types';
+import {TGlobalState, TLang, Tgps} from '@types';
 
 const RESET_APP_GLOBAL_STATE = '[appGlobalState] RESET_APP_GLOBAL_STATE';
 const CHANGE_LANG = '[appGlobalState] CHANGE_LANG';
@@ -10,6 +10,7 @@ const SET_ONBOARDING = '[appGlobalState] SET_ONBOARDING';
 const SET_IS_USER_AUTHORIZED = '[appGlobalState] SET_IS_USER_AUTHORIZED';
 const SET_BONUSES_ON_BOARDING = '[appGlobalState] SET_BONUSES_ON_BOARDING';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
+const SET_GPS = '[appGlobalState] SET_GPS';
 
 const initialstate: TGlobalState['appGlobalState'] = {
   accessToken: '',
@@ -18,6 +19,7 @@ const initialstate: TGlobalState['appGlobalState'] = {
   loader: false,
   onBoarding: true,
   bonusesOnBoarding: true,
+  gps: false,
 };
 
 export default (state = initialstate, action: any) => {
@@ -34,6 +36,8 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, {...state, loader: action.data});
     case SET_BONUSES_ON_BOARDING:
       return Object.assign({}, {...state, bonusesOnBoarding: action.data});
+    case SET_GPS:
+      return Object.assign({}, {...state, gps: action.gps});
     case RESET_APP_GLOBAL_STATE:
       return initialstate;
     default:
@@ -43,6 +47,7 @@ export default (state = initialstate, action: any) => {
 
 export const setLang = (lang: TLang) => ({lang, type: SET_LANG});
 export const getLang = (lang: TLang) => (lang === 'uk' ? 'ua' : lang);
+export const setGPS = (gps: Tgps) => ({gps, type: SET_GPS});
 export const setToken = (token: string) => ({token, type: SET_TOKEN});
 export const setOnboarding = (onBoarding: boolean) => ({
   onBoarding,

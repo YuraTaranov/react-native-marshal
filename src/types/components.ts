@@ -157,7 +157,7 @@ export type TPaySystemContent = {
 };
 
 export type TLang = 'uk' | 'ru' | 'en';
-
+export type Tgps = boolean;
 export type TPrice = {
   title: string;
   cost: number;
