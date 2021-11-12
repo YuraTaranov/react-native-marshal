@@ -55,14 +55,19 @@ export default StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: colors.gray_8D909D,
   },
+  inputContainer: {
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'space-between',
+    height: 68,
+	flex: 1,
+  },
   inputRow: {
-    // width: WInputText,
-    width: width - 120,
-    marginTop: 0,
+    // width: WInputText + 10,
+    width: 215,
   },
   curView: {
-    // width: WIcon,
-    overflow: 'visible',
+    width: 100,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
   },
@@ -71,6 +76,10 @@ export default StyleSheet.create({
     fontSize: 18,
     color: colors.black_1B1B1B,
     textAlign: 'right',
+  },
+  buttonContainer: {
+	  paddingBottom: ios ? 0 : 24,
+	  width: '100%'
   },
   usualButton: {
     width: '100%',

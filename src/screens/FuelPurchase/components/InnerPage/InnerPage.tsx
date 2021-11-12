@@ -259,7 +259,7 @@ const InnerPage: React.FC<TProps> = ({
             <InputPhone setPhone={setPhone} />
           </View>
         )}
-        <View style={styles.row}>
+        <View style={styles.inputContainer}>
           <MaterialInput
             keyboardType={'number-pad'}
             returnKeyType={'default'}
@@ -284,12 +284,14 @@ const InnerPage: React.FC<TProps> = ({
           />
         </View>
       </ScrollView>
-      <UsualButton
-        title={t('PayForFuel')}
-        disabled={isDisabledButton}
-        buttonStyle={styles.usualButton}
-        onPress={PayForFuel}
-      />
+      <View style={styles.buttonContainer}>
+        <UsualButton
+          title={t('PayForFuel')}
+          disabled={isDisabledButton}
+          buttonStyle={styles.usualButton}
+          onPress={PayForFuel}
+        />
+      </View>
       <PayTypeModal
         closeModal={hiddenModal}
         isVisible={isVisible}

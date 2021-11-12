@@ -13,7 +13,7 @@ const persistConfig = {
   timeout: 10000,
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['appGlobalState', 'biometrics', 'petrolStations', 'referral'], // ADD WHITE LIST IF YOU NEED
+  whitelist: ['appGlobalState', 'biometrics', 'petrolStations', 'referral', 'notifications'], // ADD WHITE LIST IF YOU NEED
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

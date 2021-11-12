@@ -2,6 +2,9 @@ import axios from 'axios';
 import {TGenerateOptions, TFormatResponse, TGlobalState} from '@types';
 import storage from '../../store';
 import {urls} from '@constants';
+import { Alert } from '@components';
+import { setIsUserAuthorized, setToken } from '@reducers/appGlobalState';
+import i18next from 'i18next';
 
 const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
 
@@ -40,18 +43,19 @@ const sendRequest = async ({
     const response = await instance(OPTIONS);
     return formatResponse(response);
   } catch (error) {
-    console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // TEMP
+    console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // FIXME: TEMP
     if (error.response?.status === 408 || error.code === 'ECONNABORTED') {
       throw formatResponse({
         status: 408,
         statusText: 'Request timeout!!',
       });
     }
-    // if (error.response.data?.error === 'Unauthenticated.') {
-    //   storage.store.dispatch(changeToken(''));
-    //   //   navigate('AuthNavigator');
+    if (error.response.data?.message === 'Unauthenticated.') {
+      storage.store.dispatch(setToken(''));
+      storage.store.dispatch(setIsUserAuthorized(false));
+      //   navigate('AuthNavigator');
     //   Alert.alert('', i18next.t('Сесія закінчилася, потрібна повторна авторизація'));
-    // }
+    }
     throw formatResponse(error.response);
   }
 };

@@ -128,7 +128,8 @@ export function* addCarAsync(action: any) {
             car_brand_id: action.data.brand.id,
             car_model_id: action.data.model.id,
             year: action.data.year.id,
-            car_tank_id: action.data.tank.id,
+            // car_tank_id: action.data.tank.id,
+            car_tank_id: action.data.tank.name,
           }),
         )
       : yield call(() =>
@@ -136,7 +137,8 @@ export function* addCarAsync(action: any) {
             car_brand_id: action.data.brand.id,
             car_model_id: action.data.model.id,
             year: action.data.year.id,
-            car_tank_id: action.data.tank.id,
+            // car_tank_id: action.data.tank.id,
+            car_tank_id: action.data.tank.name,
           }),
         );
     if (body.data.massage === 'OK') {
