@@ -56,7 +56,7 @@ const Bonuses: React.FC<TProps> = ({profile}) => {
       <View style={styles.borderBottomView}>
         <Text style={styles.borderBottomViewTitle}>{t('Використано')}:</Text>
         <Text style={styles.borderBottomViewValue}>{`${
-          profile?.count_spent_bonus
+          profile?.count_spent_bonus || 0
         } ${t('балів')}`}</Text>
       </View>
       <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>

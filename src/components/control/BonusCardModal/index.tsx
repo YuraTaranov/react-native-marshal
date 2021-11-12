@@ -20,7 +20,6 @@ const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal, profile}) => {
       return String(profile.card)
         .replace(/\D/, '')
         .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4');
-      // .replace(/(\d{4})(\d{6})/, '$1 $2');
     } else return '';
   }, [profile?.card]);
 
@@ -43,7 +42,7 @@ const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal, profile}) => {
           <Text style={styles.bonusCard}>{cardNumber}</Text>
         ) : null}
         <View style={styles.qrCodeContainer}>
-          <QRCode size={160} value={profile?.card || ''} />
+          <QRCode size={160} value={cardNumber} />
         </View>
       </View>
     </Modal>

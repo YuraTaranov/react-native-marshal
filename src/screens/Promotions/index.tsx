@@ -37,6 +37,7 @@ const Promotions: React.FC<TProps> = ({
 }) => {
   const {t} = useTranslation();
   const [page, setPage] = useState<number>(1);
+  //   console.log(promotions.map(i => i.id));
 
   const onPressItem = useCallback(
     id => () => {

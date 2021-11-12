@@ -87,12 +87,12 @@ const PromotionView: React.FC<TProps> = ({
       />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
-        {item.type !== 'discount' ? (
+        {item.type === 'action' ? (
           <Text style={styles.date}>{promoEndDate}</Text>
         ) : null}
         <Text style={titleStyles} numberOfLines={2} ellipsizeMode="tail">
           {item.type === 'discount'
-            ? `${item.title} -${item.discount_percentage}%`
+            ? `${t('Знижка')} -${item.discount_percentage}%`
             : item.title}
         </Text>
         {item.type !== 'action' ? (
