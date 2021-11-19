@@ -28,7 +28,7 @@ const ProfileMenuItem: React.FC<TProps> = ({
         <Text style={styles.notificationsText}>{newNotificationsLength}</Text>
       );
     }
-  }, [item.icon, newNotificationsLength]);
+  }, [item.icon, newNotificationsLength, cardNumber]);
 
   return (
     <>

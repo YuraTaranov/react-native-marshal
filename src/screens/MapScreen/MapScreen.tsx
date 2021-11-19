@@ -190,11 +190,13 @@ const MapScreen: React.FC<TProps> = ({
   }, [region]);
 
   const onZoomMinus = useCallback(() => {
-    animateToRegion({
-      ...region,
-      longitudeDelta: region.longitudeDelta * K,
-      latitudeDelta: region.latitudeDelta * K,
-    });
+    if (region.longitudeDelta < 15) {
+      animateToRegion({
+        ...region,
+        longitudeDelta: region.longitudeDelta * K,
+        latitudeDelta: region.latitudeDelta * K,
+      });
+    }
   }, [region]);
 
   const goToNewPosition = useCallback(

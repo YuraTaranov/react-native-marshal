@@ -19,7 +19,7 @@ const SwitchCustom: React.FC<TProps> = ({value, onValueChange, title}) => {
 
   const isActiveText = useMemo(() => {
     return value ? t('Увімкнено') : t('Вимкнено');
-  }, [value]);
+  }, [value, t]);
 
   return (
     <View style={styles.container}>
