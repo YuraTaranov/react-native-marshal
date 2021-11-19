@@ -16,17 +16,20 @@ const initstate: TPetrolStation[] = [];
 const filterDuplicatest = (
   newData: TPetrolStation[],
 ): Array<TPetrolStation> => {
-  const newMap = new Map();
-  newData.forEach(i => {
-    newMap.set(i.id, i);
-  });
-  return [...newMap].map(i => i[1] || null).filter(i => !!i);
+//   const newMap = new Map();
+//   newData.forEach(i => {
+//     newMap.set(i.id, i);
+//   });
+//   return [...newMap].map(i => i[1] || null).filter(i => !!i);
+
+	return Array.from(new Set(newData.map(i => JSON.stringify(i)))).map(i => JSON.parse(i));
 };
 
 export default (state = initstate, action: any) => {
   switch (action.type) {
     case SET_PETROL_STATIONS:
-      return filterDuplicatest([...state, ...action.data]);
+    //   return filterDuplicatest([...state, ...action.data]);
+      return [...action.data];
     case RESET_PETROL_STATIONS:
       return initstate;
     default:
@@ -53,7 +56,6 @@ export function* getPetrolStationsAsync() {
     const body: TGetPetrolStationResponseGenerator = yield call(() =>
       httpPost(urls.getPetrolStations, {locale}),
     );
-
     if (body?.data?.data) {
       yield put(setPetrolStations(body.data.data));
     }

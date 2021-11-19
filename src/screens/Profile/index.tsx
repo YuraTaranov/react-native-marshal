@@ -135,7 +135,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         cardNumber={cardNumber}
       />
     ),
-    [newNotificationsLength, cardNumber],
+    [newNotificationsLength, cardNumber, profile?.card],
   );
   const keyExtractor: (item: TMenuItem) => string = useCallback(
     item => item.icon,
