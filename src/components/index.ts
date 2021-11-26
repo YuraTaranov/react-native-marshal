@@ -11,6 +11,7 @@ export {
   Linking,
   PermissionsAndroid,
   Platform,
+  Pressable,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -24,32 +25,33 @@ export {
 } from 'react-native';
 
 // MODULES
+export {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 export {Pagination} from 'react-native-snap-carousel';
+export {SwipeListView} from 'react-native-swipe-list-view';
 export {default as CheckBox} from '@react-native-community/checkbox';
 export {default as ConfirmationCodeField} from 'react-native-confirmation-code-field';
 export {default as DateTimePicker} from '@react-native-community/datetimepicker';
+export {default as DeviceInfo} from 'react-native-device-info';
 export {default as FilledTextField} from 'rn-material-ui-textfield';
+export {default as Geocoder} from 'react-native-geocoding';
 export {default as Geolocation} from 'react-native-geolocation-service';
 export {default as GoogleMaps} from 'react-native-maps';
-export {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export {default as Image} from 'react-native-fast-image';
 export {default as LinearGradient} from 'react-native-linear-gradient';
+export {default as LottieView} from 'lottie-react-native';
 export {default as MapView} from 'react-native-map-clustering';
 export {default as Modal} from 'react-native-modal';
 export {default as OpenAppSettings} from 'react-native-app-settings';
 export {default as QRCodeScanner} from 'react-native-qrcode-scanner';
 export {default as QRCode} from 'react-native-qrcode-svg';
+export {default as ReactNativeBiometrics} from 'react-native-biometrics';
 export {default as SnapCarousel} from 'react-native-snap-carousel';
 export {default as TextInputMask} from 'react-native-text-input-mask';
-export {default as moment} from 'moment';
 export {default as Toast} from 'react-native-easy-toast';
-export {default as LottieView} from 'lottie-react-native';
+export {default as moment} from 'moment';
 export {formatWithMask} from 'react-native-mask-input';
 export {request, PERMISSIONS} from 'react-native-permissions';
-export {default as ReactNativeBiometrics} from 'react-native-biometrics';
-export {default as DeviceInfo} from 'react-native-device-info';
-export {default as Geocoder} from 'react-native-geocoding';
 
 // TYPOGRAPHY
 export {default as Autocomplete} from './typography/GooglePlacesAutocomplete';

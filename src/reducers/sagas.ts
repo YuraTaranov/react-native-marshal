@@ -1,11 +1,12 @@
 import {all} from 'redux-saga/effects';
 // ADD IMPORT
-import { watchFuel } from './fuel'
-import { watchFuelCalculator } from './fuelCalculator'
-import { watchPromotionsMain } from './promotionsMain'
-import { watchReferral } from './referral'
-import { watchSettings } from './settings'
-import { watchNotifications } from './notifications'
+// import {watchPaymentСards} from './paymentСards';
+import {watchFuel} from './fuel';
+import {watchFuelCalculator} from './fuelCalculator';
+import {watchPromotionsMain} from './promotionsMain';
+import {watchReferral} from './referral';
+import {watchSettings} from './settings';
+import {watchNotifications} from './notifications';
 import {watchAddCar} from './addCar';
 import {watchAppGlobalState} from './appGlobalState';
 import {watchCars} from './cars';
@@ -16,16 +17,17 @@ import {watchProfile} from './profile';
 import {watchPromotions} from './promotions';
 import {watchPromotion} from './promotion';
 import {watchPurchases} from './purchases';
+import {watchCreditCards} from './creditCards';
 
 export default function* rootSaga() {
   yield all([
     // ADD WATCHER
-		watchFuel(),
-		watchFuelCalculator(),
-		watchPromotionsMain(),
-		watchReferral(),
-		watchSettings(),
-		watchNotifications(),
+    watchFuel(),
+    watchFuelCalculator(),
+    watchPromotionsMain(),
+    watchReferral(),
+    watchSettings(),
+    watchNotifications(),
     watchAddCar(),
     watchAppGlobalState(),
     watchCars(),
@@ -36,5 +38,6 @@ export default function* rootSaga() {
     watchPromotion(),
     watchPromotions(),
     watchPurchases(),
+    watchCreditCards(),
   ]);
 }

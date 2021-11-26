@@ -23,12 +23,13 @@ export const WayToPayItem: React.FC<TProps> = ({
   const getTitle = () => {
     if (selectedPayType) {
       const {icon, title} = selectedPayType;
-      return icon === 'creditcard'
-        ? title.replace(
-            /(\d{4}\s+\d{2})\d{2}\s+\d{4}(\s+\d{4})/s,
-            '$1** ****$2',
-          )
-        : title;
+      return title;
+      // return icon === 'creditcard'
+      //   ? title.replace(
+      //       /(\d{4}\s+\d{2})\d{2}\s+\d{4}(\s+\d{4})/s,
+      //       '$1** ****$2',
+      //     )
+      //   : title;
     }
     return '';
   };

@@ -26,15 +26,16 @@ import styles from './styles';
 import type {
   FuelPurchaseRouteProp,
   TGlobalState,
-  TCreditCard,
   TPaySystemContent,
   TFuel,
+  TPaymentСards,
+  TPaymentСard,
 } from '@types';
 // import {Dispatch} from 'redux';
 
 type TProps = {
   index: number;
-  creditCards: TCreditCard[];
+  creditCards: TPaymentСards;
   fuelCountToBuy: string;
   fuel: TFuel[];
 };
@@ -136,13 +137,14 @@ const InnerPage: React.FC<TProps> = ({
     const newMap: Map<number, TPaySystemContent> = new Map();
     const newArray: TPaySystemContent[] = [];
 
-    creditCards.forEach((card, ind) => {
-      const id = ind + 1;
+    creditCards.forEach((CARD: TPaymentСard) => {
+      const {id, card, selected} = CARD;
       newMap.set(id, {
         id,
         action: () => {},
-        title: card.number,
+        title: card,
         icon: 'creditcard',
+        selected,
       });
     });
 
@@ -173,6 +175,10 @@ const InnerPage: React.FC<TProps> = ({
   };
 
   const PayForFuel = () => {
+    const {rectoken} = creditCards.filter(
+      i => `${i.id}` === `${selectedPayType?.id}`,
+    )[0] || {rectoken: ''};
+
     const payByBonus =
       `${selectedPayType?.id}` === '99' || selectedPayType?.icon === 'gift';
     const phone = '+380' + phoneNumber.replace(/\D/g, '');
@@ -184,11 +190,13 @@ const InnerPage: React.FC<TProps> = ({
         phone,
         fuel_id: selectedPriceId,
         liters: fuelCounter,
+        rectoken,
       });
     } else {
       navigate('PayForm', {
         fuel_id: selectedPriceId,
         liters: fuelCounter,
+        rectoken,
       });
     }
   };

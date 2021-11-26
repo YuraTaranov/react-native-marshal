@@ -35,6 +35,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {setBioTurnOffAfterLogout} from '@reducers/logout';
 import {getFuel} from '@reducers/fuel';
+import {getCreditCards} from '@reducers/creditCards';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
@@ -75,6 +76,7 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
     dispatch(getPromotionsMain());
     dispatch(getFuel());
     dispatch(getPromotions({page: 1}));
+    dispatch(getCreditCards());
   }, [lang]);
 
   useEffect(() => {

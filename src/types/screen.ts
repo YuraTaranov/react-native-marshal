@@ -12,6 +12,8 @@ export type TParamOfPayForm = {
   liters: string;
   fuel_id: string;
   phone?: string;
+  verificationCard?: boolean;
+  rectoken?: string;
 };
 
 export type HomeStackParamList = {

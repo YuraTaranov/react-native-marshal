@@ -5,7 +5,6 @@ export default StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    paddingVertical: 10,
   },
   eachScreen: {
     paddingTop: 8,

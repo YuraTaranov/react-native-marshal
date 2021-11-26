@@ -1,34 +1,29 @@
 import React from 'react';
-import {useCallback} from '@hooks';
-import {View, Text, Icon, TouchableOpacity} from '@components';
+import {View, Text, Icon} from '@components';
 import {SVG_Icons} from '@assets';
 import styles from './styles';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {TCreditCard} from '@types';
+import {TPaymentСard} from '@types';
 import {colors} from '@constants';
+import {Pressable} from 'react-native';
 type TProps = {
-  cardData: TCreditCard;
+  cardData: TPaymentСard;
   onSelected: () => void;
 };
 
 export const CardItem: React.FC<TProps> = ({cardData, onSelected}) => {
-  const formatCardNumber = useCallback((): string => {
-    if (!cardData?.number) {
-      return '';
-    }
-    return String(cardData.number)
-      .replace(/\D/, '')
-      .replace(/(\d{4})(\d{2})\d{6}(\d{4})/, '$1 $2** **** $3');
-  }, [cardData.number]);
+  if (!cardData?.card) {
+    return null;
+  }
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onSelected}>
+    <Pressable style={styles.container} onPress={onSelected}>
       <View>
         <SVG_Icons height={24} name="creditcard" />
       </View>
       <View style={styles.cardNumberView}>
-        <Text style={styles.cardNumberText}>{formatCardNumber()}</Text>
+        <Text style={styles.cardNumberText}>{cardData.card}</Text>
       </View>
       <View>
         <Icon
@@ -37,6 +32,6 @@ export const CardItem: React.FC<TProps> = ({cardData, onSelected}) => {
           color={cardData?.selected ? colors.green_41BB4E : colors.gray_DADBDF}
         />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };

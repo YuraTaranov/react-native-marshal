@@ -91,5 +91,7 @@
 	"ValidityPeriod": "Validity period",
 	"payThroughPaymentSystem": "Оплатить картой",
 	"ForPhone": "Для телефона",
-	"currency": "$"
+	"currency": "$",
+	"DeleteCreditCard": "Removing this card!",
+	"addingNewCreditCard": "Adding a credit card"
 }
