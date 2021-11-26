@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Image} from '@components';
+import {View} from '@components';
 import styles from './styles';
-import {assets} from '@assets';
+import {SVG_Icons as SVG} from '@assets';
 
 type TProps = {
   selected: boolean;
@@ -9,9 +9,6 @@ type TProps = {
 
 export const MarkerItem: React.FC<TProps> = ({selected}) => (
   <View style={styles.container}>
-    <Image
-      style={[styles.marker, selected && styles.selectedMarker]}
-      source={assets.MARKER}
-    />
+    <SVG name="marker" width={selected ? 55 : 45} />
   </View>
 );

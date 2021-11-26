@@ -1,5 +1,4 @@
 export {default as AboutApp} from './AboutApp/AboutApp';
-export {default as AddCard} from './AddCard/AddCard';
 export {default as AddCar} from './AddCar/AddCar';
 export {default as Biometrics} from './Biometrics/Biometrics';
 export {default as BonusCardCheck} from './BonusCardCheck/BonusCardCheck';

@@ -300,6 +300,8 @@ const MapScreen: React.FC<TProps> = ({
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={[styles.map, styles.mapPadding]}
+        extent={ios ? 512 : 150}
+        nodeSize={ios ? 64 : 200}
         // animationEnabled
         //
         clusterColor={colors.green_41BB4E}
@@ -308,18 +310,13 @@ const MapScreen: React.FC<TProps> = ({
         cacheEnabled
         followsUserLocation
         initialRegion={initRegion}
-        // region={region}
         loadingEnabled
         mapType="standard"
-        // maxZoomLevel={18}
         minZoomLevel={5}
         moveOnMarkerPress
         //
         showsCompass
         showsIndoorLevelPicker
-        // showsScale
-        // showsTraffic
-        // TrackViewChanges
         showsUserLocation
         //
         userLocationPriority="balanced"

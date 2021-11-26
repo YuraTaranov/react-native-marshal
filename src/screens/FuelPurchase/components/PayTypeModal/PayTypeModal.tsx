@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  useNavigation,
-  useTranslation,
-  useState,
-  useEffect,
-  useRoute,
-} from '@hooks';
+import {useNavigation, useTranslation} from '@hooks';
 import {
   Icon,
   Modal,
@@ -43,9 +37,8 @@ const PayTypeModal: React.FC<TProps> = ({
 
   const onSelectedItem = (id: number) => () => {
     if (id === 100) {
-      // FIXME: comment add card
-      //   navigate('AddCard', {openModal: true});
-      //   closeModal();
+      navigate('AddCard', {openModal: true});
+      closeModal();
     } else {
       onSelect(id);
     }

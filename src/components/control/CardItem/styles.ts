@@ -12,6 +12,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: colors.gray_E1E1E8,
     borderBottomWidth: 1,
+    backgroundColor: colors.white_FFFFFF,
   },
   cardNumberView: {
     flex: 1,

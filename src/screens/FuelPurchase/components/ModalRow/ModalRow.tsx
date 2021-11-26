@@ -18,10 +18,11 @@ export const ModalRow: React.FC<TProps> = ({
   icon,
   selected,
 }) => {
-  const Title =
-    icon === 'creditcard'
-      ? title.replace(/(\d{4}\s+\d{2})\d{2}\s+\d{4}(\s+\d{4})/s, '$1** ****$2')
-      : title;
+  const Title = title;
+
+    // icon === 'creditcard'
+    //   ? title.replace(/(\d{4}\s+\d{2})\d{2}\s+\d{4}(\s+\d{4})/s, '$1** ****$2')
+    //   : title;
   return (
     <TouchableOpacity
       style={styles.container}

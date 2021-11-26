@@ -15,6 +15,7 @@ import {
   UseTerms,
   Notifications,
   Promotion,
+  PayForm,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState, TProfile} from '@types';
@@ -145,6 +146,13 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
       <ProfileStack.Screen
         name="Promotion"
         component={Promotion}
+        options={{
+          headerTitleAlign: 'center',
+        }}
+      />
+      <ProfileStack.Screen
+        name="PayForm"
+        component={PayForm}
         options={{
           headerTitleAlign: 'center',
         }}

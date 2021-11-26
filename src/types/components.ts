@@ -175,3 +175,19 @@ export type TPurchase = {
   type: 'gift' | 'bonuses' | 'many';
   user_id: number;
 };
+
+export type TPaymentСard = {
+  id: number;
+  card: string;
+  selected?: boolean;
+  rectoken?: string;
+};
+
+export type TPaymentСards = TPaymentСard[];
+export type TGetPaymentСardsResponseGenerator = {
+  data: {
+    data: TPaymentСards;
+  };
+  statusText: string;
+  status: number;
+};
