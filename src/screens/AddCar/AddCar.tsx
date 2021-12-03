@@ -185,8 +185,6 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
           disabled={!car.year.name}
         /> */}
         <MaterialInput
-          renderRightAccessory
-          rightAccessoryName={'arrow-down'}
           keyboardType="decimal-pad"
           rightAccessoryColor={colors.gray_8D909D}
           value={car.tank.name}

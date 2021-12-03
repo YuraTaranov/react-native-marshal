@@ -19,7 +19,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle: {
-    width: width / 2 - 40,
+    // width: width / 2 - 40,
+    width: '49%',
   },
   confirm: {
     fontFamily: fonts.interSemiBold_600,

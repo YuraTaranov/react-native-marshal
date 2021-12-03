@@ -15,8 +15,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    fontSize: verticalScale(14),
-    lineHeight: verticalScale(16),
+    fontSize: 14,
     color: colors.black_000000,
     fontFamily: fonts.interMedium_500,
   },

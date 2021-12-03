@@ -11,8 +11,6 @@ export default StyleSheet.create({
   title: {
     color: colors.white_FFFFFF,
     fontFamily: fonts.interMedium_500,
-    fontSize: 14,
-    lineHeight: 16,
   },
   btnStyle: {
     width: '100%',
