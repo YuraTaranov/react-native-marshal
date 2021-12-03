@@ -54,20 +54,22 @@ const ProfileUpdate: React.FC<TProps> = ({
     profile?.phone.slice(4) || '',
   );
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
-    type: profile?.gender
-      ? profile?.gender === 'female'
-        ? 1
-        : profile?.gender === 'male'
-        ? 2
-        : 3
-      : 0,
-    name: profile?.gender
-      ? profile?.gender === 'male'
-        ? t('Чоловіча')
-        : profile?.gender === 'female'
-        ? t('Жіноча')
-        : t('Не вказувати')
-      : '',
+    type:
+      profile?.gender !== undefined
+        ? profile?.gender === 'female'
+          ? 1
+          : profile?.gender === 'male'
+          ? 2
+          : 3
+        : 0,
+    name:
+      profile?.gender !== undefined
+        ? profile?.gender === 'male'
+          ? t('Чоловіча')
+          : profile?.gender === 'female'
+          ? t('Жіноча')
+          : t('Не вказувати')
+        : '',
   });
 
   const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);

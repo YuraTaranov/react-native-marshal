@@ -135,8 +135,7 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  // FIXME: акции из главных
-  promotions: state.promotions.data,
+  promotions: state.promotionsMain.data,
   refreshing: state.promotionsMain.refreshing,
   lang: state.appGlobalState.lang,
 });

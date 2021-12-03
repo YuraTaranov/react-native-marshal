@@ -3,7 +3,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {
   AboutApp,
   AddCar,
-  AddCard,
   Cars,
   LoyaltyTerms,
   MyCards,
@@ -126,7 +125,7 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
           animationEnabled: ios,
         }}
       />
-      <ProfileStack.Screen
+      {/* <ProfileStack.Screen
         name="AddCard"
         component={AddCard}
         options={{
@@ -134,7 +133,7 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
           title: t('Add_Card'),
           animationEnabled: ios,
         }}
-      />
+      /> */}
       <ProfileStack.Screen
         name="Notifications"
         component={Notifications}

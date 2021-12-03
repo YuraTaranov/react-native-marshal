@@ -25,13 +25,12 @@ const PromotionView: React.FC<TProps> = ({
   disabled = false,
 }) => {
   const {t} = useTranslation();
+  //   console.log(JSON.stringify(item, null, 2));
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
 
   const promoEndDate = useMemo(() => {
     return `${t('Акція до')} ${moment(item.end).format('LL').slice(0, -2)}`;
   }, [item.end]);
-
-  //   console.log(JSON.stringify(item, null, 2));
 
   const prices = useMemo(() => {
     return {
@@ -105,8 +104,12 @@ const PromotionView: React.FC<TProps> = ({
         ) : null}
         {item.type === 'action' ? (
           <View style={styles.priceContainer}>
-            <Text style={styles.priceNew}>{`${prices.new} ${t('грн')}`}</Text>
-            <Text style={styles.priceOld}>{`${prices.old} ${t('грн')}`}</Text>
+            {prices.new ? (
+              <Text style={styles.priceNew}>{`${prices.new} ${t('грн')}`}</Text>
+            ) : null}
+            {prices.old ? (
+              <Text style={styles.priceOld}>{`${prices.old} ${t('грн')}`}</Text>
+            ) : null}
           </View>
         ) : null}
       </View>
