@@ -93,5 +93,6 @@
 	"ForPhone": "Для телефона",
 	"currency": "$",
 	"DeleteCreditCard": "Removing this card!",
-	"addingNewCreditCard": "Adding a credit card"
+	"addingNewCreditCard": "Adding a credit card",
+	"PayForm": "Payment page"
 }

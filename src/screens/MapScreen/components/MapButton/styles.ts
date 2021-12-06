@@ -6,6 +6,7 @@ const MapButtonSize = 52;
 
 export default StyleSheet.create({
   container: {
+    opacity: 1,
     width: MapButtonSize,
     height: MapButtonSize,
     borderRadius: MapButtonSize / 2,
@@ -19,5 +20,8 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: -4,
     backgroundColor: colors.green_41BB4E,
+  },
+  disabled: {
+    opacity: 0.2,
   },
 });
