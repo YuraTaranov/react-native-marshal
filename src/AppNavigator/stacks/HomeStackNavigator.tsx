@@ -71,6 +71,7 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
         component={PayForm}
         options={{
           headerTitleAlign: 'center',
+          title: t('PayForm'),
         }}
       />
     </HomeStack.Navigator>

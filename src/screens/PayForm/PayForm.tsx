@@ -7,7 +7,7 @@ import {
   useRoute,
   useNavigation,
 } from '@hooks';
-import {FondyService} from '@httpServices';
+import {FondyService, weblog} from '@httpServices';
 import {WebView} from 'react-native-webview';
 
 import styles from './styles';
@@ -48,6 +48,7 @@ const getFondyForm = async (
   hiddenLoading: () => void,
 ) => {
   try {
+    // console.log("URI2:", uri);
     const {data} = await FondyService.getFondyForm(args);
     setUriFunc(data);
   } catch (e) {

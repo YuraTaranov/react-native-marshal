@@ -10,6 +10,7 @@ import {
   PermissionsAndroid,
   View,
   request,
+  Alert,
 } from '@components';
 import {MapButton, MarkerModal, ClusterMarker, MarkerItem} from './components';
 import {connect} from 'react-redux';
@@ -107,6 +108,8 @@ const MapScreen: React.FC<TProps> = ({
   textOfSearch,
 }) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
+  const [disabledZoomMinus, setDisabledZoomMinus] = useState(true);
+  const [disabledZoomPlus, setDisabledZoomPlus] = useState(true);
 
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
     formatMarkerData(
@@ -154,6 +157,10 @@ const MapScreen: React.FC<TProps> = ({
             },
             500,
           );
+          setTimeout(() => {
+            setDisabledZoomMinus(false);
+            setDisabledZoomPlus(false);
+          }, 1000);
         },
         error => {
           dispatch(setGPS(false));
@@ -162,10 +169,13 @@ const MapScreen: React.FC<TProps> = ({
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     },
-    [region],
+    [animateToRegion, dispatch],
   );
 
   const onMapReady = useCallback((): void => {
+    setDisabledZoomMinus(true);
+    setDisabledZoomPlus(true);
+
     if (ios) {
       request(
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE || PERMISSIONS.IOS.LOCATION_ALWAYS,
@@ -187,21 +197,20 @@ const MapScreen: React.FC<TProps> = ({
       longitudeDelta: region.longitudeDelta / K,
       latitudeDelta: region.latitudeDelta / K,
     });
-  }, [region]);
+  }, [animateToRegion, region]);
 
   const onZoomMinus = useCallback(() => {
-    if (region.longitudeDelta < 15) {
+    if (!disabledZoomMinus) {
       animateToRegion({
         ...region,
         longitudeDelta: region.longitudeDelta * K,
         latitudeDelta: region.latitudeDelta * K,
       });
     }
-  }, [region]);
+  }, [disabledZoomMinus, animateToRegion, region]);
 
   const goToNewPosition = useCallback(
     (newPoint: TPoint) => {
-      //   console.log(newPoint, 'goToNewPosition');
       const longitude = newPoint.longitude;
       const latitude = newPoint.latitude;
       animateToRegion({
@@ -211,15 +220,23 @@ const MapScreen: React.FC<TProps> = ({
         longitude,
         latitude,
       });
-      //   animateToRegion({
-      //     longitude,
-      //     latitude,
-      //     latitudeDelta: 0.015,
-      //     longitudeDelta: 0.02,
-      //   });
     },
-    [region],
+    [animateToRegion],
   );
+
+  useEffect(() => {
+    if (region.longitudeDelta > 15.82) {
+      setDisabledZoomMinus(true);
+    } else {
+      setDisabledZoomMinus(false);
+    }
+
+    if (region.longitudeDelta > 0.000262) {
+      setDisabledZoomPlus(false);
+    } else {
+      setDisabledZoomPlus(true);
+    }
+  }, [disabledZoomMinus, disabledZoomPlus, region]);
 
   const openMarker = useCallback(
     (data: TMarker) => {
@@ -342,8 +359,12 @@ const MapScreen: React.FC<TProps> = ({
           ))}
       </MapView>
       <View style={styles.buttonsBlock}>
-        <MapButton onPress={onZoomPlus} />
-        <MapButton onPress={onZoomMinus} name="minus" />
+        <MapButton onPress={onZoomPlus} disabled={disabledZoomPlus} />
+        <MapButton
+          onPress={onZoomMinus}
+          name="minus"
+          disabled={disabledZoomMinus}
+        />
         {isGPS && <MapButton onPress={goToUserLocate} green name="location" />}
       </View>
       <MarkerModal
