@@ -82,7 +82,7 @@ const MyCards: React.FC<TProps> = ({dispatch, creditCardList}) => {
       return;
     }
   };
-  animation('ios');
+
   return (
     <View style={styles.container}>
       <View style={styles.mainView}>

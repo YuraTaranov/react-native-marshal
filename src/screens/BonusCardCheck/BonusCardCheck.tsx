@@ -80,7 +80,7 @@ const BonusCardCheck: React.FC<TProps> = ({
 
   const onReadQR: (e: any) => void = useCallback((e: any) => {
     if (e.data) {
-      setCardNumber(e.data);
+      setCardNumber(e.data.replace(/ /g, ''));
       setIsCardNumberReadByQR(true);
       setTimeout(() => {
         closeModal();

@@ -10,6 +10,8 @@ import PushNotification from 'react-native-push-notification';
 import {setNotifications, regDeviceToken} from '@reducers/notifications';
 import {Dispatch} from 'redux';
 import {getPromotion} from '@reducers/promotion';
+import {getPromotionsMain} from '@reducers/promotionsMain';
+import {getPromotions} from '@reducers/promotions';
 
 type TProps = {
   dispatch: Dispatch;
@@ -55,6 +57,8 @@ const NotificationsManager: React.FC<TProps> = ({
         });
         if (item.type === 'action') {
           dispatch(getPromotion(item.data_id));
+        } else {
+          navigate('Promotions');
         }
         // проверить
         // if (ios && badge) {
@@ -70,6 +74,8 @@ const NotificationsManager: React.FC<TProps> = ({
       .messaging()
       .onMessage(async (remoteMessage: any) => {
         console.log('Foreground push data', remoteMessage.data);
+        dispatch(getPromotionsMain());
+        dispatch(getPromotions(1));
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: false,
@@ -80,7 +86,6 @@ const NotificationsManager: React.FC<TProps> = ({
           ),
         );
       });
-
     return unsubscribe;
   }, [notifications]);
 
@@ -88,6 +93,8 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
         console.log('Trey push data', remoteMessage.data);
+        dispatch(getPromotionsMain());
+        dispatch(getPromotions(1));
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: true,

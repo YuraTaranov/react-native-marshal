@@ -5,6 +5,13 @@ import {TGlobalState} from '@types';
 import OnboardingStackNavigator from './OnboardingStackNavigator';
 import AuthStackNavigator from './AuthStackNavigator';
 import TabNavigator from '../TabNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
+import BonusesStackNavigator from './BonusesStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
+import StationsStackNavigator from './StationsStackNavigator';
+import PromotionsStackNavigator from './PromotionsStackNavigator';
+import {AddCar, Cars} from '@screens';
+import {defaultStackOptions} from '../options';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
@@ -12,12 +19,13 @@ type TProps = {
 
 const RootStack = createStackNavigator();
 
-const HomeStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
+const RootStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
   return (
     <RootStack.Navigator
       headerMode="none"
       screenOptions={{
         gestureEnabled: false,
+        // ...defaultStackOptions,
       }}>
       {appGlobalState.onBoarding ? (
         <RootStack.Screen
@@ -27,7 +35,31 @@ const HomeStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
       ) : !appGlobalState.isUserAuthorized ? (
         <RootStack.Screen name="AuthNavigator" component={AuthStackNavigator} />
       ) : (
-        <RootStack.Screen name="TabNavigator" component={TabNavigator} />
+        <>
+          <RootStack.Screen name="TabNavigator" component={TabNavigator} />
+          {/* <RootStack.Screen
+            name="Stations"
+            component={StationsStackNavigator}
+          />
+          <RootStack.Screen
+            name="Promotions"
+            component={PromotionsStackNavigator}
+          />
+          <RootStack.Screen name="Home" component={HomeStackNavigator} />
+          <RootStack.Screen
+            name="Cars"
+            component={Cars}
+            options={{
+              headerTitleAlign: 'center',
+              title: 'Авто',
+            }}
+          />
+          <RootStack.Screen name="Bonuses" component={BonusesStackNavigator} />
+          <RootStack.Screen
+            name="ProfileStack"
+            component={ProfileStackNavigator}
+          /> */}
+        </>
       )}
     </RootStack.Navigator>
   );
@@ -37,4 +69,4 @@ const mapStateToProps = (state: TGlobalState) => ({
   appGlobalState: state.appGlobalState,
 });
 
-export default connect(mapStateToProps)(HomeStackNavigator);
+export default connect(mapStateToProps)(RootStackNavigator);

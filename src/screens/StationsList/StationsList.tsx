@@ -94,7 +94,6 @@ const StationsList: React.FC<TProps> = ({
         keyboardShouldPersistTaps="always"
         bounces>
         {stations.map(item => {
-          animation('ios');
           return (
             <StationListItem
               item={item}

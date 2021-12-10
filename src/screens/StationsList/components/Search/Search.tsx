@@ -7,6 +7,7 @@ import styles from './styles';
 import {resetSearchStations, setTextOfSearch} from '@reducers/searchStations';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
+import {animation} from '@helpers';
 
 type TProps = {
   dispatch: Dispatch;
@@ -18,6 +19,7 @@ const Search: React.FC<TProps> = ({dispatch, textOfSearch}) => {
   const inputEl = useRef(null);
 
   const onChangeText = (text: string) => {
+    animation();
     dispatch(setTextOfSearch(text));
   };
 

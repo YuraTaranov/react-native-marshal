@@ -19,6 +19,7 @@ const persistConfig = {
     'creditCards',
     'petrolStations',
     'referral',
+    'notifications',
   ], // ADD WHITE LIST IF YOU NEED
 };
 
