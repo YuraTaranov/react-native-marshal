@@ -31,16 +31,14 @@ const ProfileMenuItem: React.FC<TProps> = ({
   }, [item.icon, newNotificationsLength, cardNumber]);
 
   return (
-    <>
-      <TouchableOpacity style={styles.container} onPress={item.onPress}>
-        <Icon name={item.icon} color={colors.black_1E1A1A} size={24} />
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>{item.name}</Text>
-          {additionalText}
-        </View>
-        <Icon name="right" color={colors.black_1E1A1A} size={24} />
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity style={styles.container} onPress={item.onPress}>
+      <Icon name={item.icon} color={colors.black_1E1A1A} size={24} />
+      <View style={styles.nameContainer}>
+        <Text style={styles.name}>{item.name}</Text>
+        {additionalText}
+      </View>
+      <Icon name="right" color={colors.black_1E1A1A} size={24} />
+    </TouchableOpacity>
   );
 };
 

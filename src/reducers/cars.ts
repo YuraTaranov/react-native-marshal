@@ -36,6 +36,10 @@ export function* getCarsAsync() {
     if (body.data.data) {
       yield put(setCars(body.data.data));
       navigate('Cars');
+    //   navigate('ProfileStack', {
+	// 	  screen: 'Cars',
+	// 	  params: {},
+	//   });
     }
   } catch (e) {
     yield put(setLoader(false));

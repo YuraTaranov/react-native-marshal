@@ -99,7 +99,7 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
         size={24}
       />
     );
-  }, []);
+  }, [refreshing]);
 
   return (
     <View style={styles.container}>

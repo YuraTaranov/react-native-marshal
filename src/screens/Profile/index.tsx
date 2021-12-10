@@ -11,7 +11,7 @@ import {View, TouchableOpacity, Icon, BonusCardModal} from '@components';
 import {TGlobalState, TProfile, TNotification} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {colors, declension} from '@constants';
+import {colors, declension, longScreen} from '@constants';
 import {FlatList} from 'react-native-gesture-handler';
 import ProfileMenuItem from './components/ProfileMenuItem/ProfileMenuItem';
 import {setSupport} from '@reducers/modalController';
@@ -135,7 +135,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         cardNumber={cardNumber}
       />
     ),
-    [newNotificationsLength, cardNumber, profile?.card],
+    [newNotificationsLength],
   );
   const keyExtractor: (item: TMenuItem) => string = useCallback(
     item => item.icon,
@@ -148,6 +148,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         data={menuItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        scrollEnabled={!longScreen}
       />
       <BonusCardModal
         isVisible={bonusCardModelVisible}
