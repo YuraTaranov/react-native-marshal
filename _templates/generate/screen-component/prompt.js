@@ -38,7 +38,6 @@ module.exports = [
       'MarkerDetailPage',
       'RegionsPage',
       'MyCards',
-      'AddCard',
       'Biometrics',
       'Notifications',
       'FuelCalculator',

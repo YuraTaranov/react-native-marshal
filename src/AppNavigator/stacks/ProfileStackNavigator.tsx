@@ -125,15 +125,6 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
           animationEnabled: ios,
         }}
       />
-      {/* <ProfileStack.Screen
-        name="AddCard"
-        component={AddCard}
-        options={{
-          headerTitleAlign: 'center',
-          title: t('Add_Card'),
-          animationEnabled: ios,
-        }}
-      /> */}
       <ProfileStack.Screen
         name="Notifications"
         component={Notifications}

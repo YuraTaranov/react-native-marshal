@@ -19,7 +19,6 @@ export type TParamOfPayForm = {
 export type HomeStackParamList = {
   // SCREEN PARAMS
   FuelPurchase: TParamOfFuelPurchase;
-  AddCard: TParamOfAddCard;
   PayForm: TParamOfPayForm;
 };
 
@@ -27,5 +26,4 @@ export type FuelPurchaseRouteProp = RouteProp<
   HomeStackParamList,
   'FuelPurchase'
 >;
-export type AddCardRouteProp = RouteProp<HomeStackParamList, 'AddCard'>;
 export type PayFormRouteProp = RouteProp<HomeStackParamList, 'PayForm'>;

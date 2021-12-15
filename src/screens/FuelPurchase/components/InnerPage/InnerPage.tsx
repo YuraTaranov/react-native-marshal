@@ -79,12 +79,6 @@ const InnerPage: React.FC<TProps> = ({
       title: t('BuyBalls'),
       icon: 'gift',
     },
-    // {
-    //   id: 100,
-    //   action: () => navigate('AddCard'),
-    //   title: t('AddPaymentCard'),
-    //   icon: 'plus',
-    // },
   ];
 
   const fuelToBuyFormatted = useMemo(() => {

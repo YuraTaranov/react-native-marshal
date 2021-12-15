@@ -41,7 +41,6 @@ const MyCards: React.FC<TProps> = ({dispatch, creditCardList}) => {
   }, [creditCardList]);
 
   const submit = () => {
-    // navigate('AddCard');
     navigate('PayForm', {
       verificationCard: true,
       liters: '',
