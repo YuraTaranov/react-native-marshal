@@ -50,7 +50,9 @@ const FuelCalculator: React.FC<TProps> = ({
   const onPress = async (bool: boolean | ((prevState: boolean) => boolean)) => {
     if (!!geoCoordinates.end && !!geoCoordinates.start) {
       dispatch(setRoutes(await getRouteData(geoCoordinates)));
-      navigate('FuelCalculatorResult');
+      navigate('HomeStack', {
+        screen: 'FuelCalculatorResult',
+      });
     }
   };
 

@@ -21,8 +21,8 @@ import styles from './styles';
 import {Dispatch} from 'redux';
 import {TGlobalState, TPromotion} from '@types';
 import {connect} from 'react-redux';
-import {colors} from '@constants';
-import {navigate} from '@services';
+import {colors, urls} from '@constants';
+import {httpPost, navigate} from '@services';
 import {getPromotions} from '@reducers/promotions';
 import {getPetrolStations} from '@reducers/petrolStations';
 import {getProfile} from '@reducers/profile';
@@ -36,14 +36,22 @@ import {getPromotionsMain} from '@reducers/promotionsMain';
 import {setBioTurnOffAfterLogout} from '@reducers/logout';
 import {getFuel} from '@reducers/fuel';
 import {getCreditCards} from '@reducers/creditCards';
+import {setFaceIdActiveLocal, setNeedDisableBio} from '@reducers/biometrics';
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
   lang: string;
   refreshing: boolean;
+  needDisableBio: boolean;
 };
 
-const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
+const Home: React.FC<TProps> = ({
+  dispatch,
+  promotions,
+  lang,
+  refreshing,
+  needDisableBio,
+}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
@@ -85,6 +93,25 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
     }, 2000);
   }, []);
 
+  const turnOffBio = useCallback(async () => {
+    try {
+      dispatch(setFaceIdActiveLocal(false));
+      const body = await httpPost(urls.profileUpdate, {
+        setting_bio_auth: 0,
+      });
+      dispatch(getProfile());
+      dispatch(setNeedDisableBio(false));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (needDisableBio) {
+      turnOffBio();
+    }
+  }, [needDisableBio]);
+
   const refreshPromotions = useCallback(() => {
     dispatch(getPromotionsMain());
   }, []);
@@ -109,7 +136,11 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.buttonContainerCalc}
-            onPress={() => navigate('FuelCalculator')}>
+            onPress={() =>
+              navigate('HomeStack', {
+                screen: 'FuelCalculator',
+              })
+            }>
             <Icon
               size={24}
               name="calculator-duotone"
@@ -119,7 +150,12 @@ const Home: React.FC<TProps> = ({dispatch, promotions, lang, refreshing}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonContainerFuel}
-            onPress={() => navigate('FuelPurchase')}>
+            onPress={() =>
+              navigate('HomeStack', {
+                screen: 'FuelPurchase',
+                params: {},
+              })
+            }>
             <Icon size={24} name="gas" color={colors.green_009F30} />
             <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
           </TouchableOpacity>
@@ -138,6 +174,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   promotions: state.promotionsMain.data,
   refreshing: state.promotionsMain.refreshing,
   lang: state.appGlobalState.lang,
+  needDisableBio: state.biometrics.needDisableBio,
 });
 
 export default connect(mapStateToProps)(Home);

@@ -29,11 +29,15 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onPressTerms = useCallback(() => {
-    navigate('LoyaltyTerms');
+    navigate('BonusesStack', {
+      screen: 'LoyaltyTerms',
+    });
   }, []);
 
   const onPressInviteFriends = useCallback(() => {
-    navigate('InviteFriends');
+    navigate('BonusesStack', {
+      screen: 'InviteFriends',
+    });
   }, []);
 
   const refresh = useCallback(() => {
@@ -76,7 +80,9 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
           <Text style={styles.borderBottomViewTitle}>
             {t('Активні реферали')}:
           </Text>
-          <Text style={styles.borderBottomViewValue}>{activeReferrals}</Text>
+          <Text style={styles.borderBottomViewValue}>
+            {activeReferrals || 0}
+          </Text>
         </View>
         <View style={styles.borderBottomView}>
           <Text style={styles.borderBottomViewTitle}>{t('Використано')}:</Text>

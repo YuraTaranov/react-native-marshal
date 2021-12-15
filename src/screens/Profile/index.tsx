@@ -55,17 +55,26 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       {
         icon: 'bell',
         name: t('Сповіщення'),
-        onPress: () => navigate('Notifications'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'Notifications',
+          }),
       },
       {
         icon: 'wallet',
         name: t('Мої картки'),
-        onPress: () => navigate('MyCards'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'MyCards',
+          }),
       },
       {
         icon: 'shopping',
         name: t('Мої покупки'),
-        onPress: () => navigate('Purchases'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'Purchases',
+          }),
       },
       {
         icon: 'car',
@@ -75,7 +84,10 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       {
         icon: 'edit_profile',
         name: t('Редагувати профіль'),
-        onPress: () => navigate('ProfileEdit'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'ProfileEdit',
+          }),
       },
     ];
   }, [t]);
@@ -109,7 +121,9 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   }, []);
 
   const onPressSettings = useCallback(() => {
-    navigate('Settings');
+    navigate('ProfileStack', {
+      screen: 'Settings',
+    });
   }, []);
 
   useEffect(() => {

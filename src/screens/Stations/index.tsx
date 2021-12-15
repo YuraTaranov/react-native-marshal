@@ -55,7 +55,9 @@ const Stations: React.FC<TProps> = ({filters}) => {
   );
 
   const navigateToFilter = useCallback(() => {
-    navigate('FilterPage');
+    navigate('StationsStack', {
+      screen: 'FilterPage',
+    });
   }, []);
 
   useEffect(() => {

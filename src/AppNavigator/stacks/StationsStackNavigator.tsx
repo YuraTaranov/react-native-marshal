@@ -1,7 +1,6 @@
 import React from 'react';
-import {ios} from '@constants';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Stations, FilterPage, MarkerDetailPage, RegionsPage} from '@screens';
+import {FilterPage, MarkerDetailPage, RegionsPage} from '@screens';
 import {defaultStackOptions} from '../options';
 
 type TProps = {};
@@ -15,13 +14,6 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         ...defaultStackOptions,
       }}>
       <StationsStack.Screen
-        name="Stations"
-        component={Stations}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <StationsStack.Screen
         name="MarkerDetail"
         component={MarkerDetailPage}
         options={{
@@ -34,7 +26,6 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         component={FilterPage}
         options={{
           headerTitleAlign: 'center',
-          //   animationEnabled: ios,
         }}
       />
       <StationsStack.Screen
@@ -42,7 +33,6 @@ const StationsStackNavigator: React.FC<TProps> = ({}) => {
         component={RegionsPage}
         options={{
           headerTitleAlign: 'center',
-          //   animationEnabled: ios,
         }}
       />
     </StationsStack.Navigator>

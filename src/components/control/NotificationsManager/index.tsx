@@ -58,7 +58,9 @@ const NotificationsManager: React.FC<TProps> = ({
         if (item.type === 'action') {
           dispatch(getPromotion(item.data_id));
         } else {
-          navigate('Promotions');
+          navigate('HomeStack', {
+            screen: 'Promotions',
+          });
         }
         // проверить
         // if (ios && badge) {

@@ -75,6 +75,7 @@ export type TGlobalState = {
   biometrics: {
     biometricsType: TBiometricsType;
     faceIdActiveLocal: boolean;
+    needDisableBio: boolean;
     user_key: string;
   };
   searchStations: {

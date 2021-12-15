@@ -11,7 +11,10 @@ const ListEmptyComponent: React.FC<TProps> = () => {
   const {t} = useTranslation();
 
   const addCar = useCallback(() => {
-    navigate('AddCar');
+    navigate('ProfileStack', {
+      screen: 'AddCar',
+      params: {},
+    });
   }, []);
 
   return (

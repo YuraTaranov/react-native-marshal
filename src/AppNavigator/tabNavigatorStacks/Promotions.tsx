@@ -1,31 +1,29 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Promotion} from '@screens';
-import {connect} from 'react-redux';
-import {TGlobalState} from '@types';
+import {Promotions} from '@screens';
+import {useTranslation} from '@hooks';
 import {defaultStackOptions} from '../options';
-
-type TProps = {};
 
 const PromotionsStack = createStackNavigator();
 
-const PromotionsStackNavigator: React.FC<TProps> = ({}) => {
+const PromotionsScreen: React.FC = () => {
+  const {t} = useTranslation();
+
   return (
     <PromotionsStack.Navigator
       screenOptions={{
         ...defaultStackOptions,
       }}>
       <PromotionsStack.Screen
-        name="Promotion"
-        component={Promotion}
+        name="Promotions"
+        component={Promotions}
         options={{
           headerTitleAlign: 'center',
+          title: t('Акції'),
         }}
       />
     </PromotionsStack.Navigator>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
-
-export default connect(mapStateToProps)(PromotionsStackNavigator);
+export default PromotionsScreen;

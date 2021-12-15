@@ -37,7 +37,12 @@ const PayTypeModal: React.FC<TProps> = ({
 
   const onSelectedItem = (id: number) => () => {
     if (id === 100) {
-      navigate('AddCard', {openModal: true});
+      navigate('HomeStack', {
+        screen: 'AddCard',
+        params: {
+          openModal: true,
+        },
+      });
       closeModal();
     } else {
       onSelect(id);

@@ -7,7 +7,6 @@ import {
   LoyaltyTerms,
   MyCards,
   NotificationSettings,
-  Profile,
   ProfileEdit,
   Purchases,
   Settings,
@@ -17,18 +16,16 @@ import {
   PayForm,
 } from '@screens';
 import {connect} from 'react-redux';
-import {TGlobalState, TProfile} from '@types';
+import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
 import {ios} from '@constants';
 import {defaultStackOptions} from '../options';
 
-type TProps = {
-  profile: TProfile;
-};
+type TProps = {};
 
 const ProfileStack = createStackNavigator();
 
-const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
+const ProfileStackNavigator: React.FC<TProps> = ({}) => {
   const {t} = useTranslation();
 
   return (
@@ -36,14 +33,6 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
       screenOptions={{
         ...defaultStackOptions,
       }}>
-      <ProfileStack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          headerTitleAlign: 'center',
-          title: profile?.name ? `${profile?.name} ${profile?.surname}` : '',
-        }}
-      />
       <ProfileStack.Screen
         name="Cars"
         component={Cars}
@@ -151,8 +140,6 @@ const ProfileStackNavigator: React.FC<TProps> = ({profile}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
-  profile: state.profile.data,
-});
+const mapStateToProps = (state: TGlobalState) => ({});
 
 export default connect(mapStateToProps)(ProfileStackNavigator);

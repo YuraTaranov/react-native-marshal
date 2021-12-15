@@ -180,17 +180,19 @@ const InnerPage: React.FC<TProps> = ({
     if (payByBonus) {
       Alert.alert('Покупка за бонус');
     } else if (phone.length > 10) {
-      navigate('PayForm', {
-        phone,
-        fuel_id: selectedPriceId,
-        liters: fuelCounter,
-        rectoken,
+      navigate('HomeStack', {
+        screen: 'PayForm',
+        params: {
+          phone,
+          fuel_id: selectedPriceId,
+          liters: fuelCounter,
+          rectoken,
+        },
       });
     } else {
-      navigate('PayForm', {
-        fuel_id: selectedPriceId,
-        liters: fuelCounter,
-        rectoken,
+      navigate('HomeStack', {
+        screen: 'PayForm',
+        params: {fuel_id: selectedPriceId, liters: fuelCounter, rectoken},
       });
     }
   };

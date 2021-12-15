@@ -1,23 +1,16 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  Bonuses,
-  LoyaltyTerms,
-  InviteFriends,
-  BonusesOnBoarding,
-} from '@screens';
+import {LoyaltyTerms, InviteFriends} from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
 import {defaultStackOptions} from '../options';
 
-type TProps = {
-  bonusesOnBoarding: boolean;
-};
+type TProps = {};
 
 const BonusesStack = createStackNavigator();
 
-const BonusesStackNavigator: React.FC<TProps> = ({bonusesOnBoarding}) => {
+const BonusesStackNavigator: React.FC<TProps> = ({}) => {
   const {t} = useTranslation();
 
   return (
@@ -25,14 +18,6 @@ const BonusesStackNavigator: React.FC<TProps> = ({bonusesOnBoarding}) => {
       screenOptions={{
         ...defaultStackOptions,
       }}>
-      <BonusesStack.Screen
-        name={bonusesOnBoarding ? 'BonusesOnBoarding' : 'Bonuses'}
-        component={bonusesOnBoarding ? BonusesOnBoarding : Bonuses}
-        options={{
-          headerTitleAlign: 'center',
-          title: bonusesOnBoarding ? t('Запросити друзів') : t('Бонуси'),
-        }}
-      />
       <BonusesStack.Screen
         name="LoyaltyTerms"
         component={LoyaltyTerms}
@@ -53,8 +38,6 @@ const BonusesStackNavigator: React.FC<TProps> = ({bonusesOnBoarding}) => {
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({
-  bonusesOnBoarding: state.appGlobalState.bonusesOnBoarding,
-});
+const mapStateToProps = (state: TGlobalState) => ({});
 
 export default connect(mapStateToProps)(BonusesStackNavigator);

@@ -71,7 +71,10 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
   const onPressButton = () => {
     goBack();
   };
-  const goToRegionsPage = () => navigate('RegionsPage');
+  const goToRegionsPage = () =>
+    navigate('HomeStack', {
+      screen: 'RegionsPage',
+    });
   const onChangeSelected = useCallback(
     (title: string) => () => {
       const List: TListItem[] =

@@ -23,7 +23,9 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   const {setOptions} = useNavigation();
 
   const onPressSettings = useCallback(() => {
-    navigate('Settings');
+    navigate('ProfileStack', {
+      screen: 'Settings',
+    });
   }, []);
 
   useEffect(() => {

@@ -113,7 +113,6 @@ export function* loginWithBiometricsAsync(action: any) {
         user_key,
       }),
     );
-    yield put(setLoader(false));
     if (data) {
       yield put(setToken(data.data.bearer_token));
       yield put(setProfile(data.data));
@@ -126,7 +125,16 @@ export function* loginWithBiometricsAsync(action: any) {
       yield put(setFaceIdActiveLocal(false));
     }
   } catch (error) {
+	if (error?.data?.message === 'The given data was invalid.') {
+		yield put(setFaceIdActiveLocal(false));
+		return Alert.alert(
+			'',
+			i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
+		  );
+	} else {
+		errorHandler(error, 'loginWithBiometricsAsync');
+	}
+  } finally {
     yield put(setLoader(false));
-    errorHandler(error, 'loginWithBiometricsAsync');
   }
 }
