@@ -10,7 +10,6 @@ import BonusesStackNavigator from './BonusesStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import StationsStackNavigator from './StationsStackNavigator';
 import PromotionsStackNavigator from './PromotionsStackNavigator';
-import {AddCar, Cars} from '@screens';
 import {defaultStackOptions} from '../options';
 
 type TProps = {
@@ -24,8 +23,7 @@ const RootStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
     <RootStack.Navigator
       headerMode="none"
       screenOptions={{
-        gestureEnabled: false,
-        // ...defaultStackOptions,
+        ...defaultStackOptions,
       }}>
       {appGlobalState.onBoarding ? (
         <RootStack.Screen
@@ -37,28 +35,23 @@ const RootStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
       ) : (
         <>
           <RootStack.Screen name="TabNavigator" component={TabNavigator} />
-          {/* <RootStack.Screen
-            name="Stations"
+          <RootStack.Screen
+            name="StationsStack"
             component={StationsStackNavigator}
           />
           <RootStack.Screen
-            name="Promotions"
+            name="PromotionsStack"
             component={PromotionsStackNavigator}
           />
-          <RootStack.Screen name="Home" component={HomeStackNavigator} />
+          <RootStack.Screen name="HomeStack" component={HomeStackNavigator} />
           <RootStack.Screen
-            name="Cars"
-            component={Cars}
-            options={{
-              headerTitleAlign: 'center',
-              title: 'Авто',
-            }}
+            name="BonusesStack"
+            component={BonusesStackNavigator}
           />
-          <RootStack.Screen name="Bonuses" component={BonusesStackNavigator} />
           <RootStack.Screen
             name="ProfileStack"
             component={ProfileStackNavigator}
-          /> */}
+          />
         </>
       )}
     </RootStack.Navigator>

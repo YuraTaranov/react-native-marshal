@@ -54,7 +54,12 @@ const StationsList: React.FC<TProps> = ({
     if (!id) {
       return;
     }
-    navigate('MarkerDetail', {markerId: id});
+    navigate('StationsStack', {
+      screen: 'MarkerDetail',
+      params: {
+        markerId: id,
+      },
+    });
   };
 
   const getRoute = (id: number): void => {

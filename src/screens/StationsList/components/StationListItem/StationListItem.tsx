@@ -1,6 +1,6 @@
 import React from 'react';
 import {useCallback, useMemo, useTranslation, useState} from '@hooks';
-import {View, Text, Icon, TouchableOpacity} from '@components';
+import {View, Text, Icon, TouchableOpacity, Image} from '@components';
 import {SVG_Icons} from '@assets';
 import styles from './styles';
 import {colors} from '@constants';
@@ -35,10 +35,11 @@ export const StationListItem: React.FC<TProps> = ({
       <View style={styles.container}>
         <View style={styles.leftIconView}>
           <View style={styles.leftIcon}>
-            <SVG_Icons
+            {/* <SVG_Icons
               height={36}
               fill={selected ? colors.green_41BB4E : colors.red_F10000}
-            />
+            /> */}
+            <Image source={{uri: item.image}} style={styles.stationImage} />
           </View>
         </View>
 

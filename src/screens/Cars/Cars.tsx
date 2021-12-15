@@ -26,13 +26,19 @@ const Cars: React.FC<TProps> = ({dispatch, cars}) => {
 
   const onPressCar = useCallback(
     car => () => {
-      navigate('AddCar', {car});
+      navigate('ProfileStack', {
+        screen: 'AddCar',
+        params: {car},
+      });
     },
     [],
   );
 
   const addCar = useCallback(() => {
-    navigate('AddCar');
+    navigate('ProfileStack', {
+      screen: 'AddCar',
+      params: {},
+    });
   }, []);
 
   const renderItem: ({item}: {item: TCar}) => JSX.Element = useCallback(

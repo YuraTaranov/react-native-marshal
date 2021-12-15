@@ -41,10 +41,13 @@ const MyCards: React.FC<TProps> = ({dispatch, creditCardList}) => {
   }, [creditCardList]);
 
   const submit = () => {
-    navigate('PayForm', {
-      verificationCard: true,
-      liters: '',
-      fuel_id: '',
+    navigate('ProfileStack', {
+      screen: 'PayForm',
+      params: {
+        verificationCard: true,
+        liters: '',
+        fuel_id: '',
+      },
     });
   };
 

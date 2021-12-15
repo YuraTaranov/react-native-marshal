@@ -2,6 +2,8 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
 import {httpGet, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
+import { Alert } from '@components';
+import i18next from 'i18next';
 
 const GET_PROMOTION = '[promotion] GET_PROMOTION';
 const SET_PROMOTION = '[promotion] SET_PROMOTION';
@@ -39,10 +41,16 @@ export function* getPromotionAsync(action: any) {
     yield put(setLoader(false));
     if (body.data.data) {
       yield put(setPromotion(body.data.data));
-      navigate('Promotion');
+      navigate('PromotionsStack', {
+		  screen: 'Promotion'
+	  });
     }
   } catch (e) {
-    yield put(setLoader(false));
+	  if (e?.data?.message?.startsWith('No query results for model')) {
+		  return Alert.alert('', i18next.t('Эта акция устарела или временно недоступна'))
+	  }
     errorHandler(e, 'getPromotionAsync');
+  } finally {
+    yield put(setLoader(false));
   }
 }

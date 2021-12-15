@@ -246,7 +246,13 @@ const MapScreen: React.FC<TProps> = ({
         goToNewPosition(data);
         if (data.showDetails) {
           setSelectedMarker(null);
-          navigate('MarkerDetail', {markerId: data.id, isGPS});
+          navigate('StationsStack', {
+            screen: 'MarkerDetail',
+            params: {
+              markerId: data.id,
+              isGPS,
+            },
+          });
         } else {
           setSelectedMarker(data);
         }

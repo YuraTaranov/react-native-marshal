@@ -27,6 +27,10 @@ export default StyleSheet.create({
     borderRadius: 5,
     backgroundColor: colors.gray_E1E1E1,
   },
+  stationImage: {
+	  height: 30,
+	  width: 30,
+  },
   touch: {
     borderRadius: 10,
   },

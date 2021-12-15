@@ -20,7 +20,7 @@ import {connect} from 'react-redux';
 import styles from './styles';
 
 //Type
-import {TGlobalState, TPetrolStation} from '@types';
+import {TFuel, TGlobalState, TPetrolStation} from '@types';
 import {colors} from '@constants';
 // import {Dispatch} from 'redux';
 type TRoute = {
@@ -34,6 +34,7 @@ type TProps = {
   // dispatch: Dispatch;
   petrolStations: Array<TPetrolStation>;
   route: TRoute;
+  fuel: TFuel[];
 };
 //markerId
 
@@ -41,17 +42,26 @@ const MarkerDetailPage: React.FC<TProps> = ({
   // dispatch,
   // route,
   petrolStations,
+  fuel,
 }) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const {params} = useRoute();
   const [showRouteButton, setShowRouteButton] = useState(false);
   const [stationId, setStationId] = useState<number | undefined>(undefined);
-
   // const [stationId, setStationId] = useState<number | null>(
   //   route?.params?.markerId || null,
   // );
   const [stationDetails, setStationDetail] = useState<TPetrolStation | null>();
+
+  const findFuelPrice = useCallback(
+    id => {
+      const find = fuel.find(f => f.id === id);
+      return find ? find.price : 0;
+    },
+    [fuel],
+  );
+
   const setHeader = useCallback(() => {
     if (stationDetails && stationDetails?.name) {
       setOptions({
@@ -69,7 +79,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
   }, [stationId, petrolStations, setHeader]);
 
   useEffect(() => {
-    if (params?.markerId){
+    if (params?.markerId) {
       setStationId(params.markerId);
     }
     if (params?.isGPS) {
@@ -123,7 +133,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
             </View>
             <View style={styles.rightView}>
               <Text style={styles.rightText}>{`${
-                item?.price || ''
+                findFuelPrice(item.id) || ''
               } ₴ / л`}</Text>
             </View>
           </View>
@@ -146,6 +156,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
 
 const mapStateToProps = (state: TGlobalState) => ({
   petrolStations: state.petrolStations,
+  fuel: state.fuel.data,
 });
 
 export default connect(mapStateToProps)(MarkerDetailPage);

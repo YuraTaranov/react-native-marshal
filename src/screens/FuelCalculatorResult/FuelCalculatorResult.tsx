@@ -35,7 +35,10 @@ const FuelCalculatorResult: React.FC<TProps> = ({
     : 0;
 
   const onPressBuyFuel = useCallback(() => {
-    navigate('FuelPurchase', {fuelCountToBuy});
+    navigate('HomeStack', {
+      screen: 'FuelPurchase',
+      params: {fuelCountToBuy},
+    });
   }, [fuelCountToBuy]);
 
   return (

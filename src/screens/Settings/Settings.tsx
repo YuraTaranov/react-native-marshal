@@ -83,19 +83,31 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
       },
       {
         name: t('Сповіщення'),
-        onPress: () => navigate('NotificationSettings'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'NotificationSettings',
+          }),
       },
       {
         name: t('Про додаток'),
-        onPress: () => navigate('AboutApp'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'AboutApp',
+          }),
       },
       {
         name: t('Умови лояльності'),
-        onPress: () => navigate('LoyaltyTerms'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'LoyaltyTerms',
+          }),
       },
       {
         name: t('Умови використання'),
-        onPress: () => navigate('UseTerms'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'UseTerms',
+          }),
       },
     ];
   }, [t]);
