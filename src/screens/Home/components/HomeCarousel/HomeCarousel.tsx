@@ -21,7 +21,8 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   useEffect(() => {
     // чтобы избежать бага с рендером слайдов после логаут-логина
     setTimeout(() => {
-      setData(promotions?.length ? promotions.slice(0, 5) : []);
+      //   setData(promotions?.length ? promotions.reverse().slice(0, 5) : []);
+      setData(promotions?.length ? promotions : []);
     }, 10);
   }, [promotions]);
 

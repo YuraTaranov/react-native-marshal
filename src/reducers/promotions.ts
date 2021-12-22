@@ -69,7 +69,7 @@ export function* getPromotionsAsync(action: any) {
       yield put(setPromotions(body.data.data));
     } else {
       if (body.data.data.length) {
-        yield put(setPromotions([...body.data.data, ...promotions]));
+        yield put(setPromotions([...promotions, ...body.data.data]));
       }
     }
     yield put(setLazyLoading(false));
