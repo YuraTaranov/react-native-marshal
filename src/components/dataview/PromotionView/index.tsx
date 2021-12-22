@@ -29,8 +29,12 @@ const PromotionView: React.FC<TProps> = ({
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
 
   const promoEndDate = useMemo(() => {
-    return `${t('Акція до')} ${moment(item.end).format('LL').slice(0, -2)}`;
-  }, [item.end]);
+    return `${item.type === 'action' ? t('Акція до') : t('Знижка до')} ${moment(
+      item.end,
+    )
+      .format('LL')
+      .slice(0, -2)}`;
+  }, [item.end, item.type]);
 
   const prices = useMemo(() => {
     return {
@@ -86,7 +90,7 @@ const PromotionView: React.FC<TProps> = ({
       />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
-        {item.type === 'action' ? (
+        {item.type !== 'new' ? (
           <Text style={styles.date}>{promoEndDate}</Text>
         ) : null}
         <Text style={titleStyles} numberOfLines={2} ellipsizeMode="tail">

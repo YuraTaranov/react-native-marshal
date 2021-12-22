@@ -29,10 +29,10 @@ const Promotion: React.FC<TProps> = ({promotion, language}) => {
   }, [promotion.type, t]);
 
   const date = useMemo(() => {
-    return `${t('Акція до')} ${moment(promotion?.end)
-      .format('LL')
-      .slice(0, -2)}`;
-  }, [promotion.end]);
+    return `${
+      promotion?.type === 'action' ? t('Акція до') : t('Знижка до')
+    } ${moment(promotion?.end).format('LL').slice(0, -2)}`;
+  }, [promotion.end, promotion?.type]);
 
   return (
     <View style={styles.container}>
@@ -40,7 +40,7 @@ const Promotion: React.FC<TProps> = ({promotion, language}) => {
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.title}>{promotion?.title}</Text>
         <Text style={styles.description}>{promotion?.text}</Text>
-        {promotion.type === 'action' ? (
+        {promotion.type !== 'new' ? (
           <Text style={styles.date}>{date}</Text>
         ) : null}
       </ScrollView>

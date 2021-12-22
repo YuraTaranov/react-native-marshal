@@ -55,13 +55,13 @@ const NotificationsManager: React.FC<TProps> = ({
             PushNotification.removeAllDeliveredNotifications();
           }
         });
-        if (item.type === 'action') {
-          dispatch(getPromotion(item.data_id));
-        } else {
-          navigate('HomeStack', {
-            screen: 'Promotions',
-          });
-        }
+        dispatch(getPromotion(item.data_id));
+        // if (item.type === 'action') {
+        //   dispatch(getPromotion(item.data_id));
+        // } else {
+        //   navigate('Promotions');
+        // }
+
         // проверить
         // if (ios && badge) {
         //   PushNotificationIOS.setApplicationIconBadgeNumber(Number(badge));
@@ -108,7 +108,7 @@ const NotificationsManager: React.FC<TProps> = ({
             ),
           );
           handleNotification(modifiedNotification, remoteMessage.badge);
-        }, 1000);
+        }, 200);
       },
     );
 

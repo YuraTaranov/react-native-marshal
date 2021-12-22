@@ -114,6 +114,7 @@ const Home: React.FC<TProps> = ({
 
   const refreshPromotions = useCallback(() => {
     dispatch(getPromotionsMain());
+    dispatch(getProfile());
   }, []);
 
   const refreshControl = useMemo(() => {
