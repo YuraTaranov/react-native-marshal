@@ -12,6 +12,7 @@ import {Dispatch} from 'redux';
 import {getPromotion} from '@reducers/promotion';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {getPromotions} from '@reducers/promotions';
+import {ios} from '@constants';
 
 type TProps = {
   dispatch: Dispatch;
@@ -33,28 +34,30 @@ const NotificationsManager: React.FC<TProps> = ({
   const handleNotification: (item: TNotification, badge: number) => null =
     useCallback(
       (item, badge) => {
-        PushNotification.getDeliveredNotifications(data => {
-          if (data.length) {
-            const modifiedNotifications = data.map(item => {
-              return {
-                id: item.userInfo.id,
-                title: item.userInfo.title,
-                message: item.userInfo.message,
-                body: item.userInfo.body,
-                type: item.userInfo.type,
-                date: item.userInfo.date,
-                data_id: item.userInfo.data_id,
-                isRead: false,
-              };
-            });
-            dispatch(
-              setNotifications(
-                [...modifiedNotifications, ...notifications].slice(0, 40),
-              ),
-            );
-            PushNotification.removeAllDeliveredNotifications();
-          }
-        });
+        ios &&
+          PushNotification.getDeliveredNotifications(data => {
+            if (data.length) {
+              const modifiedNotifications = data.map(item => {
+                return {
+                  id: item.userInfo.id,
+                  title: item.userInfo.title,
+                  message: item.userInfo.message,
+                  body: item.userInfo.body,
+                  type: item.userInfo.type,
+                  date: item.userInfo.date,
+                  data_id: item.userInfo.data_id,
+                  isRead: false,
+                };
+              });
+              dispatch(
+                setNotifications(
+                  [...modifiedNotifications, ...notifications].slice(0, 40),
+                ),
+              );
+              PushNotification.removeAllDeliveredNotifications();
+            }
+          });
+
         dispatch(getPromotion(item.data_id));
         // if (item.type === 'action') {
         //   dispatch(getPromotion(item.data_id));
