@@ -59,7 +59,7 @@ const Promotions: React.FC<TProps> = ({
     dispatch(setRefreshing(true));
     setPage(1);
     dispatch(getPromotions({page: 1}));
-  }, [page]);
+  }, []);
 
   const renderItem: ({item}: {item: TPromotion}) => JSX.Element = useCallback(
     ({item}) => (

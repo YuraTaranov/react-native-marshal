@@ -134,11 +134,13 @@ const Login: React.FC<TProps> = ({
               value={phone}
               mask={'[00] [000] [00] [00]'}
               onChangeText={changeText}
+              editable={!loading}
             />
             {phone.length ? (
               <TouchableOpacity
                 style={styles.closeBtn}
-                onPress={clearPhoneNumber}>
+                onPress={clearPhoneNumber}
+                disabled={loading}>
                 <Icon name={'Union'} color={colors.black_000000} size={14} />
               </TouchableOpacity>
             ) : null}

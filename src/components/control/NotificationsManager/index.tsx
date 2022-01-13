@@ -80,7 +80,7 @@ const NotificationsManager: React.FC<TProps> = ({
       .onMessage(async (remoteMessage: any) => {
         console.log('Foreground push data', remoteMessage.data);
         dispatch(getPromotionsMain());
-        dispatch(getPromotions(1));
+        dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: false,
@@ -99,7 +99,7 @@ const NotificationsManager: React.FC<TProps> = ({
       async (remoteMessage: any) => {
         console.log('Trey push data', remoteMessage.data);
         dispatch(getPromotionsMain());
-        dispatch(getPromotions(1));
+        dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: true,
