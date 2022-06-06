@@ -119,13 +119,13 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
     if (filters.regions.length > 3) {
       return `${filters.regions[0]}, ${filters.regions[1]} ${t(
         'and_further',
-      )} ${filters.regions.length - 2}...}`;
+      )} ${filters.regions.length - 2}`;
     } else if (filters.regions.length > 0) {
       return filters.regions.join(', ');
     } else {
       return '';
     }
-  }, [filters]);
+  }, [filters, t]);
 
   useEffect(() => {
     setOptions({

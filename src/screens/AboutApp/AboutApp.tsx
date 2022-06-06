@@ -37,7 +37,7 @@ const AboutApp: React.FC<TProps> = ({dispatch, settings}) => {
         },
         {text: t('Відміна'), onPress: () => {}, style: 'destructive'},
       ]);
-  }, [isNeedUpdate]);
+  }, [isNeedUpdate, t]);
 
   const data = useMemo(() => {
     return settings.find(item => item.type === 'about_the_application');

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors, fonts} from '@constants';
+import {colors, fonts, ios} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -29,16 +29,15 @@ export default StyleSheet.create({
     color: colors.gray_F3F5FA,
   },
   title: {
-    fontSize: 24,
+    fontSize: ios ? 22 : 18,
     color: colors.white_FFFFFF,
     fontFamily: fonts.interSemiBold_600,
     marginTop: 16,
     width: 185,
   },
   description: {
-    fontSize: 16,
+    fontSize: ios ? 16 : 14,
     color: colors.white_FFFFFF,
-    marginTop: 8,
     width: 170,
   },
   priceContainer: {

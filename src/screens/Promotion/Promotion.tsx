@@ -32,7 +32,7 @@ const Promotion: React.FC<TProps> = ({promotion, language}) => {
     return `${
       promotion?.type === 'action' ? t('Акція до') : t('Знижка до')
     } ${moment(promotion?.end).format('LL').slice(0, -2)}`;
-  }, [promotion.end, promotion?.type]);
+  }, [promotion.end, promotion?.type, t]);
 
   return (
     <View style={styles.container}>

@@ -36,7 +36,7 @@ const InviteFriends: React.FC<TProps> = ({referralLink}) => {
         Alert.alert(error.message);
       }
     }
-  }, []);
+  }, [t]);
 
   const onPressCopy = useCallback(() => {
     if (referralLink) {

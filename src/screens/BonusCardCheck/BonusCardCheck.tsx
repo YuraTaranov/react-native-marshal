@@ -20,11 +20,16 @@ import {
   QRCodeScanner,
   Image,
   UsualButton,
+  request,
+  PERMISSIONS,
+  PermissionsAndroid,
+  OpenAppSettings,
+  Alert,
 } from '@components';
 import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {colors, hitSlop, urls} from '@constants';
+import {colors, hitSlop, ios, urls} from '@constants';
 import {assets} from '@assets';
 import {httpPost, errorHandler, navigate} from '@services';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
@@ -54,11 +59,60 @@ const BonusCardCheck: React.FC<TProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [isCardNumberReadByQR, setIsCardNumberReadByQR] =
     useState<boolean>(false);
+  const [permissionsGranted, setPermissionsGranted] = useState<boolean>(false);
 
   useEffect(() => {
     setOptions({
       headerRight: () => <QuestionButton />,
     });
+  }, []);
+
+  useEffect(() => {
+    isModalVisible && checkPermissions();
+  }, [isModalVisible]);
+
+  const openSettings = useCallback(() => {
+    Alert.alert(
+      '',
+      t(
+        'Додаток не може відкрити камеру, оскільки доступ заборонено. Ви хочете змінити дозволи додатку в налаштуваннях пристрою?',
+      ),
+      [
+        {
+          text: t('Так'),
+          onPress: () => {
+            OpenAppSettings.open();
+            setIsModalVisible(false);
+          },
+          style: 'default',
+        },
+        {
+          text: t('Ні'),
+          onPress: () => {
+            setIsModalVisible(false);
+          },
+          style: 'cancel',
+        },
+      ],
+    );
+  }, [t]);
+
+  const checkPermissions = useCallback(async () => {
+    if (ios) {
+      const iosCameraAvailable = await request(PERMISSIONS.IOS.CAMERA);
+      setPermissionsGranted(iosCameraAvailable === 'granted');
+      if (iosCameraAvailable !== 'granted') {
+        openSettings();
+      }
+    } else {
+      const androidCameraAvailable = await PermissionsAndroid.request(
+        PERMISSIONS.ANDROID.CAMERA,
+      );
+      setPermissionsGranted(androidCameraAvailable === 'granted');
+      if (androidCameraAvailable !== 'granted') {
+        openSettings();
+      }
+    }
   }, []);
 
   const onChangeCardNumber = useCallback(text => {
@@ -186,11 +240,13 @@ const BonusCardCheck: React.FC<TProps> = ({
         coverScreen={true}
         style={styles.modalContainer}>
         <View style={styles.modalContentContainer}>
-          <QRCodeScanner
-            onRead={onReadQR}
-            cameraStyle={styles.absolute}
-            containerStyle={styles.absolute}
-          />
+          {permissionsGranted ? (
+            <QRCodeScanner
+              onRead={onReadQR}
+              cameraStyle={styles.absolute}
+              containerStyle={styles.absolute}
+            />
+          ) : null}
           <View style={styles.modalHeader}>
             <Text style={styles.modalHeaderText}>
               {t('Сканування штрих-коду картки')}

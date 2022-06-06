@@ -71,9 +71,10 @@ const FuelCalculatorResult: React.FC<TProps> = ({
           <RouteItem key={r.summary} fuelCouner={+fuelConsumption} data={r} />
         ))}
       </ScrollView>
-      <View style={styles.buttonContainer}>
+      {/* TODO: buy fuel */}
+      {/* <View style={styles.buttonContainer}>
         <UsualButton title={t('BuyFuel')} onPress={onPressBuyFuel} />
-      </View>
+      </View> */}
     </View>
   );
 };

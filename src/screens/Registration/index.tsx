@@ -1,8 +1,7 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {useNavigation, useEffect} from '@hooks';
-import {QuestionButton, ProfileUpdate} from '@components';
+import {QuestionButton, ProfileUpdate, SafeAreaView} from '@components';
 import styles from './styles';
 
 type TProps = {};

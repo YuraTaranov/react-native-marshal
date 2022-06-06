@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useCallback} from 'react';
-import {useEffect, useState, useRef, useMemo} from '@hooks';
+import {useEffect, useState, useRef} from '@hooks';
 import {
   Geolocation,
   MapView,

@@ -6,6 +6,7 @@ import {
   FuelPurchase,
   PayForm,
   Promotion,
+  RegionsPage,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
@@ -61,6 +62,13 @@ const HomeStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('PayForm'),
+        }}
+      />
+      <HomeStack.Screen
+        name="RegionsPage"
+        component={RegionsPage}
+        options={{
+          headerTitleAlign: 'center',
         }}
       />
     </HomeStack.Navigator>

@@ -3,12 +3,14 @@ import {useCallback, useMemo, useTranslation} from '@hooks';
 import {View, TouchableOpacity, Text} from '@components';
 import styles from './styles';
 import {hitSlop} from '@constants';
+import {ViewStyle} from 'react-native';
 
 type TProps = {
   text: string;
   active: boolean;
   onChange: (value: any) => void;
   type: number;
+  containerStyles?: ViewStyle;
 };
 
 const RadioButtonCustom: React.FC<TProps> = ({
@@ -16,6 +18,7 @@ const RadioButtonCustom: React.FC<TProps> = ({
   type,
   active,
   onChange,
+  containerStyles,
 }) => {
   const {t} = useTranslation();
 
@@ -32,11 +35,11 @@ const RadioButtonCustom: React.FC<TProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.radioContainer}
+      style={[styles.radioContainer, containerStyles]}
       onPress={onPress}
       hitSlop={hitSlop}>
       <View style={radioStyle} />
-      <Text style={styles.radioText}>{t(text)}</Text>
+      <Text style={styles.radioText}>{text}</Text>
     </TouchableOpacity>
   );
 };

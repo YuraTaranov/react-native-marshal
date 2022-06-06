@@ -44,24 +44,30 @@ const Purchases: React.FC<TProps> = ({
     dispatch(getPurchases({page: 1}));
   }, []);
 
-  const fuelVolume = useCallback(volume => {
-    return `${volume} ${declension(Number(volume), [
-      t('літр'),
-      t('літра'),
-      t('літрів'),
-    ])}`;
-  }, []);
+  const fuelVolume = useCallback(
+    volume => {
+      return `${volume} ${declension(Number(volume), [
+        t('літр'),
+        t('літра'),
+        t('літрів'),
+      ])}`;
+    },
+    [t],
+  );
 
   const parseDate = useCallback(date => {
     return moment(date).format('DD.MM.YYYY hh:mm');
   }, []);
 
-  const parseFuel = useCallback(fuelId => {
-    if (fuelId === 1) return t('ДТ');
-    if (fuelId === 2) return 'А95';
-    if (fuelId === 3) return 'А98';
-    return 'А98+';
-  }, []);
+  const parseFuel = useCallback(
+    fuelId => {
+      if (fuelId === 1) return t('ДТ');
+      if (fuelId === 2) return 'А95';
+      if (fuelId === 3) return 'А98';
+      return 'А98+';
+    },
+    [t],
+  );
 
   const renderItem: ({item}: {item: TPurchase}) => JSX.Element = useCallback(
     ({item}) => (
@@ -78,7 +84,7 @@ const Purchases: React.FC<TProps> = ({
         </View>
       </View>
     ),
-    [],
+    [t],
   );
 
   const keyExtractor: (item: TPurchase) => string = useCallback(

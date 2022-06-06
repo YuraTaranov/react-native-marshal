@@ -85,21 +85,24 @@ const Autocomplete: React.FC<TProps> = ({
     query.language = lang;
   }, [lang]);
 
-  const getMyLocationAddress = useCallback((lat, lng) => {
-    Geocoder.from(lat, lng)
-      .then(json => {
-        const address = json?.results[0]?.formatted_address;
-        if (address) {
-          type === 'arrival'
-            ? dispatch(setArrivalPoint(address))
-            : dispatch(setDeparturePoint(address));
-          setMyLocationLoading(false);
-        } else {
-          Alert.alert('', t('Неможливо визначити ваше місце розташування'));
-        }
-      })
-      .catch(error => console.warn(error));
-  }, []);
+  const getMyLocationAddress = useCallback(
+    (lat, lng) => {
+      Geocoder.from(lat, lng)
+        .then(json => {
+          const address = json?.results[0]?.formatted_address;
+          if (address) {
+            type === 'arrival'
+              ? dispatch(setArrivalPoint(address))
+              : dispatch(setDeparturePoint(address));
+            setMyLocationLoading(false);
+          } else {
+            Alert.alert('', t('Неможливо визначити ваше місце розташування'));
+          }
+        })
+        .catch(error => console.warn(error));
+    },
+    [t],
+  );
 
   const getCurrentLocation = () => {
     setMyLocationLoading(true);

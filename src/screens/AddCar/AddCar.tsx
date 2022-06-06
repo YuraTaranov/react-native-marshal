@@ -197,7 +197,7 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
       {car.brand.name && car.model.name && car.year.name && car.tank.name ? (
         <View style={styles.buttonContainer}>
           <UsualButton
-            title={t('Зберегти')}
+            title={carToEdit ? t('Зберегти зміни') : t('Зберегти')}
             onPress={onPressSaveCar}
             disabled={carToEdit && isFieldsPristine}
           />

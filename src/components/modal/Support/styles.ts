@@ -36,7 +36,7 @@ export default StyleSheet.create({
   },
   phone: {
     color: colors.green_007E26,
-    fontSize: 32,
+    fontSize: 28,
     fontFamily: fonts.interSemiBold_600,
     marginTop: 16,
   },

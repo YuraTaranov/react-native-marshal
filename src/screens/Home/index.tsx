@@ -16,6 +16,7 @@ import {
   Icon,
   NotificationsManager,
   RefreshControl,
+  Alert,
 } from '@components';
 import styles from './styles';
 import {Dispatch} from 'redux';
@@ -56,14 +57,6 @@ const Home: React.FC<TProps> = ({
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
 
-  const openCardModal = useCallback(() => {
-    setCardModalVisible(true);
-  }, []);
-
-  const closeCardModal = useCallback(() => {
-    setCardModalVisible(false);
-  }, []);
-
   useEffect(() => {
     setOptions({
       headerLeft: () => <QuestionButton />,
@@ -84,13 +77,27 @@ const Home: React.FC<TProps> = ({
     dispatch(getPromotionsMain());
     dispatch(getFuel());
     dispatch(getPromotions({page: 1}));
-    dispatch(getCreditCards());
+    // dispatch(getCreditCards()); // TODO: buy fuel
   }, [lang]);
 
   useEffect(() => {
     setTimeout(() => {
       dispatch(setBioTurnOffAfterLogout(false));
     }, 2000);
+  }, []);
+
+  useEffect(() => {
+    if (needDisableBio) {
+      turnOffBio();
+    }
+  }, [needDisableBio]);
+
+  const openCardModal = useCallback(() => {
+    setCardModalVisible(true);
+  }, []);
+
+  const closeCardModal = useCallback(() => {
+    setCardModalVisible(false);
   }, []);
 
   const turnOffBio = useCallback(async () => {
@@ -106,11 +113,21 @@ const Home: React.FC<TProps> = ({
     }
   }, []);
 
-  useEffect(() => {
-    if (needDisableBio) {
-      turnOffBio();
-    }
-  }, [needDisableBio]);
+  const navigateToFuelCalculator = useCallback(() => {
+    navigate('HomeStack', {
+      screen: 'FuelCalculator',
+    });
+  }, []);
+
+  const navigateToFuelPurchase = useCallback(() => {
+    // navigate('HomeStack', {
+    //   screen: 'FuelPurchase',
+    //   params: {},
+    // });
+    // Alert.alert('', t(''))
+    // TODO: buy fuel
+    Alert.alert('', 'Coming soon...');
+  }, [t]);
 
   const refreshPromotions = useCallback(() => {
     dispatch(getPromotionsMain());
@@ -137,11 +154,7 @@ const Home: React.FC<TProps> = ({
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.buttonContainerCalc}
-            onPress={() =>
-              navigate('HomeStack', {
-                screen: 'FuelCalculator',
-              })
-            }>
+            onPress={navigateToFuelCalculator}>
             <Icon
               size={24}
               name="calculator-duotone"
@@ -151,12 +164,7 @@ const Home: React.FC<TProps> = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonContainerFuel}
-            onPress={() =>
-              navigate('HomeStack', {
-                screen: 'FuelPurchase',
-                params: {},
-              })
-            }>
+            onPress={navigateToFuelPurchase}>
             <Icon size={24} name="gas" color={colors.green_009F30} />
             <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
           </TouchableOpacity>

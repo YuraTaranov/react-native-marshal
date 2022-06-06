@@ -7,6 +7,7 @@ import {
   Icon,
   TouchableOpacity,
   ActivityIndicator,
+  RadioButtonCustom,
 } from '@components';
 import styles from './styles';
 import {colors, hitSlop} from '@constants';
@@ -102,7 +103,7 @@ const AddCarModal: React.FC<TProps> = ({
         };
       case 'year':
         return {
-          title: t('Рік'),
+          title: `${t('Рік')}:`,
           state: years,
           onPress: (item: TCarProp) => () => {
             setCar({
@@ -123,17 +124,39 @@ const AddCarModal: React.FC<TProps> = ({
           },
         };
     }
-  }, [modalType, brands, models, years, tank, car]);
+  }, [modalType, brands, models, years, tank, car, t]);
+
+  const isRadioActive = useCallback(
+    (item: TCarProp) => {
+      if (modalType === 'brand') {
+        return item.id === car.brand.id;
+      }
+      if (modalType === 'model') {
+        return item.id === car.model.id;
+      }
+      if (modalType === 'year') {
+        return item.id === car.year.id;
+      }
+      return false;
+    },
+    [modalType, car],
+  );
 
   const renderItem: ({item}: {item: TCarProp}) => JSX.Element = useCallback(
     ({item}) => (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={modalTypeData.onPress(item)}>
-        <Text style={styles.name}>{item.name}</Text>
+        <RadioButtonCustom
+          text={item.name}
+          active={isRadioActive(item)}
+          onChange={modalTypeData.onPress(item)}
+          type={2}
+          containerStyles={{marginBottom: 0}}
+        />
       </TouchableOpacity>
     ),
-    [modalTypeData],
+    [modalTypeData, modalType, car],
   );
 
   const keyExtractor: (item: TCarProp) => string = useCallback(

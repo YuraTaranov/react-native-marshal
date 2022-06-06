@@ -85,7 +85,7 @@ const Promotions: React.FC<TProps> = ({
     return (
       <Text style={styles.emptyTitle}>{t(`Нові акції скоро з'являться!`)}</Text>
     );
-  }, []);
+  }, [t]);
 
   return (
     <View style={styles.container}>

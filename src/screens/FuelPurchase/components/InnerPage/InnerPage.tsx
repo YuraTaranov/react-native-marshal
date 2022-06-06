@@ -202,7 +202,8 @@ const InnerPage: React.FC<TProps> = ({
       +fuelCounter > 0 &&
       fullCostOfFuel > 0 &&
       paySystems.some(item => !!item?.selected) &&
-      (!index || !!phoneNumber)
+      (!index || !!phoneNumber) &&
+      +fuelCounter > 9
     ) {
       setIsDisabledButton(false);
     } else {

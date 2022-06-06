@@ -2,7 +2,8 @@ import {Alert} from 'react-native';
 import i18next from 'i18next';
 
 export const errorHandler = (error: any, method?: string) => {
-  console.log('REQUEST ERROR', method || 'Pass the method', error);
+	// Alert.alert('', JSON.stringify(error)) // FIXME: no internet connection
+	__DEV__ && console.log('REQUEST ERROR', method || 'Pass the method', error);
   // const message = error.data?.message || '';
 
   if (error.status === 418) {

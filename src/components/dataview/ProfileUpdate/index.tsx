@@ -17,7 +17,7 @@ import styles from './styles';
 import moment from 'moment';
 import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
-import {urls, ios, colors, darkMode} from '@constants';
+import {urls, ios, colors} from '@constants';
 import {connect} from 'react-redux';
 import {TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
@@ -55,7 +55,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   );
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
     type:
-      profile?.gender !== undefined
+      profile?.gender !== null
         ? profile?.gender === 'female'
           ? 1
           : profile?.gender === 'male'
@@ -63,7 +63,7 @@ const ProfileUpdate: React.FC<TProps> = ({
           : 3
         : 0,
     name:
-      profile?.gender !== undefined
+      profile?.gender !== null
         ? profile?.gender === 'male'
           ? t('Чоловіча')
           : profile?.gender === 'female'
@@ -209,7 +209,9 @@ const ProfileUpdate: React.FC<TProps> = ({
     if (isRegistration) {
       return (
         !nameValue ||
+        !nameValue.trim() ||
         !surnameValue ||
+        !surnameValue.trim() ||
         birthdayValue === maximumDate ||
         !genderValue.name ||
         !consentPersonalData ||
@@ -220,6 +222,8 @@ const ProfileUpdate: React.FC<TProps> = ({
       return (
         !nameValue ||
         !surnameValue ||
+        !nameValue.trim() ||
+        !surnameValue.trim() ||
         birthdayValue === maximumDate ||
         !genderValue.name ||
         // phoneValue.length < 9 ||
@@ -243,7 +247,7 @@ const ProfileUpdate: React.FC<TProps> = ({
         {t('Даю згоду на обробку моїх персональних даних')}
       </Text>
     );
-  }, []);
+  }, [t]);
 
   const loyaltyDataText = useMemo(() => {
     return (
@@ -254,7 +258,7 @@ const ProfileUpdate: React.FC<TProps> = ({
         </Text>
       </Text>
     );
-  }, []);
+  }, [t]);
 
   return (
     <>
@@ -269,6 +273,7 @@ const ProfileUpdate: React.FC<TProps> = ({
             returnKeyType={'default'}
             value={nameValue}
             onChangeText={setNameValue}
+            maxLength={25}
             lineWidth={0.5}
             label={t('textInput.name')}
           />
@@ -276,6 +281,7 @@ const ProfileUpdate: React.FC<TProps> = ({
             returnKeyType={'default'}
             value={surnameValue}
             lineWidth={0.5}
+            maxLength={30}
             onChangeText={setSurnameValue}
             label={t('textInput.surname')}
           />
@@ -352,7 +358,11 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
         />
       ) : null}
-      <View style={styles.buttonContainer}>
+      <View
+        style={{
+          ...styles.buttonContainer,
+          marginBottom: !isRegistration ? 24 : 0,
+        }}>
         <UsualButton
           title={
             isRegistration ? t('button.title.continue') : t('Прийняти зміни')

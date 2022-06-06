@@ -34,7 +34,7 @@ const PromotionView: React.FC<TProps> = ({
     )
       .format('LL')
       .slice(0, -2)}`;
-  }, [item.end, item.type]);
+  }, [item.end, item.type, t]);
 
   const prices = useMemo(() => {
     return {
@@ -53,7 +53,7 @@ const PromotionView: React.FC<TProps> = ({
     if (item.type === 'action') {
       return [styles.title, {fontSize: 16, fontFamily: fonts.interRegular_400}];
     } else if (item.type === 'discount') {
-      return [styles.title, {marginTop: 40}];
+      return [styles.title, {marginTop: 0}];
     } else {
       return styles.title;
     }
@@ -83,11 +83,7 @@ const PromotionView: React.FC<TProps> = ({
       onPress={onPress && onPress(item.id)}
       activeOpacity={0.9}
       disabled={disabled}>
-      <Image
-        source={{uri: item?.image}}
-        style={borderRadiusStyles.image}
-        fallback={true}
-      />
+      <Image source={{uri: item?.image}} style={borderRadiusStyles.image} />
       <Image source={background} style={borderRadiusStyles.background} />
       <View style={styles.contentContainer}>
         {item.type !== 'new' ? (

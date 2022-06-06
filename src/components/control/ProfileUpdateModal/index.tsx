@@ -31,7 +31,7 @@ const CheckBoxCustom: React.FC<TProps> = ({
   const isModalTypeDate = modalType === 'date';
 
   const modalStyles = useMemo(() => {
-    return {...styles.modalContainer, height: isModalTypeDate ? 400 : 250};
+    return {...styles.modalContainer, height: isModalTypeDate ? 450 : 250};
   }, [isModalTypeDate]);
 
   const modalContent = useMemo(() => {
@@ -77,7 +77,7 @@ const CheckBoxCustom: React.FC<TProps> = ({
         </View>
       );
     }
-  }, [modalType, birthdayValue, appGlobalState.lang, genderValue.type]);
+  }, [modalType, birthdayValue, appGlobalState.lang, genderValue.type, t]);
 
   return (
     <Modal

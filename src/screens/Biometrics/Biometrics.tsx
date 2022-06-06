@@ -100,7 +100,7 @@ const Biometrics: React.FC<TProps> = ({dispatch, biometricsType}) => {
       image: assets.BIO_FACE,
       button: t('Увімкнути вхід з Face ID'),
     };
-  }, [biometricsType]);
+  }, [biometricsType, t]);
 
   return (
     <View style={styles.container}>

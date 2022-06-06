@@ -32,7 +32,6 @@ export default StyleSheet.create({
     position: 'absolute',
   },
   usualButton: {
-    marginBottom: 16,
   },
   checkboxText: {
     width: width - 65,

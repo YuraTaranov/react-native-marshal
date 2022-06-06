@@ -43,7 +43,10 @@ const sendRequest = async ({
     const response = await instance(OPTIONS);
     return formatResponse(response);
   } catch (error) {
-    console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // FIXME: TEMP
+    __DEV__ && console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // FIXME: TEMP
+	// Alert.alert('', `${JSON.stringify(error)}`) // FIXME: no internet connection
+	// if (error.message === 'Network Error') Alert.alert('No internet connection')
+
     if (error.response?.status === 408 || error.code === 'ECONNABORTED') {
       throw formatResponse({
         status: 408,

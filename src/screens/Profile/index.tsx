@@ -60,14 +60,15 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
             screen: 'Notifications',
           }),
       },
-      {
-        icon: 'wallet',
-        name: t('Мої картки'),
-        onPress: () =>
-          navigate('ProfileStack', {
-            screen: 'MyCards',
-          }),
-      },
+      //   TODO: my cards (buy fuel)
+      //   {
+      //     icon: 'wallet',
+      //     name: t('Мої картки'),
+      //     onPress: () =>
+      //       navigate('ProfileStack', {
+      //         screen: 'MyCards',
+      //       }),
+      //   },
       {
         icon: 'shopping',
         name: t('Мої покупки'),
@@ -108,13 +109,12 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
 
   const newNotificationsLength = useMemo(() => {
     return unreadNotificationsCount
-      ? `${unreadNotificationsCount} ${declension(Number(2), [
-          'сповіщення',
-          'сповіщення',
-          'сповіщень',
-        ])}`
+      ? `${unreadNotificationsCount} ${declension(
+          Number(unreadNotificationsCount),
+          [t('непрочитане'), t('непрочитаних'), t('непрочитаних')],
+        )}`
       : null;
-  }, [unreadNotificationsCount]);
+  }, [unreadNotificationsCount, t]);
 
   const onPressSupport = useCallback(() => {
     dispatch(setSupport(true));

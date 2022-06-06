@@ -114,7 +114,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
 
   const langValue = useMemo(() => {
     return language === 'uk' ? t('Українська') : t('Російська');
-  }, [language]);
+  }, [language, t]);
 
   const renderItem: ({item}: {item: TMenuItem}) => JSX.Element = useCallback(
     ({item}) => (

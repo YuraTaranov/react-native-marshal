@@ -1,11 +1,11 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {Text, Icon, SafeAreaView} from '@components';
+import {TouchableOpacity, View} from 'react-native';
+import {Text, Icon} from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {colors} from '@constants';
-import {i18n} from '@services';
+import {useTranslation} from '@hooks';
 
 type TProps = {
   navigation: any;
@@ -20,8 +20,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
     [],
   );
 
+  const {t} = useTranslation();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         disabled={generalIndex === 0}
         style={styles.eachScreen}
@@ -32,7 +34,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 0 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 0 && styles.textActive]}>
-          {i18n.t('Наші АЗК')}
+          {t('Наші АЗК')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -45,7 +47,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 1 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 1 && styles.textActive]}>
-          {i18n.t('Акції')}
+          {t('Акції')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -58,7 +60,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 2 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 2 && styles.textActive]}>
-          {i18n.t('Головна')}
+          {t('Головна')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -71,7 +73,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 3 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 3 && styles.textActive]}>
-          {i18n.t('Бонуси')}
+          {t('Бонуси')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -84,10 +86,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
           color={generalIndex === 4 ? colors.green_00AE36 : colors.gray_2D2D2D}
         />
         <Text style={[styles.text, generalIndex === 4 && styles.textActive]}>
-          {i18n.t('Профіль')}
+          {t('Профіль')}
         </Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

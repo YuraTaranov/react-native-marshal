@@ -53,7 +53,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
 
   const onPressNotification = useCallback(
     item => () => {
-      if (item.type === 'action') dispatch(getPromotion(item.data_id));
+      if (item.type !== 'text') dispatch(getPromotion(item.data_id));
     },
     [],
   );
@@ -81,7 +81,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
             </Text>
             <Text style={styles.date}>{getDate(item.date)}</Text>
           </View>
-          {item.type === 'action' ? (
+          {item.type !== 'text' ? (
             <Icon size={24} name="right" color={colors.black_000000} />
           ) : null}
         </TouchableOpacity>
@@ -98,10 +98,10 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     return (
       <View style={styles.emptyContainer}>
         <Image source={assets.NO_NOTIFICATIONS} style={styles.emptyImage} />
-        <Text style={styles.emptyTitle}>{t('Нових сповіщень немає')}</Text>
+        <Text style={styles.emptyTitle}>{t('Сповіщень немає')}</Text>
       </View>
     );
-  }, []);
+  }, [t]);
 
   return (
     <View style={styles.container}>

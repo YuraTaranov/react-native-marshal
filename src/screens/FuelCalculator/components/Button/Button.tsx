@@ -28,19 +28,19 @@ export const CalculateButton: React.FunctionComponent<TProps> = ({
     return {marginBottom: offset.value};
   });
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardStatus(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardStatus(false);
-    });
+  //   useEffect(() => {
+  //     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+  //       setKeyboardStatus(true);
+  //     });
+  //     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+  //       setKeyboardStatus(false);
+  //     });
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+  //     return () => {
+  //       showSubscription.remove();
+  //       hideSubscription.remove();
+  //     };
+  //   }, []);
 
   const Calculate = () => {
     onPress(true);
