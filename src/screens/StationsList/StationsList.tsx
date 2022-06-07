@@ -6,7 +6,7 @@ import {View, ScrollView, Geolocation, Linking} from '@components';
 import {Search, StationListItem, NothingFoundItem} from './components';
 import {connect} from 'react-redux';
 import {navigate} from '@services';
-import {getUrlForRoute, animation} from '@helpers';
+import {getUrlForRoute, animation, openAppSettings} from '@helpers';
 import styles from './styles';
 import {getFilteredPetrolStationList} from '@helpers';
 import {setGPS} from '@reducers/appGlobalState';
@@ -85,6 +85,7 @@ const StationsList: React.FC<TProps> = ({
       },
       error => {
         dispatch(setGPS(false));
+        openAppSettings();
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
@@ -106,7 +107,6 @@ const StationsList: React.FC<TProps> = ({
               // selected={item.id === selectedId}
               onShowDetails={openDetailOfStation}
               getRoute={getRoute}
-              showRouteButton={isGPS}
             />
           );
         })}

@@ -17,7 +17,11 @@ import {connect} from 'react-redux';
 import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import {useIsFocused} from '@react-navigation/core';
-import {getFilteredPetrolStationList, isSearch} from '@helpers';
+import {
+  getFilteredPetrolStationList,
+  isSearch,
+  openAppSettings,
+} from '@helpers';
 import {setGPS} from '@reducers/appGlobalState';
 import styles from './styles';
 
@@ -262,7 +266,6 @@ const MapScreen: React.FC<TProps> = ({
   );
 
   const goToUserLocate = useCallback(() => {
-    // console.log('goToUserLocate');
     getCurrentPosition(
       position => {
         dispatch(setGPS(true));
@@ -270,6 +273,7 @@ const MapScreen: React.FC<TProps> = ({
       },
       error => {
         dispatch(setGPS(false));
+        openAppSettings();
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
@@ -320,6 +324,7 @@ const MapScreen: React.FC<TProps> = ({
     <View style={styles.container}>
       <MapView
         key={refresh}
+        // @ts-ignore
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={[styles.map, styles.mapPadding]}
@@ -371,13 +376,13 @@ const MapScreen: React.FC<TProps> = ({
           name="minus"
           disabled={disabledZoomMinus}
         />
-        {isGPS && <MapButton onPress={goToUserLocate} green name="location" />}
+        <MapButton onPress={goToUserLocate} green name="location" />
       </View>
       <MarkerModal
         isVisible={!!selectedMarker}
         data={selectedMarker}
         cb={openMarker}
-        showRouteButton={isGPS}
+        isGPS={isGPS}
       />
     </View>
   );

@@ -4,3 +4,5 @@ export {getUrlForRoute, getRouteData, getDistanceMatrix} from './url_coder';
 export {getFilteredPetrolStationList, isSearch} from './petrolStation';
 
 export * from './scaling';
+export { default as openAppSettings } from './openAppSettings'
+

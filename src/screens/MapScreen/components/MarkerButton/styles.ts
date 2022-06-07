@@ -12,6 +12,8 @@ export default StyleSheet.create({
     borderWidth: 1.5,
     height: 60,
     flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'center',
     backgroundColor: colors.white_FFFFFF,
   },
   blackFond: {
@@ -22,15 +24,9 @@ export default StyleSheet.create({
     fontFamily: fonts.interSemiBold_600,
   },
   left: {
-    flex: 3,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
     paddingRight: 8,
   },
   right: {
-    flex: 5,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
   },
   text: {
     fontFamily: fonts.interMedium_500,

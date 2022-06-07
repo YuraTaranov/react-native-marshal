@@ -13,7 +13,7 @@ import {
 import {View, Text, ScrollView, Geolocation, Linking} from '@components';
 import {GetRouteButton} from './components';
 import {ios} from '@constants';
-import {getUrlForRoute} from '@helpers';
+import {getUrlForRoute, openAppSettings} from '@helpers';
 import {SVG_Icons} from '@assets';
 
 import {connect} from 'react-redux';
@@ -102,6 +102,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
       },
       error => {
         console.log(error.code, error.message);
+        openAppSettings();
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
@@ -141,14 +142,12 @@ const MarkerDetailPage: React.FC<TProps> = ({
       </ScrollView>
 
       <View style={styles.buttonView}>
-        {showRouteButton && (
-          <GetRouteButton
-            iconName="route"
-            label={t('Get directions')}
-            onPress={openingRoute}
-            black
-          />
-        )}
+        <GetRouteButton
+          iconName="route"
+          label={t('Get directions')}
+          onPress={openingRoute}
+          black
+        />
       </View>
     </View>
   );

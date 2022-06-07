@@ -24,6 +24,7 @@ import {
 } from '@types';
 import {setArrivalPoint, setDeparturePoint} from '@reducers/fuelCalculator';
 import {Dispatch} from 'redux';
+import {openAppSettings} from '@helpers';
 
 type TLang = 'uk' | 'ua' | 'ru' | 'en';
 
@@ -124,6 +125,8 @@ const Autocomplete: React.FC<TProps> = ({
       },
       error => {
         dispatch(setGPS(false));
+        setMyLocationLoading(false);
+        openAppSettings();
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},

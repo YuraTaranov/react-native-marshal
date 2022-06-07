@@ -1,7 +1,6 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
+import {useCallback, useTranslation} from '@hooks';
 import {View, Text, Icon, TouchableOpacity, Image} from '@components';
-import {SVG_Icons} from '@assets';
 import styles from './styles';
 import {colors} from '@constants';
 import {TPetrolStation} from '@types';
@@ -11,7 +10,6 @@ type TProps = {
   selected?: boolean;
   onShowDetails: (id: number) => void;
   getRoute: (id: number) => void;
-  showRouteButton: boolean;
 };
 
 export const StationListItem: React.FC<TProps> = ({
@@ -19,13 +17,13 @@ export const StationListItem: React.FC<TProps> = ({
   item,
   onShowDetails,
   selected,
-  showRouteButton,
 }) => {
   const {t} = useTranslation();
 
   const onPressItem = useCallback(() => {
     onShowDetails(item.id);
   }, [item.id]);
+
   const onPressRoute = useCallback(() => {
     getRoute(item.id);
   }, [item.id]);
@@ -51,22 +49,20 @@ export const StationListItem: React.FC<TProps> = ({
             <Text style={styles.textAddress}>{item.address}</Text>
           </View>
         </View>
-        {showRouteButton && (
-          <TouchableOpacity style={styles.touch} onPress={onPressRoute}>
-            <View style={styles.rightIconView}>
-              <View style={styles.iconView}>
-                <Icon
-                  name="route"
-                  color={!selected ? colors.green_41BB4E : colors.red_F10000}
-                  size={18}
-                />
-              </View>
-              <View style={styles.iconTextView}>
-                <Text style={styles.iconText}>{`${t('Route')}`}</Text>
-              </View>
+        <TouchableOpacity style={styles.touch} onPress={onPressRoute}>
+          <View style={styles.rightIconView}>
+            <View style={styles.iconView}>
+              <Icon
+                name="route"
+                color={!selected ? colors.green_41BB4E : colors.red_F10000}
+                size={18}
+              />
             </View>
-          </TouchableOpacity>
-        )}
+            <View style={styles.iconTextView}>
+              <Text style={styles.iconText}>{`${t('Route')}`}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

@@ -12,7 +12,7 @@ import {
 import {MarkerButton} from '..';
 import styles from './styles';
 import {colors} from '@constants';
-import {getUrlForRoute} from '@helpers';
+import {getUrlForRoute, openAppSettings} from '@helpers';
 
 //Type
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,15 +22,10 @@ type TProps = {
   cb: Function;
   data: TMarker;
   isVisible: boolean;
-  showRouteButton: boolean;
+  isGPS: boolean;
 };
 
-export const MarkerModal: React.FC<TProps> = ({
-  isVisible,
-  data,
-  showRouteButton,
-  cb,
-}) => {
+export const MarkerModal: React.FC<TProps> = ({isVisible, data, isGPS, cb}) => {
   const {t} = useTranslation();
   const [visible, setVisible] = useState(isVisible);
 
@@ -50,10 +45,10 @@ export const MarkerModal: React.FC<TProps> = ({
             endLongitude: data?.longitude,
           });
           Linking.openURL(urlForRoute);
-          //   console.log('POS', urlForRoute);
         },
         error => {
           console.log(error.code, error.message);
+          openAppSettings();
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
@@ -102,14 +97,12 @@ export const MarkerModal: React.FC<TProps> = ({
               onPress={showDetails}
             />
             <View style={styles.divider} collapsable={false} />
-            {showRouteButton && (
-              <MarkerButton
-                iconName="route"
-                label={t('Route')}
-                onPress={openingRoute}
-                black
-              />
-            )}
+            <MarkerButton
+              iconName="route"
+              label={t('Route')}
+              onPress={openingRoute}
+              black
+            />
           </View>
           <TouchableOpacity onPress={closeModal} style={[styles.eject]}>
             <Icon name="x" size={24} color={colors.black_1E1A1A} />
