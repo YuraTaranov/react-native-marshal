@@ -69,7 +69,10 @@ export type TGlobalState = {
   promotion: {
     data: TPromotion;
   };
-  petrolStations: TPetrolStation[];
+  petrolStations: {
+	data: TPetrolStation[];
+	loading: boolean;
+  }
   filters: TFilters;
   creditCards: TCreditCard[];
   biometrics: {
@@ -98,4 +101,7 @@ export type TGlobalState = {
     routes: TRoute[];
   };
   fuel: {data: TFuel[]};
+  network: {
+	isConnected: boolean;
+  }
 };

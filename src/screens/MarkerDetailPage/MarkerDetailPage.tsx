@@ -154,7 +154,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  petrolStations: state.petrolStations,
+  petrolStations: state.petrolStations.data,
   fuel: state.fuel.data,
 });
 

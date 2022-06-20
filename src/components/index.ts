@@ -92,6 +92,7 @@ export {default as Loader} from './layout/Loader';
 export {default as Wrapper} from './layout/Wrapper';
 
 // MODAL
+export {default as InternetConnectionModal} from './modal/InternetConnectionModal';
 export {default as Support} from './modal/Support';
 
 // OTHER

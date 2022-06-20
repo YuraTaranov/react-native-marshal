@@ -18,6 +18,7 @@
 		"android:clean": "cd android/ && ./gradlew clean && cd ..",
 		"android:menu": "adb shell input keyevent KEYCODE_MENU",
 		"android:reload": "adb shell input text \"RR\"",
+		"android:release_bundle": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd .. && open ./android/app/build/outputs/bundle/release",
 		"postinstall": "cd ios && pod install && cd ..",
 		"generateKeystore": "keytool -genkeypair -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000",
 		"getReleaseSHA1": "keytool -list -v -alias release -keystore ./android/app/release.keystore",

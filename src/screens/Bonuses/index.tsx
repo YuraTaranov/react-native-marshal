@@ -94,10 +94,10 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
             profile?.count_spent_bonus || 0
           } ${t('балів')}`}</Text>
         </View>
-        <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>
+        {/* <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>
           <Text style={styles.termsTitle}>{t('Умови програми')}</Text>
           <Icon size={24} name="right" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
       <View style={styles.buttonContainer}>
         <UsualButton

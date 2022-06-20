@@ -5,13 +5,15 @@ import {View, Text, FlatList, TouchableOpacity, Icon, Image} from '@components';
 import {TGlobalState, TNotification} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {colors} from '@constants';
+import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import moment from 'moment';
 import {setNotifications} from '@reducers/notifications';
 import {animation} from '@helpers';
 import {getPromotion} from '@reducers/promotion';
 import {assets} from '@assets';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 
 type TProps = {
   dispatch: Dispatch;
@@ -21,6 +23,11 @@ type TProps = {
 const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
+
+  useEffect(() => {
+    PushNotification.removeAllDeliveredNotifications();
+    ios && PushNotificationIOS.setApplicationIconBadgeNumber(0);
+  }, []);
 
   const onPressSettings = useCallback(() => {
     navigate('ProfileStack', {

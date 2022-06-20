@@ -37,7 +37,11 @@ export const StationListItem: React.FC<TProps> = ({
               height={36}
               fill={selected ? colors.green_41BB4E : colors.red_F10000}
             /> */}
-            <Image source={{uri: item.image}} style={styles.stationImage} />
+            <Image
+              source={{uri: item.image}}
+              style={styles.stationImage}
+              resizeMode="contain"
+            />
           </View>
         </View>
 

@@ -13,7 +13,6 @@ type TProps = {
 
 const DeepLinksManager: React.FC<TProps> = ({dispatch}) => {
   const handleDynamicLink = (link: FirebaseDynamicLinksTypes.DynamicLink) => {
-    // console.log('LINK foreground ===', link);
     if (link?.url) {
       const userId = link?.url?.split('=')[1];
       dispatch(setReferralUserId(userId));
@@ -22,7 +21,6 @@ const DeepLinksManager: React.FC<TProps> = ({dispatch}) => {
 
   useEffect(() => {
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
-
     return () => unsubscribe();
   }, []);
 
@@ -30,11 +28,7 @@ const DeepLinksManager: React.FC<TProps> = ({dispatch}) => {
     dynamicLinks()
       .getInitialLink()
       .then((link: FirebaseDynamicLinksTypes.DynamicLink | null) => {
-        // console.log('LINK background ===', link);
-        if (link?.url) {
-          const userId = link?.url?.split('=')[1];
-          dispatch(setReferralUserId(userId));
-        }
+        link && handleDynamicLink(link);
       });
   }, []);
 

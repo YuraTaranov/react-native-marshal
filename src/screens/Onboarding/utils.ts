@@ -2,7 +2,7 @@ import { assets } from "@assets";
 
 export const data = [
     {
-        title: 'Швидка покупка пального за допомогою додатка',
+        title: 'Віртуальна картка',
         image: assets.ONBOARDING_1
     },
     {
@@ -10,7 +10,7 @@ export const data = [
         image: assets.ONBOARDING_2
     },
     {
-        title: 'Накопичення бонусів, якими можна розплачуватися',
+        title: 'Калькулятор пального',
         image: assets.ONBOARDING_3
     },
 ]

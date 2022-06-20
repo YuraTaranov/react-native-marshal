@@ -131,6 +131,11 @@ export function* loginWithBiometricsAsync(action: any) {
 			'',
 			i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
 		  );
+	} else if (error?.status === 500) {
+		Alert.alert(
+			'',
+			i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
+		  );
 	} else {
 		errorHandler(error, 'loginWithBiometricsAsync');
 	}

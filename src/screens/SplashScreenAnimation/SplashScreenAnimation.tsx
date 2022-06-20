@@ -1,6 +1,6 @@
 import React from 'react';
-import {useCallback, useRef, useEffect} from '@hooks';
-import {View, Image} from '@components';
+import {useCallback, useRef, useEffect, useState, useTranslation} from '@hooks';
+import {View, Image, Text} from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -9,11 +9,21 @@ import {Animated, Easing} from 'react-native';
 import {assets} from '@assets';
 import {width} from '@constants';
 
-type TProps = {};
+type TProps = {
+  isConnected: boolean;
+};
 
-const SplashScreenAnimation: React.FC<TProps> = ({}) => {
+const SplashScreenAnimation: React.FC<TProps> = ({isConnected}) => {
+  const {t} = useTranslation();
   const logoAnim = useRef(new Animated.Value(0)).current;
   const linesAnim = useRef(new Animated.Value(0)).current;
+  const [animationFinished, setAnimationFinished] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (animationFinished && isConnected) {
+      replace('RootStackNavigator');
+    }
+  }, [animationFinished, isConnected]);
 
   useEffect(() => {
     Animated.timing(logoAnim, {
@@ -32,22 +42,38 @@ const SplashScreenAnimation: React.FC<TProps> = ({}) => {
   }, [logoAnim, linesAnim]);
 
   const onAnimationFinish = useCallback(() => {
-    replace('RootStackNavigator');
+    setAnimationFinished(true);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{...styles.logoContainer, opacity: logoAnim}}>
-        <Image source={assets.LOGO} style={styles.logo} />
-      </Animated.View>
-      <Animated.View style={{width: linesAnim}}>
-        <View style={styles.whiteLine} />
-        <View style={styles.redLine} />
-      </Animated.View>
+      {!isConnected && animationFinished ? (
+        <View style={styles.noInternetContainer}>
+          <Text style={styles.noInternetTitle}>
+            {t('Проблеми з мережею Інтернет')}
+          </Text>
+          <Image source={assets.NO_INTERNET} style={styles.noInternetImage} />
+          <Text style={styles.noInternetDescription}>
+            {t(`Будь ласка перевірте з'єднання з Інтернетом`)}
+          </Text>
+        </View>
+      ) : (
+        <>
+          <Animated.View style={{...styles.logoContainer, opacity: logoAnim}}>
+            <Image source={assets.LOGO} style={styles.logo} />
+          </Animated.View>
+          <Animated.View style={{width: linesAnim}}>
+            <View style={styles.whiteLine} />
+            <View style={styles.redLine} />
+          </Animated.View>
+        </>
+      )}
     </View>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  isConnected: state.network.isConnected,
+});
 
 export default connect(mapStateToProps)(SplashScreenAnimation);

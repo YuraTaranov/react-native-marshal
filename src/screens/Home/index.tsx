@@ -36,8 +36,10 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {setBioTurnOffAfterLogout} from '@reducers/logout';
 import {getFuel} from '@reducers/fuel';
-import {getCreditCards} from '@reducers/creditCards';
+// import {getCreditCards} from '@reducers/creditCards';
 import {setFaceIdActiveLocal, setNeedDisableBio} from '@reducers/biometrics';
+import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
+
 type TProps = {
   dispatch: Dispatch;
   promotions: TPromotion[];
@@ -56,6 +58,7 @@ const Home: React.FC<TProps> = ({
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
+  const [fuelModalVisible, setFuelModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setOptions({
@@ -100,6 +103,10 @@ const Home: React.FC<TProps> = ({
     setCardModalVisible(false);
   }, []);
 
+  const closeFuelModal = useCallback(() => {
+    setFuelModalVisible(false);
+  }, []);
+
   const turnOffBio = useCallback(async () => {
     try {
       dispatch(setFaceIdActiveLocal(false));
@@ -124,10 +131,8 @@ const Home: React.FC<TProps> = ({
     //   screen: 'FuelPurchase',
     //   params: {},
     // });
-    // Alert.alert('', t(''))
-    // TODO: buy fuel
-    Alert.alert('', 'Coming soon...');
-  }, [t]);
+    setFuelModalVisible(true);
+  }, []);
 
   const refreshPromotions = useCallback(() => {
     dispatch(getPromotionsMain());
@@ -150,6 +155,10 @@ const Home: React.FC<TProps> = ({
     <View style={styles.container}>
       <NotificationsManager />
       <FuelBalance />
+      <BuyFuelInProgress
+        isVisible={fuelModalVisible}
+        closeModal={closeFuelModal}
+      />
       <ScrollView refreshControl={refreshControl}>
         <View style={styles.buttonsContainer}>
           <TouchableOpacity

@@ -54,20 +54,18 @@ const NotificationsManager: React.FC<TProps> = ({
                   [...modifiedNotifications, ...notifications].slice(0, 40),
                 ),
               );
-              PushNotification.removeAllDeliveredNotifications();
             }
           });
 
-        dispatch(getPromotion(item.data_id));
-        // if (item.type === 'action') {
-        //   dispatch(getPromotion(item.data_id));
-        // } else {
+        if (
+          item.type === 'action' ||
+          item.type === 'discount' ||
+          item.type === 'new'
+        ) {
+          dispatch(getPromotion(item.data_id));
+        }
+        // else {
         //   navigate('Promotions');
-        // }
-
-        // проверить
-        // if (ios && badge) {
-        //   PushNotificationIOS.setApplicationIconBadgeNumber(Number(badge));
         // }
         return null;
       },
@@ -78,7 +76,7 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = firebase
       .messaging()
       .onMessage(async (remoteMessage: any) => {
-        console.log('Foreground push data', remoteMessage.data);
+        // console.log('Foreground push data', remoteMessage.data);
         dispatch(getPromotionsMain());
         dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
@@ -97,7 +95,7 @@ const NotificationsManager: React.FC<TProps> = ({
   useEffect(() => {
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
-        console.log('Trey push data', remoteMessage.data);
+        // console.log('Trey push data', remoteMessage.data);
         dispatch(getPromotionsMain());
         dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
@@ -123,7 +121,7 @@ const NotificationsManager: React.FC<TProps> = ({
       .getInitialNotification()
       .then((remoteMessage: any) => {
         if (remoteMessage) {
-          console.log('Quit push data', remoteMessage.data);
+          //   console.log('Quit push data', remoteMessage.data);
           const modifiedNotification: TNotification = {
             ...remoteMessage.data,
             isRead: true,
@@ -157,10 +155,6 @@ const NotificationsManager: React.FC<TProps> = ({
         await messaging().registerDeviceForRemoteMessages();
       }
       messaging().setAutoInitEnabled(true);
-      //   if (ios) {
-      //     PushNotificationIOS.removeAllDeliveredNotifications();
-      //     // PushNotificationIOS.setApplicationIconBadgeNumber(0);
-      //   }
       getToken();
     } else {
       requestPermission();

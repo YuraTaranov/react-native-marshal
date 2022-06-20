@@ -1,27 +1,17 @@
-import {StyleSheet} from '@components';
+import {StyleSheet} from 'react-native';
 import {colors, fonts, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.green_009F30,
+	margin: 0,
+	backgroundColor: colors.green_009F30,
+	justifyContent: 'center',
+	alignItems: 'center'
   },
-  logoContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 270,
-    height: 228,
-  },
-  whiteLine: {
-    height: 44,
-    backgroundColor: colors.white_FFFFFF,
-  },
-  redLine: {
-    height: 44,
-    backgroundColor: colors.red_E30016,
+  text: {
+	fontSize: 20,
+	color: colors.white_FFFFFF
   },
   noInternetContainer: {
 	flex: 1, 

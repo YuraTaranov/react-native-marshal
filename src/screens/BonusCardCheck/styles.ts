@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: colors.white_FFFFFF,
     paddingHorizontal: 16,
     paddingTop: 24,
-    paddingBottom: bottom + 16,
+    paddingBottom: 16,
   },
   title: {
     fontSize: 18,

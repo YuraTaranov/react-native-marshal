@@ -1,11 +1,10 @@
 import axios from 'axios';
-import {TGenerateOptions, TFormatResponse, TGlobalState} from '@types';
+import {TGenerateOptions, TFormatResponse} from '@types';
 import storage from '../../store';
 import {urls} from '@constants';
-import { Alert } from '@components';
 import { setIsUserAuthorized, setToken } from '@reducers/appGlobalState';
-import i18next from 'i18next';
 
+// FIXME: add prod url
 const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
 
 const instance = axios.create();
@@ -42,10 +41,8 @@ const sendRequest = async ({
   try {
     const response = await instance(OPTIONS);
     return formatResponse(response);
-  } catch (error) {
-    __DEV__ && console.log('+++++ ERROR', JSON.parse(JSON.stringify(error))); // FIXME: TEMP
-	// Alert.alert('', `${JSON.stringify(error)}`) // FIXME: no internet connection
-	// if (error.message === 'Network Error') Alert.alert('No internet connection')
+  } catch (error: any) {
+    __DEV__ && console.log('---ERROR---', JSON.parse(JSON.stringify(error)));
 
     if (error.response?.status === 408 || error.code === 'ECONNABORTED') {
       throw formatResponse({
@@ -56,8 +53,6 @@ const sendRequest = async ({
     if (error.response.data?.message === 'Unauthenticated.') {
       storage.store.dispatch(setToken(''));
       storage.store.dispatch(setIsUserAuthorized(false));
-      //   navigate('AuthNavigator');
-    //   Alert.alert('', i18next.t('Сесія закінчилася, потрібна повторна авторизація'));
     }
     throw formatResponse(error.response);
   }
@@ -72,18 +67,6 @@ const generateOptions = ({method, url, data, params}: TGenerateOptions) => {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'Accept-Language': 'ru',
-
-    // 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS, PATCH',
-    // Accept: '*/*',
-    // Host: 'dev.ungdomsappen.se',
-
-    // 'Cache-Control': 'no-cache',
-    // 'Accept-Encoding': 'gzip, deflate, br',
-
-    // Accept: 'application/json',
-    // 'Accept-Language': 'ru',
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
   };
 
   const authHeaders = {

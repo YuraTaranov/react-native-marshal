@@ -7,7 +7,7 @@ import {TGlobalState} from '@types';
 import {Dispatch} from 'redux';
 import {setSupport} from '@reducers/modalController';
 import {Direction} from 'react-native-modal';
-import {colors} from '@constants';
+import {colors, ios} from '@constants';
 import {Linking} from 'react-native';
 import {assets} from '@assets';
 
@@ -24,8 +24,9 @@ const swipeDirection:
   | Direction[]
   | undefined = ['down', 'up'];
 
-//   FIXME: tel
-const tel = '+38 (050) 123 12 12';
+const tel = '+38 (050) 863 98 52';
+const viberNumber = '%+380508639852';
+const telegramUrl = 'tg://resolve?domain=Marshal_azs';
 
 const Support: React.FC<TProps> = ({support, dispatch}) => {
   const {t} = useTranslation();
@@ -38,73 +39,57 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
     try {
       Linking.openURL(`tel:${tel}`);
     } catch (error) {
-      console.log('onPressPhone error', error);
+      __DEV__ && console.log('onPressPhone error', error);
     }
   }, []);
 
-  const onPressMessenger = useCallback(() => {
-    //   FIXME: add messenger link
+  const onPressWhatsapp = useCallback(() => {
     try {
-      Linking.openURL('http://m.me/sport24live');
+      // Linking.openURL(`whatsapp://send?phone=+380508639852`);
+      Linking.openURL(`https://api.whatsapp.com/send?phone=380508639852`);
     } catch (error) {
-      console.log('onPressMessenger error', error);
+      __DEV__ && console.log('onPressWhatsapp error', error);
     }
   }, []);
 
   const onPressViber = useCallback(() => {
-    //   FIXME: add viber link
     try {
-      const contactNumber = '%+380734701124';
-      /* // contact inf
-      Linking.openURL(`viber://contact?number=${contactNumber}`);
-      */
-
-      // contact chat
-      Linking.openURL(`viber://chat?number=${contactNumber}`);
-
-      /* // -- viber bot
-      const ViberChatURI = 'mbzjzWXWGxxMLe14eorwxQ==';
-      const YourContext = 'YourContext';
-      const YourText = 'YourText';
-
-      if (ViberChatURI) {
-        Linking.openURL(
-          `viber://pa?chatURI=${ViberChatURI}${
-            !!YourContext && '&context=' + YourContext
-          }${!!YourText && '&text=' + YourText}`,
-        );
-      }
-      */
+      Linking.openURL(`viber://chat?number=${viberNumber}`).catch(err => {
+        err.message.startsWith('Unable to open URL') &&
+          Linking.openURL(
+            ios
+              ? 'https://apps.apple.com/ru/app/id382617920'
+              : 'https://play.google.com/store/apps/details?id=com.viber.voip',
+          );
+      });
     } catch (error) {
-      console.log('onPressViber error', error);
+      __DEV__ && console.log(error, 'viber link error');
     }
   }, []);
 
   const onPressTelegram = useCallback(() => {
-    //   FIXME: add telegram link
-    const url = 'tg://resolve?domain=dmitry_ilchenko';
     try {
-      Linking.openURL(url).catch(err => {
-        if (err.message === `Unable to open URL: ${url}`) {
-          Linking.openURL('http://t.me/dmitry_ilchenko');
+      Linking.openURL(telegramUrl).catch(err => {
+        if (err.message === `Unable to open URL: ${telegramUrl}`) {
+          Linking.openURL('http://t.me/Marshal_azs');
         }
       });
     } catch (error) {
-      console.log('onPressTelegram error', error);
+      __DEV__ && console.log('onPressTelegram error', error);
     }
   }, []);
 
   return (
     <Modal
-      swipeDirection={swipeDirection}
-      propagateSwipe={true}
-      onSwipeCancel={onSwipeCancel}
       isVisible={support}
       backdropTransitionOutTiming={0}
       backdropOpacity={0}
       useNativeDriver={true}
       style={styles.modalContainer}>
-      <View style={styles.header}>
+      <TouchableOpacity
+        style={styles.header}
+        onPress={onSwipeCancel}
+        activeOpacity={1}>
         <Text style={styles.headerText}>{t('Підтримка')}</Text>
         <Icon
           name="x"
@@ -112,7 +97,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
           color={colors.white_FFFFFF}
           style={styles.close}
         />
-      </View>
+      </TouchableOpacity>
       <View style={styles.contentContainer}>
         <Text style={styles.boldText}>{t('Виникли питання?')}</Text>
         <Text style={styles.boldText}>{t('Ми завжди раді допомогти')}:</Text>
@@ -125,7 +110,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
         <View style={styles.messengersContainer}>
           <TouchableOpacity
             style={styles.messengerContainer}
-            onPress={onPressMessenger}>
+            onPress={onPressWhatsapp}>
             <Image style={styles.messengerLogo} source={assets.MESSENGER} />
           </TouchableOpacity>
           <TouchableOpacity

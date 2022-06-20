@@ -9,6 +9,8 @@ import {TGlobalState} from '@types';
 import {navigationRef, onStateChange} from '@services';
 import {SplashScreenAnimation} from '@screens';
 import RootStackNavigator from './stacks/RootStackNavigator';
+import NetInfo from '@react-native-community/netinfo';
+import {setIsConnected} from '@reducers/network';
 
 const InitialStack = createStackNavigator();
 
@@ -21,6 +23,16 @@ const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
   useEffect(() => {
     i18next.changeLanguage(appGlobalState.lang);
   }, [appGlobalState.lang]);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setIsConnected(state.isConnected));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>

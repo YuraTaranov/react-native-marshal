@@ -2,15 +2,13 @@ import {Alert} from 'react-native';
 import i18next from 'i18next';
 
 export const errorHandler = (error: any, method?: string) => {
-	// Alert.alert('', JSON.stringify(error)) // FIXME: no internet connection
-	__DEV__ && console.log('REQUEST ERROR', method || 'Pass the method', error);
-  // const message = error.data?.message || '';
+  __DEV__ && console.log('REQUEST ERROR', method || 'Pass the method', error);
 
-  if (error.status === 418) {
-    return Alert.alert(
-      '',
-      i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'),
-    );
+  if (error.status === 408 || error.status === 418) {
+	return Alert.alert(
+		'',
+		i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'),
+	  );
   }
 
   let resultString = '';
@@ -23,9 +21,6 @@ export const errorHandler = (error: any, method?: string) => {
   if (!resultString.trim()) {
     resultString = error.data?.message || '-';
   }
-  if (error.data.message === 'Unauthenticated.') {
-    console.log('Unauthenticated');
-  } else {
-    Alert.alert('', resultString);
-  }
+
+  Alert.alert('', resultString);
 };

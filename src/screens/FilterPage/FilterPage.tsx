@@ -176,7 +176,7 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
   );
 };
 const mapStateToProps = (state: TGlobalState) => ({
-  petrolStations: state.petrolStations,
+  petrolStations: state.petrolStations.data,
   filters: state.filters,
 });
 

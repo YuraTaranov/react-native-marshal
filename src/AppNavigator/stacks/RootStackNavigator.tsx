@@ -11,6 +11,7 @@ import ProfileStackNavigator from './ProfileStackNavigator';
 import StationsStackNavigator from './StationsStackNavigator';
 import PromotionsStackNavigator from './PromotionsStackNavigator';
 import {defaultStackOptions} from '../options';
+import {InternetConnectionModal} from '@components';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
@@ -20,41 +21,47 @@ const RootStack = createStackNavigator();
 
 const RootStackNavigator: React.FC<TProps> = ({appGlobalState}) => {
   return (
-    <RootStack.Navigator
-      headerMode="none"
-      screenOptions={{
-        ...defaultStackOptions,
-      }}>
-      {appGlobalState.onBoarding ? (
-        <RootStack.Screen
-          name={'Onboarding'}
-          component={OnboardingStackNavigator}
-        />
-      ) : !appGlobalState.isUserAuthorized ? (
-        <RootStack.Screen name="AuthNavigator" component={AuthStackNavigator} />
-      ) : (
-        <>
-          <RootStack.Screen name="TabNavigator" component={TabNavigator} />
+    <>
+      <InternetConnectionModal />
+      <RootStack.Navigator
+        headerMode="none"
+        screenOptions={{
+          ...defaultStackOptions,
+        }}>
+        {appGlobalState.onBoarding ? (
           <RootStack.Screen
-            name="StationsStack"
-            component={StationsStackNavigator}
+            name={'Onboarding'}
+            component={OnboardingStackNavigator}
           />
+        ) : !appGlobalState.isUserAuthorized ? (
           <RootStack.Screen
-            name="PromotionsStack"
-            component={PromotionsStackNavigator}
+            name="AuthNavigator"
+            component={AuthStackNavigator}
           />
-          <RootStack.Screen name="HomeStack" component={HomeStackNavigator} />
-          <RootStack.Screen
-            name="BonusesStack"
-            component={BonusesStackNavigator}
-          />
-          <RootStack.Screen
-            name="ProfileStack"
-            component={ProfileStackNavigator}
-          />
-        </>
-      )}
-    </RootStack.Navigator>
+        ) : (
+          <>
+            <RootStack.Screen name="TabNavigator" component={TabNavigator} />
+            <RootStack.Screen
+              name="StationsStack"
+              component={StationsStackNavigator}
+            />
+            <RootStack.Screen
+              name="PromotionsStack"
+              component={PromotionsStackNavigator}
+            />
+            <RootStack.Screen name="HomeStack" component={HomeStackNavigator} />
+            <RootStack.Screen
+              name="BonusesStack"
+              component={BonusesStackNavigator}
+            />
+            <RootStack.Screen
+              name="ProfileStack"
+              component={ProfileStackNavigator}
+            />
+          </>
+        )}
+      </RootStack.Navigator>
+    </>
   );
 };
 

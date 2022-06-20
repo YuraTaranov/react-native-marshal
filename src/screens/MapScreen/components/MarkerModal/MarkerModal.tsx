@@ -17,17 +17,24 @@ import {getUrlForRoute, openAppSettings} from '@helpers';
 //Type
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {TMarker} from '../../MapScreen';
+import {navigate} from '@services';
 
 type TProps = {
   cb: Function;
   data: TMarker;
   isVisible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isGPS: boolean;
 };
 
-export const MarkerModal: React.FC<TProps> = ({isVisible, data, isGPS, cb}) => {
+export const MarkerModal: React.FC<TProps> = ({
+  isVisible,
+  setVisible,
+  data,
+  isGPS,
+  cb,
+}) => {
   const {t} = useTranslation();
-  const [visible, setVisible] = useState(isVisible);
 
   const closeModal = useCallback(() => {
     cb(null);
@@ -59,18 +66,20 @@ export const MarkerModal: React.FC<TProps> = ({isVisible, data, isGPS, cb}) => {
 
   const showDetails = useCallback(() => {
     if (data) {
-      cb({...data, showDetails: true});
       setVisible(false);
+      navigate('StationsStack', {
+        screen: 'MarkerDetail',
+        params: {
+          markerId: data.id,
+          isGPS,
+        },
+      });
     }
   }, [cb, data]);
 
-  useEffect(() => {
-    setVisible(isVisible);
-  }, [isVisible]);
-
   return (
     <Modal
-      isVisible={visible}
+      isVisible={isVisible}
       animationIn="fadeInUp"
       onBackdropPress={closeModal}
       backdropTransitionOutTiming={0}

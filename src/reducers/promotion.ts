@@ -45,11 +45,12 @@ export function* getPromotionAsync(action: any) {
 		  screen: 'Promotion'
 	  });
     }
-  } catch (e) {
-	  if (e?.data?.message?.startsWith('No query results for model')) {
-		  return Alert.alert('', i18next.t('Эта акция устарела или временно недоступна'))
+  } catch (e: any) {
+	  if (e && e?.data && e?.data?.message?.startsWith('No query results for model')) {
+		return Alert.alert('', i18next.t('Эта акция устарела или временно недоступна'))
+	  } else {
+		errorHandler(e, 'getPromotionAsync');
 	  }
-    errorHandler(e, 'getPromotionAsync');
   } finally {
     yield put(setLoader(false));
   }

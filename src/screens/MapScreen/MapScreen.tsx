@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useCallback} from 'react';
-import {useEffect, useState, useRef} from '@hooks';
+import {useEffect, useState, useRef, useMemo} from '@hooks';
 import {
   Geolocation,
   MapView,
-  Marker,
+  Marker as MapMarker,
   PERMISSIONS,
   PROVIDER_GOOGLE,
   PermissionsAndroid,
@@ -28,6 +28,7 @@ import styles from './styles';
 // Types
 import {TGlobalState, TPetrolStation, TFullMarker, TFilters} from '@types';
 import {Dispatch} from 'redux';
+import CustomMarker from './components/CustomMarker/CustomMarker';
 
 const {getCurrentPosition} = Geolocation;
 
@@ -68,6 +69,7 @@ export type TMarker = {
   latitude: number;
   longitude: number;
   showDetails?: boolean;
+  image: string;
 } | null;
 
 type TPoint = {
@@ -98,6 +100,7 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
           latitude: parseFloat(m.lat) || 0,
           longitude: parseFloat(m.long) || 0,
           showDetails: false,
+          image: m.image,
         };
       }),
     ].filter(i => !!i) || []
@@ -112,8 +115,9 @@ const MapScreen: React.FC<TProps> = ({
   textOfSearch,
 }) => {
   const [selectedMarker, setSelectedMarker] = useState<TMarker>(null);
-  const [disabledZoomMinus, setDisabledZoomMinus] = useState(true);
-  const [disabledZoomPlus, setDisabledZoomPlus] = useState(true);
+  const [disabledZoomMinus, setDisabledZoomMinus] = useState<boolean>(true);
+  const [disabledZoomPlus, setDisabledZoomPlus] = useState<boolean>(true);
+  const [markerModalVisible, setMarkerModalVisible] = useState<boolean>(false);
 
   const [AllMarkers, setAllMarkers] = useState<Array<TMarker>>(
     formatMarkerData(
@@ -243,26 +247,12 @@ const MapScreen: React.FC<TProps> = ({
   }, [disabledZoomMinus, disabledZoomPlus, region]);
 
   const openMarker = useCallback(
-    (data: TMarker) => {
-      if (!data || JSON.stringify(data) === JSON.stringify(selectedMarker)) {
-        setSelectedMarker(null);
-      } else {
-        goToNewPosition(data);
-        if (data.showDetails) {
-          setSelectedMarker(null);
-          navigate('StationsStack', {
-            screen: 'MarkerDetail',
-            params: {
-              markerId: data.id,
-              isGPS,
-            },
-          });
-        } else {
-          setSelectedMarker(data);
-        }
-      }
+    (data: TMarker) => () => {
+      setMarkerModalVisible(true);
+      setSelectedMarker(data);
+      data && goToNewPosition(data);
     },
-    [selectedMarker],
+    [],
   );
 
   const goToUserLocate = useCallback(() => {
@@ -308,17 +298,34 @@ const MapScreen: React.FC<TProps> = ({
     const points = properties.point_count;
 
     return (
-      <Marker
+      <MapMarker
         key={`cluster-${id}`}
         coordinate={{
           longitude: geometry.coordinates[0],
           latitude: geometry.coordinates[1],
         }}
+        tracksViewChanges={false}
         onPress={onPress}>
         <ClusterMarker counter={points} />
-      </Marker>
+      </MapMarker>
     );
   }, []);
+
+  const renderMarkers = useMemo(() => {
+    return AllMarkers.map((m, index) => (
+      <CustomMarker
+        key={m?.id || index}
+        m={m}
+        selectedMarker={selectedMarker}
+        openMarker={openMarker}
+        coordinate={{
+          // need for clustering
+          latitude: m?.latitude || 0,
+          longitude: m?.longitude || 0,
+        }}
+      />
+    ));
+  }, [selectedMarker, openMarker]);
 
   return (
     <View style={styles.container}>
@@ -356,18 +363,7 @@ const MapScreen: React.FC<TProps> = ({
         //
         onMapReady={onMapReady}
         onRegionChangeComplete={onRegionChangeComplete}>
-        {isFocused &&
-          AllMarkers.map(m => (
-            <Marker
-              key={`${m?.id}`}
-              onPress={() => openMarker(m)}
-              coordinate={{
-                latitude: m?.latitude || 0,
-                longitude: m?.longitude || 0,
-              }}>
-              <MarkerItem selected={selectedMarker?.id === m?.id} />
-            </Marker>
-          ))}
+        {isFocused && renderMarkers}
       </MapView>
       <View style={styles.buttonsBlock}>
         <MapButton onPress={onZoomPlus} disabled={disabledZoomPlus} />
@@ -379,7 +375,8 @@ const MapScreen: React.FC<TProps> = ({
         <MapButton onPress={goToUserLocate} green name="location" />
       </View>
       <MarkerModal
-        isVisible={!!selectedMarker}
+        isVisible={markerModalVisible}
+        setVisible={setMarkerModalVisible}
         data={selectedMarker}
         cb={openMarker}
         isGPS={isGPS}
@@ -389,7 +386,7 @@ const MapScreen: React.FC<TProps> = ({
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  markers: state.petrolStations,
+  markers: state.petrolStations.data,
   filters: state.filters,
   textOfSearch: state.searchStations.textOfSearch,
   isGPS: state.appGlobalState.gps,

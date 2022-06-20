@@ -30,8 +30,7 @@ type TProps = {
   profile: TProfile;
 };
 
-// FIXME: loyaltyUrl
-const loyaltyUrl = 'https://google.com';
+const loyaltyUrl = 'http://marshal.ua/rules/';
 const minimumDate = new Date(Date.now() - 3849948144000); // 122 years in ms
 const maximumDate = new Date(Date.now() - 568080000000); // 18 years in ms
 const initialDate = new Date(Date.now() - 599184000000); // 19 years in ms
@@ -215,7 +214,7 @@ const ProfileUpdate: React.FC<TProps> = ({
         birthdayValue === maximumDate ||
         !genderValue.name ||
         !consentPersonalData ||
-        !agreeLoyaltyProgram ||
+        // !agreeLoyaltyProgram ||
         loading
       );
     } else {
@@ -319,11 +318,12 @@ const ProfileUpdate: React.FC<TProps> = ({
                 toggleValue={setConsentPersonalData}
                 text={personalDataText}
               />
-              <CheckBoxCustom
+              {/* TODO: loyalty program link */}
+              {/* <CheckBoxCustom
                 value={agreeLoyaltyProgram}
                 toggleValue={setAgreeLoyaltyProgram}
                 text={loyaltyDataText}
-              />
+              /> */}
             </View>
           ) : null}
           {!isRegistration ? (

@@ -92,6 +92,7 @@ export type TFullMarker = {
   name: string;
   region: string;
   address: string;
+  image: string;
 };
 
 export type TPetrolStation = TFullMarker & {
@@ -137,7 +138,7 @@ export type TNotification = {
   message: string;
   body: string;
   data_id: number;
-  type: 'action' | 'text';
+  type: 'action' | 'new' | 'discount' | 'text';
   date: Date;
 };
 

@@ -5,10 +5,12 @@ export const assets = {
   BONUSES_GIFT: require('./images/bonuses_gift.png'),
   BONUSES_ONBOARDING: require('./images/bonuses_onboarding.png'),
   MARKER: require('./images/marker-01.png'),
+  MARKER_LOGO: require('./images/marker_logo.png'),
   MESSENGER: require('./images/Messenger.png'),
   NO_CARDS: require('./images/no_cards.png'),
   NO_CARS: require('./images/no_cars.png'),
   NO_PURCHASES: require('./images/no_purchases.png'),
+  NO_INTERNET: require('./images/no_internet.png'),
   ONBOARDING_1: require('./images/Onboarding_1.png'),
   ONBOARDING_2: require('./images/Onboarding_2.png'),
   ONBOARDING_3: require('./images/Onboarding_3.png'),
@@ -26,4 +28,5 @@ export const assets = {
   LOGO: require('./images/logo.png'),
   NO_NOTIFICATIONS: require('./images/no_notifications.png'),
   NO_SEARCH: require('./images/no_search.png'),
+  BUY_FUEL_IN_PROGRESS: require('./images/in_progress.png'),
 };

@@ -22,5 +22,6 @@ export default combineReducers({
   promotionsMain: require('./promotionsMain').default,
   fuelCalculator: require('./fuelCalculator').default,
   fuel: require('./fuel').default,
+  network: require('./network').default,
   // ADD NEW REDUCER
 });
