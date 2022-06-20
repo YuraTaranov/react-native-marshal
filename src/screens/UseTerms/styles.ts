@@ -21,4 +21,10 @@ export default StyleSheet.create({
     color: colors.gray_2D2D2D,
     marginTop: 16,
   },
+  link: {
+	textDecorationLine: 'underline',
+	color: 'blue',
+	fontSize: 16,
+    marginTop: 16,
+  }
 });
