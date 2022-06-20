@@ -76,7 +76,7 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = firebase
       .messaging()
       .onMessage(async (remoteMessage: any) => {
-        // console.log('Foreground push data', remoteMessage.data);
+        __DEV__ && console.log('Foreground push data', remoteMessage.data);
         dispatch(getPromotionsMain());
         dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
@@ -95,7 +95,7 @@ const NotificationsManager: React.FC<TProps> = ({
   useEffect(() => {
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
-        // console.log('Trey push data', remoteMessage.data);
+        __DEV__ && console.log('Trey push data', remoteMessage.data);
         dispatch(getPromotionsMain());
         dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
@@ -121,7 +121,7 @@ const NotificationsManager: React.FC<TProps> = ({
       .getInitialNotification()
       .then((remoteMessage: any) => {
         if (remoteMessage) {
-          //   console.log('Quit push data', remoteMessage.data);
+          __DEV__ && console.log('Quit push data', remoteMessage.data);
           const modifiedNotification: TNotification = {
             ...remoteMessage.data,
             isRead: true,
