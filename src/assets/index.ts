@@ -20,6 +20,7 @@ export const assets = {
   QR_SCAN: require('./images/qr_scan.png'),
   TELEGRAM: require('./images/Telegram.png'),
   VIBER: require('./images/Viber.png'),
+  WHATSAPP: require('./images/Whatsapp.png'),
   CARD_FRONT: require('./images/card/card-front.png'),
   CARD_BACK: require('./images/card/card-back.png'),
   BIO_TOUCH: require('./images/bio_touch.png'),

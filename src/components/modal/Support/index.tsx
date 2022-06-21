@@ -111,7 +111,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
           <TouchableOpacity
             style={styles.messengerContainer}
             onPress={onPressWhatsapp}>
-            <Image style={styles.messengerLogo} source={assets.MESSENGER} />
+            <Image style={styles.messengerLogo} source={assets.WHATSAPP} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.messengerContainer}
