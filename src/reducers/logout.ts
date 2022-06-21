@@ -29,7 +29,6 @@ export function* watchLogout() {
 }
 
 export function* logoutAsync() {
-  yield put(setBioTurnOffAfterLogout(true));
   yield put(setIsUserAuthorized(false));
   yield put(setToken(''));
   yield put(resetProfile());

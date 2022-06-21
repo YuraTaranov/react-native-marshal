@@ -16,11 +16,12 @@ import {
   Icon,
   NotificationsManager,
   RefreshControl,
-  Alert,
+  ReactNativeBiometrics,
+  DeviceInfo,
 } from '@components';
 import styles from './styles';
 import {Dispatch} from 'redux';
-import {TGlobalState, TPromotion} from '@types';
+import {TGlobalState, TProfile, TPromotion} from '@types';
 import {connect} from 'react-redux';
 import {colors, urls} from '@constants';
 import {httpPost, navigate} from '@services';
@@ -34,10 +35,9 @@ import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
 import {ScrollView} from 'react-native-gesture-handler';
 import {getPromotionsMain} from '@reducers/promotionsMain';
-import {setBioTurnOffAfterLogout} from '@reducers/logout';
 import {getFuel} from '@reducers/fuel';
 // import {getCreditCards} from '@reducers/creditCards';
-import {setFaceIdActiveLocal, setNeedDisableBio} from '@reducers/biometrics';
+import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
 
 type TProps = {
@@ -45,20 +45,25 @@ type TProps = {
   promotions: TPromotion[];
   lang: string;
   refreshing: boolean;
-  needDisableBio: boolean;
+  isBioActiveLocal: boolean;
+  profile: TProfile;
 };
+
+const device_id = DeviceInfo.getUniqueId();
 
 const Home: React.FC<TProps> = ({
   dispatch,
   promotions,
   lang,
   refreshing,
-  needDisableBio,
+  profile,
+  isBioActiveLocal,
 }) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const [cardModalVisible, setCardModalVisible] = useState<boolean>(false);
   const [fuelModalVisible, setFuelModalVisible] = useState<boolean>(false);
+  const [needUpdateBio, setNeedUpdateBio] = useState<boolean>(true);
 
   useEffect(() => {
     setOptions({
@@ -84,16 +89,48 @@ const Home: React.FC<TProps> = ({
   }, [lang]);
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(setBioTurnOffAfterLogout(false));
-    }, 2000);
+    if (needUpdateBio) {
+      if (profile?.setting_bio_auth === true) {
+        setNeedUpdateBio(false);
+        if (isBioActiveLocal) {
+          createKeys();
+        } else {
+          turnOffBio();
+        }
+      } else if (profile?.setting_bio_auth === false) {
+        setNeedUpdateBio(false);
+        dispatch(setFaceIdActiveLocal(false));
+      }
+    }
+  }, [profile?.setting_bio_auth, needUpdateBio]);
+
+  const createKeys = useCallback(async () => {
+    try {
+      const res = await ReactNativeBiometrics.createKeys();
+      const body = await httpPost(urls.biometricsAdd, {
+        public_key: res.publicKey,
+        device_id,
+      });
+      if (body.data.data.user_key) {
+        dispatch(setUserKey(body.data.data.user_key));
+        dispatch(getProfile());
+      }
+    } catch (e) {
+      __DEV__ && console.log('createKeys error biometrics reg');
+    }
   }, []);
 
-  useEffect(() => {
-    if (needDisableBio) {
-      turnOffBio();
+  const turnOffBio = useCallback(async () => {
+    try {
+      const body = await httpPost(urls.profileUpdate, {
+        setting_bio_auth: 0,
+      });
+      dispatch(getProfile());
+      dispatch(setFaceIdActiveLocal(false));
+    } catch (error) {
+      console.log(error);
     }
-  }, [needDisableBio]);
+  }, []);
 
   const openCardModal = useCallback(() => {
     setCardModalVisible(true);
@@ -105,19 +142,6 @@ const Home: React.FC<TProps> = ({
 
   const closeFuelModal = useCallback(() => {
     setFuelModalVisible(false);
-  }, []);
-
-  const turnOffBio = useCallback(async () => {
-    try {
-      dispatch(setFaceIdActiveLocal(false));
-      const body = await httpPost(urls.profileUpdate, {
-        setting_bio_auth: 0,
-      });
-      dispatch(getProfile());
-      dispatch(setNeedDisableBio(false));
-    } catch (error) {
-      console.log(error);
-    }
   }, []);
 
   const navigateToFuelCalculator = useCallback(() => {
@@ -193,6 +217,8 @@ const mapStateToProps = (state: TGlobalState) => ({
   refreshing: state.promotionsMain.refreshing,
   lang: state.appGlobalState.lang,
   needDisableBio: state.biometrics.needDisableBio,
+  profile: state.profile.data,
+  isBioActiveLocal: state.biometrics.faceIdActiveLocal,
 });
 
 export default connect(mapStateToProps)(Home);

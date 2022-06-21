@@ -44,10 +44,10 @@ export type TProfile = {
   count_spent_bonus?: number;
   count_referral?: number;
   fuels: TFuelProfile[];
-  setting_affiliate_program: '0' | '1';
-  setting_bio_auth: '0' | '1';
-  setting_message_dev: '0' | '1';
-  setting_action: '0' | '1';
+  setting_affiliate_program: boolean;
+  setting_bio_auth: boolean;
+  setting_message_dev: boolean;
+  setting_action: boolean;
 };
 
 export type TPromotion = {

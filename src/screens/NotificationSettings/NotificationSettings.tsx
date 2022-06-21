@@ -18,13 +18,13 @@ type TProps = {
 const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
   const {t} = useTranslation();
   const [isPromoActive, setIsPromoActive] = useState<boolean>(
-    !!Number(profile?.setting_action),
+    profile?.setting_action,
   );
   const [isPartnerActive, setIsPartnerActive] = useState<boolean>(
-    !!Number(profile?.setting_affiliate_program),
+    profile?.setting_affiliate_program,
   );
   const [isMessagesActive, setIsMessagesActive] = useState<boolean>(
-    !!Number(profile?.setting_message_dev),
+    profile?.setting_message_dev,
   );
 
   const updateProfile = useCallback(async data => {
@@ -44,21 +44,21 @@ const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
   const togglePromo = useCallback(value => {
     setIsPromoActive(value);
     updateProfile({
-      setting_action: Number(value),
+      setting_action: value,
     });
   }, []);
 
   const togglePartner = useCallback(value => {
     setIsPartnerActive(value);
     updateProfile({
-      setting_affiliate_program: Number(value),
+      setting_affiliate_program: value,
     });
   }, []);
 
   const toggleMessages = useCallback(value => {
     setIsMessagesActive(value);
     updateProfile({
-      setting_message_dev: Number(value),
+      setting_message_dev: value,
     });
   }, []);
 

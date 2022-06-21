@@ -21,6 +21,7 @@ import {
   TouchableOpacity,
   Keyboard,
   ReactNativeBiometrics,
+  Image,
 } from '@components';
 import {TGlobalState} from '@types';
 import {connect} from 'react-redux';
@@ -30,13 +31,14 @@ import {verticalScale} from '@helpers';
 import {setPhone, checkPhone} from '@reducers/login';
 import {setBiometricsType} from '@reducers/biometrics';
 import BiometricsLoginModal from './components/BiometricsLoginModal/BiometricsLoginModal';
+import {assets} from '@assets';
 
 type TProps = {
   dispatch: Dispatch;
   phone: string;
   loading: boolean;
   faceIdActiveLocal: boolean;
-  bioTurnOffAfterLogout: boolean;
+  biometricsType: string;
 };
 
 const Login: React.FC<TProps> = ({
@@ -44,12 +46,13 @@ const Login: React.FC<TProps> = ({
   phone,
   loading,
   faceIdActiveLocal,
-  bioTurnOffAfterLogout,
+  biometricsType,
 }) => {
   const {t} = useTranslation();
   const textInputMaskRef = useRef<TextInput>(null);
   const {setOptions} = useNavigation();
   const [textInputFocus, setTextInputFocus] = useState<boolean>(false);
+  const [bioModalVisible, setBioModalVisible] = useState<boolean>(false);
 
   ReactNativeBiometrics.isSensorAvailable().then(resultObject => {
     const {available, biometryType} = resultObject;
@@ -99,6 +102,10 @@ const Login: React.FC<TProps> = ({
     onChangeText(extracted);
   }, []);
 
+  const onPressBio = useCallback(() => {
+    setBioModalVisible(true);
+  }, []);
+
   const disabled = useMemo(() => phone.length < 9, [phone]);
 
   const textInputBorderColor = useMemo(() => {
@@ -110,11 +117,21 @@ const Login: React.FC<TProps> = ({
     };
   }, [phone, textInputFocus]);
 
+  const bioImage = useMemo(() => {
+    if (biometricsType === 'touchId') {
+      return assets.TOUCH_ID_IOS;
+    }
+    if (biometricsType === 'faceId') {
+      return assets.FACE_ID;
+    }
+    if (biometricsType === 'fingerprint') {
+      return assets.TOUCH_ID;
+    }
+  }, [biometricsType]);
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      {faceIdActiveLocal && !bioTurnOffAfterLogout ? (
-        <BiometricsLoginModal />
-      ) : null}
+      {faceIdActiveLocal && bioModalVisible ? <BiometricsLoginModal /> : null}
       <KeyboardAvoidingView
         keyboardVerticalOffset={verticalScale(90)}
         style={styles.container}>
@@ -135,6 +152,7 @@ const Login: React.FC<TProps> = ({
               mask={'[00] [000] [00] [00]'}
               onChangeText={changeText}
               editable={!loading}
+              returnKeyType="done"
             />
             {phone.length ? (
               <TouchableOpacity
@@ -146,14 +164,27 @@ const Login: React.FC<TProps> = ({
             ) : null}
           </View>
         </View>
-        <UsualButton
-          title={t('button.title.continue')}
-          loading={loading}
-          dark={loading || !disabled}
-          disabled={disabled}
-          buttonStyle={styles.buttonStyle}
-          onPress={submit}
-        />
+        <View style={styles.buttonContainer}>
+          <UsualButton
+            title={t('button.title.continue')}
+            loading={loading}
+            dark={loading || !disabled}
+            disabled={disabled}
+            buttonStyle={styles.buttonStyle}
+            onPress={submit}
+          />
+          {faceIdActiveLocal ? (
+            <TouchableOpacity
+              onPress={onPressBio}
+              style={styles.bioButtonContainer}>
+              <Image
+                style={styles.bioImage}
+                resizeMode="contain"
+                source={bioImage}
+              />
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -162,6 +193,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   phone: state.login.phone,
   loading: state.login.loading,
   faceIdActiveLocal: state.biometrics.faceIdActiveLocal,
+  biometricsType: state.biometrics.biometricsType,
   bioTurnOffAfterLogout: state.logout.bioTurnOffAfterLogout,
 });
 

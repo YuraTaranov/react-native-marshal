@@ -152,6 +152,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
         data={menuItems}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        scrollEnabled={false}
       />
       <LanguageModal
         isVisible={languageModalVisible}

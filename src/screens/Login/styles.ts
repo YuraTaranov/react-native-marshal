@@ -46,7 +46,27 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  buttonContainer: {
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'center',
+	marginBottom: 16
+  },
   buttonStyle: {
-    marginBottom: 16,
+	flex: 1,
+  },
+  bioButtonContainer: {
+	height: 54,
+	width: 54,
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderRadius: 6,
+	borderWidth: 2,
+	borderColor: colors.gray_404353,
+	marginLeft: 16
+  },
+  bioImage: {
+	height: 24,
+	width: 24,
   },
 });
