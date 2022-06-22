@@ -55,12 +55,11 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   const onPressViber = useCallback(() => {
     try {
       Linking.openURL(`viber://chat?number=${viberNumber}`).catch(err => {
-        err.message.startsWith('Unable to open URL') &&
-          Linking.openURL(
-            ios
-              ? 'https://apps.apple.com/ru/app/id382617920'
-              : 'https://play.google.com/store/apps/details?id=com.viber.voip',
-          );
+        Linking.openURL(
+          ios
+            ? 'https://apps.apple.com/ru/app/id382617920'
+            : 'https://play.google.com/store/apps/details?id=com.viber.voip',
+        );
       });
     } catch (error) {
       __DEV__ && console.log(error, 'viber link error');
@@ -70,9 +69,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
   const onPressTelegram = useCallback(() => {
     try {
       Linking.openURL(telegramUrl).catch(err => {
-        if (err.message === `Unable to open URL: ${telegramUrl}`) {
-          Linking.openURL('http://t.me/Marshal_azs');
-        }
+        Linking.openURL('http://t.me/Marshal_azs');
       });
     } catch (error) {
       __DEV__ && console.log('onPressTelegram error', error);
