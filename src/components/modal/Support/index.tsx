@@ -25,7 +25,8 @@ const swipeDirection:
   | undefined = ['down', 'up'];
 
 const tel = '+38 (050) 863 98 52';
-const viberNumber = '%+380508639852';
+const viberNumberIOS = '%+380508639852';
+const viberNumberAndroid = '380508639852';
 const telegramUrl = 'tg://resolve?domain=Marshal_azs';
 
 const Support: React.FC<TProps> = ({support, dispatch}) => {
@@ -54,7 +55,9 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
 
   const onPressViber = useCallback(() => {
     try {
-      Linking.openURL(`viber://chat?number=${viberNumber}`).catch(err => {
+      Linking.openURL(
+        `viber://chat?number=${ios ? viberNumberIOS : viberNumberAndroid}`,
+      ).catch(err => {
         Linking.openURL(
           ios
             ? 'https://apps.apple.com/ru/app/id382617920'
