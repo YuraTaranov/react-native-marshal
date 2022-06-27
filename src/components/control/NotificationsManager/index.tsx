@@ -126,13 +126,20 @@ const NotificationsManager: React.FC<TProps> = ({
             ...remoteMessage.data,
             isRead: true,
           };
-          if (notifications[0].id !== modifiedNotification.id) {
+          if (notifications.length) {
+            if (notifications[0].id !== modifiedNotification.id) {
+              setTimeout(() => {
+                dispatch(
+                  setNotifications(
+                    [modifiedNotification, ...notifications].slice(0, 40),
+                  ),
+                );
+                handleNotification(modifiedNotification, remoteMessage.badge);
+              }, 1000);
+            }
+          } else {
             setTimeout(() => {
-              dispatch(
-                setNotifications(
-                  [modifiedNotification, ...notifications].slice(0, 40),
-                ),
-              );
+              dispatch(setNotifications([modifiedNotification]));
               handleNotification(modifiedNotification, remoteMessage.badge);
             }, 1000);
           }
