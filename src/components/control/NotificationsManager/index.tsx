@@ -157,7 +157,7 @@ const NotificationsManager: React.FC<TProps> = ({
   const checkPermission = useCallback(async () => {
     const enabled = await messaging().hasPermission();
     if (enabled === 1) {
-      console.log('NOTIFICATIONS PERMISSIONS ENABLED');
+      __DEV__ && console.log('NOTIFICATIONS PERMISSIONS ENABLED');
       if (!messaging().isDeviceRegisteredForRemoteMessages) {
         await messaging().registerDeviceForRemoteMessages();
       }

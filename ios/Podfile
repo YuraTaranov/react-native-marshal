@@ -20,7 +20,6 @@ target 'Marshal' do
   pod 'react-native-google-maps', :path => rn_maps_path
 
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-  pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
   pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"

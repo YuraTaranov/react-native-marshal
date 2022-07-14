@@ -7,6 +7,7 @@ export const urls = {
   logout: 'logout',
   sendFcmToken: 'set-notification-id',
   getProfile: 'profile/show',
+  deleteProfile: 'profile/destroy',
   profileUpdate: 'profile/update',
   addCardOld: 'marshal-card/add-card',
   addCardNew: 'marshal-card/new-card',

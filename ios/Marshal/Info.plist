@@ -71,8 +71,6 @@
 	<string>$(PRODUCT_NAME) намагається отримати доступ до вашого місця розташування для відображення вашої позиції на карті</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) намагається отримати доступ до камери щоб відсканувати бонусну карту</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>User tracking usage</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>
@@ -106,7 +104,6 @@
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
-		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -16,6 +16,7 @@ import {
   FlatList,
   OpenAppSettings,
   ConfirmModal,
+  Alert,
 } from '@components';
 import {TGlobalState, TBiometricsType} from '@types';
 import {connect} from 'react-redux';
@@ -25,6 +26,7 @@ import {navigate} from '@services';
 import {logout} from '@reducers/logout';
 import BioAuthSwitch from './components/BioAuthSwitch/BioAuthSwitch';
 import LanguageModal from './components/LanguageModal/LanguageModal';
+import {deleteProfile} from '@reducers/profile';
 
 type TProps = {
   dispatch: Dispatch;
@@ -43,6 +45,16 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
   const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
   const [languageModalVisible, setLanguageModalVisible] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={onPressLogout}>
+          <Icon size={24} name="logout" color={colors.white_FFFFFF} />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const onPressLogout = useCallback(() => {
     setLogoutModalVisible(true);
@@ -65,15 +77,24 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
     setLanguageModalVisible(false);
   }, []);
 
-  useEffect(() => {
-    setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={onPressLogout}>
-          <Icon size={24} name="logout" color={colors.white_FFFFFF} />
-        </TouchableOpacity>
-      ),
-    });
+  const deleteAcc = useCallback(() => {
+    dispatch(deleteProfile());
   }, []);
+
+  const openDeleteProfileAlert = useCallback(() => {
+    Alert.alert('', t('Ви впевнені, що хочете видалити ваш акаунт?'), [
+      {
+        text: t('Так'),
+        onPress: deleteAcc,
+        style: 'default',
+      },
+      {
+        text: t('Ні'),
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+  }, [t]);
 
   const menuItems: TMenuItem[] = useMemo(() => {
     return [
@@ -108,6 +129,10 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
           navigate('ProfileStack', {
             screen: 'UseTerms',
           }),
+      },
+      {
+        name: t('Видалити акаунт'),
+        onPress: () => openDeleteProfileAlert(),
       },
     ];
   }, [t]);
