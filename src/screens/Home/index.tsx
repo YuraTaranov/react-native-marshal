@@ -68,11 +68,13 @@ const Home: React.FC<TProps> = ({
   useEffect(() => {
     setOptions({
       headerLeft: () => <QuestionButton />,
-      headerRight: () => (
-        <TouchableOpacity onPress={openCardModal}>
-          <Icon size={24} name="bonus_card" color={colors.white_FFFFFF} />
-        </TouchableOpacity>
-      ),
+      headerRight: profile?.card
+        ? () => (
+            <TouchableOpacity onPress={openCardModal}>
+              <Icon size={24} name="bonus_card" color={colors.white_FFFFFF} />
+            </TouchableOpacity>
+          )
+        : undefined,
     });
     dispatch(getProfile());
     dispatch(getReferralLink());

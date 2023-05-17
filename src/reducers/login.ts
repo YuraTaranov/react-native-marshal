@@ -90,7 +90,7 @@ export function* checkCodeAsync(action: any) {
     if (body.data.data) {
       yield put(setProfile(body.data.data));
       yield put(setToken(body.data.data.bearer_token));
-      if (body.data.data.card) {
+      if (body.data.data.name) {
         yield put(setIsUserAuthorized(true));
         yield put(resetLogin());
       } else {
@@ -125,20 +125,20 @@ export function* loginWithBiometricsAsync(action: any) {
       yield put(setFaceIdActiveLocal(false));
     }
   } catch (error) {
-	if (error?.data?.message === 'The given data was invalid.') {
-		yield put(setFaceIdActiveLocal(false));
-		return Alert.alert(
-			'',
-			i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
-		  );
-	} else if (error?.status === 500) {
-		Alert.alert(
-			'',
-			i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
-		  );
-	} else {
-		errorHandler(error, 'loginWithBiometricsAsync');
-	}
+    if (error?.data?.message === 'The given data was invalid.') {
+      yield put(setFaceIdActiveLocal(false));
+      return Alert.alert(
+        '',
+        i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
+      );
+    } else if (error?.status === 500) {
+      Alert.alert(
+        '',
+        i18next.t('Помилка, авторизуйтесь за допомогою логіна і пароля'),
+      );
+    } else {
+      errorHandler(error, 'loginWithBiometricsAsync');
+    }
   } finally {
     yield put(setLoader(false));
   }

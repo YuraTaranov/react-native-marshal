@@ -19,15 +19,17 @@ import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
 import {urls, ios, colors} from '@constants';
 import {connect} from 'react-redux';
-import {TGlobalState, TProfile} from '@types';
+import {TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
 import {Alert} from 'react-native';
+import {setIsUserAuthorized} from '@reducers/appGlobalState';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
   dispatch: Dispatch;
   isRegistration: boolean;
   profile: TProfile;
+  biometricsType: TBiometricsType;
 };
 
 const loyaltyUrl = 'http://marshal.ua/rules/';
@@ -40,6 +42,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   appGlobalState,
   isRegistration,
   profile,
+  biometricsType,
 }) => {
   const {t} = useTranslation();
   const [nameValue, setNameValue] = useState<string>(profile?.name || '');
@@ -177,7 +180,9 @@ const ProfileUpdate: React.FC<TProps> = ({
       if (body.status === 200) {
         dispatch(setProfile(body.data.data));
         if (isRegistration) {
-          navigate('BonusCardCheck');
+          biometricsType !== 'none'
+            ? navigate('Biometrics') // BonusCardCheck
+            : dispatch(setIsUserAuthorized(true));
         } else {
           Alert.alert('', t('Дані профілю оновлені'));
           goBack();
@@ -390,6 +395,7 @@ const ProfileUpdate: React.FC<TProps> = ({
 const mapStateToProps = (state: TGlobalState) => ({
   appGlobalState: state.appGlobalState,
   profile: state.profile.data,
+  biometricsType: state.biometrics.biometricsType,
 });
 
 export default connect(mapStateToProps)(ProfileUpdate);

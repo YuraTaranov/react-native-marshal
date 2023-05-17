@@ -59,7 +59,9 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
   const [modalType, setModalType] = useState<TModalType>('brand');
 
   useEffect(() => {
-    if (carToEdit) dispatch(getModelsCar(car.brand.id));
+    if (carToEdit) {
+      dispatch(getModelsCar(car.brand.id));
+    }
   }, []);
 
   useEffect(() => {
@@ -86,8 +88,10 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
 
   const onChangeTank = useCallback(
     val => {
-      if (val.startsWith('0')) return;
-      const formattedValue = val ? val.replace(/[^0-9.]/g, '') : val;
+      if (val.startsWith('0')) {
+        return;
+      }
+      const formattedValue = val ? val.replace(/[^0-9]/g, '') : val;
       setCar({...car, tank: {id: '', name: formattedValue}});
     },
     [car],

@@ -20,7 +20,7 @@ const AboutApp: React.FC<TProps> = ({dispatch, settings}) => {
 
   VersionCheck.needUpdate()
     .then(async (res: any) => {
-      if (res.isNeeded) {
+      if (res?.isNeeded) {
         setStoreUrl(res.storeUrl);
         setIsNeedUpdate(true);
       }

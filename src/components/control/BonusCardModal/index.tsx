@@ -16,11 +16,13 @@ const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal, profile}) => {
   const {t} = useTranslation();
 
   const cardNumber = useMemo(() => {
-    if (!!profile?.card) {
+    if (profile?.card) {
       return String(profile.card)
         .replace(/\D/, '')
         .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4');
-    } else return '';
+    } else {
+      return '';
+    }
   }, [profile?.card]);
 
   return (

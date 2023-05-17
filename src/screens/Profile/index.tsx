@@ -48,11 +48,6 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   const menuItems: TMenuItem[] = useMemo(() => {
     return [
       {
-        icon: 'creditcard',
-        name: t('Карта лояльності Marshal'),
-        onPress: () => openBonusCardModal(),
-      },
-      {
         icon: 'bell',
         name: t('Сповіщення'),
         onPress: () =>
@@ -99,7 +94,9 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         .replace(/\D/, '')
         .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, 'XXXX XXXX XXXX $4');
       // .replace(/(\d{4})(\d{6})/, 'XXXX $2');
-    } else return 'XXXX XXXX XXXX XXXX';
+    } else {
+      return 'XXXX XXXX XXXX XXXX';
+    }
     // } else return 'XXXX XXXXXX';
   }, [profile?.card]);
 
@@ -158,6 +155,17 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
 
   return (
     <View style={styles.container}>
+      {profile?.card ? (
+        <ProfileMenuItem
+          item={{
+            icon: 'creditcard',
+            name: t('Карта лояльності Marshal'),
+            onPress: () => openBonusCardModal(),
+          }}
+          newNotificationsLength={newNotificationsLength}
+          cardNumber={cardNumber}
+        />
+      ) : null}
       <FlatList
         data={menuItems}
         renderItem={renderItem}
