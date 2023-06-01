@@ -1,6 +1,6 @@
 export const urls = {
   baseDevURL: 'https://dev.marshal.myapp.com.ua/api/',
-  baseProdURL: 'https://dev.marshal.myapp.com.ua/api/',
+  baseProdURL: 'https://prod.marshal.myapp.com.ua/api/',
 
   checkPhone: 'check-phone',
   login: 'login',

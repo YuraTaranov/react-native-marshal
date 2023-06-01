@@ -2,9 +2,8 @@ import axios from 'axios';
 import {TGenerateOptions, TFormatResponse} from '@types';
 import storage from '../../store';
 import {urls} from '@constants';
-import { setIsUserAuthorized, setToken } from '@reducers/appGlobalState';
+import {setIsUserAuthorized, setToken} from '@reducers/appGlobalState';
 
-// FIXME: add prod url
 const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
 
 const instance = axios.create();
