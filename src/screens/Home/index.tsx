@@ -192,7 +192,7 @@ const Home: React.FC<TProps> = ({
             onPress={navigateToFuelCalculator}>
             <Icon
               size={24}
-              name="calculator-duotone"
+              name="calculator-duotone-2"
               color={colors.green_009F30}
             />
             <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
@@ -200,7 +200,7 @@ const Home: React.FC<TProps> = ({
           <TouchableOpacity
             style={styles.buttonContainerFuel}
             onPress={navigateToFuelPurchase}>
-            <Icon size={24} name="gas" color={colors.green_009F30} />
+            <Icon size={24} name="gas-2" color={colors.green_009F30} />
             <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
           </TouchableOpacity>
         </View>
