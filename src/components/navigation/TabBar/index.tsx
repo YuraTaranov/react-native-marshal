@@ -30,7 +30,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         onPress={jump('Stations')}>
         <Icon
           name={generalIndex === 0 ? 'station-3' : 'station-2'}
-          size={24}
+          size={generalIndex === 0 ? 24 : 24}
           color={generalIndex === 0 ? colors.red_D61920 : colors.black_58585B}
         />
         <Text style={[styles.text, generalIndex === 0 && styles.textActive]}>
@@ -43,7 +43,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         onPress={jump('Promotions')}>
         <Icon
           name={generalIndex === 1 ? 'promotion-3' : 'promotion-2'}
-          size={24}
+          size={generalIndex === 1 ? 24 : 24}
           color={generalIndex === 1 ? colors.red_D61920 : colors.black_58585B}
         />
         <Text style={[styles.text, generalIndex === 1 && styles.textActive]}>
@@ -56,7 +56,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         onPress={jump('Home')}>
         <Icon
           name={generalIndex === 2 ? 'home-3' : 'home-2'}
-          size={24}
+          size={generalIndex === 2 ? 24 : 24}
           color={generalIndex === 2 ? colors.red_D61920 : colors.black_58585B}
         />
         <Text style={[styles.text, generalIndex === 2 && styles.textActive]}>
@@ -69,7 +69,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         onPress={jump('Bonuses')}>
         <Icon
           name={generalIndex === 3 ? 'gift-3' : 'gift-2'}
-          size={24}
+          size={generalIndex === 3 ? 24 : 24}
           color={generalIndex === 3 ? colors.red_D61920 : colors.black_58585B}
         />
         <Text style={[styles.text, generalIndex === 3 && styles.textActive]}>
@@ -82,7 +82,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         onPress={jump('Profile')}>
         <Icon
           name={generalIndex === 4 ? 'profile-3' : 'profile-2'}
-          size={24}
+          size={generalIndex === 4 ? 24 : 24}
           color={generalIndex === 4 ? colors.red_D61920 : colors.black_58585B}
         />
         <Text style={[styles.text, generalIndex === 4 && styles.textActive]}>

@@ -33,4 +33,7 @@ export const assets = {
   NO_NOTIFICATIONS: require('./images/no_notifications.png'),
   NO_SEARCH: require('./images/no_search.png'),
   BUY_FUEL_IN_PROGRESS: require('./images/in_progress.png'),
+  FINGERPRINT: require('./images/fingerprint.png'),
+  CARD_LOGO: require('./images/card_logo.png'),
+  CARD_BACKGROUND: require('./images/card_background.png'),
 };

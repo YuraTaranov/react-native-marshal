@@ -1,5 +1,11 @@
 import React from 'react';
-import {useCallback, useTranslation, useState, useEffect} from '@hooks';
+import {
+  useCallback,
+  useTranslation,
+  useState,
+  useEffect,
+  useMemo,
+} from '@hooks';
 import {
   View,
   Text,
@@ -8,11 +14,16 @@ import {
   Modal,
   RadioButtonCustom,
   FlatList,
+  QRCode,
+  Image,
+  GradientBorder,
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {TProfile, TGlobalState, TFuelProfile, TFuel} from '@types';
 import {colors, hitSlop} from '@constants';
+import {Animated, ImageBackground} from 'react-native';
+import {assets} from '@assets';
 
 type TRadioButtonCBParams = {
   type: number;
@@ -34,6 +45,8 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
   };
   const [fuelType, setFuelType] = useState<TFuelProfile>(initialFuel);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [flipped, setFlipped] = useState(false);
+  const animationValue = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
     // find and set the first type of fuel from the profile, the liters of which are not equal to 0, or type "95" if all 0
@@ -44,6 +57,153 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
       }
     }
   }, [profile?.fuels]);
+
+  const cardNumber = useMemo(() => {
+    if (profile?.card) {
+      return String(profile.card)
+        .replace(/\D/, '')
+        .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4');
+    } else {
+      return '';
+    }
+  }, [profile?.card]);
+
+  const flipCard = () => {
+    setFlipped(!flipped);
+    Animated.spring(animationValue, {
+      toValue: flipped ? 0 : 1,
+      friction: 8,
+      tension: 10,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const frontInterpolate = animationValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['0deg', '90deg', '180deg'],
+  });
+
+  const backInterpolate = animationValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['180deg', '90deg', '0deg'],
+  });
+
+  const frontAnimatedStyle = {
+    transform: [{rotateY: frontInterpolate}],
+  };
+
+  const backAnimatedStyle = {
+    transform: [{rotateY: backInterpolate}],
+  };
+
+  const renderFront = () => (
+    <View>
+      <Animated.View
+        style={[styles.card, styles.frontCard, frontAnimatedStyle]}>
+        <ImageBackground
+          source={assets.CARD_BACKGROUND}
+          style={styles.imageBackgroundContainer}
+          imageStyle={styles.imageBackground}>
+          <TouchableOpacity
+            onPress={flipCard}
+            activeOpacity={1}
+            disabled={!cardNumber}
+            style={styles.flipContainer}>
+            <View style={styles.fingerprintContainer}>
+              {cardNumber ? (
+                <Image
+                  source={assets.FINGERPRINT}
+                  style={styles.fingerprint}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </View>
+          </TouchableOpacity>
+          <Image
+            source={assets.CARD_LOGO}
+            style={styles.logo}
+            resizeMode="cover"
+          />
+          <GradientBorder />
+          <View style={styles.bonusContainer}>
+            <Text style={styles.bonusValue}>{`${
+              profile?.count_bonus || 0
+            }`}</Text>
+            <Text style={[styles.bonusValue, styles.bonusValueRegular]}>{`${t(
+              'балів',
+            )}`}</Text>
+          </View>
+          <GradientBorder />
+          <View style={styles.fuelContainer}>
+            <TouchableOpacity
+              style={styles.fuelTypeContainer}
+              onPress={openModal}>
+              <View>
+                <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
+                <View style={styles.fuelTypeValueContainer}>
+                  <Text style={styles.fuelTypeValue}>{`${t(
+                    fuelType.name,
+                  )}`}</Text>
+                  <Icon
+                    name="arrow-down"
+                    size={16}
+                    color={colors.white_FFFFFF}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.fuelValueContainer}>
+              <View>
+                <Text style={styles.fuelTitle}>{t('Баланс палива')}</Text>
+                <Text style={styles.fuelValue}>
+                  {`${fuelType.liters}`}
+                  <Text
+                    style={[styles.fuelValue, styles.fuelValueRegular]}>{` ${t(
+                    'л',
+                  )}`}</Text>
+                </Text>
+              </View>
+            </View>
+          </View>
+          <GradientBorder />
+        </ImageBackground>
+      </Animated.View>
+    </View>
+  );
+
+  const renderBack = () => (
+    <View>
+      <Animated.View style={[styles.card, styles.backCard, backAnimatedStyle]}>
+        <TouchableOpacity
+          onPress={flipCard}
+          activeOpacity={1}
+          style={{width: '100%'}}>
+          <View style={styles.fingerprintContainer}>
+            <Image
+              source={assets.FINGERPRINT}
+              style={styles.fingerprint}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.bonusCardNumber}>{t('Карта лояльності')}</Text>
+        {profile?.card ? (
+          <>
+            <Text style={{...styles.bonusCardNumber, marginTop: 4}}>
+              {cardNumber}
+            </Text>
+            <View style={styles.qrCodeContainer}>
+              <QRCode
+                size={120}
+                value={cardNumber}
+                backgroundColor="transparent"
+              />
+            </View>
+          </>
+        ) : null}
+      </Animated.View>
+    </View>
+  );
 
   const openModal = useCallback(() => {
     fuel?.length && setIsModalVisible(true);
@@ -87,24 +247,8 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.bonusValue}>{`${profile?.count_bonus || 0} ${t(
-          'балів',
-        )}`}</Text>
-      </View>
-      <View style={styles.fuelContainer}>
-        <TouchableOpacity style={styles.fuelTypeContainer} onPress={openModal}>
-          <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
-          <View style={styles.fuelTypeValueContainer}>
-            <Text style={styles.fuelTypeValue}>{`${t(fuelType.name)}`}</Text>
-            <Icon name="arrow-down" size={24} color={colors.white_FFFFFF} />
-          </View>
-        </TouchableOpacity>
-        <View style={styles.fuelValueContainer}>
-          <Text style={styles.fuelTitle}>{t('Баланс палива')}</Text>
-          <Text style={styles.fuelValue}>{`${fuelType.liters} ${t('л')}`}</Text>
-        </View>
-      </View>
+      {renderBack()}
+      {renderFront()}
       <Modal
         isVisible={isModalVisible}
         backdropTransitionOutTiming={0}

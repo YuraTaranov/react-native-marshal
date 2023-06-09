@@ -17,10 +17,7 @@ const App: React.FC = () => {
   return (
     <Provider store={storage.store}>
       <PersistGate loading={null} persistor={storage.persistor}>
-        <StatusBar
-          backgroundColor={colors.green_27A74C}
-          barStyle="light-content"
-        />
+        <StatusBar barStyle="dark-content" />
         <Loader>
           <AppNavigator />
           <DeepLinksManager />

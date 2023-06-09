@@ -13,15 +13,15 @@ export default StyleSheet.create({
     paddingBottom: 16,
   },
   dotStyle: {
-    width: 8,
-    height: 8,
+    width: 6,
+    height: 6,
     borderRadius: 30,
-    backgroundColor: colors.black_000000,
+    backgroundColor: colors.red_D61920,
   },
   dotsStyleInactive: {
     marginHorizontal: 0,
-    width: 8,
-    height: 8,
+    width: 6,
+    height: 6,
     backgroundColor: colors.gray_E1E1E8,
   },
 });
