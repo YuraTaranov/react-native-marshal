@@ -133,12 +133,16 @@ export default StyleSheet.create({
     width: 35,
     height: 35,
   },
-  logo: {
+  logoContainer: {
     width: width / 1.5,
     height: 50,
     marginBottom: 16,
     position: 'absolute',
     top: 30,
+  },
+  logo: {
+    width: '100%',
+    height: '100%',
   },
   frontCard: {
     position: 'absolute',

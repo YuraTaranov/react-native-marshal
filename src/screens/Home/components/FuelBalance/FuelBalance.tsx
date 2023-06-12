@@ -119,11 +119,16 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
               ) : null}
             </View>
           </TouchableOpacity>
-          <Image
-            source={assets.CARD_LOGO}
-            style={styles.logo}
-            resizeMode="cover"
-          />
+          <TouchableOpacity
+            onPress={flipCard}
+            style={styles.logoContainer}
+            activeOpacity={1}>
+            <Image
+              source={assets.CARD_LOGO}
+              style={styles.logo}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
           <GradientBorder />
           <View style={styles.bonusContainer}>
             <Text style={styles.bonusValue}>{`${
@@ -137,6 +142,7 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
           <View style={styles.fuelContainer}>
             <TouchableOpacity
               style={styles.fuelTypeContainer}
+              disabled={flipped}
               onPress={openModal}>
               <View>
                 <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
