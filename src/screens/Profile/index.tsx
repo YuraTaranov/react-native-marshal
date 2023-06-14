@@ -127,12 +127,12 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
     setOptions({
       headerLeft: () => (
         <TouchableOpacity onPress={onPressSupport}>
-          <Icon size={24} name="support" color={colors.white_FFFFFF} />
+          <Icon size={24} name="support" color={colors.black_000000} />
         </TouchableOpacity>
       ),
       headerRight: () => (
         <TouchableOpacity onPress={onPressSettings}>
-          <Icon size={24} name="settings" color={colors.white_FFFFFF} />
+          <Icon size={24} name="settings" color={colors.black_000000} />
         </TouchableOpacity>
       ),
     });

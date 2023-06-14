@@ -28,7 +28,7 @@ const AuthStackNavigator: React.FC<TProps> = ({}) => {
         screenOptions={{
           ...defaultStackOptions,
           headerBackImage: () => (
-            <Icon name={'left'} color={colors.white_FFFFFF} size={24} />
+            <Icon name={'left'} color={colors.black_000000} size={24} />
           ),
         }}>
         <AuthStack.Screen

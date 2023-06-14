@@ -39,7 +39,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={onPressSettings}>
-          <Icon size={24} name="settings" color={colors.white_FFFFFF} />
+          <Icon size={24} name="settings" color={colors.black_000000} />
         </TouchableOpacity>
       ),
     });
@@ -60,7 +60,9 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
 
   const onPressNotification = useCallback(
     item => () => {
-      if (item.type !== 'text') dispatch(getPromotion(item.data_id));
+      if (item.type !== 'text') {
+        dispatch(getPromotion(item.data_id));
+      }
     },
     [],
   );
