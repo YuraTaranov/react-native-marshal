@@ -25,7 +25,6 @@ const PromotionView: React.FC<TProps> = ({
   disabled = false,
 }) => {
   const {t} = useTranslation();
-  //   console.log(JSON.stringify(item, null, 2));
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
 
   const promoEndDate = useMemo(() => {

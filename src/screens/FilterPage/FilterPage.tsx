@@ -131,7 +131,11 @@ const FilterPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
     setOptions({
       title: t('Filters'),
       headerRight: () => (
-        <RightButton onPress={cleaning} title={t('Cleaning')} />
+        <RightButton
+          onPress={cleaning}
+          title={t('Cleaning')}
+          color={colors.black_000000}
+        />
       ),
     });
   }, [cleaning, setOptions, t]);

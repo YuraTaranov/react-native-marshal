@@ -59,7 +59,7 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
   }, [refreshing]);
 
   const bonusesValue = useMemo(() => {
-    return profile?.count_bonus ? `${profile.count_bonus} ${t('балів')}` : '';
+    return `${profile?.count_bonus || 0}`;
   }, [profile?.count_bonus, t]);
 
   const activeReferrals = useMemo(() => {
