@@ -1,23 +1,17 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
-import {
-  View,
-  Text,
-  Image,
-  Icon,
-  UsualButton,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-} from '@components';
-import {TGlobalState, TProfile} from '@types';
 import {connect} from 'react-redux';
-import styles from './styles';
-import {assets} from '@assets';
-import {colors, declension} from '@constants';
+import {Dispatch} from 'redux';
+
+import {useCallback, useMemo, useNavigation, useState, useEffect} from '@hooks';
+import {View, ScrollView, RefreshControl, QuestionButton} from '@components';
+import {colors} from '@constants';
 import {navigate} from '@services';
 import {getProfile} from '@reducers/profile';
-import {Dispatch} from 'redux';
+
+import styles from './styles';
+import {BonusCard, BonusInfoBlock, InviteButton} from './components';
+//types
+import {TGlobalState, TProfile} from '@types';
 
 type TProps = {
   dispatch: Dispatch;
@@ -25,14 +19,22 @@ type TProps = {
 };
 
 const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
-  const {t} = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
 
-  const onPressTerms = useCallback(() => {
-    navigate('BonusesStack', {
-      screen: 'LoyaltyTerms',
+  const {count_bonus, count_spent_bonus} = profile;
+  const {setOptions} = useNavigation();
+
+  useEffect(() => {
+    setOptions({
+      headerLeft: () => <QuestionButton />,
     });
   }, []);
+
+  // const onPressTerms = useCallback(() => {
+  //   navigate('BonusesStack', {
+  //     screen: 'LoyaltyTerms',
+  //   });
+  // }, []);
 
   const onPressInviteFriends = useCallback(() => {
     navigate('BonusesStack', {
@@ -58,53 +60,30 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
     );
   }, [refreshing]);
 
-  const bonusesValue = useMemo(() => {
-    return `${profile?.count_bonus || 0}`;
-  }, [profile?.count_bonus, t]);
-
-  const activeReferrals = useMemo(() => {
-    return profile?.count_referral
-      ? `${profile.count_referral} ${declension(profile.count_referral, [
-          t('особа'),
-          t('особи'),
-          t('осіб'),
-        ])}`
-      : '';
-  }, [profile?.count_referral, t]);
+  // const activeReferrals = useMemo(() => {
+  //   return profile?.count_referral
+  //     ? `${profile.count_referral} ${declension(profile.count_referral, [
+  //         t('особа'),
+  //         t('особи'),
+  //         t('осіб'),
+  //       ])}`
+  //     : '';
+  // }, [profile?.count_referral, t]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image source={assets.BONUSES_GIFT} style={styles.headerImage} />
-        <Text style={styles.headerBalance}>{t('Баланс бонусів')}</Text>
-        <Text style={styles.headerValue}>{bonusesValue}</Text>
-      </View>
+      <BonusCard count_bonus={count_bonus} />
       <ScrollView refreshControl={refreshControl}>
-        <View style={styles.borderBottomView}>
-          <Text style={styles.borderBottomViewTitle}>
-            {t('Активні реферали')}:
-          </Text>
-          <Text style={styles.borderBottomViewValue}>
-            {activeReferrals || 0}
-          </Text>
-        </View>
-        <View style={styles.borderBottomView}>
-          <Text style={styles.borderBottomViewTitle}>{t('Використано')}:</Text>
-          <Text style={styles.borderBottomViewValue}>{`${
-            profile?.count_spent_bonus || 0
-          } ${t('балів')}`}</Text>
-        </View>
+        <BonusInfoBlock
+          count_bonus={count_bonus}
+          count_spent_bonus={count_spent_bonus}
+        />
+        <InviteButton onPressHandler={onPressInviteFriends} />
         {/* <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>
           <Text style={styles.termsTitle}>{t('Умови програми')}</Text>
           <Icon size={24} name="right" />
         </TouchableOpacity> */}
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <UsualButton
-          title={t('Запросити друзів')}
-          onPress={onPressInviteFriends}
-        />
-      </View>
     </View>
   );
 };

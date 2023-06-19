@@ -4,6 +4,7 @@ export const colors = {
   red_D61920: '#D61920',
   red_A60E0D: '#A60E0D',
   red_C76B6B: '#C76B6B',
+  red_CA001A: '#CA001A',
   black_000000: '#000000',
   black_1B1B1B: '#1B1B1B',
   black_1E1A1A: '#1E1A1A',
