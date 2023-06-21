@@ -1,8 +1,10 @@
 import React from 'react';
+
 import {useMemo} from '@hooks';
-import {View, Text, TouchableOpacity, Icon} from '@components';
+import {View, Text, TouchableOpacity, GradientBorder} from '@components';
+import {gradients} from '@constants';
+
 import styles from './styles';
-import {colors} from '@constants';
 
 type TProps = {
   item: {
@@ -32,12 +34,11 @@ const ProfileMenuItem: React.FC<TProps> = ({
 
   return (
     <TouchableOpacity style={styles.container} onPress={item.onPress}>
-      <Icon name={item.icon} color={colors.black_1E1A1A} size={24} />
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{item.name}</Text>
         {additionalText}
+        <GradientBorder colors={gradients.gray} />
       </View>
-      <Icon name="right" color={colors.black_1E1A1A} size={24} />
     </TouchableOpacity>
   );
 };

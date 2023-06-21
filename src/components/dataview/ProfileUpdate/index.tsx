@@ -12,12 +12,13 @@ import {
   UsualButton,
   ProfileUpdateModal,
   formatWithMask,
+  GradientBorder,
 } from '@components';
 import styles from './styles';
 import moment from 'moment';
 import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
-import {urls, ios, colors} from '@constants';
+import {urls, ios, colors, gradients} from '@constants';
 import {connect} from 'react-redux';
 import {TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
@@ -273,22 +274,40 @@ const ProfileUpdate: React.FC<TProps> = ({
               {t('text.enterYourPersonalInformation')}
             </Text>
           ) : null}
-          <MaterialInput
-            returnKeyType={'default'}
-            value={nameValue}
-            onChangeText={setNameValue}
-            maxLength={25}
-            lineWidth={0.5}
-            label={t('textInput.name')}
-          />
-          <MaterialInput
-            returnKeyType={'default'}
-            value={surnameValue}
-            lineWidth={0.5}
-            maxLength={30}
-            onChangeText={setSurnameValue}
-            label={t('textInput.surname')}
-          />
+          <>
+            <MaterialInput
+              returnKeyType={'default'}
+              value={nameValue}
+              onChangeText={setNameValue}
+              maxLength={25}
+              textColor={colors.black_1A1718}
+              lineWidth={0}
+              activeLineWidth={0}
+              label={t('textInput.name')}
+              isUpperCase
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
+            />
+          </>
+          <>
+            <MaterialInput
+              returnKeyType={'default'}
+              value={surnameValue}
+              lineWidth={0}
+              activeLineWidth={0}
+              textColor={colors.black_1A1718}
+              maxLength={30}
+              onChangeText={setSurnameValue}
+              label={t('textInput.surname')}
+              isUpperCase
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
+            />
+          </>
           <View>
             <TouchableOpacity
               style={styles.buttonTI}
@@ -296,10 +315,20 @@ const ProfileUpdate: React.FC<TProps> = ({
             />
             <MaterialInput
               renderRightAccessory
-              rightAccessoryName={'calendar-dates'}
+              rightAccessoryColor={colors.gray_888A8E}
+              rightAccessoryName={'arrow-down'}
               value={dateValue}
               label={t('textInput.dateOfBirth')}
               disabled={true}
+              textColor={colors.black_1A1718}
+              disabledLineWidth={0}
+              lineWidth={0}
+              activeLineWidth={0}
+              isUpperCase
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
             />
           </View>
           <View>
@@ -309,11 +338,21 @@ const ProfileUpdate: React.FC<TProps> = ({
             />
             <MaterialInput
               renderRightAccessory
+              rightAccessoryColor={colors.gray_888A8E}
               rightAccessoryName={'arrow-down'}
               returnKeyType={'next'}
               value={genderValue.name}
+              textColor={colors.black_1A1718}
               label={t('textInput.sex')}
               disabled={true}
+              disabledLineWidth={0}
+              lineWidth={0}
+              activeLineWidth={0}
+              isUpperCase
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
             />
           </View>
           {isRegistration ? (
@@ -332,23 +371,29 @@ const ProfileUpdate: React.FC<TProps> = ({
             </View>
           ) : null}
           {!isRegistration ? (
-            <MaterialInput
-              keyboardType={'number-pad'}
-              returnKeyType={'done'}
-              value={formatPhone.masked}
-              onChangeText={setPhoneValue}
-              lineWidth={0.5}
-              maxLength={12}
-              label={t('Номер телефону')}
-              prefix="+380"
-              onFocus={onPhoneFocus}
-              onBlur={onPhoneBlur}
-              disabled={true}
-              textColor={colors.gray_8D909D}
-              baseColor={
-                isPhoneFocus ? colors.black_000000 : colors.gray_8D909D
-              }
-            />
+            <>
+              <MaterialInput
+                keyboardType={'number-pad'}
+                returnKeyType={'done'}
+                value={formatPhone.masked}
+                onChangeText={setPhoneValue}
+                maxLength={12}
+                label={t('Номер телефону')}
+                prefix="+380"
+                onFocus={onPhoneFocus}
+                textColor={colors.gray_8D909D}
+                onBlur={onPhoneBlur}
+                disabled={true}
+                isUpperCase
+                disabledLineWidth={0}
+                lineWidth={0}
+                activeLineWidth={0}
+              />
+              <GradientBorder
+                colors={gradients.gray}
+                style={styles.gradientBorder}
+              />
+            </>
           ) : null}
         </View>
       </View>
@@ -363,22 +408,22 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
         />
       ) : null}
-      <View
-        style={{
-          ...styles.buttonContainer,
-          marginBottom: !isRegistration ? 24 : 0,
-        }}>
-        <UsualButton
-          title={
-            isRegistration ? t('button.title.continue') : t('Прийняти зміни')
-          }
-          loading={loading}
-          dark={loading}
-          disabled={isButtonDisabled}
-          buttonStyle={styles.usualButton}
-          onPress={submit}
-        />
-      </View>
+      {isRegistration ? (
+        <View
+          style={{
+            ...styles.buttonContainer,
+            marginBottom: !isRegistration ? 24 : 0,
+          }}>
+          <UsualButton
+            title={t('button.title.continue')}
+            loading={loading}
+            dark={loading}
+            disabled={isButtonDisabled}
+            buttonStyle={styles.usualButton}
+            onPress={submit}
+          />
+        </View>
+      ) : null}
       <ProfileUpdateModal
         isModalVisible={isModalVisible}
         closeModal={closeModal}

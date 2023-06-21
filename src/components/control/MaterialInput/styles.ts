@@ -6,6 +6,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 0,
     backgroundColor: colors.white_FFFFFF,
+    paddingBottom: 0,
   },
   accessoryContainer: {
     zIndex: 2,

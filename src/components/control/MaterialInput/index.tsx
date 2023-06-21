@@ -18,6 +18,7 @@ const MaterialInput: React.FC<TProps> = ({
   onSubmit,
   onRef,
   activeLineWidth = 2,
+  disabledLineWidth = 0.5,
   baseColor = colors.gray_8D909D,
   disabled,
   error,
@@ -36,6 +37,7 @@ const MaterialInput: React.FC<TProps> = ({
   rightAccessoryName,
   tintColor,
   value,
+  isUpperCase = false,
 }) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
@@ -55,12 +57,19 @@ const MaterialInput: React.FC<TProps> = ({
     }
   }, [renderRightAccessory, rightAccessoryName, rightAccessoryColor]);
 
+  const formatValue = useMemo(() => {
+    if (typeof value === 'string' && isUpperCase) {
+      return value.toUpperCase();
+    }
+    return value as string;
+  }, [value]);
+
   return (
     <FilledTextField
       ref={onRef}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={value}
+      value={formatValue as string}
       onChangeText={onChangeText}
       label={label}
       keyboardType={keyboardType}
@@ -71,7 +80,7 @@ const MaterialInput: React.FC<TProps> = ({
       tintColor={tintColor ? tintColor : colors.black_000000}
       baseColor={baseColor}
       lineWidth={lineWidth}
-      disabledLineWidth={0.5}
+      disabledLineWidth={disabledLineWidth}
       disabledLineType="solid"
       activeLineWidth={activeLineWidth}
       inputContainerStyle={{
@@ -117,4 +126,6 @@ type TProps = {
   disabled?: boolean;
   error?: string;
   tintColor?: string;
+  disabledLineWidth?: number;
+  isUpperCase?: boolean;
 };
