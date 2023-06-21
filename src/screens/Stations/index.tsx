@@ -46,7 +46,7 @@ const Stations: React.FC<TProps> = ({filters}) => {
           indicatorStyle={styles.tabBarIndicatorStyle}
           style={[styles.whiteFond, styles.barTitle]}
           labelStyle={styles.tabBarLabelStyle}
-          activeColor={colors.green_007E26}
+          activeColor={colors.red_CA001A}
           inactiveColor={colors.black_1E1A1A}
         />
       </SafeAreaView>

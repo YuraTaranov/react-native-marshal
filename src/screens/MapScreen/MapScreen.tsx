@@ -366,13 +366,7 @@ const MapScreen: React.FC<TProps> = ({
         {isFocused && renderMarkers}
       </MapView>
       <View style={styles.buttonsBlock}>
-        <MapButton onPress={onZoomPlus} disabled={disabledZoomPlus} />
-        <MapButton
-          onPress={onZoomMinus}
-          name="minus"
-          disabled={disabledZoomMinus}
-        />
-        <MapButton onPress={goToUserLocate} green name="location" />
+        <MapButton onPress={goToUserLocate} green name="location-1" />
       </View>
       <MarkerModal
         isVisible={markerModalVisible}
