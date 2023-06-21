@@ -94,7 +94,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
         <Icon
           name="x"
           size={24}
-          color={colors.white_FFFFFF}
+          color={colors.gray_464649}
           style={styles.close}
         />
       </TouchableOpacity>
