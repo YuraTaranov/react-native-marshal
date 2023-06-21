@@ -1,11 +1,13 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {Text, Icon} from '@components';
-import styles from './styles';
 import {connect} from 'react-redux';
+
+import {View} from '@components';
+
+import TabItem from '../TabItem';
+import styles from './styles';
+
+//types
 import {TGlobalState} from '@types';
-import {colors} from '@constants';
-import {useTranslation} from '@hooks';
 
 type TProps = {
   navigation: any;
@@ -20,11 +22,48 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
     [],
   );
 
-  const {t} = useTranslation();
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <TabItem
+        isActive={generalIndex === 0}
+        title={'Наші АЗК'}
+        onPressHandler={jump('Stations')}
+        iconName={generalIndex === 0 ? 'station-3' : 'station-2'}
+      />
+      <TabItem
+        isActive={generalIndex === 1}
+        title={'Акції'}
+        onPressHandler={jump('Promotions')}
+        iconName={generalIndex === 1 ? 'station-3' : 'station-2'}
+      />
+      <TabItem
+        isActive={generalIndex === 2}
+        title={'Головна'}
+        onPressHandler={jump('Home')}
+        iconName={generalIndex === 2 ? 'home-3' : 'home-2'}
+      />
+      <TabItem
+        isActive={generalIndex === 3}
+        title={'Бонуси'}
+        onPressHandler={jump('Bonuses')}
+        iconName={generalIndex === 3 ? 'gift-3' : 'gift-2'}
+      />
+      <TabItem
+        isActive={generalIndex === 4}
+        title={'Профіль'}
+        onPressHandler={jump('Profile')}
+        iconName={generalIndex === 4 ? 'profile-3' : 'profile-2'}
+      />
+    </View>
+  );
+};
+
+const mapStateToProps = (state: TGlobalState) => ({});
+
+export default connect(mapStateToProps)(TabBar);
+
+{
+  /* <TouchableOpacity
         disabled={generalIndex === 0}
         style={styles.eachScreen}
         onPress={jump('Stations')}>
@@ -36,8 +75,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         <Text style={[styles.text, generalIndex === 0 && styles.textActive]}>
           {t('Наші АЗК')}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */
+}
+{
+  /* <TouchableOpacity
         disabled={generalIndex === 1}
         style={styles.eachScreen}
         onPress={jump('Promotions')}>
@@ -49,8 +90,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         <Text style={[styles.text, generalIndex === 1 && styles.textActive]}>
           {t('Акції')}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */
+}
+{
+  /* <TouchableOpacity
         disabled={generalIndex === 2}
         style={styles.eachScreen}
         onPress={jump('Home')}>
@@ -62,8 +105,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         <Text style={[styles.text, generalIndex === 2 && styles.textActive]}>
           {t('Головна')}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */
+}
+{
+  /* <TouchableOpacity
         disabled={generalIndex === 3}
         style={styles.eachScreen}
         onPress={jump('Bonuses')}>
@@ -75,8 +120,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         <Text style={[styles.text, generalIndex === 3 && styles.textActive]}>
           {t('Бонуси')}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */
+}
+{
+  /* <TouchableOpacity
         disabled={generalIndex === 4}
         style={styles.eachScreen}
         onPress={jump('Profile')}>
@@ -88,11 +135,5 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         <Text style={[styles.text, generalIndex === 4 && styles.textActive]}>
           {t('Профіль')}
         </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const mapStateToProps = (state: TGlobalState) => ({});
-
-export default connect(mapStateToProps)(TabBar);
+      </TouchableOpacity> */
+}
