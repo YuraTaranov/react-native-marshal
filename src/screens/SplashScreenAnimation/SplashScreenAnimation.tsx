@@ -54,7 +54,7 @@ const SplashScreenAnimation: React.FC<TProps> = ({isConnected}) => {
           </Text>
           <Image source={assets.NO_INTERNET} style={styles.noInternetImage} />
           <Text style={styles.noInternetDescription}>
-            {t(`Будь ласка перевірте з'єднання з Інтернетом`)}
+            {t(`Будь ласка перевірте підключення до інтерету`)}
           </Text>
         </View>
       ) : (

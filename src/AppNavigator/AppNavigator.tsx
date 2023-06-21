@@ -1,16 +1,19 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {Dispatch} from 'redux';
 import i18next from 'i18next';
 import {connect} from 'react-redux';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {useEffect} from '@hooks';
-import {TGlobalState} from '@types';
-import {navigationRef, onStateChange} from '@services';
-import {SplashScreenAnimation} from '@screens';
-import RootStackNavigator from './stacks/RootStackNavigator';
 import NetInfo from '@react-native-community/netinfo';
 import {setIsConnected} from '@reducers/network';
+import {navigationRef, onStateChange} from '@services';
+
+import RootStackNavigator from './stacks/RootStackNavigator';
+
+//types
+import {TGlobalState} from '@types';
 
 const InitialStack = createStackNavigator();
 
@@ -37,12 +40,7 @@ const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
   return (
     <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
       <InitialStack.Navigator
-        screenOptions={{headerShown: false, gestureEnabled: false}}
-        initialRouteName="SplashScreenAnimation">
-        <InitialStack.Screen
-          name="SplashScreenAnimation"
-          component={SplashScreenAnimation}
-        />
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
         <InitialStack.Screen
           name="RootStackNavigator"
           component={RootStackNavigator}
