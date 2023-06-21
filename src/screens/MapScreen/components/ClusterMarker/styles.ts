@@ -6,7 +6,7 @@ const miniSize = Size - 4;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: colors.green_41BB4E,
+    backgroundColor: colors.red_CA001A,
     width: Size,
     height: Size,
     borderRadius: Size / 2,
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   circle: {
-    backgroundColor: colors.green_41BB4E,
+    backgroundColor: colors.red_CA001A,
     width: miniSize,
     height: miniSize,
     borderRadius: miniSize / 2,
