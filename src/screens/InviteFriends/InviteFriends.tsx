@@ -32,7 +32,7 @@ const InviteFriends: React.FC<TProps> = ({referralLink}) => {
           title: t('Приєднуйтесь до найкращої мережі автозаправок - Marshal'),
           message: referralLink,
         });
-      } catch (error) {
+      } catch (error: any) {
         Alert.alert(error.message);
       }
     }
