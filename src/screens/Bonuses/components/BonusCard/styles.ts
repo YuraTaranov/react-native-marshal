@@ -57,6 +57,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   gradientBorder: {
-    width: sizes.window_width - 32,
+    width: sizes.window_width - 64,
   },
 });
