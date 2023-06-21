@@ -25,7 +25,7 @@ const BonusesScreen: React.FC<TProps> = ({bonusesOnBoarding}) => {
         component={bonusesOnBoarding ? BonusesOnBoarding : Bonuses}
         options={{
           headerTitleAlign: 'center',
-          title: bonusesOnBoarding ? t('Запросити друзів') : t('Бонуси'),
+          title: bonusesOnBoarding ? t('Запросити друзів') : '',
         }}
       />
     </BonusesStack.Navigator>
