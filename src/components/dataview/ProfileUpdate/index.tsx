@@ -284,7 +284,6 @@ const ProfileUpdate: React.FC<TProps> = ({
               lineWidth={0}
               activeLineWidth={0}
               label={t('textInput.name')}
-              isUpperCase
             />
             <GradientBorder
               colors={gradients.gray}
@@ -301,7 +300,6 @@ const ProfileUpdate: React.FC<TProps> = ({
               maxLength={30}
               onChangeText={setSurnameValue}
               label={t('textInput.surname')}
-              isUpperCase
             />
             <GradientBorder
               colors={gradients.gray}
@@ -324,7 +322,6 @@ const ProfileUpdate: React.FC<TProps> = ({
               disabledLineWidth={0}
               lineWidth={0}
               activeLineWidth={0}
-              isUpperCase
             />
             <GradientBorder
               colors={gradients.gray}
@@ -348,7 +345,6 @@ const ProfileUpdate: React.FC<TProps> = ({
               disabledLineWidth={0}
               lineWidth={0}
               activeLineWidth={0}
-              isUpperCase
             />
             <GradientBorder
               colors={gradients.gray}
@@ -384,7 +380,6 @@ const ProfileUpdate: React.FC<TProps> = ({
                 textColor={colors.gray_8D909D}
                 onBlur={onPhoneBlur}
                 disabled={true}
-                isUpperCase
                 disabledLineWidth={0}
                 lineWidth={0}
                 activeLineWidth={0}

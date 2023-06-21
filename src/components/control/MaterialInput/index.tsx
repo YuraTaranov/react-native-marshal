@@ -37,7 +37,6 @@ const MaterialInput: React.FC<TProps> = ({
   rightAccessoryName,
   tintColor,
   value,
-  isUpperCase = false,
 }) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
@@ -57,19 +56,12 @@ const MaterialInput: React.FC<TProps> = ({
     }
   }, [renderRightAccessory, rightAccessoryName, rightAccessoryColor]);
 
-  const formatValue = useMemo(() => {
-    if (typeof value === 'string' && isUpperCase) {
-      return value.toUpperCase();
-    }
-    return value as string;
-  }, [value]);
-
   return (
     <FilledTextField
       ref={onRef}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={formatValue as string}
+      value={value as string}
       onChangeText={onChangeText}
       label={label}
       keyboardType={keyboardType}
@@ -127,5 +119,4 @@ type TProps = {
   error?: string;
   tintColor?: string;
   disabledLineWidth?: number;
-  isUpperCase?: boolean;
 };
