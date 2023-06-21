@@ -1,11 +1,10 @@
 import {StyleSheet} from '@components';
-import {colors, fonts} from '@constants';
+import {fonts} from '@constants';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 24,
-    paddingHorizontal: 16,
   },
   emptyTitle: {
     textAlign: 'center',

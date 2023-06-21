@@ -34,8 +34,8 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
 
   const renderItem = useCallback(({item}: {item: TPromotion}) => {
     return (
-      <View style={styles.itemContainer}>
-        <PromotionView item={item} bgBorderRadius={6} onPress={onPressItem} />
+      <View>
+        <PromotionView item={item} bgBorderRadius={0} onPress={onPressItem} />
       </View>
     );
   }, []);
@@ -48,7 +48,7 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
             data={data}
             renderItem={renderItem}
             sliderWidth={width}
-            itemWidth={width - 32}
+            itemWidth={width}
             onBeforeSnapToItem={setActiveIndex}
             inactiveSlideOpacity={1}
             inactiveSlideScale={1}

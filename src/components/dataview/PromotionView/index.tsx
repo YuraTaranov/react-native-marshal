@@ -80,7 +80,7 @@ const PromotionView: React.FC<TProps> = ({
     <TouchableOpacity
       style={styles.container}
       onPress={onPress && onPress(item.id)}
-      activeOpacity={0.9}
+      activeOpacity={1}
       disabled={disabled}>
       <Image source={{uri: item?.image}} style={borderRadiusStyles.image} />
       <Image source={background} style={borderRadiusStyles.background} />
@@ -110,6 +110,11 @@ const PromotionView: React.FC<TProps> = ({
               <Text style={styles.priceOld}>{`${prices.old} ${t('грн')}`}</Text>
             ) : null}
           </View>
+        ) : null}
+        {!disabled ? (
+          <TouchableOpacity onPress={onPress && onPress(item.id)}>
+            <Text style={styles.link}>{`${t('Дізнатись більше')}`}...</Text>
+          </TouchableOpacity>
         ) : null}
       </View>
     </TouchableOpacity>

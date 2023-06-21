@@ -1,16 +1,20 @@
 import {StyleSheet} from 'react-native';
-import {colors, fonts, ios} from '@constants';
+import {colors, fonts, ios, sizes} from '@constants';
+
+const TITLE_WIDTH = sizes.window_width / 2 - 64; //32*2 - paddings
+const DESCRIPTION_WIDTH = sizes.window_width / 4;
 
 export default StyleSheet.create({
   container: {
-    height: 180,
+    height: 200,
     marginBottom: 16,
   },
   contentContainer: {
-    padding: 16,
+    paddingLeft: 32,
     zIndex: 2,
     justifyContent: 'space-between',
     flex: 1,
+    paddingVertical: 16,
   },
   image: {
     height: '100%',
@@ -29,16 +33,16 @@ export default StyleSheet.create({
     color: colors.gray_F3F5FA,
   },
   title: {
-    fontSize: ios ? 22 : 18,
-    color: colors.white_FFFFFF,
-    fontFamily: fonts.interSemiBold_600,
-    marginTop: 16,
-    width: 185,
+    fontSize: ios ? 16 : 14,
+    color: colors.black_1F1F1F,
+    fontFamily: fonts.interRegular_400,
+    width: TITLE_WIDTH,
+    textTransform: 'uppercase',
   },
   description: {
     fontSize: ios ? 16 : 14,
-    color: colors.white_FFFFFF,
-    width: 170,
+    color: colors.black_1F1F1F,
+    width: DESCRIPTION_WIDTH,
   },
   priceContainer: {
     flexDirection: 'row',
@@ -56,5 +60,11 @@ export default StyleSheet.create({
     marginLeft: 8,
     marginTop: 6,
     textDecorationLine: 'line-through',
+  },
+  link: {
+    color: colors.gray_7C7C7B,
+    textTransform: 'uppercase',
+    fontSize: 10,
+    fontFamily: fonts.interBold_700,
   },
 });
