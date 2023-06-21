@@ -34,7 +34,7 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         isActive={generalIndex === 1}
         title={'Акції'}
         onPressHandler={jump('Promotions')}
-        iconName={generalIndex === 1 ? 'station-3' : 'station-2'}
+        iconName={generalIndex === 1 ? 'promotion-3' : 'promotion-2'}
       />
       <TabItem
         isActive={generalIndex === 2}
