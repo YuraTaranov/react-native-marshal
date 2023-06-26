@@ -119,7 +119,7 @@ const LoyaltyCard: React.FC<TProps> = ({profile}) => {
             <View style={styles.qrCodeContainer}>
               <QRCode
                 size={120}
-                value={cardNumber}
+                value={`${profile?.card}`}
                 backgroundColor="transparent"
               />
             </View>
