@@ -54,7 +54,7 @@ const ProfileUpdate: React.FC<TProps> = ({
     (profile?.birthday && new Date(profile?.birthday)) || initialDate,
   );
   const [phoneValue, setPhoneValue] = useState<string>(
-    profile?.phone.slice(4) || '',
+    profile?.phone?.slice(4) || '',
   );
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
     type:
