@@ -13,6 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1970F1719FAD4535BCC23567 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57BCCF355608416A8EDBF2DB /* Inter-Thin.ttf */; };
+		2B487D23536D4173B418C890 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95496A1A529841F4A4ABCFF1 /* icomoon.ttf */; };
 		2C4D60A4CDF50DAAA8BEDA43 /* libPods-Marshal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B344D7BB8AE43D41F18D5 /* libPods-Marshal.a */; };
 		41189F6953794D7587A7B662 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A59D4E6E33647D7B087A102 /* Inter-Regular.ttf */; };
 		520045A4EDF94EF090D329DE /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51E2C06CCEC84ECA831035CD /* Inter-Black.ttf */; };
@@ -26,7 +27,6 @@
 		B4E1F6C3EF0A485CAA584210 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 993A0B5B8FC143A7BBA39263 /* Inter-Light.ttf */; };
 		C5E084F026C16353003AAE21 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E084EF26C16353003AAE21 /* Swift.swift */; };
 		D109E9F43543483D8CC272F9 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B82A0EEBE1FB47DAA8884F28 /* Inter-Bold.ttf */; };
-		2B487D23536D4173B418C890 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95496A1A529841F4A4ABCFF1 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +72,7 @@
 		75AD2AD926DD217C00193FEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Marshal/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		881D5EDF0323DA461F3D3A8B /* Pods-Marshal-MarshalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marshal-MarshalTests.debug.xcconfig"; path = "Target Support Files/Pods-Marshal-MarshalTests/Pods-Marshal-MarshalTests.debug.xcconfig"; sourceTree = "<group>"; };
+		95496A1A529841F4A4ABCFF1 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../src/assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		993A0B5B8FC143A7BBA39263 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		B82A0EEBE1FB47DAA8884F28 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		C08641190165465AADB79CD7 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		FA5C454F911C49C2B85670DB /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		FB4758BFB655DE09B886AEC1 /* Pods-Marshal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marshal.release.xcconfig"; path = "Target Support Files/Pods-Marshal/Pods-Marshal.release.xcconfig"; sourceTree = "<group>"; };
 		FD56B70222BE4FC69C80D789 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		95496A1A529841F4A4ABCFF1 /* icomoon.ttf */ = {isa = PBXFileReference; name = "icomoon.ttf"; path = "../src/assets/fonts/icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Marshal/Info.plist;
@@ -606,7 +606,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -632,14 +632,14 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				INFOPLIST_FILE = Marshal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
