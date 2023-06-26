@@ -4,7 +4,8 @@ import storage from '../../store';
 import {urls} from '@constants';
 import {setIsUserAuthorized, setToken} from '@reducers/appGlobalState';
 
-const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
+// const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
+const baseURL = urls.baseProdURL;
 // const baseURL = urls.baseProdURL;
 
 const instance = axios.create();

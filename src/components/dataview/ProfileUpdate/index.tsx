@@ -18,7 +18,7 @@ import styles from './styles';
 import moment from 'moment';
 import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
-import {urls, ios, colors, gradients} from '@constants';
+import {urls, ios, colors, gradients, width} from '@constants';
 import {connect} from 'react-redux';
 import {TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
@@ -84,6 +84,35 @@ const ProfileUpdate: React.FC<TProps> = ({
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<'date' | 'gender'>('date');
   const [isPhoneFocus, setIsPhoneFocus] = useState<boolean>(false);
+
+  const parsedGender = useMemo(() => {
+    if (genderValue?.type === 1) {
+      return 'female';
+    }
+    if (genderValue?.type === 2) {
+      return 'male';
+    }
+    if (genderValue?.type === 0) {
+      return null;
+    }
+  }, [genderValue?.type]);
+
+  const isSaveButtonVisible = useMemo(() => {
+    return (
+      nameValue !== profile?.name ||
+      surnameValue !== profile?.surname ||
+      birthdayValue?.toDateString() !==
+        new Date(profile?.birthday)?.toDateString() ||
+      parsedGender != profile?.gender
+    );
+  }, [
+    profile,
+    parsedGender,
+    nameValue,
+    surnameValue,
+    birthdayValue,
+    genderValue,
+  ]);
 
   const onPhoneFocus = useCallback(() => {
     setIsPhoneFocus(true);
@@ -186,7 +215,7 @@ const ProfileUpdate: React.FC<TProps> = ({
             : dispatch(setIsUserAuthorized(true));
         } else {
           Alert.alert('', t('Дані профілю оновлені'));
-          goBack();
+          // goBack();
         }
       }
     } catch (error) {
@@ -403,18 +432,20 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
         />
       ) : null}
-      {isRegistration ? (
+      {isRegistration || isSaveButtonVisible ? (
         <View
           style={{
             ...styles.buttonContainer,
-            marginBottom: !isRegistration ? 24 : 0,
+            marginTop: isRegistration ? 0 : 16,
           }}>
           <UsualButton
-            title={t('button.title.continue')}
+            title={isRegistration ? t('button.title.continue') : t('Зберегти')}
             loading={loading}
             dark={loading}
             disabled={isButtonDisabled}
-            buttonStyle={styles.usualButton}
+            buttonStyle={{
+              width: width - (isRegistration ? 65 : 56),
+            }}
             onPress={submit}
           />
         </View>

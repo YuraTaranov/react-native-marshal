@@ -28,10 +28,11 @@ const Stations: React.FC<TProps> = ({filters}) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [isFilterEmpty, setIsFilterEmpty] = useState(true);
-  const [routes] = useState([
+
+  const routes = [
     {key: 'first', title: t('map.tabMapFirst')},
     {key: 'second', title: t('map.tabMapSecond')},
-  ]);
+  ];
 
   const renderScene = SceneMap({
     first: MapScreen,
@@ -51,7 +52,7 @@ const Stations: React.FC<TProps> = ({filters}) => {
         />
       </SafeAreaView>
     ),
-    [],
+    [t],
   );
 
   const navigateToFilter = useCallback(() => {

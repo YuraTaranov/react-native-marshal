@@ -30,7 +30,6 @@ export default StyleSheet.create({
     zIndex: 2,
     position: 'absolute',
   },
-  usualButton: {},
   checkboxText: {
     width: width - 65,
   },
