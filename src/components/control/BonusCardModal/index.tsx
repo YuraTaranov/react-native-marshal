@@ -44,7 +44,7 @@ const BonusCardModal: React.FC<TProps> = ({isVisible, closeModal, profile}) => {
           <Text style={styles.bonusCard}>{cardNumber}</Text>
         ) : null}
         <View style={styles.qrCodeContainer}>
-          <QRCode size={160} value={cardNumber} />
+          <QRCode size={160} value={`${profile?.card || ''}`} />
         </View>
       </View>
     </Modal>
