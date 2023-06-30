@@ -37,6 +37,7 @@ const MaterialInput: React.FC<TProps> = ({
   rightAccessoryName,
   tintColor,
   value,
+  autoFocus,
 }) => {
   const rightAccessory = useMemo(() => {
     if (renderRightAccessory && rightAccessoryName) {
@@ -68,7 +69,10 @@ const MaterialInput: React.FC<TProps> = ({
       onSubmitEditing={onSubmit}
       maxLength={maxLength}
       labelTextStyle={styles.lableStyle}
-      style={{...styles.textInputStyle, color: textColor}}
+      style={{
+        ...styles.textInputStyle,
+        color: textColor,
+      }}
       tintColor={tintColor ? tintColor : colors.black_000000}
       baseColor={baseColor}
       lineWidth={lineWidth}
@@ -80,6 +84,7 @@ const MaterialInput: React.FC<TProps> = ({
         ...inputContainerStyle,
       }}
       labelFontSize={12}
+      autoFocus={autoFocus}
       renderRightAccessory={rightAccessory}
       returnKeyType={returnKeyType}
       formatText={formatText}
@@ -119,4 +124,5 @@ type TProps = {
   error?: string;
   tintColor?: string;
   disabledLineWidth?: number;
+  autoFocus?: boolean;
 };

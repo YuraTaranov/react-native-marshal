@@ -47,6 +47,14 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   const menuItems: TMenuItem[] = useMemo(() => {
     return [
       {
+        icon: 'edit_profile',
+        name: t('Редагувати профіль'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'ProfileEdit',
+          }),
+      },
+      {
         icon: 'bell',
         name: t('Історія сповіщень'),
         onPress: () =>
@@ -76,14 +84,6 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         name: t('Авто'),
         onPress: () => dispatch(getCars()),
       },
-      // {
-      //   icon: 'edit_profile',
-      //   name: t('Редагувати профіль'),
-      //   onPress: () =>
-      //     navigate('ProfileStack', {
-      //       screen: 'ProfileEdit',
-      //     }),
-      // },
     ];
   }, [t]);
 
@@ -136,7 +136,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       {profile?.card ? <LoyaltyCard profile={profile} /> : null}
       <View style={styles.leftIndent}>
         <GradientBorder colors={gradients.gray} style={styles.gradientBorder} />
-        <ProfileUpdate isRegistration={false} />
+        {/* <ProfileUpdate isRegistration={false} /> */}
         <View style={styles.menuItemsContainer}>
           {menuItems.map(item => (
             <ProfileMenuItem

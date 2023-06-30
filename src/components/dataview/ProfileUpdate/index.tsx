@@ -1,5 +1,11 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
+import {
+  useCallback,
+  useMemo,
+  useTranslation,
+  useState,
+  useEffect,
+} from '@hooks';
 import {
   View,
   Text,
@@ -20,7 +26,7 @@ import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
 import {urls, ios, colors, gradients, width} from '@constants';
 import {connect} from 'react-redux';
-import {TBiometricsType, TGlobalState, TProfile} from '@types';
+import {ProfileField, TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
 import {Alert} from 'react-native';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
@@ -205,6 +211,7 @@ const ProfileUpdate: React.FC<TProps> = ({
             gender,
             phone: `+380${phone}`,
           };
+
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
       if (body.status === 200) {
@@ -215,7 +222,7 @@ const ProfileUpdate: React.FC<TProps> = ({
             : dispatch(setIsUserAuthorized(true));
         } else {
           Alert.alert('', t('Дані профілю оновлені'));
-          // goBack();
+          goBack();
         }
       }
     } catch (error) {
@@ -294,6 +301,24 @@ const ProfileUpdate: React.FC<TProps> = ({
     );
   }, [t]);
 
+  const onPressNavigateToEdit = useCallback(
+    (fieldType: ProfileField, data: string) => () => {
+      navigate('ProfileStack', {
+        screen: 'ProfileEdit',
+        params: {
+          data,
+          fieldType,
+        },
+      });
+    },
+    [navigate],
+  );
+
+  useEffect(() => {
+    setNameValue(profile?.name);
+    setSurnameValue(profile?.surname);
+  }, [profile.name, profile.surname]);
+
   return (
     <>
       <View style={styles.container}>
@@ -303,13 +328,14 @@ const ProfileUpdate: React.FC<TProps> = ({
               {t('text.enterYourPersonalInformation')}
             </Text>
           ) : null}
-          <>
+          <View>
             <MaterialInput
               returnKeyType={'default'}
               value={nameValue}
               onChangeText={setNameValue}
               maxLength={25}
               textColor={colors.black_1A1718}
+              disabledLineWidth={0}
               lineWidth={0}
               activeLineWidth={0}
               label={t('textInput.name')}
@@ -318,13 +344,14 @@ const ProfileUpdate: React.FC<TProps> = ({
               colors={gradients.gray}
               style={styles.gradientBorder}
             />
-          </>
-          <>
+          </View>
+          <View>
             <MaterialInput
               returnKeyType={'default'}
               value={surnameValue}
               lineWidth={0}
               activeLineWidth={0}
+              disabledLineWidth={0}
               textColor={colors.black_1A1718}
               maxLength={30}
               onChangeText={setSurnameValue}
@@ -334,7 +361,7 @@ const ProfileUpdate: React.FC<TProps> = ({
               colors={gradients.gray}
               style={styles.gradientBorder}
             />
-          </>
+          </View>
           <View>
             <TouchableOpacity
               style={styles.buttonTI}
@@ -373,6 +400,7 @@ const ProfileUpdate: React.FC<TProps> = ({
               disabled={true}
               disabledLineWidth={0}
               lineWidth={0}
+              // formatText={formatText}
               activeLineWidth={0}
             />
             <GradientBorder
@@ -432,24 +460,27 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
         />
       ) : null}
-      {isRegistration || isSaveButtonVisible ? (
-        <View
-          style={{
-            ...styles.buttonContainer,
-            marginTop: isRegistration ? 0 : 16,
-          }}>
-          <UsualButton
-            title={isRegistration ? t('button.title.continue') : t('Зберегти')}
-            loading={loading}
-            dark={loading}
-            disabled={isButtonDisabled}
-            buttonStyle={{
-              width: width - (isRegistration ? 65 : 56),
-            }}
-            onPress={submit}
-          />
-        </View>
-      ) : null}
+      {/* {isRegistration ? ( */}
+      <View
+        style={{
+          ...styles.buttonContainer,
+          marginTop: isRegistration ? 0 : 16,
+        }}>
+        <UsualButton
+          title={isRegistration ? t('button.title.continue') : t('Зберегти')}
+          loading={loading}
+          dark={loading}
+          disabled={
+            isButtonDisabled || (!isRegistration && !isSaveButtonVisible)
+          }
+          buttonStyle={{
+            width: isRegistration ? width - 65 : width - 64,
+            marginLeft: 16,
+          }}
+          onPress={submit}
+        />
+      </View>
+      {/* ) : null} */}
       <ProfileUpdateModal
         isModalVisible={isModalVisible}
         closeModal={closeModal}
