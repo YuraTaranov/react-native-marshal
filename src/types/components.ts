@@ -54,6 +54,7 @@ export type TPromotion = {
   id: number;
   type: 'new' | 'discount' | 'action';
   image: string;
+  image_background: string;
   discount_percentage?: number;
   start?: string;
   end?: string;
