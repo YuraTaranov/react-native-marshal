@@ -35,7 +35,7 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
   const renderItem = useCallback(({item}: {item: TPromotion}) => {
     return (
       <View>
-        <PromotionView item={item} bgBorderRadius={0} onPress={onPressItem} />
+        <PromotionView item={item} onPress={onPressItem} />
       </View>
     );
   }, []);

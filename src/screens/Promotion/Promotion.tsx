@@ -36,7 +36,7 @@ const Promotion: React.FC<TProps> = ({promotion, language}) => {
 
   return (
     <View style={styles.container}>
-      <PromotionView disabled={true} item={promotion} bgBorderRadius={0} />
+      <PromotionView disabled={true} item={promotion} />
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.title}>{promotion?.title}</Text>
         <Text style={styles.description}>{promotion?.text}</Text>

@@ -80,9 +80,7 @@ const Promotions: React.FC<TProps> = ({
   }, []);
 
   const renderItem: ({item}: {item: TPromotion}) => JSX.Element = useCallback(
-    ({item}) => (
-      <PromotionView item={item} onPress={onPressItem} bgBorderRadius={0} />
-    ),
+    ({item}) => <PromotionView item={item} onPress={onPressItem} />,
     [],
   );
 

@@ -1,7 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {colors, fonts, ios, sizes} from '@constants';
 
-const TITLE_WIDTH = sizes.window_width / 2 - 64; //32*2 - paddings
+const HALF_SCREEN_WIDTH = sizes.window_width / 2;
+
+const IMAGE_WIDTH = sizes.window_width / 3;
+const TITLE_WIDTH = HALF_SCREEN_WIDTH - 64; //32*2 - paddings
 const DESCRIPTION_WIDTH = sizes.window_width / 4;
 
 export default StyleSheet.create({
@@ -10,23 +13,26 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   contentContainer: {
+    width: sizes.window_width / 2,
     paddingLeft: 32,
     zIndex: 2,
-    justifyContent: 'space-between',
     flex: 1,
     paddingVertical: 16,
+    backgroundColor: '#EFEFF3',
   },
-  image: {
-    height: '100%',
-    width: '100%',
-    zIndex: 0,
-    position: 'absolute',
-  },
-  background: {
+  backgroundImage: {
     zIndex: 1,
     height: '100%',
-    width: 285,
+    width: '100%',
     position: 'absolute',
+  },
+  image: {
+    width: IMAGE_WIDTH,
+    height: 150,
+    position: 'absolute',
+    bottom: -10,
+    zIndex: 10,
+    left: HALF_SCREEN_WIDTH - IMAGE_WIDTH / 2 + 16,
   },
   date: {
     fontSize: 12,
@@ -66,5 +72,15 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 10,
     fontFamily: fonts.interBold_700,
+  },
+  leftSideContainer: {
+    zIndex: 50,
+    flex: 1,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 16,
+    left: 32,
+    bottom: 16,
+    justifyContent: 'space-between',
   },
 });

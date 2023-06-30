@@ -12,7 +12,6 @@ import {connect} from 'react-redux';
 type TProps = {
   item: TPromotion;
   onPress?: (id: number) => () => void;
-  bgBorderRadius?: number;
   disabled?: boolean;
   language: string;
 };
@@ -20,7 +19,6 @@ type TProps = {
 const PromotionView: React.FC<TProps> = ({
   item,
   onPress,
-  bgBorderRadius,
   language,
   disabled = false,
 }) => {
@@ -69,22 +67,18 @@ const PromotionView: React.FC<TProps> = ({
     }
   }, [item.type]);
 
-  const borderRadiusStyles = useMemo(() => {
-    return {
-      background: [styles.background, {borderRadius: bgBorderRadius}],
-      image: [styles.image, {borderRadius: bgBorderRadius}],
-    };
-  }, [bgBorderRadius]);
-
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={onPress && onPress(item.id)}
       activeOpacity={1}
       disabled={disabled}>
-      <Image source={{uri: item?.image}} style={borderRadiusStyles.image} />
-      <Image source={background} style={borderRadiusStyles.background} />
-      <View style={styles.contentContainer}>
+      <Image
+        source={{uri: item?.image_background}}
+        style={styles.backgroundImage}
+      />
+      <View style={styles.contentContainer}></View>
+      <View style={styles.leftSideContainer}>
         {item.type !== 'new' ? (
           <Text style={styles.date}>{promoEndDate}</Text>
         ) : null}
@@ -117,6 +111,11 @@ const PromotionView: React.FC<TProps> = ({
           </TouchableOpacity>
         ) : null}
       </View>
+      <Image
+        source={{uri: item.image}}
+        style={styles.image}
+        resizeMode="cover"
+      />
     </TouchableOpacity>
   );
 };
