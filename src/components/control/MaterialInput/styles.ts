@@ -20,6 +20,5 @@ export default StyleSheet.create({
     fontFamily: fonts.interRegular_400,
     color: colors.black_000000,
     paddingTop: android ? 2 : 0,
-    textTransform: 'uppercase',
   },
 });

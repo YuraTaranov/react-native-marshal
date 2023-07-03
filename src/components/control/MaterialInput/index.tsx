@@ -62,6 +62,7 @@ const MaterialInput: React.FC<TProps> = ({
       ref={onRef}
       onFocus={onFocus}
       onBlur={onBlur}
+      autoCapitalize="characters"
       value={value as string}
       onChangeText={onChangeText}
       label={label}

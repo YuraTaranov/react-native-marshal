@@ -26,10 +26,11 @@ import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
 import {urls, ios, colors, gradients, width} from '@constants';
 import {connect} from 'react-redux';
-import {ProfileField, TBiometricsType, TGlobalState, TProfile} from '@types';
+import {TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
 import {Alert} from 'react-native';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
+import {capitalizeFirstLetter, capitalizeUserPersonalData} from '@helpers';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
@@ -192,21 +193,21 @@ const ProfileUpdate: React.FC<TProps> = ({
     try {
       const data = isRegistration
         ? {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
         : initialPhone === phone
         ? {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
         : {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
             phone: `+380${phone}`,
@@ -215,7 +216,9 @@ const ProfileUpdate: React.FC<TProps> = ({
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
       if (body.status === 200) {
-        dispatch(setProfile(body.data.data));
+        const formattingData = capitalizeUserPersonalData(body.data.data);
+
+        dispatch(setProfile(formattingData));
         if (isRegistration) {
           biometricsType !== 'none'
             ? navigate('Biometrics') // BonusCardCheck
@@ -301,19 +304,6 @@ const ProfileUpdate: React.FC<TProps> = ({
     );
   }, [t]);
 
-  const onPressNavigateToEdit = useCallback(
-    (fieldType: ProfileField, data: string) => () => {
-      navigate('ProfileStack', {
-        screen: 'ProfileEdit',
-        params: {
-          data,
-          fieldType,
-        },
-      });
-    },
-    [navigate],
-  );
-
   useEffect(() => {
     setNameValue(profile?.name);
     setSurnameValue(profile?.surname);
@@ -394,13 +384,12 @@ const ProfileUpdate: React.FC<TProps> = ({
               rightAccessoryColor={colors.gray_888A8E}
               rightAccessoryName={'arrow-down'}
               returnKeyType={'next'}
-              value={genderValue.name}
+              value={genderValue.name.toUpperCase()}
               textColor={colors.black_1A1718}
               label={t('textInput.sex')}
               disabled={true}
               disabledLineWidth={0}
               lineWidth={0}
-              // formatText={formatText}
               activeLineWidth={0}
             />
             <GradientBorder
@@ -460,7 +449,6 @@ const ProfileUpdate: React.FC<TProps> = ({
           textColor={'#000000'}
         />
       ) : null}
-      {/* {isRegistration ? ( */}
       <View
         style={{
           ...styles.buttonContainer,
@@ -480,7 +468,6 @@ const ProfileUpdate: React.FC<TProps> = ({
           onPress={submit}
         />
       </View>
-      {/* ) : null} */}
       <ProfileUpdateModal
         isModalVisible={isModalVisible}
         closeModal={closeModal}
