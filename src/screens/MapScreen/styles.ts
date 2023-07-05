@@ -17,7 +17,7 @@ export default StyleSheet.create({
     height: 190,
     width: 60,
     bottom: 46,
-    right: 30,
+    right: 16,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
