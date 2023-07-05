@@ -49,4 +49,5 @@ ext {
     googlePlayServicesVersion = "17.0.0"
     androidMapsUtilsVersion = "2.2.5"
 	kotlinVersion = "1.6.10"
+    androidXCore = "1.6.0"
 }
