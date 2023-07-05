@@ -111,11 +111,13 @@ const PromotionView: React.FC<TProps> = ({
           </TouchableOpacity>
         ) : null}
       </View>
-      <Image
-        source={{uri: item.image}}
-        style={styles.image}
-        resizeMode="cover"
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          source={{uri: item.image}}
+          style={styles.image}
+          resizeMode="stretch"
+        />
+      </View>
     </TouchableOpacity>
   );
 };

@@ -27,16 +27,17 @@ export default StyleSheet.create({
     position: 'absolute',
   },
   image: {
-    width: IMAGE_WIDTH,
-    height: 150,
+    flex: 1,
+    aspectRatio: 1,
     position: 'absolute',
-    bottom: -10,
-    zIndex: 10,
-    left: HALF_SCREEN_WIDTH - IMAGE_WIDTH / 2 + 16,
+    left: 0,
+    top: 0,
+    bottom: 0,
   },
   date: {
-    fontSize: 12,
-    color: colors.gray_F3F5FA,
+    fontSize: 10,
+    color: colors.black_1F1F1F,
+    maxWidth: TITLE_WIDTH,
   },
   title: {
     fontSize: ios ? 16 : 14,
@@ -49,6 +50,7 @@ export default StyleSheet.create({
     fontSize: ios ? 16 : 14,
     color: colors.black_1F1F1F,
     width: DESCRIPTION_WIDTH,
+    textTransform: 'capitalize',
   },
   priceContainer: {
     flexDirection: 'row',
@@ -57,6 +59,7 @@ export default StyleSheet.create({
   },
   priceNew: {
     fontSize: 28,
+    zIndex: 50,
     color: colors.white_FFFFFF,
     fontFamily: fonts.interSemiBold_600,
   },
@@ -82,5 +85,15 @@ export default StyleSheet.create({
     left: 32,
     bottom: 16,
     justifyContent: 'space-between',
+  },
+  imageContainer: {
+    width: IMAGE_WIDTH,
+    height: 150,
+    position: 'absolute',
+    bottom: -10,
+    zIndex: 10,
+    left: HALF_SCREEN_WIDTH - IMAGE_WIDTH / 2 + 16,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
 });
