@@ -136,7 +136,6 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       {profile?.card ? <LoyaltyCard profile={profile} /> : null}
       <View style={styles.leftIndent}>
         <GradientBorder colors={gradients.gray} style={styles.gradientBorder} />
-        {/* <ProfileUpdate isRegistration={false} /> */}
         <View style={styles.menuItemsContainer}>
           {menuItems.map(item => (
             <ProfileMenuItem

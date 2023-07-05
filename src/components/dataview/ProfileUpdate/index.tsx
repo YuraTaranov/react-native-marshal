@@ -63,6 +63,7 @@ const ProfileUpdate: React.FC<TProps> = ({
   const [phoneValue, setPhoneValue] = useState<string>(
     profile?.phone?.slice(4) || '',
   );
+
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
     type:
       profile?.gender !== null
@@ -70,17 +71,36 @@ const ProfileUpdate: React.FC<TProps> = ({
           ? 1
           : profile?.gender === 'male'
           ? 2
-          : 3
-        : 0,
+          : 0
+        : 3,
     name:
       profile?.gender !== null
         ? profile?.gender === 'male'
           ? t('Чоловіча')
           : profile?.gender === 'female'
           ? t('Жіноча')
-          : t('Не вказувати')
-        : '',
+          : ''
+        : t('Не вказувати'),
   });
+
+  // const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
+  //   type:
+  //     profile?.gender !== null
+  //       ? profile?.gender === 'female'
+  //         ? 1
+  //         : profile?.gender === 'male'
+  //         ? 2
+  //         : 3
+  //       : 0,
+  //   name:
+  //     profile?.gender !== null
+  //       ? profile?.gender === 'male'
+  //         ? t('Чоловіча')
+  //         : profile?.gender === 'female'
+  //         ? t('Жіноча')
+  //         : t('Не вказувати')
+  //       : '',
+  // });
 
   const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);
   const [consentPersonalData, setConsentPersonalData] =
@@ -99,8 +119,11 @@ const ProfileUpdate: React.FC<TProps> = ({
     if (genderValue?.type === 2) {
       return 'male';
     }
-    if (genderValue?.type === 0) {
+    if (genderValue?.type === 3) {
       return null;
+    }
+    if (genderValue.type === 0) {
+      return 'nogender';
     }
   }, [genderValue?.type]);
 
@@ -269,7 +292,6 @@ const ProfileUpdate: React.FC<TProps> = ({
         !nameValue.trim() ||
         !surnameValue.trim() ||
         birthdayValue === maximumDate ||
-        !genderValue.name ||
         // phoneValue.length < 9 ||
         loading
       );
