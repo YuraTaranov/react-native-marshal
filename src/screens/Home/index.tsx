@@ -15,10 +15,10 @@ import {
   BonusCardModal,
   Icon,
   NotificationsManager,
-  RefreshControl,
   ReactNativeBiometrics,
   DeviceInfo,
   GradientBorder,
+  RefreshControl,
 } from '@components';
 import styles from './styles';
 import {Dispatch} from 'redux';
@@ -34,12 +34,11 @@ import {getReferralLink} from '@reducers/referral';
 import {getPurchases} from '@reducers/purchases';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
-import {ScrollView} from 'react-native-gesture-handler';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {getFuel} from '@reducers/fuel';
-// import {getCreditCards} from '@reducers/creditCards';
 import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
+import {ScrollView} from 'react-native';
 
 type TProps = {
   dispatch: Dispatch;
@@ -170,6 +169,7 @@ const Home: React.FC<TProps> = ({
       <RefreshControl
         onRefresh={refreshPromotions}
         refreshing={refreshing}
+        progressViewOffset={-30}
         colors={[colors.green_27A74C]}
         tintColor={colors.green_27A74C}
         size={24}
