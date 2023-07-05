@@ -89,11 +89,13 @@ const LoyaltyCard: React.FC<TProps> = ({profile}) => {
               resizeMode="cover"
             />
           </TouchableOpacity>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>{userCardName}</Text>
-          </View>
-          <View style={styles.cardNumberContainer}>
-            <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+          <View style={styles.contentContainer}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>{userCardName}</Text>
+            </View>
+            <View style={styles.cardNumberContainer}>
+              <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+            </View>
           </View>
         </ImageBackground>
       </Animated.View>

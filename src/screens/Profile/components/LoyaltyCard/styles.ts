@@ -9,6 +9,12 @@ export default StyleSheet.create({
     padding: 16,
     marginBottom: 48,
   },
+  contentContainer: {
+    flex: 1,
+    marginTop: 85, //50 + 35 50 - logo height, 35 finger heigh
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   card: {
     width: width - 32,
     height: 230,
@@ -44,7 +50,7 @@ export default StyleSheet.create({
     height: 80,
     position: 'absolute',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 35,
     top: 0,
   },
   logo: {
@@ -70,13 +76,12 @@ export default StyleSheet.create({
   },
   nameContainer: {
     flex: 1,
-    marginTop: 96,
     justifyContent: 'flex-end',
+    marginBottom: 16,
   },
   cardNumberContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 16,
   },
   name: {
     color: colors.white_FFFFFF,
