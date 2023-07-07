@@ -8,7 +8,6 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingHorizontal: 16,
-    paddingTop: 24,
   },
   contentContainer: {
     flex: 1,
@@ -31,8 +30,6 @@ export default StyleSheet.create({
     zIndex: 2,
     position: 'absolute',
   },
-  usualButton: {
-  },
   checkboxText: {
     width: width - 65,
   },
@@ -43,5 +40,8 @@ export default StyleSheet.create({
   buttonContainer: {
     width: width - 32,
     alignSelf: 'center',
+  },
+  gradientBorder: {
+    top: -5,
   },
 });

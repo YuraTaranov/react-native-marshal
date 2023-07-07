@@ -2,7 +2,7 @@ const SET_NETWORK = '[network] SET_NETWORK';
 const RESET_NETWORK = '[network] RESET_NETWORK';
 
 const initialstate = {
-	isConnected: false,
+  isConnected: true,
 };
 
 export default (state = initialstate, action: any) => {

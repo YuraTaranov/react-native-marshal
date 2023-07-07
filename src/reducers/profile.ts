@@ -2,10 +2,11 @@ import {takeLatest, put, call} from 'redux-saga/effects';
 import {httpGet, errorHandler, httpDel} from '@services';
 import {urls} from '@constants';
 import {logout} from './logout';
-import { setFaceIdActiveLocal } from './biometrics';
-import { ReactNativeBiometrics } from '@components';
-import { setLoader } from './appGlobalState';
-import { resetNotifications } from './notifications';
+import {setFaceIdActiveLocal} from './biometrics';
+import {ReactNativeBiometrics} from '@components';
+import {setLoader} from './appGlobalState';
+import {resetNotifications} from './notifications';
+import {capitalizeUserPersonalData} from '@helpers';
 
 const GET_PROFILE = '[profile] GET_PROFILE';
 const SET_PROFILE = '[profile] SET_PROFILE';
@@ -41,7 +42,9 @@ export function* getProfileAsync() {
   try {
     const {data} = yield call(() => httpGet(urls.getProfile));
     if (data.data) {
-      yield put(setProfile(data.data));
+      const formattingData = capitalizeUserPersonalData(data.data);
+
+      yield put(setProfile(formattingData));
     }
   } catch (e) {
     errorHandler(e, 'getProfileAsync');
@@ -50,17 +53,17 @@ export function* getProfileAsync() {
 
 export function* deleteProfileAsync() {
   try {
-	yield put(setLoader(true))
+    yield put(setLoader(true));
     const {data} = yield call(() => httpDel(urls.deleteProfile));
-	if (data.success) {
-	  yield put(setFaceIdActiveLocal(false))
+    if (data.success) {
+      yield put(setFaceIdActiveLocal(false));
       yield ReactNativeBiometrics.deleteKeys();
-	  yield put(resetNotifications())
-	  yield put(logout())
-	}
+      yield put(resetNotifications());
+      yield put(logout());
+    }
   } catch (e) {
     errorHandler(e, 'deleteProfileAsync');
   } finally {
-	yield put(setLoader(false))
+    yield put(setLoader(false));
   }
 }

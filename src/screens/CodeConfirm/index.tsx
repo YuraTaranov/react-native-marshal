@@ -116,6 +116,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
             onChangeText={setValue}
             cellCount={4}
             rootStyle={styles.codeFiledRoot}
+            autoFocus={true}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             renderCell={renderCell}

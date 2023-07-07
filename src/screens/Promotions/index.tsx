@@ -1,5 +1,15 @@
 import React from 'react';
-import {useCallback, useState, useMemo, useTranslation} from '@hooks';
+import {Dispatch} from 'redux';
+import {connect} from 'react-redux';
+
+import {
+  useCallback,
+  useState,
+  useMemo,
+  useTranslation,
+  useNavigation,
+  useEffect,
+} from '@hooks';
 import {
   View,
   FlatList,
@@ -7,11 +17,8 @@ import {
   ActivityIndicator,
   RefreshControl,
   Text,
+  QuestionButton,
 } from '@components';
-import {TGlobalState, TPromotion} from '@types';
-import {connect} from 'react-redux';
-import styles from './styles';
-import {Dispatch} from 'redux';
 import {getPromotion} from '@reducers/promotion';
 import {
   setLazyLoading,
@@ -19,6 +26,11 @@ import {
   setRefreshing,
 } from '@reducers/promotions';
 import {colors} from '@constants';
+
+import styles from './styles';
+
+//types
+import {TGlobalState, TPromotion} from '@types';
 
 type TProps = {
   dispatch: Dispatch;
@@ -37,6 +49,13 @@ const Promotions: React.FC<TProps> = ({
 }) => {
   const {t} = useTranslation();
   const [page, setPage] = useState<number>(1);
+  const {setOptions} = useNavigation();
+
+  useEffect(() => {
+    setOptions({
+      headerLeft: () => <QuestionButton />,
+    });
+  }, []);
 
   const onPressItem = useCallback(
     id => () => {
@@ -61,9 +80,7 @@ const Promotions: React.FC<TProps> = ({
   }, []);
 
   const renderItem: ({item}: {item: TPromotion}) => JSX.Element = useCallback(
-    ({item}) => (
-      <PromotionView item={item} onPress={onPressItem} bgBorderRadius={6} />
-    ),
+    ({item}) => <PromotionView item={item} onPress={onPressItem} />,
     [],
   );
 

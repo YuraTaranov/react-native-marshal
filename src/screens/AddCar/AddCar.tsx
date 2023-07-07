@@ -69,7 +69,7 @@ const AddCar: React.FC<TProps> = ({dispatch}) => {
       headerRight: carToEdit
         ? () => (
             <TouchableOpacity onPress={onPressDeleteCar}>
-              <Icon size={24} name="trash" color={colors.white_FFFFFF} />
+              <Icon size={24} name="trash" color={colors.black_000000} />
             </TouchableOpacity>
           )
         : null,

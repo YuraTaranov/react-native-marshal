@@ -1,5 +1,11 @@
 import React from 'react';
-import {useCallback, useMemo, useTranslation, useState} from '@hooks';
+import {
+  useCallback,
+  useMemo,
+  useTranslation,
+  useState,
+  useEffect,
+} from '@hooks';
 import {
   View,
   Text,
@@ -12,17 +18,19 @@ import {
   UsualButton,
   ProfileUpdateModal,
   formatWithMask,
+  GradientBorder,
 } from '@components';
 import styles from './styles';
 import moment from 'moment';
 import {navigate, errorHandler, httpPost, goBack} from '@services';
 import {setProfile} from '@reducers/profile';
-import {urls, ios, colors} from '@constants';
+import {urls, ios, colors, gradients, width} from '@constants';
 import {connect} from 'react-redux';
 import {TBiometricsType, TGlobalState, TProfile} from '@types';
 import {Dispatch} from 'redux';
 import {Alert} from 'react-native';
 import {setIsUserAuthorized} from '@reducers/appGlobalState';
+import {capitalizeFirstLetter, capitalizeUserPersonalData} from '@helpers';
 
 type TProps = {
   appGlobalState: TGlobalState['appGlobalState'];
@@ -53,8 +61,9 @@ const ProfileUpdate: React.FC<TProps> = ({
     (profile?.birthday && new Date(profile?.birthday)) || initialDate,
   );
   const [phoneValue, setPhoneValue] = useState<string>(
-    profile?.phone.slice(4) || '',
+    profile?.phone?.slice(4) || '',
   );
+
   const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
     type:
       profile?.gender !== null
@@ -62,17 +71,36 @@ const ProfileUpdate: React.FC<TProps> = ({
           ? 1
           : profile?.gender === 'male'
           ? 2
-          : 3
-        : 0,
+          : 0
+        : 3,
     name:
       profile?.gender !== null
         ? profile?.gender === 'male'
           ? t('Чоловіча')
           : profile?.gender === 'female'
           ? t('Жіноча')
-          : t('Не вказувати')
-        : '',
+          : ''
+        : t('Не вказувати'),
   });
+
+  // const [genderValue, setGenderValue] = useState<{type: number; name: string}>({
+  //   type:
+  //     profile?.gender !== null
+  //       ? profile?.gender === 'female'
+  //         ? 1
+  //         : profile?.gender === 'male'
+  //         ? 2
+  //         : 3
+  //       : 0,
+  //   name:
+  //     profile?.gender !== null
+  //       ? profile?.gender === 'male'
+  //         ? t('Чоловіча')
+  //         : profile?.gender === 'female'
+  //         ? t('Жіноча')
+  //         : t('Не вказувати')
+  //       : '',
+  // });
 
   const [visibleDatePicker, setVisibleDatePicker] = useState<boolean>(false);
   const [consentPersonalData, setConsentPersonalData] =
@@ -83,6 +111,38 @@ const ProfileUpdate: React.FC<TProps> = ({
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<'date' | 'gender'>('date');
   const [isPhoneFocus, setIsPhoneFocus] = useState<boolean>(false);
+
+  const parsedGender = useMemo(() => {
+    if (genderValue?.type === 1) {
+      return 'female';
+    }
+    if (genderValue?.type === 2) {
+      return 'male';
+    }
+    if (genderValue?.type === 3) {
+      return null;
+    }
+    if (genderValue.type === 0) {
+      return 'nogender';
+    }
+  }, [genderValue?.type]);
+
+  const isSaveButtonVisible = useMemo(() => {
+    return (
+      nameValue !== profile?.name ||
+      surnameValue !== profile?.surname ||
+      birthdayValue?.toDateString() !==
+        new Date(profile?.birthday)?.toDateString() ||
+      parsedGender != profile?.gender
+    );
+  }, [
+    profile,
+    parsedGender,
+    nameValue,
+    surnameValue,
+    birthdayValue,
+    genderValue,
+  ]);
 
   const onPhoneFocus = useCallback(() => {
     setIsPhoneFocus(true);
@@ -156,29 +216,32 @@ const ProfileUpdate: React.FC<TProps> = ({
     try {
       const data = isRegistration
         ? {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
         : initialPhone === phone
         ? {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
           }
         : {
-            name: nameValue,
-            surname: surnameValue,
+            name: capitalizeFirstLetter(nameValue.toLowerCase()),
+            surname: capitalizeFirstLetter(surnameValue.toLowerCase()),
             birthday: moment(birthdayValue).format('YYYY-MM-DD'),
             gender,
             phone: `+380${phone}`,
           };
+
       const body = await httpPost(urls.profileUpdate, data);
       setLoading(false);
       if (body.status === 200) {
-        dispatch(setProfile(body.data.data));
+        const formattingData = capitalizeUserPersonalData(body.data.data);
+
+        dispatch(setProfile(formattingData));
         if (isRegistration) {
           biometricsType !== 'none'
             ? navigate('Biometrics') // BonusCardCheck
@@ -229,7 +292,6 @@ const ProfileUpdate: React.FC<TProps> = ({
         !nameValue.trim() ||
         !surnameValue.trim() ||
         birthdayValue === maximumDate ||
-        !genderValue.name ||
         // phoneValue.length < 9 ||
         loading
       );
@@ -264,6 +326,11 @@ const ProfileUpdate: React.FC<TProps> = ({
     );
   }, [t]);
 
+  useEffect(() => {
+    setNameValue(profile?.name);
+    setSurnameValue(profile?.surname);
+  }, [profile.name, profile.surname]);
+
   return (
     <>
       <View style={styles.container}>
@@ -273,22 +340,40 @@ const ProfileUpdate: React.FC<TProps> = ({
               {t('text.enterYourPersonalInformation')}
             </Text>
           ) : null}
-          <MaterialInput
-            returnKeyType={'default'}
-            value={nameValue}
-            onChangeText={setNameValue}
-            maxLength={25}
-            lineWidth={0.5}
-            label={t('textInput.name')}
-          />
-          <MaterialInput
-            returnKeyType={'default'}
-            value={surnameValue}
-            lineWidth={0.5}
-            maxLength={30}
-            onChangeText={setSurnameValue}
-            label={t('textInput.surname')}
-          />
+          <View>
+            <MaterialInput
+              returnKeyType={'default'}
+              value={nameValue}
+              onChangeText={setNameValue}
+              maxLength={25}
+              textColor={colors.black_1A1718}
+              disabledLineWidth={0}
+              lineWidth={0}
+              activeLineWidth={0}
+              label={t('textInput.name')}
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
+            />
+          </View>
+          <View>
+            <MaterialInput
+              returnKeyType={'default'}
+              value={surnameValue}
+              lineWidth={0}
+              activeLineWidth={0}
+              disabledLineWidth={0}
+              textColor={colors.black_1A1718}
+              maxLength={30}
+              onChangeText={setSurnameValue}
+              label={t('textInput.surname')}
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
+            />
+          </View>
           <View>
             <TouchableOpacity
               style={styles.buttonTI}
@@ -296,10 +381,19 @@ const ProfileUpdate: React.FC<TProps> = ({
             />
             <MaterialInput
               renderRightAccessory
-              rightAccessoryName={'calendar-dates'}
+              rightAccessoryColor={colors.gray_888A8E}
+              rightAccessoryName={'arrow-down'}
               value={dateValue}
               label={t('textInput.dateOfBirth')}
               disabled={true}
+              textColor={colors.black_1A1718}
+              disabledLineWidth={0}
+              lineWidth={0}
+              activeLineWidth={0}
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
             />
           </View>
           <View>
@@ -309,11 +403,20 @@ const ProfileUpdate: React.FC<TProps> = ({
             />
             <MaterialInput
               renderRightAccessory
+              rightAccessoryColor={colors.gray_888A8E}
               rightAccessoryName={'arrow-down'}
               returnKeyType={'next'}
-              value={genderValue.name}
+              value={genderValue.name.toUpperCase()}
+              textColor={colors.black_1A1718}
               label={t('textInput.sex')}
               disabled={true}
+              disabledLineWidth={0}
+              lineWidth={0}
+              activeLineWidth={0}
+            />
+            <GradientBorder
+              colors={gradients.gray}
+              style={styles.gradientBorder}
             />
           </View>
           {isRegistration ? (
@@ -332,23 +435,28 @@ const ProfileUpdate: React.FC<TProps> = ({
             </View>
           ) : null}
           {!isRegistration ? (
-            <MaterialInput
-              keyboardType={'number-pad'}
-              returnKeyType={'done'}
-              value={formatPhone.masked}
-              onChangeText={setPhoneValue}
-              lineWidth={0.5}
-              maxLength={12}
-              label={t('Номер телефону')}
-              prefix="+380"
-              onFocus={onPhoneFocus}
-              onBlur={onPhoneBlur}
-              disabled={true}
-              textColor={colors.gray_8D909D}
-              baseColor={
-                isPhoneFocus ? colors.black_000000 : colors.gray_8D909D
-              }
-            />
+            <>
+              <MaterialInput
+                keyboardType={'number-pad'}
+                returnKeyType={'done'}
+                value={formatPhone.masked}
+                onChangeText={setPhoneValue}
+                maxLength={12}
+                label={t('Номер телефону')}
+                prefix="+380"
+                onFocus={onPhoneFocus}
+                textColor={colors.gray_8D909D}
+                onBlur={onPhoneBlur}
+                disabled={true}
+                disabledLineWidth={0}
+                lineWidth={0}
+                activeLineWidth={0}
+              />
+              <GradientBorder
+                colors={gradients.gray}
+                style={styles.gradientBorder}
+              />
+            </>
           ) : null}
         </View>
       </View>
@@ -366,16 +474,19 @@ const ProfileUpdate: React.FC<TProps> = ({
       <View
         style={{
           ...styles.buttonContainer,
-          marginBottom: !isRegistration ? 24 : 0,
+          marginTop: isRegistration ? 0 : 16,
         }}>
         <UsualButton
-          title={
-            isRegistration ? t('button.title.continue') : t('Прийняти зміни')
-          }
+          title={isRegistration ? t('button.title.continue') : t('Зберегти')}
           loading={loading}
           dark={loading}
-          disabled={isButtonDisabled}
-          buttonStyle={styles.usualButton}
+          disabled={
+            isButtonDisabled || (!isRegistration && !isSaveButtonVisible)
+          }
+          buttonStyle={{
+            width: isRegistration ? width - 65 : width - 64,
+            marginLeft: 16,
+          }}
           onPress={submit}
         />
       </View>

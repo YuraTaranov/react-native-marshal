@@ -18,7 +18,7 @@ const QuestionButton: React.FC<TProps> = ({dispatch}) => {
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Icon size={24} name="support" color={colors.white_FFFFFF} />
+      <Icon size={24} name="support" color={colors.gray_464649} />
     </TouchableOpacity>
   );
 };

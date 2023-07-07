@@ -23,6 +23,7 @@ import styles from './styles';
 //Type
 import {TFilters, TGlobalState, TListItem, TPetrolStation} from '@types';
 import {Dispatch} from 'redux';
+import {colors} from '@constants';
 
 type TProps = {
   dispatch: Dispatch;
@@ -82,7 +83,11 @@ const RegionsPage: React.FC<TProps> = ({dispatch, petrolStations, filters}) => {
     setOptions({
       title: t('Filters'),
       headerRight: () => (
-        <RightButton onPress={cleaning} title={t('Cleaning')} />
+        <RightButton
+          onPress={cleaning}
+          title={t('Cleaning')}
+          color={colors.black_000000}
+        />
       ),
     });
   }, [setOptions, t, cleaning]);

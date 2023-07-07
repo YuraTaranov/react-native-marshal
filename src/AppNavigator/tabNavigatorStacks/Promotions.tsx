@@ -18,8 +18,7 @@ const PromotionsScreen: React.FC = () => {
         name="Promotions"
         component={Promotions}
         options={{
-          headerTitleAlign: 'center',
-          title: t('Акції'),
+          title: '',
         }}
       />
     </PromotionsStack.Navigator>

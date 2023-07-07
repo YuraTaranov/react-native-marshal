@@ -1,23 +1,32 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Dispatch} from 'redux';
+
 import {
   useEffect,
   useCallback,
   useMemo,
   useTranslation,
   useNavigation,
-  useState,
 } from '@hooks';
-import {View, TouchableOpacity, Icon, BonusCardModal} from '@components';
-import {TGlobalState, TProfile, TNotification} from '@types';
-import {connect} from 'react-redux';
-import styles from './styles';
-import {colors, declension, longScreen} from '@constants';
-import {FlatList} from 'react-native-gesture-handler';
-import ProfileMenuItem from './components/ProfileMenuItem/ProfileMenuItem';
-import {setSupport} from '@reducers/modalController';
-import {Dispatch} from 'redux';
+import {
+  View,
+  TouchableOpacity,
+  Icon,
+  GradientBorder,
+  ProfileUpdate,
+  QuestionButton,
+} from '@components';
+import {colors, declension, gradients} from '@constants';
 import {navigate} from '@services';
 import {getCars} from '@reducers/cars';
+
+import styles from './styles';
+import {LoyaltyCard, ProfileMenuItem} from './components';
+
+//types
+import {TGlobalState, TProfile, TNotification} from '@types';
 
 type TProps = {
   notifications: TNotification[];
@@ -34,22 +43,20 @@ type TMenuItem = {
 const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-  const [bonusCardModelVisible, setBonusCardModelVisible] =
-    useState<boolean>(false);
-
-  const openBonusCardModal = useCallback(() => {
-    setBonusCardModelVisible(true);
-  }, []);
-
-  const closeBonusCardModal = useCallback(() => {
-    setBonusCardModelVisible(false);
-  }, []);
 
   const menuItems: TMenuItem[] = useMemo(() => {
     return [
       {
+        icon: 'edit_profile',
+        name: t('Редагувати профіль'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'ProfileEdit',
+          }),
+      },
+      {
         icon: 'bell',
-        name: t('Сповіщення'),
+        name: t('Історія сповіщень'),
         onPress: () =>
           navigate('ProfileStack', {
             screen: 'Notifications',
@@ -76,14 +83,6 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
         icon: 'car',
         name: t('Авто'),
         onPress: () => dispatch(getCars()),
-      },
-      {
-        icon: 'edit_profile',
-        name: t('Редагувати профіль'),
-        onPress: () =>
-          navigate('ProfileStack', {
-            screen: 'ProfileEdit',
-          }),
       },
     ];
   }, [t]);
@@ -113,10 +112,6 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       : null;
   }, [unreadNotificationsCount, t]);
 
-  const onPressSupport = useCallback(() => {
-    dispatch(setSupport(true));
-  }, []);
-
   const onPressSettings = useCallback(() => {
     navigate('ProfileStack', {
       screen: 'Settings',
@@ -125,58 +120,34 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
 
   useEffect(() => {
     setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={onPressSupport}>
-          <Icon size={24} name="support" color={colors.white_FFFFFF} />
-        </TouchableOpacity>
-      ),
+      headerLeft: () => <QuestionButton />,
       headerRight: () => (
         <TouchableOpacity onPress={onPressSettings}>
-          <Icon size={24} name="settings" color={colors.white_FFFFFF} />
+          <Icon size={24} name="settings" color={colors.gray_464649} />
         </TouchableOpacity>
       ),
     });
   }, []);
 
-  const renderItem: ({item}: {item: TMenuItem}) => JSX.Element = useCallback(
-    ({item}) => (
-      <ProfileMenuItem
-        item={item}
-        newNotificationsLength={newNotificationsLength}
-        cardNumber={cardNumber}
-      />
-    ),
-    [newNotificationsLength],
-  );
-  const keyExtractor: (item: TMenuItem) => string = useCallback(
-    item => item.icon,
-    [],
-  );
-
   return (
-    <View style={styles.container}>
-      {profile?.card ? (
-        <ProfileMenuItem
-          item={{
-            icon: 'creditcard',
-            name: t('Карта лояльності Marshal'),
-            onPress: () => openBonusCardModal(),
-          }}
-          newNotificationsLength={newNotificationsLength}
-          cardNumber={cardNumber}
-        />
-      ) : null}
-      <FlatList
-        data={menuItems}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        scrollEnabled={!longScreen}
-      />
-      <BonusCardModal
-        isVisible={bonusCardModelVisible}
-        closeModal={closeBonusCardModal}
-      />
-    </View>
+    <ScrollView
+      contentContainerStyle={styles.contentContainer}
+      style={styles.container}>
+      {profile?.card ? <LoyaltyCard profile={profile} /> : null}
+      <View style={styles.leftIndent}>
+        <GradientBorder colors={gradients.gray} style={styles.gradientBorder} />
+        <View style={styles.menuItemsContainer}>
+          {menuItems.map(item => (
+            <ProfileMenuItem
+              item={item}
+              newNotificationsLength={newNotificationsLength}
+              cardNumber={cardNumber}
+              key={item.name}
+            />
+          ))}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 const mapStateToProps = (state: TGlobalState) => ({

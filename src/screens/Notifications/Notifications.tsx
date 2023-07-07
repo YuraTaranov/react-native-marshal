@@ -36,16 +36,6 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   }, []);
 
   useEffect(() => {
-    setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={onPressSettings}>
-          <Icon size={24} name="settings" color={colors.white_FFFFFF} />
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       const hasUnread = notifications.find(item => !item.isRead);
       if (hasUnread) {
@@ -60,7 +50,9 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
 
   const onPressNotification = useCallback(
     item => () => {
-      if (item.type !== 'text') dispatch(getPromotion(item.data_id));
+      if (item.type !== 'text') {
+        dispatch(getPromotion(item.data_id));
+      }
     },
     [],
   );

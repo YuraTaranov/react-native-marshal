@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+
 import {colors, fonts} from '@constants';
 
 export default StyleSheet.create({
@@ -7,17 +8,15 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    borderBottomWidth: 1,
-    borderColor: colors.gray_E1E1E8,
   },
   nameContainer: {
     flex: 1,
-    marginLeft: 16,
   },
   name: {
-    color: colors.black_1B1B1B,
+    color: colors.black_1A1718,
+    textTransform: 'uppercase',
     fontSize: 16,
-    fontFamily: fonts.interSemiBold_600,
+    fontFamily: fonts.interMedium_500,
   },
   bonusCardNumber: {
     color: colors.gray_6D6F79,

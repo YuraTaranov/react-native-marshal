@@ -15,9 +15,10 @@ import {
   BonusCardModal,
   Icon,
   NotificationsManager,
-  RefreshControl,
   ReactNativeBiometrics,
   DeviceInfo,
+  GradientBorder,
+  RefreshControl,
 } from '@components';
 import styles from './styles';
 import {Dispatch} from 'redux';
@@ -33,12 +34,11 @@ import {getReferralLink} from '@reducers/referral';
 import {getPurchases} from '@reducers/purchases';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
-import {ScrollView} from 'react-native-gesture-handler';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {getFuel} from '@reducers/fuel';
-// import {getCreditCards} from '@reducers/creditCards';
 import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
+import {ScrollView} from 'react-native';
 
 type TProps = {
   dispatch: Dispatch;
@@ -48,6 +48,12 @@ type TProps = {
   isBioActiveLocal: boolean;
   profile: TProfile;
 };
+
+const gradientColors = [
+  'rgba(220, 221, 222, 0.1)',
+  'rgba(220, 221, 222, 1)',
+  'rgba(220, 221, 222, 0.1)',
+];
 
 const device_id = DeviceInfo.getUniqueId();
 
@@ -68,13 +74,6 @@ const Home: React.FC<TProps> = ({
   useEffect(() => {
     setOptions({
       headerLeft: () => <QuestionButton />,
-      headerRight: profile?.card
-        ? () => (
-            <TouchableOpacity onPress={openCardModal}>
-              <Icon size={24} name="bonus_card" color={colors.white_FFFFFF} />
-            </TouchableOpacity>
-          )
-        : undefined,
     });
     dispatch(getProfile());
     dispatch(getReferralLink());
@@ -170,6 +169,7 @@ const Home: React.FC<TProps> = ({
       <RefreshControl
         onRefresh={refreshPromotions}
         refreshing={refreshing}
+        progressViewOffset={-30}
         colors={[colors.green_27A74C]}
         tintColor={colors.green_27A74C}
         size={24}
@@ -186,23 +186,27 @@ const Home: React.FC<TProps> = ({
         closeModal={closeFuelModal}
       />
       <ScrollView refreshControl={refreshControl}>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.buttonContainerCalc}
-            onPress={navigateToFuelCalculator}>
-            <Icon
-              size={24}
-              name="calculator-duotone"
-              color={colors.green_009F30}
-            />
-            <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonContainerFuel}
-            onPress={navigateToFuelPurchase}>
-            <Icon size={24} name="gas" color={colors.green_009F30} />
-            <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
-          </TouchableOpacity>
+        <View style={styles.buttonsBlock}>
+          <GradientBorder colors={gradientColors} />
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.buttonContainerCalc}
+              onPress={navigateToFuelCalculator}>
+              <Text style={styles.buttonText}>{t('Калькулятор')}</Text>
+              <Icon
+                size={28}
+                name="calculator-duotone-2"
+                color={colors.black_000000}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonContainerFuel}
+              onPress={navigateToFuelPurchase}>
+              <Text style={styles.buttonText}>{t('Купити пальне')}</Text>
+              <Icon size={28} name="gas-2" color={colors.black_000000} />
+            </TouchableOpacity>
+          </View>
+          <GradientBorder colors={gradientColors} />
         </View>
         {promotions ? <HomeCarousel promotions={promotions} /> : null}
       </ScrollView>

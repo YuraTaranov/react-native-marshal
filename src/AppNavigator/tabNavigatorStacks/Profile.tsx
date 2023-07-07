@@ -21,8 +21,7 @@ const ProfileScreen: React.FC<TProps> = ({profile}) => {
         name="Profile"
         component={Profile}
         options={{
-          headerTitleAlign: 'center',
-          title: profile?.name ? `${profile?.name} ${profile?.surname}` : '',
+          title: '',
         }}
       />
     </ProfileStack.Navigator>

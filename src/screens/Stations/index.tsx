@@ -28,10 +28,11 @@ const Stations: React.FC<TProps> = ({filters}) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [isFilterEmpty, setIsFilterEmpty] = useState(true);
-  const [routes] = useState([
+
+  const routes = [
     {key: 'first', title: t('map.tabMapFirst')},
     {key: 'second', title: t('map.tabMapSecond')},
-  ]);
+  ];
 
   const renderScene = SceneMap({
     first: MapScreen,
@@ -46,12 +47,12 @@ const Stations: React.FC<TProps> = ({filters}) => {
           indicatorStyle={styles.tabBarIndicatorStyle}
           style={[styles.whiteFond, styles.barTitle]}
           labelStyle={styles.tabBarLabelStyle}
-          activeColor={colors.green_007E26}
+          activeColor={colors.red_CA001A}
           inactiveColor={colors.black_1E1A1A}
         />
       </SafeAreaView>
     ),
-    [],
+    [t],
   );
 
   const navigateToFilter = useCallback(() => {

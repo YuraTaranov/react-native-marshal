@@ -6,14 +6,16 @@ export default StyleSheet.create({
     flex: 1,
     paddingBottom: 24,
   },
-  flatList: {},
+  flatList: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
   itemContainer: {
-    padding: 16,
+    paddingVertical: 16,
+    paddingLeft: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: colors.gray_E1E1E8,
   },
   itemName: {
     color: colors.black_1B1B1B,
@@ -22,7 +24,7 @@ export default StyleSheet.create({
   },
   itemDate: {
     color: colors.gray_6D6F79,
-    fontSize: 13,
+    fontSize: 16,
     marginTop: 4,
   },
   itemPrice: {
@@ -38,5 +40,16 @@ export default StyleSheet.create({
   },
   activityIndicatorContainer: {
     marginTop: 8,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    backgroundColor: colors.white_FFFFFF,
+    paddingLeft: 16,
+    paddingBottom: 16,
+  },
+  headerTitle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

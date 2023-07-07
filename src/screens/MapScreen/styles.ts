@@ -16,10 +16,10 @@ export default StyleSheet.create({
     position: 'absolute',
     height: 190,
     width: 60,
-    bottom: 70,
-    right: 30,
+    bottom: 46,
+    right: 16,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
   },
   mapPadding: {
     top: 0,

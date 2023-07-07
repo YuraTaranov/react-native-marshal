@@ -50,7 +50,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
     setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={onPressLogout}>
-          <Icon size={24} name="logout" color={colors.white_FFFFFF} />
+          <Icon size={24} name="logout" color={colors.black_000000} />
         </TouchableOpacity>
       ),
     });

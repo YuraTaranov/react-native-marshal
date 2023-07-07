@@ -1,40 +1,41 @@
 import {StyleSheet} from '@components';
-import {colors, width} from '@constants';
-import {shadowBlock} from '@helpers';
+import {android, colors, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(249, 249, 249)',
+  },
+  buttonsBlock: {
+    marginTop: 48,
+    marginHorizontal: 16,
   },
   buttonsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 24,
   },
   buttonContainerCalc: {
-    height: 56,
-    width: width / 2 - 24,
+    height: 46,
+    width: width / 2,
     backgroundColor: colors.white_FFFFFF,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginRight: 16,
-    borderRadius: 6,
-    ...shadowBlock,
+    borderRightWidth: android ? 1 : 0.25,
+    borderColor: '#dddfe0',
   },
   buttonContainerFuel: {
-    height: 56,
-    width: width / 2 - 24,
+    height: 46,
+    width: width / 2,
     backgroundColor: colors.white_FFFFFF,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 6,
-    ...shadowBlock,
   },
   buttonText: {
-    marginLeft: 8,
+    marginRight: 24,
+    textTransform: 'uppercase',
+    fontSize: 12,
   },
 });

@@ -7,14 +7,14 @@ export default StyleSheet.create({
     margin: 0,
   },
   header: {
-    backgroundColor: colors.green_27A74C,
+    backgroundColor: colors.white_FFFFFF,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',
     height: ios ? top + 44 : top + 32,
   },
   headerText: {
-    color: colors.white_FFFFFF,
+    color: colors.black_1A1718,
     fontFamily: fonts.interSemiBold_600,
     fontSize: 18,
     marginBottom: ios ? 12 : 16,

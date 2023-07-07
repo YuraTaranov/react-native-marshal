@@ -7,7 +7,7 @@ import {TGlobalState} from '@types';
 import {Dispatch} from 'redux';
 import {setSupport} from '@reducers/modalController';
 import {Direction} from 'react-native-modal';
-import {colors, ios} from '@constants';
+import {android, colors, ios} from '@constants';
 import {Linking} from 'react-native';
 import {assets} from '@assets';
 
@@ -84,7 +84,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
       isVisible={support}
       backdropTransitionOutTiming={0}
       backdropOpacity={0}
-      useNativeDriver={true}
+      useNativeDriver={android}
       style={styles.modalContainer}>
       <TouchableOpacity
         style={styles.header}
@@ -94,7 +94,7 @@ const Support: React.FC<TProps> = ({support, dispatch}) => {
         <Icon
           name="x"
           size={24}
-          color={colors.white_FFFFFF}
+          color={colors.gray_464649}
           style={styles.close}
         />
       </TouchableOpacity>

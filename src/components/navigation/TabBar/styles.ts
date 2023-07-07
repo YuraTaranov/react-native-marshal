@@ -5,7 +5,7 @@ export default StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-	paddingBottom: 8,
+    paddingVertical: 8,
   },
   eachScreen: {
     paddingTop: 8,
@@ -14,8 +14,9 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 12,
+    color: colors.black_58585B,
   },
   textActive: {
-    color: colors.green_00AE36,
+    color: colors.red_D61920,
   },
 });

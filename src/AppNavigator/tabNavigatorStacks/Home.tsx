@@ -16,7 +16,7 @@ const HomeScreen: React.FC = () => {
         component={Home}
         options={{
           headerTitleAlign: 'center',
-          title: 'Marshal',
+          title: '',
         }}
       />
     </HomeStack.Navigator>

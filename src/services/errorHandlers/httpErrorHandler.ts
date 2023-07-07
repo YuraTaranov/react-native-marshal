@@ -5,10 +5,10 @@ export const errorHandler = (error: any, method?: string) => {
   __DEV__ && console.log('REQUEST ERROR', method || 'Pass the method', error);
 
   if (error.status === 408 || error.status === 418) {
-	return Alert.alert(
-		'',
-		i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'),
-	  );
+    return Alert.alert(
+      '',
+      i18next.t('Перевірте підключення до Інтернету або спробуйте пізніше'),
+    );
   }
 
   let resultString = '';
@@ -22,5 +22,5 @@ export const errorHandler = (error: any, method?: string) => {
     resultString = error.data?.message || '-';
   }
 
-  Alert.alert('', resultString);
+  // Alert.alert('', resultString);
 };

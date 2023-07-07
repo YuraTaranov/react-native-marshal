@@ -54,6 +54,7 @@ export type TPromotion = {
   id: number;
   type: 'new' | 'discount' | 'action';
   image: string;
+  image_background: string;
   discount_percentage?: number;
   start?: string;
   end?: string;
@@ -166,15 +167,27 @@ export type TPrice = {
 };
 
 export type TPurchase = {
-  bonuses: number;
-  created_at: Date;
-  credit_card: number;
-  fuel_id: 1 | 2 | 3 | 4;
-  id: number;
-  liters: number;
-  money: string; // money
-  type: 'gift' | 'bonuses' | 'many';
-  user_id: number;
+  // bonuses: number;
+  // created_at: Date;
+  // credit_card: number;
+  // fuel_id: 1 | 2 | 3 | 4;
+  // id: number;
+  // liters: number;
+  // money: string; // money
+  // type: 'gift' | 'bonuses' | 'many';
+  // user_id: number;
+  transactionId: number;
+  transactionDate: Date;
+  totalAmount: number;
+};
+
+export type TPurchaseDetail = {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  amount: number;
+  discountAmount: number;
 };
 
 export type TPaymentСard = {

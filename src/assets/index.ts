@@ -4,7 +4,7 @@ export {default as SVG_Img} from './svg/SVG_Img';
 export const assets = {
   BONUSES_GIFT: require('./images/bonuses_gift.png'),
   BONUSES_ONBOARDING: require('./images/bonuses_onboarding.png'),
-  MARKER: require('./images/marker-01.png'),
+  MARKER: require('./images/marker.png'),
   MARKER_LOGO: require('./images/marker_logo.png'),
   MESSENGER: require('./images/Messenger.png'),
   NO_CARDS: require('./images/no_cards.png'),
@@ -33,4 +33,9 @@ export const assets = {
   NO_NOTIFICATIONS: require('./images/no_notifications.png'),
   NO_SEARCH: require('./images/no_search.png'),
   BUY_FUEL_IN_PROGRESS: require('./images/in_progress.png'),
+  FINGERPRINT: require('./images/fingerprint.png'),
+  CARD_LOGO: require('./images/card_logo.png'),
+  CARD_BACKGROUND: require('./images/card_background.png'),
+  NO_CONNECTION: require('./images/no-connection-modal.png'),
+  MAP_ICON_LOCATION: require('./images/map-icon-2.png'),
 };

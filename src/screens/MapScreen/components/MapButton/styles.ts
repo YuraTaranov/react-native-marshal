@@ -24,4 +24,8 @@ export default StyleSheet.create({
   disabled: {
     opacity: 0.2,
   },
+  iamge: {
+    width: MapButtonSize,
+    height: MapButtonSize,
+  },
 });

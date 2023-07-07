@@ -6,7 +6,7 @@ export const defaultStackOptions: StackNavigationOptions = {
   headerBackTitleVisible: false,
   headerStyle: styles.headerStyle,
   headerTitleStyle: styles.headerTitleStyle,
-  headerTintColor: colors.white_FFFFFF,
+  headerTintColor: colors.black_000000,
   cardStyle: styles.cardStyle,
   headerRightContainerStyle: styles.headerRightContainerStyle,
   headerLeftContainerStyle: styles.headerLeftContainerStyle,
