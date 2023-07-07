@@ -13,14 +13,18 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
+  GradientBorder,
 } from '@components';
-import {TGlobalState, TPurchase} from '@types';
+import {TGlobalState, TProfile, TPurchase} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {declension, colors} from '@constants';
+import {declension, colors, sizes, gradients} from '@constants';
 import {setLazyLoading, getPurchases, setRefreshing} from '@reducers/purchases';
 import ListEmptyComponent from './components/ListEmptyComponent/ListEmptyComponent';
 import moment from 'moment';
+import {BonusCard, InviteButton} from './components';
+import {navigate} from '@services';
 
 type TProps = {
   dispatch: Dispatch;
@@ -28,6 +32,7 @@ type TProps = {
   lazyLoading: boolean;
   finishLoading: boolean;
   refreshing: boolean;
+  profile: TGlobalState['profile']['data'];
 };
 
 const Purchases: React.FC<TProps> = ({
@@ -36,9 +41,11 @@ const Purchases: React.FC<TProps> = ({
   lazyLoading,
   finishLoading,
   refreshing,
+  profile,
 }) => {
   const {t} = useTranslation();
   const [page, setPage] = useState<number>(1);
+  const {count_bonus, count_spent_bonus} = profile;
 
   useEffect(() => {
     dispatch(getPurchases({page: 1}));
@@ -69,26 +76,34 @@ const Purchases: React.FC<TProps> = ({
     [t],
   );
 
+  const onPressNavigatePurchaseDetail = useCallback(
+    (transactionId: number, transactionDate) => () => {
+      navigate('PurchaseDetail', {transactionId, transactionDate});
+    },
+    [navigate],
+  );
+
   const renderItem: ({item}: {item: TPurchase}) => JSX.Element = useCallback(
     ({item}) => (
-      <View style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={onPressNavigatePurchaseDetail(
+          item.transactionId,
+          item.transactionDate,
+        )}>
         <View>
-          <Text style={styles.itemName}>{`${t('Паливо')} ${parseFuel(
-            item.fuel_id,
-          )} • ${fuelVolume(item.liters)}`}</Text>
-          <Text style={styles.itemDate}>{parseDate(item.created_at)}</Text>
+          <Text style={styles.itemDate}>{parseDate(item.transactionDate)}</Text>
         </View>
         <View>
-          <Text style={styles.itemPrice}>{`${item.money} ₴`}</Text>
-          <Text style={styles.itemCard}>{`** ${item.credit_card}`}</Text>
+          <Text>{item.totalAmount.toFixed(2)} грн</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     ),
     [t],
   );
 
   const keyExtractor: (item: TPurchase) => string = useCallback(
-    item => String(item.id),
+    item => String(item.transactionId),
     [],
   );
 
@@ -117,25 +132,54 @@ const Purchases: React.FC<TProps> = ({
     [lazyLoading],
   );
 
+  const onPressInviteFriends = useCallback(() => {
+    navigate('BonusesStack', {
+      screen: 'InviteFriends',
+    });
+  }, []);
+
+  const listHeaderComponent = useMemo(
+    () => (
+      <View
+        style={styles.headerContainer}>
+        <View
+          style={styles.headerTitle}>
+          <Text>{t('Дата')}</Text>
+        </View>
+        <View
+          style={styles.headerTitle}>
+          <Text>{t('Сума')}</Text>
+        </View>
+      </View>
+    ),
+    [],
+  );
   return (
     <View style={styles.container}>
+      <BonusCard count_bonus={count_bonus} />
+      <InviteButton onPressHandler={onPressInviteFriends} />
       <FlatList
         data={purchases}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         style={styles.flatList}
-        refreshControl={
-          <RefreshControl
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-            colors={[colors.green_27A74C]}
-            tintColor={colors.green_27A74C}
-            size={24}
-          />
-        }
+        ItemSeparatorComponent={() => (
+          <GradientBorder colors={gradients.gray} />
+        )}
+        stickyHeaderIndices={[0]}
+        ListHeaderComponent={listHeaderComponent}
+        // refreshControl={
+        //   <RefreshControl
+        //     onRefresh={onRefresh}
+        //     refreshing={refreshing}
+        //     colors={[colors.green_27A74C]}
+        //     tintColor={colors.green_27A74C}
+        //     size={24}
+        //   />
+        // }
         initialNumToRender={10}
         onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+        // onEndReached={onEndReached}
         ListEmptyComponent={<ListEmptyComponent />}
         ListFooterComponent={lazyLoader}
       />
@@ -148,6 +192,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   finishLoading: state.purchases.finishLoading,
   lazyLoading: state.purchases.lazyLoading,
   refreshing: state.purchases.refreshing,
+  profile: state.profile.data,
 });
 
 export default connect(mapStateToProps)(Purchases);
