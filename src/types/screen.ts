@@ -16,10 +16,16 @@ export type TParamOfPayForm = {
   rectoken?: string;
 };
 
+export type TParaOfPurchaseDetail = {
+  transactionId: number;
+  transactionDate: Date;
+};
+
 export type HomeStackParamList = {
   // SCREEN PARAMS
   FuelPurchase: TParamOfFuelPurchase;
   PayForm: TParamOfPayForm;
+  PurchaseDetail: TParaOfPurchaseDetail;
 };
 
 export type FuelPurchaseRouteProp = RouteProp<
@@ -27,3 +33,7 @@ export type FuelPurchaseRouteProp = RouteProp<
   'FuelPurchase'
 >;
 export type PayFormRouteProp = RouteProp<HomeStackParamList, 'PayForm'>;
+export type PurchaseDetailRouteProp = RouteProp<
+  HomeStackParamList,
+  'PurchaseDetail'
+>;

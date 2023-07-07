@@ -34,3 +34,4 @@ export {default as FuelPurchase} from './FuelPurchase/FuelPurchase';
 export {default as Languages} from './Languages/Languages';
 export {default as FuelCalculatorResult} from './FuelCalculatorResult/FuelCalculatorResult';
 export {default as PayForm} from './PayForm/PayForm';
+export {default as PurchaseDetail} from './PurchaseDetail/PurchaseDetail';

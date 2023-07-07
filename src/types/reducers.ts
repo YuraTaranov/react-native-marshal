@@ -14,6 +14,7 @@ import {
   TPurchase,
   TNotification,
   TFuel,
+  TPurchaseDetail,
 } from './components';
 import {TRoute} from './geocode';
 
@@ -70,9 +71,9 @@ export type TGlobalState = {
     data: TPromotion;
   };
   petrolStations: {
-	data: TPetrolStation[];
-	loading: boolean;
-  }
+    data: TPetrolStation[];
+    loading: boolean;
+  };
   filters: TFilters;
   creditCards: TCreditCard[];
   biometrics: {
@@ -102,6 +103,10 @@ export type TGlobalState = {
   };
   fuel: {data: TFuel[]};
   network: {
-	isConnected: boolean;
-  }
+    isConnected: boolean;
+  };
+  purchaseDetail: {
+    data: TPurchaseDetail[];
+    loading: boolean;
+  };
 };
