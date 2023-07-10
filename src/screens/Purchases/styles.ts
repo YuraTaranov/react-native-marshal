@@ -4,7 +4,7 @@ import {colors, fonts} from '@constants';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 24,
+    paddingBottom: 32,
   },
   flatList: {
     flex: 1,

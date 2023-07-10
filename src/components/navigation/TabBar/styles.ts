@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@constants';
+import {colors, ios} from '@constants';
 
 export default StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    paddingVertical: 8,
+    paddingTop: 8,
+    marginBottom: ios ? 28 : 8,
   },
   eachScreen: {
     paddingTop: 8,

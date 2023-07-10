@@ -77,7 +77,7 @@ const Home: React.FC<TProps> = ({
     });
     dispatch(getProfile());
     dispatch(getReferralLink());
-    dispatch(getPurchases({page: 1}));
+    dispatch(getPurchases(1));
   }, []);
 
   useEffect(() => {
