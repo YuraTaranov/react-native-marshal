@@ -1,6 +1,14 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {httpGet, errorHandler} from '@services';
-import {urls} from '@constants';
+import {errorHandler} from '@services';
+import {PurchaseService} from '@httpServices';
+import {
+  IGetPurchases,
+  ISetPurchases,
+  ISetPurchasesFinishLoading,
+  ISetPurchasesLazyLoading,
+  ISetPurchasesRefreshing,
+  TPurchasesResponse,
+} from '@types';
 
 const GET_PURCHASES = '[purchases] GET_PURCHASES';
 const SET_PURCHASES = '[purchases] SET_PURCHASES';
@@ -10,408 +18,7 @@ const SET_FINISH_LOADING = '[operations] SET_FINISH_LOADING';
 const RESET_PURCHASES = '[purchases] RESET_PURCHASES';
 
 const initialstate = {
-  data: [
-    {
-      transactionId: 27867,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-13',
-      totalAmount: 25,
-      totalRedeem: 10,
-      totalIssuance: 0,
-      totalDiscount: 2.5,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27866,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-12',
-      totalAmount: 40,
-      totalRedeem: 5,
-      totalIssuance: 1,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27865,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-11',
-      totalAmount: 40,
-      totalRedeem: 5,
-      totalIssuance: 0,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27864,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-10',
-      totalAmount: 40,
-      totalRedeem: 5,
-      totalIssuance: 1.44,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27863,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-09',
-      totalAmount: 40,
-      totalRedeem: 15,
-      totalIssuance: 0,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27862,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-08',
-      totalAmount: 40,
-      totalRedeem: 15,
-      totalIssuance: 0,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27861,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-07',
-      totalAmount: 40,
-      totalRedeem: 11,
-      totalIssuance: 1,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27860,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-06',
-      totalAmount: 40,
-      totalRedeem: 11,
-      totalIssuance: 0.84,
-      totalDiscount: 4,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27859,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-05',
-      totalAmount: 40,
-      totalRedeem: 12.5,
-      totalIssuance: 0.3,
-      totalDiscount: 2.5,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27858,
-      typeName: 'Списання',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: '20211206-03',
-      totalAmount: 40,
-      totalRedeem: 10,
-      totalIssuance: 0.9,
-      totalDiscount: 2.5,
-      containsDetails: true,
-      typeId: 204,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27737,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-22T13:05:44.843',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'itbi21211122-3',
-      totalAmount: 35,
-      totalRedeem: 0,
-      totalIssuance: 1.4,
-      totalDiscount: 0,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27696,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211118-26',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25.88,
-      totalDiscount: 35,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27692,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211118-25',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25.88,
-      totalDiscount: 35,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27689,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211118-24',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25.88,
-      totalDiscount: 35,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27647,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T11:11:14.000',
-      terminalId: 2126,
-      cityId: 0,
-      terminalName: 'АЗС№26 г.Киев, Кольцевая дорога, 16               ',
-      city: null,
-      terminalAddress: 'АЗС№26 г.Киев, Кольцевая дорога, 16',
-      cardNo: '7703020000000979',
-      terminalReceipt: '146468',
-      totalAmount: 551,
-      totalRedeem: 0,
-      totalIssuance: 100,
-      totalDiscount: 137.75,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27638,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211118-23',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25.88,
-      totalDiscount: 35,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27637,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-18T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211118-22',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 26,
-      totalDiscount: 35,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27636,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211117-21',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25,
-      totalDiscount: 39,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27635,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211117-20',
-      totalAmount: 500,
-      totalRedeem: 0,
-      totalIssuance: 25,
-      totalDiscount: 39,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-    {
-      transactionId: 27634,
-      typeName: 'Нарахування',
-      transactionDate: '2021-11-16T09:39:00.000',
-      terminalId: 2121,
-      cityId: 0,
-      terminalName: 'АЗС№21 г.Киев, ул.Камышинская, 4                  ',
-      city: null,
-      terminalAddress: 'АЗС№21 г.Киев, ул.Камышинская, 4',
-      cardNo: '7703020000000979',
-      terminalReceipt: 'test20211117-19',
-      totalAmount: 300,
-      totalRedeem: 0,
-      totalIssuance: 12,
-      totalDiscount: 10,
-      containsDetails: true,
-      typeId: 203,
-      payTypeId: 1,
-      payType: 'cash',
-    },
-  ],
+  data: [],
   lazyLoading: false,
   finishLoading: false,
   refreshing: false,
@@ -434,14 +41,23 @@ export default (state = initialstate, action: any) => {
   }
 };
 
-export const getPurchases = (data: any) => ({data, type: GET_PURCHASES});
-export const setPurchases = (data: any) => ({data, type: SET_PURCHASES});
-export const setLazyLoading = (data: boolean) => ({
+export const getPurchases = (data: IGetPurchases['data']) => ({
+  data,
+  type: GET_PURCHASES,
+});
+export const setPurchases = (data: ISetPurchases['data']) => ({
+  data,
+  type: SET_PURCHASES,
+});
+export const setLazyLoading = (data: ISetPurchasesLazyLoading['data']) => ({
   data,
   type: SET_LAZY_LOADING,
 });
-export const setRefreshing = (data: boolean) => ({data, type: SET_REFRESHING});
-export const setFinishLoading = (data: boolean) => ({
+export const setRefreshing = (data: ISetPurchasesRefreshing['data']) => ({
+  data,
+  type: SET_REFRESHING,
+});
+export const setFinishLoading = (data: ISetPurchasesFinishLoading['data']) => ({
   data,
   type: SET_FINISH_LOADING,
 });
@@ -453,25 +69,26 @@ export function* watchPurchases() {
 
 export function* getPurchasesAsync(action: any) {
   const purchases: any[] = yield select(state => state.purchases.data);
-  // try {
-  //   const body: any = yield call(() =>
-  //     httpGet(`${urls.getPurchases}?page=${action.data.page}`),
-  //   );
-  //   if (body.data.data.length < 10) {
-  //     yield put(setFinishLoading(true));
-  //   } else {
-  //     yield put(setFinishLoading(false));
-  //   }
-  //   if (action.data.page === 1) {
-  //     yield put(setPurchases(body.data.data));
-  //   } else {
-  //     if (body.data.data.length) {
-  //       yield put(setPurchases([...purchases, ...body.data.data]));
-  //     }
-  //   }
-  //   yield put(setLazyLoading(false));
-  //   yield put(setRefreshing(false));
-  // } catch (e) {
-  //   errorHandler(e, 'getPurchasesAsync');
-  // }
+
+  try {
+    const {data}: TPurchasesResponse = yield call(() =>
+      PurchaseService.getPurchases(action.data),
+    );
+    if (data.data.transactions.length < 10) {
+      yield put(setFinishLoading(true));
+    } else {
+      yield put(setFinishLoading(false));
+    }
+    if (action.data === 1) {
+      yield put(setPurchases(data.data.transactions));
+    } else {
+      if (data.data.transactions.length) {
+        yield put(setPurchases([...purchases, ...data.data.transactions]));
+      }
+    }
+    yield put(setLazyLoading(false));
+    yield put(setRefreshing(false));
+  } catch (e) {
+    errorHandler(e, 'getPurchasesAsync');
+  }
 }

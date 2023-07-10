@@ -167,27 +167,17 @@ export type TPrice = {
 };
 
 export type TPurchase = {
-  // bonuses: number;
-  // created_at: Date;
-  // credit_card: number;
-  // fuel_id: 1 | 2 | 3 | 4;
-  // id: number;
-  // liters: number;
-  // money: string; // money
-  // type: 'gift' | 'bonuses' | 'many';
-  // user_id: number;
-  transactionId: number;
-  transactionDate: Date;
-  totalAmount: number;
+  transaction_id: number;
+  date: Date;
+  total_amount: number;
 };
 
 export type TPurchaseDetail = {
-  id: string;
   name: string;
   quantity: number;
   price: number;
   amount: number;
-  discountAmount: number;
+  discount_amount: number;
 };
 
 export type TPaymentСard = {

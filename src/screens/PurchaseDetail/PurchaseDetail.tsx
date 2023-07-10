@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {
   useEffect,
   useCallback,
-  useMemo,
   useTranslation,
   useRoute,
   useNavigation,
@@ -61,47 +60,46 @@ const PurchaseDetail: React.FC<TProps> = ({
   const renderItem: ({item}: {item: TPurchaseDetail}) => JSX.Element =
     useCallback(
       ({item}) => (
-        <View style={styles.itemContainer}>
-          <View style={styles.itemBlockContainer}>
-            <Text style={{}}>{t('Найменування')}</Text>
-            <Text style={{}}>{item.name}</Text>
+        <>
+          <View style={styles.itemContainer}>
+            <View style={styles.itemBlockContainer}>
+              <Text style={styles.itemTitle}>{t('Найменування')}</Text>
+              <Text style={{}}>{item.name}</Text>
+            </View>
+            <View style={styles.itemBlockContainer}>
+              <Text style={styles.itemTitle}>{t('Ціна')}</Text>
+              <Text>{item.price.toFixed(2)} грн</Text>
+            </View>
+            <View style={styles.itemBlockContainer}>
+              <Text style={styles.itemTitle}>{t('Кількість')}</Text>
+              <Text>{item.quantity}</Text>
+            </View>
+            <View style={styles.itemBlockContainer}>
+              <Text style={styles.itemTitle}>{t('Сума')}</Text>
+              <Text>{item.amount.toFixed(2)} грн</Text>
+            </View>
+            <View style={styles.itemBlockContainer}>
+              <Text style={styles.itemTitle}>{t('Знижка')}</Text>
+              <Text>
+                {item.discount_amount
+                  ? item.discount_amount.toFixed(2)
+                  : item.discount_amount}{' '}
+                грн
+              </Text>
+            </View>
           </View>
-          <View style={styles.itemBlockContainer}>
-            <Text>{t('Ціна')}</Text>
-            <Text>{item.price.toFixed(2)} грн</Text>
-          </View>
-          <View style={styles.itemBlockContainer}>
-            <Text>{t('Кількість')}</Text>
-            <Text>{item.quantity}</Text>
-          </View>
-          <View style={styles.itemBlockContainer}>
-            <Text>{t('Сума')}</Text>
-            <Text>{item.amount.toFixed(2)} грн</Text>
-          </View>
-          <View style={styles.itemBlockContainer}>
-            <Text>{t('Знижка')}</Text>
-            <Text>
-              {item.discountAmount
-                ? item.discountAmount.toFixed(2)
-                : item.discountAmount}{' '}
-              грн
-            </Text>
-          </View>
-        </View>
+          <GradientBorder colors={gradients.gray} style={styles.separator} />
+        </>
       ),
       [t],
     );
 
-  const keyExtractor: (item: TPurchaseDetail) => string = useCallback(
-    item => String(item.id),
+  const keyExtractor = useCallback(
+    (item: TPurchaseDetail, index: number) =>
+      `${String(item.name)}-${String(index)}`,
     [],
   );
 
-  const separatorComponent = useMemo(
-    () => () =>
-      <GradientBorder colors={gradients.gray} style={styles.separator} />,
-    [],
-  );
   return (
     <View style={styles.container}>
       {loading ? (
@@ -118,7 +116,6 @@ const PurchaseDetail: React.FC<TProps> = ({
             bounces={false}
             keyExtractor={keyExtractor}
             style={styles.flatList}
-            ItemSeparatorComponent={separatorComponent}
           />
         </View>
       )}

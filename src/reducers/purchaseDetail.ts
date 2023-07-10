@@ -1,8 +1,12 @@
-import {takeLatest, put, call, select, delay} from 'redux-saga/effects';
-import {setLoader} from './appGlobalState';
-import {httpGet, httpPost, navigate, errorHandler} from '@services';
-import {urls} from '@constants';
-import {IGetPurchaseDetail, ISetPurchaseDetail, TGlobalState} from '@types';
+import {takeLatest, put, call} from 'redux-saga/effects';
+import {errorHandler} from '@services';
+import {
+  IGetPurchaseDetail,
+  ISetPurchaseDetail,
+  TGlobalState,
+  TPurchaseDetailResponse,
+} from '@types';
+import {PurchaseService} from '@httpServices';
 
 const GET_PURCHASE_DETAIL = '[purchaseDetail] GET_PURCHASE_DETAIL';
 const SET_PURCHASE_DETAIL = '[purchaseDetail] SET_PURCHASE_DETAIL';
@@ -43,80 +47,14 @@ export function* watchPurchaseDetail() {
 }
 
 export function* getPurchaseDetailAsync(action: IGetPurchaseDetail) {
-  // const { accessToken } = yield select(state => state.profile)
-  // yield put(setLoader(true));
   try {
-    console.log(action.data);
-    yield delay(2000);
-    yield put(
-      setPurchaseDetail([
-        {
-          id: '1',
-          name: 'Первый товар',
-          quantity: 1,
-          price: 100,
-          amount: 100,
-          discountAmount: 10,
-        },
-        {
-          id: '2',
-          name: 'Второй товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-        {
-          id: '3',
-          name: 'Третий товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-        {
-          id: '4',
-          name: 'четвертый товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-        {
-          id: '5',
-          name: 'пятый товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-        {
-          id: '6',
-          name: 'шестой товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-        {
-          id: '7',
-          name: 'седьмой товар',
-          quantity: 2,
-          price: 100,
-          amount: 200,
-          discountAmount: 0,
-        },
-      ]),
+    const {data}: TPurchaseDetailResponse = yield call(() =>
+      PurchaseService.getPurchaseDetail(action.data),
     );
-
-    // const body = yield call(() => httpGet(urls.url));
-    // yield put(setLoader(false));
-    // if (body.data) {
-    //   yield put(setPurchaseDetail(body.data));
-    //   // navigate('Route');
-    // }
+    if (data.data.length) {
+      yield put(setPurchaseDetail(data.data));
+    }
   } catch (e) {
-    // yield put(setLoader(false));
     errorHandler(e, 'getPurchaseDetailAsync');
   } finally {
     yield put(setLoading(false));
