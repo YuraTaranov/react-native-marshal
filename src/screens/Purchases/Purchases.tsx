@@ -17,7 +17,7 @@ import {colors, gradients} from '@constants';
 import {setLazyLoading, getPurchases, setRefreshing} from '@reducers/purchases';
 import ListEmptyComponent from './components/ListEmptyComponent/ListEmptyComponent';
 import moment from 'moment';
-import {BonusCard, InviteButton} from './components';
+import {BonusCard} from './components';
 import {navigate} from '@services';
 
 type TProps = {
@@ -145,7 +145,6 @@ const Purchases: React.FC<TProps> = ({
   return (
     <View style={styles.container}>
       <BonusCard count_bonus={count_bonus} />
-      <InviteButton onPressHandler={onPressInviteFriends} />
       <FlatList
         data={purchases}
         renderItem={renderItem}
