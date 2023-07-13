@@ -25,7 +25,7 @@ const TabItem: React.FC<TProps> = ({
   title,
 }) => {
   const scaleAnimValue = useSharedValue(isActive ? 1.5 : 1);
-  const translateYAnimValue = useSharedValue(isActive ? -12 : 0);
+  const translateYAnimValue = useSharedValue(isActive ? -4 : 0);
   const {t} = useTranslation();
 
   const animatedIconContainerStyle = useAnimatedStyle(() => {
@@ -38,7 +38,7 @@ const TabItem: React.FC<TProps> = ({
   });
 
   useEffect(() => {
-    translateYAnimValue.value = withTiming(isActive ? -12 : 0);
+    translateYAnimValue.value = withTiming(isActive ? -4 : 0);
     scaleAnimValue.value = withTiming(isActive ? 1.5 : 1);
   }, [isActive]);
 
