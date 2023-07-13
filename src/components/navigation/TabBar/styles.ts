@@ -6,7 +6,7 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     paddingTop: 8,
-    marginBottom: ios ? 28 : 8,
+    marginBottom: ios ? 16 : 8,
   },
   eachScreen: {
     paddingTop: 8,

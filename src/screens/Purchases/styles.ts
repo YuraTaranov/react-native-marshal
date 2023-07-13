@@ -9,6 +9,7 @@ export default StyleSheet.create({
   flatList: {
     flex: 1,
     paddingHorizontal: 16,
+    marginTop: 48,
   },
   itemContainer: {
     paddingVertical: 16,
