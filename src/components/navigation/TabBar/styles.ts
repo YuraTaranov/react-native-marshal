@@ -1,15 +1,17 @@
 import {StyleSheet} from 'react-native';
 import {colors, ios} from '@constants';
+import {DeviceInfo} from '@components';
+
+const isPhone14pro = DeviceInfo.getModel() === 'iPhone 14 Pro';
 
 export default StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    paddingTop: 8,
-    marginBottom: ios ? 16 : 8,
+    paddingTop: 12,
+    marginBottom: ios ? (isPhone14pro ? 24 : 8) : 8,
   },
   eachScreen: {
-    paddingTop: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },

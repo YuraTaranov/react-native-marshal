@@ -3,10 +3,8 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    paddingTop: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 5,
   },
   title: {
     fontSize: 12,
