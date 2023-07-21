@@ -10,6 +10,6 @@ export default StyleSheet.create({
   },
   contentContainer: {},
   footer: {
-    height: ios ? 200 : 20,
+    height: 20,
   },
 });

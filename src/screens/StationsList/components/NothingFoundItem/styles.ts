@@ -3,9 +3,10 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
+    height: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
     overflow: 'visible',
-    paddingTop: 48,
   },
   image: {
     height: 208,
@@ -16,5 +17,9 @@ export default StyleSheet.create({
     fontSize: 18,
     color: colors.gray_8D909D,
     marginTop: 32,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    marginBottom: 46,
   },
 });
