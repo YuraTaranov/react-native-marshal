@@ -11,8 +11,10 @@ const NothingFoundItem: React.FC<TProps> = ({}) => {
 
   return (
     <View style={styles.container}>
-      <Image source={assets.NO_SEARCH} style={styles.image} />
-      <Text style={styles.text}>{t('NothingFound')}</Text>
+      <View style={styles.contentContainer}>
+        <Image source={assets.NO_SEARCH} style={styles.image} />
+        <Text style={styles.text}>{t('NothingFound')}</Text>
+      </View>
     </View>
   );
 };

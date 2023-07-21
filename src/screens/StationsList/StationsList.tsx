@@ -136,9 +136,9 @@ const StationsList: React.FC<TProps> = ({
             />
           );
         })}
-        {!stations.length && <NothingFoundItem />}
-        <View style={styles.footer} />
       </ScrollView>
+      {!stations.length && <NothingFoundItem />}
+      <View style={styles.footer} />
     </View>
   );
 };
