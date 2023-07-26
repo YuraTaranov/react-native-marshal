@@ -71,14 +71,14 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
       //         screen: 'MyCards',
       //       }),
       //   },
-      //   {
-      //     icon: 'shopping',
-      //     name: t('Мої покупки'),
-      //     onPress: () =>
-      //       navigate('ProfileStack', {
-      //         screen: 'Purchases',
-      //       }),
-      //   },
+      {
+        icon: 'shopping',
+        name: t('Мої покупки'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'Purchases',
+          }),
+      },
       {
         icon: 'car',
         name: t('Авто'),

@@ -3,7 +3,7 @@ import {httpGet} from '../http';
 
 export class PurchaseService {
   public getPurchases(page: number): Promise<TPurchasesResponse> {
-    return httpGet('/profile/purchases', {page, limit: 10});
+    return httpGet('/profile/purchases', {page, limit: 15});
   }
 
   public getPurchaseDetail(

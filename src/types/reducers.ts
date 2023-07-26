@@ -11,10 +11,10 @@ import {
   TBiometricsType,
   TSettingsText,
   TLang,
-  TPurchase,
   TNotification,
   TFuel,
   TPurchaseDetail,
+  TSectionListItem,
 } from './components';
 import {TRoute} from './geocode';
 
@@ -43,7 +43,8 @@ export type TGlobalState = {
     data: TProfile;
   };
   purchases: {
-    data: TPurchase[];
+    data: TSectionListItem[];
+    loading: boolean;
     lazyLoading: boolean;
     finishLoading: boolean;
     refreshing: boolean;

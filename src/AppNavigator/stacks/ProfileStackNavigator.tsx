@@ -20,7 +20,7 @@ import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
 import {ios} from '@constants';
-import {defaultStackOptions} from '../options';
+import {defaultStackOptions, purchaseOptions} from '../options';
 
 type TProps = {};
 
@@ -102,6 +102,7 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         name="Purchases"
         component={Purchases}
         options={{
+          ...purchaseOptions,
           headerTitleAlign: 'center',
           title: t('Мої покупки'),
         }}
@@ -141,8 +142,9 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         name="PurchaseDetail"
         component={PurchaseDetail}
         options={{
+          ...purchaseOptions,
           headerTitleAlign: 'center',
-          title: '',
+          title: t('Мої покупки'),
         }}
       />
     </ProfileStack.Navigator>

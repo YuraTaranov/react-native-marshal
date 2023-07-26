@@ -11,6 +11,7 @@ export default StyleSheet.create({
     marginTop: 8,
     color: colors.black_58585B,
     fontFamily: fonts.interRegular_400,
+    textTransform: 'uppercase',
   },
   titleActive: {
     color: colors.red_D61920,

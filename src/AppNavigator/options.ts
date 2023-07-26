@@ -1,5 +1,5 @@
 import styles from './styles';
-import {colors} from '@constants';
+import {colors, fonts} from '@constants';
 import {StackNavigationOptions} from '@react-navigation/stack';
 
 export const defaultStackOptions: StackNavigationOptions = {
@@ -29,4 +29,13 @@ export const headerStyle = {
   headerTitleStyle: defaultStackOptions.headerTitleStyle,
 };
 
+export const purchaseOptions = {
+  headerStyle: {backgroundColor: colors.dark_red_7C2022},
+  headerTintColor: colors.white_FFFFFF,
+  headerTitleStyle: {
+    color: colors.white_FFFFFF,
+    fontSize: 18,
+    fontFamily: fonts.interSemiBold_600,
+  },
+};
 export const cardStyle = styles.cardStyle;

@@ -19,6 +19,7 @@ export type TParamOfPayForm = {
 export type TParaOfPurchaseDetail = {
   transactionId: number;
   transactionDate: Date;
+  total_amount: number;
 };
 
 export type HomeStackParamList = {

@@ -1,32 +1,41 @@
 import React from 'react';
 import {Dispatch} from 'redux';
-import {useCallback, useTranslation, useState, useMemo} from '@hooks';
+import {connect} from 'react-redux';
+import moment from 'moment';
+
+import {
+  useCallback,
+  useTranslation,
+  useState,
+  useMemo,
+  useEffect,
+} from '@hooks';
 import {
   View,
   Text,
-  FlatList,
   RefreshControl,
-  ActivityIndicator,
   TouchableOpacity,
-  GradientBorder,
+  LazyLoader,
+  SectionList,
+  ActivityIndicator,
 } from '@components';
-import {TGlobalState, TPurchase} from '@types';
-import {connect} from 'react-redux';
-import styles from './styles';
-import {colors, gradients} from '@constants';
-import {setLazyLoading, getPurchases, setRefreshing} from '@reducers/purchases';
-import ListEmptyComponent from './components/ListEmptyComponent/ListEmptyComponent';
-import moment from 'moment';
-import {BonusCard} from './components';
 import {navigate} from '@services';
+import {colors} from '@constants';
+import {setLazyLoading, getPurchases, setRefreshing} from '@reducers/purchases';
+
+import styles from './styles';
+import {ListEmptyComponent} from './components';
+
+//types
+import {TGlobalState, TPurchase} from '@types';
 
 type TProps = {
   dispatch: Dispatch;
-  purchases: TPurchase[];
+  purchases: TGlobalState['purchases']['data'];
   lazyLoading: boolean;
   finishLoading: boolean;
   refreshing: boolean;
-  profile: TGlobalState['profile']['data'];
+  loading: boolean;
 };
 
 const Purchases: React.FC<TProps> = ({
@@ -35,45 +44,24 @@ const Purchases: React.FC<TProps> = ({
   lazyLoading,
   finishLoading,
   refreshing,
-  profile,
+  loading,
 }) => {
   const {t} = useTranslation();
   const [page, setPage] = useState<number>(1);
-  const {count_bonus, count_spent_bonus} = profile;
 
-  // useEffect(() => {
-  //   dispatch(getPurchases(1));
-  // }, []);
-
-  // const fuelVolume = useCallback(
-  //   volume => {
-  //     return `${volume} ${declension(Number(volume), [
-  //       t('літр'),
-  //       t('літра'),
-  //       t('літрів'),
-  //     ])}`;
-  //   },
-  //   [t],
-  // );
-
-  const parseDate = useCallback(date => {
-    return moment(date).format('DD.MM.YYYY hh:mm');
+  useEffect(() => {
+    dispatch(getPurchases(1));
   }, []);
 
-  // const parseFuel = useCallback(
-  //   fuelId => {
-  //     if (fuelId === 1) return t('ДТ');
-  //     if (fuelId === 2) return 'А95';
-  //     if (fuelId === 3) return 'А98';
-  //     return 'А98+';
-  //   },
-  //   [t],
-  // );
-
   const onPressNavigatePurchaseDetail = useCallback(
-    (transactionId: number, transactionDate) => () => {
-      navigate('PurchaseDetail', {transactionId, transactionDate});
-    },
+    (transactionId: number, transactionDate: Date, total_amount: number) =>
+      () => {
+        navigate('PurchaseDetail', {
+          transactionId,
+          transactionDate,
+          total_amount,
+        });
+      },
     [navigate],
   );
 
@@ -81,12 +69,49 @@ const Purchases: React.FC<TProps> = ({
     ({item}) => (
       <TouchableOpacity
         style={styles.itemContainer}
-        onPress={onPressNavigatePurchaseDetail(item.transaction_id, item.date)}>
-        <View>
-          <Text style={styles.itemDate}>{parseDate(item.date)}</Text>
+        onPress={onPressNavigatePurchaseDetail(
+          item.transaction_id,
+          item.date,
+          item.total_amount,
+        )}>
+        <View style={styles.itemContentContainer}>
+          <View>
+            <Text style={styles.itemTitle}>
+              {t('Покупка')} №{item.transaction_id}
+            </Text>
+            {item.total_discount > 0 ? (
+              <Text style={styles.discount}>
+                {t('Знижку враховано')}: -{item.total_discount}грн
+              </Text>
+            ) : null}
+          </View>
+          <View style={styles.itemPriceContainer}>
+            {item.total_discount > 0 ? (
+              <Text style={styles.oldPrice}>
+                {(item.total_amount + item.total_discount).toFixed(2)} грн
+              </Text>
+            ) : null}
+            <Text style={styles.itemPrice}>
+              {item.total_amount.toFixed(2)} грн
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text>{item.total_amount.toFixed(2)} грн</Text>
+
+        <View style={styles.bonusesContainer}>
+          {item.total_redeem ? (
+            <View style={styles.redeemContainer}>
+              <Text style={styles.redeem}>
+                -{item.total_redeem} {t('Бонуси')}
+              </Text>
+            </View>
+          ) : null}
+          {item.total_issuance ? (
+            <View style={styles.issuanceContainer}>
+              <Text style={styles.issuance}>
+                +{item.total_issuance} {t('Бонуси')}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </TouchableOpacity>
     ),
@@ -117,59 +142,62 @@ const Purchases: React.FC<TProps> = ({
     () =>
       lazyLoading ? (
         <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator size={'large'} color={colors.green_27A74C} />
+          <LazyLoader />
         </View>
       ) : null,
     [lazyLoading],
   );
 
-  const onPressInviteFriends = useCallback(() => {
-    navigate('BonusesStack', {
-      screen: 'InviteFriends',
-    });
-  }, []);
-
-  const listHeaderComponent = useMemo(
-    () => (
-      <View style={styles.headerContainer}>
-        <View style={styles.headerTitle}>
-          <Text>{t('Дата')}</Text>
+  const renderSectionHeader = useCallback(
+    ({section}: {section: {title: string}}) => {
+      const formattedDate = moment(section.title).format('D MMMM, YYYY');
+      return (
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>{formattedDate}</Text>
         </View>
-        <View style={styles.headerTitle}>
-          <Text>{t('Сума')}</Text>
-        </View>
-      </View>
-    ),
+      );
+    },
     [],
   );
+
+  const itemSeparatorComponent = useCallback(
+    () => <View style={styles.itemSeparator} />,
+    [],
+  );
+
   return (
     <View style={styles.container}>
-      <BonusCard count_bonus={count_bonus} />
-      <FlatList
-        data={purchases}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        style={styles.flatList}
-        ItemSeparatorComponent={() => (
-          <GradientBorder colors={gradients.gray} />
-        )}
-        stickyHeaderIndices={[0]}
-        ListHeaderComponent={purchases.length ? listHeaderComponent : null}
-        refreshControl={
-          <RefreshControl
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-            colors={[colors.green_27A74C]}
-            tintColor={colors.green_27A74C}
-            size={24}
-          />
-        }
-        initialNumToRender={10}
-        onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
-        ListEmptyComponent={<ListEmptyComponent />}
-        ListFooterComponent={lazyLoader}
-      />
+      {loading && !purchases.length ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator color={colors.dark_red_7C2022} size="large" />
+        </View>
+      ) : (
+        <SectionList
+          sections={purchases}
+          renderItem={renderItem}
+          contentContainerStyle={styles.contentContainer}
+          keyExtractor={keyExtractor}
+          style={styles.flatList}
+          ItemSeparatorComponent={itemSeparatorComponent}
+          refreshControl={
+            <RefreshControl
+              onRefresh={onRefresh}
+              refreshing={refreshing}
+              colors={[colors.dark_red_7C2022]}
+              tintColor={colors.dark_red_7C2022}
+              size={24}
+            />
+          }
+          renderSectionHeader={renderSectionHeader}
+          initialNumToRender={20}
+          onEndReachedThreshold={0.5}
+          onEndReached={onEndReached}
+          ListEmptyComponent={
+            !loading && !purchases.length ? <ListEmptyComponent /> : null
+          }
+          ListFooterComponent={lazyLoader}
+        />
+      )}
     </View>
   );
 };
@@ -179,7 +207,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   finishLoading: state.purchases.finishLoading,
   lazyLoading: state.purchases.lazyLoading,
   refreshing: state.purchases.refreshing,
-  profile: state.profile.data,
+  loading: state.purchases.loading,
 });
 
 export default connect(mapStateToProps)(Purchases);

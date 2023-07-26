@@ -1,4 +1,4 @@
-import {TPurchase} from '../components';
+import {TSectionListItem} from '@types';
 
 interface IPurchasesActions {
   GET_PURCHASES: string;
@@ -15,7 +15,7 @@ export interface IGetPurchases {
 
 export interface ISetPurchases {
   type: IPurchasesActions['SET_PURCHASES'];
-  data: TPurchase[];
+  data: TSectionListItem[];
 }
 
 export interface ISetPurchasesRefreshing {

@@ -6,6 +6,5 @@ export default StyleSheet.create({
     fontFamily: fonts.interRegular_400,
     color: '#000000',
     fontSize: 14,
-    textTransform: 'uppercase',
   },
 });
