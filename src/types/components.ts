@@ -170,6 +170,9 @@ export type TPurchase = {
   transaction_id: number;
   date: Date;
   total_amount: number;
+  total_issuance: number;
+  total_redeem: number;
+  total_discount: number;
 };
 
 export type TPurchaseDetail = {
@@ -178,6 +181,8 @@ export type TPurchaseDetail = {
   price: number;
   amount: number;
   discount_amount: number;
+  bonus_issuance: number;
+  bonus_redeem: number;
 };
 
 export type TPaymentСard = {
@@ -194,4 +199,9 @@ export type TGetPaymentСardsResponseGenerator = {
   };
   statusText: string;
   status: number;
+};
+
+export type TSectionListItem = {
+  title: string;
+  data: TPurchase[];
 };

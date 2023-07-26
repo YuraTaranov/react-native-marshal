@@ -1,1 +1,1 @@
-export {default as BonusCard} from './BonusCard';
+export {default as ListEmptyComponent} from './ListEmptyComponent/ListEmptyComponent';

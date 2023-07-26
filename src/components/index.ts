@@ -22,6 +22,7 @@ export {
   TouchableHighlight,
   TouchableOpacity,
   View,
+  SectionList,
 } from 'react-native';
 
 // MODULES
@@ -91,6 +92,7 @@ export {default as GradientBorder} from './layout/GradientBorder';
 export {default as KeyboardAvoidingView} from './layout/KeyboardAvoidingView';
 export {default as Loader} from './layout/Loader';
 export {default as Wrapper} from './layout/Wrapper';
+export {default as LazyLoader} from './layout/LazyLoader';
 
 // MODAL
 export {default as InternetConnectionModal} from './modal/InternetConnectionModal';
