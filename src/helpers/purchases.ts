@@ -46,3 +46,7 @@ export const formatDate = (date_: Date) => {
   const formattedTime = date.format('HH:mm');
   return {formattedDate, formattedTime};
 };
+
+export const getQuantityType = (product_code: string) => {
+  return Number(product_code) > 100 ? 'шт' : 'л';
+};
