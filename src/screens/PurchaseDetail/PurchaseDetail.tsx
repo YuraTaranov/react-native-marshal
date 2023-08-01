@@ -12,7 +12,7 @@ import {
 import {View, Text, ActivityIndicator, FlatList, Icon} from '@components';
 import {getPurchaseDetail, resetPurchaseDetail} from '@reducers/purchaseDetail';
 import {colors} from '@constants';
-import {formatDate} from '@helpers';
+import {formatDate, getQuantityType} from '@helpers';
 
 import styles from './styles';
 
@@ -51,7 +51,8 @@ const PurchaseDetail: React.FC<TProps> = ({
           <View style={styles.itemContainer}>
             <View style={styles.itemBlockContainer}>
               <Text style={styles.itemTitle}>
-                {item.name}, {item.quantity}
+                {item.name}, {item.quantity}{' '}
+                {getQuantityType(item.product_code)}
               </Text>
               <Text style={styles.itemPrice}>{item.amount.toFixed(2)} грн</Text>
             </View>

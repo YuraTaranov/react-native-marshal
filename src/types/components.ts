@@ -183,6 +183,7 @@ export type TPurchaseDetail = {
   discount_amount: number;
   bonus_issuance: number;
   bonus_redeem: number;
+  product_code: string;
 };
 
 export type TPaymentСard = {
