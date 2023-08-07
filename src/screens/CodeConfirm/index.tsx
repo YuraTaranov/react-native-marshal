@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSmsUserConsent} from '@eabdullazyanov/react-native-sms-user-consent';
 import {
   useTranslation,
   useState,
@@ -40,6 +41,7 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   const codeFieldRef = useRef<TextInput>(null);
+  const retrievedCode = useSmsUserConsent(4);
   const [value, setValue] = useState('');
   const [needRefreshTimer, setNeedRefreshTimer] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(60);
@@ -47,6 +49,12 @@ const CodeConfirm: React.FC<TProps> = ({dispatch, loading}) => {
     value,
     setValue,
   });
+
+  useEffect(() => {
+    if (retrievedCode) {
+      setValue(retrievedCode);
+    }
+  }, [retrievedCode]);
 
   useEffect(() => {
     codeFieldRef.current?.focus();
