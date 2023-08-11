@@ -13,7 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1970F1719FAD4535BCC23567 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57BCCF355608416A8EDBF2DB /* Inter-Thin.ttf */; };
-		2B487D23536D4173B418C890 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95496A1A529841F4A4ABCFF1 /* icomoon.ttf */; };
+		26C1B79D848F4F9B9E8F5816 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40E8C5DF0BCE49FA8DBBF275 /* icomoon.ttf */; };
 		2C4D60A4CDF50DAAA8BEDA43 /* libPods-Marshal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B344D7BB8AE43D41F18D5 /* libPods-Marshal.a */; };
 		41189F6953794D7587A7B662 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A59D4E6E33647D7B087A102 /* Inter-Regular.ttf */; };
 		520045A4EDF94EF090D329DE /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51E2C06CCEC84ECA831035CD /* Inter-Black.ttf */; };
@@ -59,6 +59,7 @@
 		2E0D9C2570B04B06B1D583A9 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		33AB5AD93D7242B5A255B10B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		3B6E425AB6B64FDFA323ACC6 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		40E8C5DF0BCE49FA8DBBF275 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../src/assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		420CF9EAD71AB5BE1FAED70B /* libPods-Marshal-MarshalTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Marshal-MarshalTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4354F909458EF5D261670054 /* Pods-Marshal-MarshalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marshal-MarshalTests.release.xcconfig"; path = "Target Support Files/Pods-Marshal-MarshalTests/Pods-Marshal-MarshalTests.release.xcconfig"; sourceTree = "<group>"; };
 		4C085303D17F4B0AB7307B67 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		75AD2AD926DD217C00193FEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Marshal/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		881D5EDF0323DA461F3D3A8B /* Pods-Marshal-MarshalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marshal-MarshalTests.debug.xcconfig"; path = "Target Support Files/Pods-Marshal-MarshalTests/Pods-Marshal-MarshalTests.debug.xcconfig"; sourceTree = "<group>"; };
-		95496A1A529841F4A4ABCFF1 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../src/assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		993A0B5B8FC143A7BBA39263 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		B82A0EEBE1FB47DAA8884F28 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		C08641190165465AADB79CD7 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				33AB5AD93D7242B5A255B10B /* Octicons.ttf */,
 				3B6E425AB6B64FDFA323ACC6 /* SimpleLineIcons.ttf */,
 				234750BA40314138AD06F24D /* Zocial.ttf */,
-				95496A1A529841F4A4ABCFF1 /* icomoon.ttf */,
+				40E8C5DF0BCE49FA8DBBF275 /* icomoon.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 				41189F6953794D7587A7B662 /* Inter-Regular.ttf in Resources */,
 				5ACBC9A93CD9449B9B52A2D8 /* Inter-SemiBold.ttf in Resources */,
 				1970F1719FAD4535BCC23567 /* Inter-Thin.ttf in Resources */,
-				2B487D23536D4173B418C890 /* icomoon.ttf in Resources */,
+				26C1B79D848F4F9B9E8F5816 /* icomoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Marshal/Info.plist;
@@ -632,7 +632,7 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				INFOPLIST_FILE = Marshal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
