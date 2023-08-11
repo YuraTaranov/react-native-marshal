@@ -18,6 +18,7 @@ import {
   LazyLoader,
   SectionList,
   ActivityIndicator,
+  StatusBar,
 } from '@components';
 import {navigate} from '@services';
 import {colors} from '@constants';
@@ -167,6 +168,7 @@ const Purchases: React.FC<TProps> = ({
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={colors.dark_red_7C2022} />
       {loading && !purchases.length ? (
         <View style={styles.loaderContainer}>
           <ActivityIndicator color={colors.dark_red_7C2022} size="large" />

@@ -9,7 +9,15 @@ import {
   useRoute,
   useMemo,
 } from '@hooks';
-import {View, Text, ActivityIndicator, FlatList, Icon} from '@components';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  Icon,
+  TouchableOpacity,
+  Linking,
+} from '@components';
 import {getPurchaseDetail, resetPurchaseDetail} from '@reducers/purchaseDetail';
 import {colors} from '@constants';
 import {formatDate, getQuantityType} from '@helpers';
@@ -118,6 +126,10 @@ const PurchaseDetail: React.FC<TProps> = ({
     [],
   );
 
+  const onPressCall = useCallback(() => {
+    Linking.openURL(`tel:+380508639862`);
+  }, []);
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -141,12 +153,14 @@ const PurchaseDetail: React.FC<TProps> = ({
       )}
       <View style={styles.footer}>
         <Text style={styles.footerDescription}>{t('Тов “Маршал”')}</Text>
-        <View style={styles.footerContactContainer}>
+        <TouchableOpacity
+          style={styles.footerContactContainer}
+          onPress={onPressCall}>
           <Icon name="phone" color={colors.green_289E42} size={13} />
           <Text style={styles.footerContact}>
             {t('Гаряча лінія')}: +38-050-863-98-62
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
