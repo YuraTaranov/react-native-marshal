@@ -15,6 +15,7 @@ import {
   Promotion,
   PayForm,
   PurchaseDetail,
+  PrivacyPolicy,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
@@ -96,6 +97,14 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         options={{
           headerTitleAlign: 'center',
           title: t('Умови використання'),
+        }}
+      />
+      <ProfileStack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerTitleAlign: 'center',
+          title: t('Політика конфіденційності'),
         }}
       />
       <ProfileStack.Screen

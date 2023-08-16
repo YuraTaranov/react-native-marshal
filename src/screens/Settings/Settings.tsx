@@ -131,6 +131,13 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
           }),
       },
       {
+        name: t('Політика конфіденційності'),
+        onPress: () =>
+          navigate('ProfileStack', {
+            screen: 'PrivacyPolicy',
+          }),
+      },
+      {
         name: t('Видалити акаунт'),
         onPress: () => openDeleteProfileAlert(),
       },
