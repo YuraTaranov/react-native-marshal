@@ -46,6 +46,7 @@ module.exports = [
       'FuelCalculatorResult',
       'PayForm',
       'PurchaseDetail',
+      'PrivacyPolicy',
       //ADD MORE SCREENS
     ],
   },
