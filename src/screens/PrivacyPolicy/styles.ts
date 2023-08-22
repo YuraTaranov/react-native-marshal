@@ -1,5 +1,5 @@
 import {StyleSheet} from '@components';
-import {colors} from '@constants';
+import {colors, fonts} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -13,5 +13,10 @@ export default StyleSheet.create({
   description: {
     fontSize: 16,
     color: colors.gray_2D2D2D,
+  },
+  link: {
+    fontFamily: fonts.interBold_700,
+    color: colors.black_000000,
+    fontSize: 16,
   },
 });
