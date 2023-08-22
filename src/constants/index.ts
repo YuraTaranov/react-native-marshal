@@ -10,3 +10,4 @@ export {urls} from './urls';
 export {width, height, top, bottom, hitSlop, padding} from './safeSpaces';
 export {gradients} from './gradients';
 export * from './strings';
+export {privacyPolicySupportPhone} from './support';
