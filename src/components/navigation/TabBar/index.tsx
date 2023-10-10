@@ -1,7 +1,8 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
 import {View} from '@components';
+import {useCallback, useMemo} from '@hooks';
 
 import TabItem from '../TabItem';
 import styles from './styles';
@@ -12,9 +13,10 @@ import {TGlobalState} from '@types';
 type TProps = {
   navigation: any;
   state: any;
+  notifications: TGlobalState['notifications']['data'];
 };
 
-const TabBar: React.FC<TProps> = ({navigation, state}) => {
+const TabBar: React.FC<TProps> = ({navigation, state, notifications}) => {
   const generalIndex: number = state?.index || 0;
 
   const jump = useCallback(
@@ -22,6 +24,10 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
     [],
   );
 
+  const hasNewNotifications = useMemo(
+    () => Boolean(notifications.find(item => !item.isRead)),
+    [notifications],
+  );
   return (
     <View style={styles.container}>
       <TabItem
@@ -53,87 +59,14 @@ const TabBar: React.FC<TProps> = ({navigation, state}) => {
         title={'Профіль'}
         onPressHandler={jump('Profile')}
         iconName={generalIndex === 4 ? 'profile-3' : 'profile-2'}
+        hasBadge={hasNewNotifications}
       />
     </View>
   );
 };
 
-const mapStateToProps = (state: TGlobalState) => ({});
+const mapStateToProps = (state: TGlobalState) => ({
+  notifications: state.notifications.data,
+});
 
 export default connect(mapStateToProps)(TabBar);
-
-{
-  /* <TouchableOpacity
-        disabled={generalIndex === 0}
-        style={styles.eachScreen}
-        onPress={jump('Stations')}>
-        <Icon
-          name={generalIndex === 0 ? 'station-3' : 'station-2'}
-          size={generalIndex === 0 ? 24 : 24}
-          color={generalIndex === 0 ? colors.red_D61920 : colors.black_58585B}
-        />
-        <Text style={[styles.text, generalIndex === 0 && styles.textActive]}>
-          {t('Наші АЗК')}
-        </Text>
-      </TouchableOpacity> */
-}
-{
-  /* <TouchableOpacity
-        disabled={generalIndex === 1}
-        style={styles.eachScreen}
-        onPress={jump('Promotions')}>
-        <Icon
-          name={generalIndex === 1 ? 'promotion-3' : 'promotion-2'}
-          size={generalIndex === 1 ? 24 : 24}
-          color={generalIndex === 1 ? colors.red_D61920 : colors.black_58585B}
-        />
-        <Text style={[styles.text, generalIndex === 1 && styles.textActive]}>
-          {t('Акції')}
-        </Text>
-      </TouchableOpacity> */
-}
-{
-  /* <TouchableOpacity
-        disabled={generalIndex === 2}
-        style={styles.eachScreen}
-        onPress={jump('Home')}>
-        <Icon
-          name={generalIndex === 2 ? 'home-3' : 'home-2'}
-          size={generalIndex === 2 ? 24 : 24}
-          color={generalIndex === 2 ? colors.red_D61920 : colors.black_58585B}
-        />
-        <Text style={[styles.text, generalIndex === 2 && styles.textActive]}>
-          {t('Головна')}
-        </Text>
-      </TouchableOpacity> */
-}
-{
-  /* <TouchableOpacity
-        disabled={generalIndex === 3}
-        style={styles.eachScreen}
-        onPress={jump('Bonuses')}>
-        <Icon
-          name={generalIndex === 3 ? 'gift-3' : 'gift-2'}
-          size={generalIndex === 3 ? 24 : 24}
-          color={generalIndex === 3 ? colors.red_D61920 : colors.black_58585B}
-        />
-        <Text style={[styles.text, generalIndex === 3 && styles.textActive]}>
-          {t('Бонуси')}
-        </Text>
-      </TouchableOpacity> */
-}
-{
-  /* <TouchableOpacity
-        disabled={generalIndex === 4}
-        style={styles.eachScreen}
-        onPress={jump('Profile')}>
-        <Icon
-          name={generalIndex === 4 ? 'profile-3' : 'profile-2'}
-          size={generalIndex === 4 ? 24 : 24}
-          color={generalIndex === 4 ? colors.red_D61920 : colors.black_58585B}
-        />
-        <Text style={[styles.text, generalIndex === 4 && styles.textActive]}>
-          {t('Профіль')}
-        </Text>
-      </TouchableOpacity> */
-}

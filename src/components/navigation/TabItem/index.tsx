@@ -16,6 +16,7 @@ type TProps = {
   iconName: string;
   isActive: boolean;
   title: string;
+  hasBadge?: boolean;
 };
 
 const TabItem: React.FC<TProps> = ({
@@ -23,9 +24,14 @@ const TabItem: React.FC<TProps> = ({
   iconName,
   isActive,
   title,
+  hasBadge,
 }) => {
   const scaleAnimValue = useSharedValue(isActive ? 1.5 : 1);
   const translateYAnimValue = useSharedValue(isActive ? -4 : 0);
+
+  const translateBadgeY = useSharedValue(isActive ? -4 : 0);
+  const translateBadgeX = useSharedValue(isActive ? 4 : 0);
+
   const {t} = useTranslation();
 
   const animatedIconContainerStyle = useAnimatedStyle(() => {
@@ -37,16 +43,31 @@ const TabItem: React.FC<TProps> = ({
     };
   });
 
+  const animatedBadgeStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {translateY: translateBadgeY.value},
+        {translateX: translateBadgeX.value},
+      ],
+    };
+  });
   useEffect(() => {
     translateYAnimValue.value = withTiming(isActive ? -4 : 0);
     scaleAnimValue.value = withTiming(isActive ? 1.5 : 1);
-  }, [isActive]);
+    if (hasBadge) {
+      translateBadgeY.value = withTiming(isActive ? -4 : 0);
+      translateBadgeX.value = withTiming(isActive ? 4 : 0);
+    }
+  }, [isActive, hasBadge]);
 
   return (
     <TouchableOpacity
       disabled={isActive}
       style={styles.container}
       onPress={onPressHandler}>
+      {hasBadge ? (
+        <Animated.View style={[styles.badge, animatedBadgeStyle]} />
+      ) : null}
       <Animated.View style={animatedIconContainerStyle}>
         <Icon
           name={iconName}
@@ -54,6 +75,7 @@ const TabItem: React.FC<TProps> = ({
           color={isActive ? colors.red_D61920 : colors.black_58585B}
         />
       </Animated.View>
+
       <Text style={[styles.title, isActive && styles.titleActive]}>
         {t(title)}
       </Text>

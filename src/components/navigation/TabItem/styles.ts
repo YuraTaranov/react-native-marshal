@@ -16,4 +16,13 @@ export default StyleSheet.create({
   titleActive: {
     color: colors.red_D61920,
   },
+  badge: {
+    width: 10,
+    height: 10,
+    position: 'absolute',
+    top: 0,
+    right: 8,
+    borderRadius: 5,
+    backgroundColor: colors.red_D61920,
+  },
 });
