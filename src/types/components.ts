@@ -1,3 +1,5 @@
+export type {StyleProp, ViewStyle} from 'react-native';
+
 export type TCar = {
   car_brand: {id: number; name: string};
   car_model: {id: number; name: string; year_start: number; year_end: number};
