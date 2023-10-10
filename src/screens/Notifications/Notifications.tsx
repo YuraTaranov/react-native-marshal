@@ -23,16 +23,9 @@ type TProps = {
 const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-
   useEffect(() => {
     PushNotification.removeAllDeliveredNotifications();
     ios && PushNotificationIOS.setApplicationIconBadgeNumber(0);
-  }, []);
-
-  const onPressSettings = useCallback(() => {
-    navigate('ProfileStack', {
-      screen: 'Settings',
-    });
   }, []);
 
   useEffect(() => {
@@ -52,6 +45,8 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     item => () => {
       if (item.type !== 'text') {
         dispatch(getPromotion(item.data_id));
+      } else {
+        navigate('NotificationsDetail', item);
       }
     },
     [],
@@ -59,7 +54,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
 
   const getDate = useCallback((item: Date) => {
     const date = moment(item).format('DD.MM.YYYY');
-    const time = moment(item).format('HH:MM');
+    const time = moment(item).format('HH:mm');
     return `${date} ${time}`;
   }, []);
 
@@ -68,8 +63,7 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
       ({item}) => (
         <TouchableOpacity
           style={styles.itemContainer}
-          onPress={onPressNotification(item)}
-          disabled={item.type === 'text'}>
+          onPress={onPressNotification(item)}>
           <View>
             <Icon size={24} color={colors.black_000000} name="bell" />
             {!item.isRead ? <View style={styles.newMessageCircle} /> : null}
