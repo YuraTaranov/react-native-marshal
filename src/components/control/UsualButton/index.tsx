@@ -9,13 +9,14 @@ import {
 } from '@components';
 import styles from './styles';
 import {colors} from '@constants';
+import {StyleProp, ViewStyle} from '@types';
 
 type TProps = {
   title: string;
   loading?: boolean;
   disabled?: boolean;
   dark?: boolean;
-  buttonStyle?: {};
+  buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: {};
   onPress: () => void;
 };

@@ -168,7 +168,7 @@ const Purchases: React.FC<TProps> = ({
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={colors.dark_red_7C2022} />
+      <StatusBar backgroundColor={colors.dark_red_7C2022} animated />
       {loading && !purchases.length ? (
         <View style={styles.loaderContainer}>
           <ActivityIndicator color={colors.dark_red_7C2022} size="large" />
