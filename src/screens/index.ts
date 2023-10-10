@@ -36,3 +36,4 @@ export {default as FuelCalculatorResult} from './FuelCalculatorResult/FuelCalcul
 export {default as PayForm} from './PayForm/PayForm';
 export {default as PurchaseDetail} from './PurchaseDetail/PurchaseDetail';
 export {default as PrivacyPolicy} from './PrivacyPolicy/PrivacyPolicy';
+export {default as NotificationsDetail} from './NotificationDetail/NotificationsDetail';

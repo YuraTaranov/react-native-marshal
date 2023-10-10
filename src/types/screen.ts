@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type {RouteProp} from '@react-navigation/native';
+import {TNotification} from '@types';
 
 type TParamOfFuelPurchase = {
   openModal?: boolean;
@@ -27,6 +28,7 @@ export type HomeStackParamList = {
   FuelPurchase: TParamOfFuelPurchase;
   PayForm: TParamOfPayForm;
   PurchaseDetail: TParaOfPurchaseDetail;
+  NotificationDetail: TNotification;
 };
 
 export type FuelPurchaseRouteProp = RouteProp<
@@ -37,4 +39,8 @@ export type PayFormRouteProp = RouteProp<HomeStackParamList, 'PayForm'>;
 export type PurchaseDetailRouteProp = RouteProp<
   HomeStackParamList,
   'PurchaseDetail'
+>;
+export type NotificationDetailRouteProp = RouteProp<
+  HomeStackParamList,
+  'NotificationDetail'
 >;

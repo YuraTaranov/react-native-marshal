@@ -16,12 +16,13 @@ import {
   PayForm,
   PurchaseDetail,
   PrivacyPolicy,
+  NotificationsDetail,
 } from '@screens';
 import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 import {useTranslation} from '@hooks';
 import {ios} from '@constants';
-import {defaultStackOptions, purchaseOptions} from '../options';
+import {darkRedOptions, defaultStackOptions} from '../options';
 
 type TProps = {};
 
@@ -111,7 +112,7 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         name="Purchases"
         component={Purchases}
         options={{
-          ...purchaseOptions,
+          ...darkRedOptions,
           headerTitleAlign: 'center',
           title: t('Мої покупки'),
         }}
@@ -134,6 +135,15 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         }}
       />
       <ProfileStack.Screen
+        name="NotificationsDetail"
+        component={NotificationsDetail}
+        options={{
+          ...darkRedOptions,
+          headerTitleAlign: 'center',
+          title: '',
+        }}
+      />
+      <ProfileStack.Screen
         name="Promotion"
         component={Promotion}
         options={{
@@ -151,7 +161,7 @@ const ProfileStackNavigator: React.FC<TProps> = ({}) => {
         name="PurchaseDetail"
         component={PurchaseDetail}
         options={{
-          ...purchaseOptions,
+          ...darkRedOptions,
           headerTitleAlign: 'center',
           title: t('Мої покупки'),
         }}

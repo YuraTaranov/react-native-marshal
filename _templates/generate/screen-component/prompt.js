@@ -47,6 +47,7 @@ module.exports = [
       'PayForm',
       'PurchaseDetail',
       'PrivacyPolicy',
+      'NotificationDetail',
       //ADD MORE SCREENS
     ],
   },

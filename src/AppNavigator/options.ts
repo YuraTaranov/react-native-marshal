@@ -29,7 +29,7 @@ export const headerStyle = {
   headerTitleStyle: defaultStackOptions.headerTitleStyle,
 };
 
-export const purchaseOptions = {
+export const darkRedOptions = {
   headerStyle: {backgroundColor: colors.dark_red_7C2022},
   headerTintColor: colors.white_FFFFFF,
   headerTitleStyle: {
