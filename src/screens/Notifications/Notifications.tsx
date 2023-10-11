@@ -1,5 +1,4 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {useEffect, useCallback, useTranslation, useNavigation} from '@hooks';
 import {View, Text, FlatList, TouchableOpacity, Icon, Image} from '@components';
 import {TGlobalState, TNotification} from '@types';
@@ -8,19 +7,15 @@ import styles from './styles';
 import {colors, ios} from '@constants';
 import {navigate} from '@services';
 import moment from 'moment';
-import {setNotifications} from '@reducers/notifications';
-import {animation} from '@helpers';
-import {getPromotion} from '@reducers/promotion';
 import {assets} from '@assets';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 
 type TProps = {
-  dispatch: Dispatch;
   notifications: TNotification[];
 };
 
-const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
+const Notifications: React.FC<TProps> = ({notifications}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   useEffect(() => {
@@ -28,24 +23,9 @@ const Notifications: React.FC<TProps> = ({dispatch, notifications}) => {
     ios && PushNotificationIOS.setApplicationIconBadgeNumber(0);
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const hasUnread = notifications.find(item => !item.isRead);
-      if (hasUnread) {
-        const notificationsRead = notifications.map(item => {
-          return {...item, isRead: true};
-        });
-        animation('ios');
-        dispatch(setNotifications(notificationsRead));
-      }
-    }, 5000);
-  }, [notifications]);
-
   const onPressNotification = useCallback(
     item => () => {
-      if (item.type !== 'text') {
-        dispatch(getPromotion(item.data_id));
-      } else {
+      if (item.type === 'text') {
         navigate('NotificationsDetail', item);
       }
     },

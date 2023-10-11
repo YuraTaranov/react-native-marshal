@@ -1,36 +1,52 @@
 import React from 'react';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
-import {useMemo, useTranslation, useRoute} from '@hooks';
+import {useMemo, useTranslation, useRoute, useEffect} from '@hooks';
 import {View, Text, StatusBar, UsualButton, ScrollView} from '@components';
 import {goBack} from '@services';
 import {colors} from '@constants';
+import {animation} from '@helpers';
+import {setNotifications} from '@reducers/notifications';
 
 import styles from './styles';
 
 //types
-import {NotificationDetailRouteProp, TNotification} from '@types';
+import {NotificationDetailRouteProp, TGlobalState, TNotification} from '@types';
+
 type TProps = {
-  notificationData: TNotification;
+  dispatch: Dispatch;
+  notifications: TNotification[];
 };
 
-const NotificationsDetail: React.FC<TProps> = () => {
+const NotificationsDetail: React.FC<TProps> = ({dispatch, notifications}) => {
   const {
     t,
     i18n: {language},
   } = useTranslation();
   const {params} = useRoute<NotificationDetailRouteProp>();
 
-  const {title, message, date} = params;
+  const {title, message, date, isRead, id} = params;
 
   const formatDateAndTime = useMemo(() => {
     return {
       date: moment(new Date(date), 'MM.YYYY')
         .locale(language)
         .format('DD MMMM'),
-      time: moment(new Date(date), 'HH:mm').locale(language).format('HH:mm'),
+      time: moment(date).format('HH:mm'),
     };
   }, [date, language, t]);
+
+  useEffect(() => {
+    if (!isRead) {
+      const notificationsActuality = notifications.map(item => {
+        return {...item, isRead: item.id === id ? true : item.isRead};
+      });
+      animation('ios');
+      dispatch(setNotifications(notificationsActuality));
+    }
+  }, []);
 
   return (
     <>
@@ -51,4 +67,7 @@ const NotificationsDetail: React.FC<TProps> = () => {
   );
 };
 
-export default NotificationsDetail;
+const mapStateToProps = (state: TGlobalState) => ({
+  notifications: state.notifications.data,
+});
+export default connect(mapStateToProps)(NotificationsDetail);

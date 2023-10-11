@@ -96,12 +96,16 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
         __DEV__ && console.log('Trey push data', remoteMessage.data);
-        dispatch(getPromotionsMain());
-        dispatch(getPromotions({page: 1}));
+
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: true,
         };
+
+        navigate('ProfileStack', {
+          screen: 'NotificationsDetail',
+          params: {...modifiedNotification},
+        });
         setTimeout(() => {
           dispatch(
             setNotifications(
