@@ -110,4 +110,7 @@ export type TGlobalState = {
     data: TPurchaseDetail[];
     loading: boolean;
   };
+  discount: {
+
+  }
 };

@@ -208,3 +208,9 @@ export type TSectionListItem = {
   title: string;
   data: TPurchase[];
 };
+
+export enum EFuel {
+  PETROL = 1,
+  DIESEL = 2,
+  GAS = 3
+}

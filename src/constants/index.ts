@@ -11,3 +11,4 @@ export {width, height, top, bottom, hitSlop, padding} from './safeSpaces';
 export {gradients} from './gradients';
 export * from './strings';
 export {privacyPolicySupportPhone} from './support';
+export {fuel} from './fuel';

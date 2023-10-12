@@ -27,3 +27,12 @@ export type TPurchaseDetailResponse = {
     data: TPurchaseDetail[];
   };
 };
+
+export type TDiscountResponse = {
+  data: {
+    quantity: number,
+    type: number,
+    discount: number,
+    next_discount: number
+  }
+}
