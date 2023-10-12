@@ -15,6 +15,7 @@ import {
   TFuel,
   TPurchaseDetail,
   TSectionListItem,
+  TDiscount,
 } from './components';
 import {TRoute} from './geocode';
 
@@ -111,6 +112,8 @@ export type TGlobalState = {
     loading: boolean;
   };
   discount: {
-
-  }
+    initialLoading: boolean;
+    loading: boolean;
+    data: TDiscount | null;
+  };
 };

@@ -188,6 +188,14 @@ export type TPurchaseDetail = {
   product_code: string;
 };
 
+export type TDiscount = {
+  quantity: number;
+  type: number;
+  date: string;
+  discount: number;
+  next_discount: number;
+};
+
 export type TPaymentСard = {
   id: number;
   card: string;
@@ -212,5 +220,5 @@ export type TSectionListItem = {
 export enum EFuel {
   PETROL = 1,
   DIESEL = 2,
-  GAS = 3
+  GAS = 3,
 }
