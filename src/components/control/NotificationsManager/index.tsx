@@ -51,7 +51,7 @@ const NotificationsManager: React.FC<TProps> = ({
               });
               dispatch(
                 setNotifications(
-                  [...modifiedNotifications, ...notifications].slice(0, 40),
+                  [item,...modifiedNotifications, ...notifications].slice(0, 40),
                 ),
               );
             }
@@ -64,12 +64,14 @@ const NotificationsManager: React.FC<TProps> = ({
         ) {
           dispatch(getPromotion(item.data_id));
         }
-        // else {
-        //   navigate('Promotions');
-        // }
+        
+        navigate('ProfileStack', {
+          screen: 'NotificationsDetail',
+          params: {...item},
+        });
         return null;
       },
-      [notifications],
+      [notifications, navigate],
     );
 
   useEffect(() => {
@@ -77,8 +79,6 @@ const NotificationsManager: React.FC<TProps> = ({
       .messaging()
       .onMessage(async (remoteMessage: any) => {
         __DEV__ && console.log('Foreground push data', remoteMessage.data);
-        dispatch(getPromotionsMain());
-        dispatch(getPromotions({page: 1}));
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: false,
@@ -102,18 +102,13 @@ const NotificationsManager: React.FC<TProps> = ({
           isRead: true,
         };
 
-        navigate('ProfileStack', {
-          screen: 'NotificationsDetail',
-          params: {...modifiedNotification},
-        });
-        setTimeout(() => {
-          dispatch(
-            setNotifications(
-              [modifiedNotification, ...notifications].slice(0, 40),
-            ),
-          );
-          handleNotification(modifiedNotification, remoteMessage.badge);
-        }, 200);
+        dispatch(
+          setNotifications(
+            [modifiedNotification, ...notifications].slice(0, 40),
+          ),
+        );
+  
+        handleNotification(modifiedNotification, remoteMessage.badge);
       },
     );
 
