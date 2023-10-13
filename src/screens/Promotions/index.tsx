@@ -18,13 +18,13 @@ import {
   VerticalGradientBorder,
 } from '@components';
 import styles from './styles';
-import {getDiscount, setType} from '@reducers/discount';
+import {getDiscount} from '@reducers/discount';
 import {TDiscount, TGlobalState} from '@types';
 import {colors} from '@constants';
 import 'moment/locale/uk';
 import 'moment/locale/ru';
 import moment from 'moment';
-import {setLoader} from '@reducers/appGlobalState';
+import {setLoader, setType} from '@reducers/appGlobalState';
 import {declOfNum, formatPriceName, literFormat} from '@helpers';
 
 const gradientColors = [
@@ -36,7 +36,7 @@ const gradientColors = [
 type TProps = {
   dispatch: Dispatch;
   discount: TDiscount;
-  type: number;
+  fuelType: number;
   initialLoading: boolean;
   loading: boolean;
   language: string;
@@ -44,7 +44,7 @@ type TProps = {
 
 const Promotions: React.FC<TProps> = ({
   dispatch,
-  type,
+  fuelType,
   discount,
   loading,
   initialLoading,
@@ -64,10 +64,10 @@ const Promotions: React.FC<TProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isFocused && type !== previousType) {
-      dispatch(getDiscount(type));
+    if (isFocused && fuelType !== previousType) {
+      dispatch(getDiscount(fuelType));
     }
-  }, [type, isFocused]);
+  }, [fuelType, isFocused]);
 
   const discountData = useMemo(() => {
     if (discount) {
@@ -94,27 +94,36 @@ const Promotions: React.FC<TProps> = ({
         <View style={styles.btnView}>
           <TouchableOpacity
             onPress={() => chooseType(1)}
-            style={[styles.btn, type === 1 && styles.activeBtn]}>
+            style={[styles.btn, fuelType === 1 && styles.activeBtn]}>
             <Text
-              style={[styles.btnTitle, type === 1 && styles.activeBtnTitle]}>
+              style={[
+                styles.btnTitle,
+                fuelType === 1 && styles.activeBtnTitle,
+              ]}>
               {t('Бензин')}
             </Text>
           </TouchableOpacity>
           <VerticalGradientBorder colors={gradientColors} />
           <TouchableOpacity
             onPress={() => chooseType(2)}
-            style={[styles.btn, type === 2 && styles.activeBtn]}>
+            style={[styles.btn, fuelType === 2 && styles.activeBtn]}>
             <Text
-              style={[styles.btnTitle, type === 2 && styles.activeBtnTitle]}>
+              style={[
+                styles.btnTitle,
+                fuelType === 2 && styles.activeBtnTitle,
+              ]}>
               {t('Дизель')}
             </Text>
           </TouchableOpacity>
           <VerticalGradientBorder colors={gradientColors} />
           <TouchableOpacity
             onPress={() => chooseType(3)}
-            style={[styles.btn, type === 3 && styles.activeBtn]}>
+            style={[styles.btn, fuelType === 3 && styles.activeBtn]}>
             <Text
-              style={[styles.btnTitle, type === 3 && styles.activeBtnTitle]}>
+              style={[
+                styles.btnTitle,
+                fuelType === 3 && styles.activeBtnTitle,
+              ]}>
               {t('Газ')}
             </Text>
           </TouchableOpacity>
@@ -182,7 +191,7 @@ const Promotions: React.FC<TProps> = ({
 };
 const mapStateToProps = (state: TGlobalState) => ({
   discount: state.discount.data,
-  type: state.discount.type,
+  fuelType: state.appGlobalState.fuelType,
   loading: state.discount.loading,
   initialLoading: state.discount.initialLoading,
   language: state.appGlobalState.lang,

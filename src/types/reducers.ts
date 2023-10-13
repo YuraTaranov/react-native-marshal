@@ -28,6 +28,7 @@ export type TGlobalState = {
     accessToken: string;
     loader: boolean;
     isUserAuthorized: boolean;
+    fuelType: number;
     bonusesOnBoarding: boolean;
     gps: boolean;
   };
@@ -117,6 +118,5 @@ export type TGlobalState = {
     initialLoading: boolean;
     loading: boolean;
     data: TDiscount;
-    type: number;
   };
 };

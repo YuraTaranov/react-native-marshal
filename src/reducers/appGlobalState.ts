@@ -11,6 +11,7 @@ const SET_IS_USER_AUTHORIZED = '[appGlobalState] SET_IS_USER_AUTHORIZED';
 const SET_BONUSES_ON_BOARDING = '[appGlobalState] SET_BONUSES_ON_BOARDING';
 const SET_LOADER = '[appGlobalState] SET_LOADER';
 const SET_GPS = '[appGlobalState] SET_GPS';
+const SET_FUEL_TYPE = '[appGlobalState] SET_FUEL_TYPE';
 
 const initialstate: TGlobalState['appGlobalState'] = {
   accessToken: '',
@@ -18,6 +19,7 @@ const initialstate: TGlobalState['appGlobalState'] = {
   lang: 'uk',
   loader: false,
   onBoarding: true,
+  fuelType: 1,
   bonusesOnBoarding: true,
   gps: false,
 };
@@ -32,6 +34,8 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, {...state, onBoarding: action.onBoarding});
     case SET_IS_USER_AUTHORIZED:
       return Object.assign({}, {...state, isUserAuthorized: action.data});
+    case SET_FUEL_TYPE:
+      return Object.assign({}, {...state, fuelType: action.data});
     case SET_LOADER:
       return Object.assign({}, {...state, loader: action.data});
     case SET_BONUSES_ON_BOARDING:
@@ -48,6 +52,7 @@ export default (state = initialstate, action: any) => {
 export const setLang = (lang: TLang) => ({lang, type: SET_LANG});
 export const getLang = (lang: TLang) => (lang === 'uk' ? 'ua' : lang);
 export const setGPS = (gps: Tgps) => ({gps, type: SET_GPS});
+export const setType = (data: number) => ({data, type: SET_FUEL_TYPE});
 export const setToken = (token: string) => ({token, type: SET_TOKEN});
 export const setOnboarding = (onBoarding: boolean) => ({
   onBoarding,

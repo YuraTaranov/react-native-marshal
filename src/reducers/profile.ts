@@ -39,6 +39,7 @@ export function* watchProfile() {
 }
 
 export function* getProfileAsync() {
+  yield put(setLoader(false));
   try {
     const {data} = yield call(() => httpGet(urls.getProfile));
     if (data.data) {

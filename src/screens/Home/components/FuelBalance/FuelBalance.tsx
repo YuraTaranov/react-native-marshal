@@ -27,8 +27,9 @@ import {colors, fuel, hitSlop} from '@constants';
 import {ActivityIndicator, Animated, ImageBackground} from 'react-native';
 import {assets} from '@assets';
 import {Dispatch} from 'redux';
-import {getDiscount, setType} from '@reducers/discount';
+import {getDiscount} from '@reducers/discount';
 import {formatPriceName} from '@helpers';
+import {setType} from '@reducers/appGlobalState';
 
 type TRadioButtonCBParams = {
   type: number;
@@ -38,10 +39,16 @@ type TRadioButtonCBParams = {
 type TProps = {
   dispatch: Dispatch;
   profile: TProfile;
+  fuelType: number;
   discount: TGlobalState['discount'];
 };
 
-const FuelBalance: React.FC<TProps> = ({profile, discount, dispatch}) => {
+const FuelBalance: React.FC<TProps> = ({
+  profile,
+  discount,
+  fuelType,
+  dispatch,
+}) => {
   const {t} = useTranslation();
   const {name, surname} = profile;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -49,7 +56,7 @@ const FuelBalance: React.FC<TProps> = ({profile, discount, dispatch}) => {
   const isFocused = useIsFocused();
   const animationValue = useState(new Animated.Value(0))[0];
   const [activeDiscount, setActiveDiscount] = useState(() => fuel[0]);
-  const previousType = usePrevious(discount.type);
+  const previousType = usePrevious(discount.data.type);
 
   const userCardName = useMemo(
     () => `${name ?? ''} ${surname ?? surname}`,
@@ -57,15 +64,15 @@ const FuelBalance: React.FC<TProps> = ({profile, discount, dispatch}) => {
   );
 
   useEffect(() => {
-    const findFuel = fuel.find(item => item.type === discount.type);
+    const findFuel = fuel.find(item => item.type === fuelType);
     if (findFuel) setActiveDiscount(findFuel);
-  }, [discount.type]);
+  }, [fuelType]);
 
   useEffect(() => {
-    if (isFocused && discount.type !== previousType) {
-      dispatch(getDiscount(discount.type));
+    if (isFocused && fuelType !== previousType) {
+      dispatch(getDiscount(fuelType));
     }
-  }, [discount.type, isFocused]);
+  }, [fuelType, isFocused]);
 
   const cardNumber = useMemo(() => {
     if (profile?.card) {
@@ -303,6 +310,7 @@ const FuelBalance: React.FC<TProps> = ({profile, discount, dispatch}) => {
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
   discount: state.discount,
+  fuelType: state.appGlobalState.fuelType,
 });
 
 export default connect(mapStateToProps)(FuelBalance);

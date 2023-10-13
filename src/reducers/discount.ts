@@ -31,7 +31,6 @@ const initialstate: TGlobalState['discount'] = {
   loading: true,
   initialLoading: true,
   data: FUEL_INITIAL_STATE,
-  type: 1,
 };
 
 export default (state = initialstate, action: any) => {
@@ -42,8 +41,6 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, {...state, initialLoading: action.data});
     case SET_LOADING:
       return Object.assign({}, {...state, loading: action.data});
-    case SET_TYPE:
-      return Object.assign({}, {...state, type: action.data});
     case RESET_DISCOUNT:
       return initialstate;
     default:
@@ -52,7 +49,6 @@ export default (state = initialstate, action: any) => {
 };
 
 export const getDiscount = (data: number) => ({data, type: GET_DISCOUNT});
-export const setType = (data: number) => ({data, type: SET_TYPE});
 export const setDiscount = (data: any) => ({data, type: SET_DISCOUNT});
 export const setLoading = (data: any) => ({data, type: SET_LOADING});
 export const setInitialLoading = (data: any) => ({
@@ -71,6 +67,8 @@ export function* getDiscountAsync(action: any) {
     const {data}: TDiscountResponse = yield call(() =>
       DiscountService.getDiscount(action.data),
     );
+
+    console.log(data);
 
     yield put(setDiscount(data.data));
   } catch (e) {
