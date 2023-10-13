@@ -20,8 +20,8 @@ import {
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
-import {TProfile, TGlobalState, TFuelProfile, TFuel} from '@types';
-import {colors, hitSlop} from '@constants';
+import {TProfile, TGlobalState, TFuelProfile, TFuel, TFuelData} from '@types';
+import {colors, fuel, hitSlop} from '@constants';
 import {Animated, ImageBackground} from 'react-native';
 import {assets} from '@assets';
 
@@ -32,31 +32,29 @@ type TRadioButtonCBParams = {
 
 type TProps = {
   profile: TProfile;
-  fuel: TFuel[];
+  discount: TGlobalState['discount'];
 };
 
-const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
+const FuelBalance: React.FC<TProps> = ({profile, discount}) => {
   const {t} = useTranslation();
-
-  const initialFuel: TFuelProfile = {
-    id: 2,
-    name: '95',
-    liters: 0,
-  };
-  const [fuelType, setFuelType] = useState<TFuelProfile>(initialFuel);
+  const {petrol, gas, diesel} = discount;
+  const {name, surname} = profile;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [flipped, setFlipped] = useState(false);
   const animationValue = useState(new Animated.Value(0))[0];
 
+  const [fuel, setFuel] = useState([petrol, gas, diesel]);
+  const [activeDiscount, setActiveDiscount] = useState(() => fuel[1]);
+
   useEffect(() => {
-    // find and set the first type of fuel from the profile, the liters of which are not equal to 0, or type "95" if all 0
-    if (profile?.fuels?.length) {
-      const fuelAvailable = profile.fuels.find(item => item.liters);
-      if (fuelAvailable) {
-        setFuelType(fuelAvailable);
-      }
-    }
-  }, [profile?.fuels]);
+    setFuel([diesel, gas, petrol]);
+    setActiveDiscount(petrol);
+  }, [diesel, gas, petrol]);
+
+  const userCardName = useMemo(
+    () => `${name ?? ''} ${surname ?? surname}`,
+    [name, surname],
+  );
 
   const cardNumber = useMemo(() => {
     if (profile?.card) {
@@ -129,16 +127,11 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
               resizeMode="cover"
             />
           </TouchableOpacity>
-          <GradientBorder />
-          <View style={styles.bonusContainer}>
-            <Text style={styles.bonusValue}>{`${
-              profile?.count_bonus || 0
-            }`}</Text>
-            <Text style={[styles.bonusValue, styles.bonusValueRegular]}>{`${t(
-              'балів',
-            )}`}</Text>
+          <GradientBorder style={styles.gradientBorder} />
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>{userCardName}</Text>
           </View>
-          <GradientBorder />
+          <GradientBorder style={styles.gradientBorder} />
           <View style={styles.fuelContainer}>
             <TouchableOpacity
               style={styles.fuelTypeContainer}
@@ -148,7 +141,7 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
                 <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
                 <View style={styles.fuelTypeValueContainer}>
                   <Text style={styles.fuelTypeValue}>{`${t(
-                    fuelType.name,
+                    activeDiscount.title,
                   )}`}</Text>
                   <Icon
                     name="arrow-down"
@@ -160,18 +153,21 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
             </TouchableOpacity>
             <View style={styles.fuelValueContainer}>
               <View>
-                <Text style={styles.fuelTitle}>{t('Баланс палива')}</Text>
+                <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
                 <Text style={styles.fuelValue}>
-                  {`${fuelType.liters}`}
+                  {`${activeDiscount.discount}`}
                   <Text
                     style={[styles.fuelValue, styles.fuelValueRegular]}>{` ${t(
-                    'л',
+                    'коп/л',
                   )}`}</Text>
                 </Text>
               </View>
             </View>
           </View>
-          <GradientBorder />
+          <GradientBorder style={styles.gradientBorder} />
+          <View style={styles.cardNumberContainer}>
+            <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+          </View>
         </ImageBackground>
       </Animated.View>
     </View>
@@ -221,33 +217,32 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
 
   const onChangeFuelType = useCallback(
     (params: TRadioButtonCBParams) => {
-      const findFuel = fuel.find(item => item.id === params.type);
+      const findFuel = fuel.find(item => item.type === params.type);
       if (findFuel) {
-        const findFuelInProfile = profile?.fuels.find(
-          pf => pf.id === findFuel?.id,
-        ) || {...findFuel, liters: 0};
-        setFuelType(findFuelInProfile);
+        setActiveDiscount(findFuel);
       }
       closeModal();
     },
-    [profile, fuel],
+    [fuel],
   );
 
-  const renderItem: ({item}: {item: TFuel}) => JSX.Element = useCallback(
-    ({item}) => (
-      <RadioButtonCustom
-        key={item.id}
-        text={item.name}
-        active={fuelType.id === item.id}
-        onChange={onChangeFuelType}
-        type={item.id}
-      />
-    ),
-    [fuelType.id, onChangeFuelType],
+  const renderItem: ({item}: {item: TFuelData}) => JSX.Element = useCallback(
+    ({item}) => {
+      return (
+        <RadioButtonCustom
+          key={item.title}
+          text={t(item.title)}
+          active={activeDiscount.type === item.type}
+          onChange={onChangeFuelType}
+          type={item.type}
+        />
+      );
+    },
+    [activeDiscount, fuel],
   );
 
-  const keyExtractor: (item: TFuel) => string = useCallback(
-    item => String(item.id),
+  const keyExtractor: (item: TFuelData) => string = useCallback(
+    item => item.title,
     [],
   );
 
@@ -282,7 +277,7 @@ const FuelBalance: React.FC<TProps> = ({profile, fuel}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
-  fuel: state.fuel.data,
+  discount: state.discount,
 });
 
 export default connect(mapStateToProps)(FuelBalance);

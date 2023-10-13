@@ -2,15 +2,15 @@ import { EFuel } from "@types";
 
 export const fuel = [
     {
-        title: "Бензин",
+        title: "petrol",
         type: EFuel.PETROL
     },
     {
-        title: "Дизель",
+        title: "diesel",
         type: EFuel.DIESEL
     },
     {
-        title: "Газ",
+        title: "gas",
         type: EFuel.GAS
     }
 ]

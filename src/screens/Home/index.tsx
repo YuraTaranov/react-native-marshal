@@ -39,6 +39,7 @@ import {getFuel} from '@reducers/fuel';
 import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
 import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
 import {ScrollView} from 'react-native';
+import { getDiscount } from '@reducers/discount';
 
 type TProps = {
   dispatch: Dispatch;
@@ -86,6 +87,7 @@ const Home: React.FC<TProps> = ({
     dispatch(getPromotionsMain());
     dispatch(getFuel());
     dispatch(getPromotions({page: 1}));
+    dispatch(getDiscount())
     // dispatch(getCreditCards()); // TODO: buy fuel
   }, [lang]);
 
