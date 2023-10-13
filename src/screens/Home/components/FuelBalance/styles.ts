@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors, fonts, width} from '@constants';
+import {colors, fonts, sizes, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -101,7 +101,7 @@ export default StyleSheet.create({
   // new card
   card: {
     width: width - 32,
-    height: 230,
+    height: 260,
     borderRadius: 15,
     alignItems: 'center',
     backgroundColor: colors.white_FFFFFF,
@@ -167,5 +167,29 @@ export default StyleSheet.create({
     width: 120,
     alignSelf: 'center',
     marginTop: 12,
+  },
+  nameContainer: {
+    justifyContent: 'flex-end',
+    paddingTop :16,
+    marginBottom: 16,
+  },
+  name: {
+    color: colors.white_FFFFFF,
+    fontSize: 18,
+    fontFamily: fonts.interRegular_400,
+    textTransform: 'uppercase',
+  },
+  cardNumberContainer: {
+    flex: 1,
+    justifyContent :"center"
+  },
+  cardNunber: {
+    color: colors.white_FFFFFF,
+    fontSize: 16,
+    fontFamily: fonts.interRegular_400,
+    textTransform: 'uppercase',
+  },
+  gradientBorder: {
+    width: sizes.window_width - 64,
   },
 });

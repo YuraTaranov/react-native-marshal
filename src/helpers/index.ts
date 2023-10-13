@@ -12,4 +12,4 @@ export {
 
 export * from './scaling';
 export {default as openAppSettings} from './openAppSettings';
-export {declOfNum, formatPriceName} from './declOfNum';
+export {declOfNum, formatPriceName, literFormat} from './declOfNum';

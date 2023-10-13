@@ -2,7 +2,14 @@ import React, {useCallback, useMemo} from 'react';
 import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
-import {useState, useTranslation, useNavigation, useEffect} from '@hooks';
+import {
+  useState,
+  useTranslation,
+  useNavigation,
+  useEffect,
+  useIsFocused,
+  usePrevious,
+} from '@hooks';
 import {
   View,
   Text,
@@ -11,14 +18,14 @@ import {
   VerticalGradientBorder,
 } from '@components';
 import styles from './styles';
-import {getDiscount} from '@reducers/discount';
+import {getDiscount, setType} from '@reducers/discount';
 import {TDiscount, TGlobalState} from '@types';
 import {colors} from '@constants';
 import 'moment/locale/uk';
 import 'moment/locale/ru';
 import moment from 'moment';
 import {setLoader} from '@reducers/appGlobalState';
-import {declOfNum, formatPriceName} from '@helpers';
+import {declOfNum, formatPriceName, literFormat} from '@helpers';
 
 const gradientColors = [
   'rgba(220, 221, 222, 0.1)',
@@ -28,7 +35,8 @@ const gradientColors = [
 
 type TProps = {
   dispatch: Dispatch;
-  discount: TDiscount | null;
+  discount: TDiscount;
+  type: number;
   initialLoading: boolean;
   loading: boolean;
   language: string;
@@ -36,6 +44,7 @@ type TProps = {
 
 const Promotions: React.FC<TProps> = ({
   dispatch,
+  type,
   discount,
   loading,
   initialLoading,
@@ -43,9 +52,9 @@ const Promotions: React.FC<TProps> = ({
 }) => {
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
   const {t} = useTranslation();
+  const isFocused = useIsFocused();
+  const previousType = usePrevious(discount.type);
   const titles = [t('літр'), t('літра'), t('літрів')];
-
-  const [type, setType] = useState<1 | 2 | 3>(1);
   const {setOptions} = useNavigation();
 
   useEffect(() => {
@@ -55,8 +64,10 @@ const Promotions: React.FC<TProps> = ({
   }, []);
 
   useEffect(() => {
-    dispatch(getDiscount(type));
-  }, [type]);
+    if (isFocused && type !== previousType) {
+      dispatch(getDiscount(type));
+    }
+  }, [type, isFocused]);
 
   const discountData = useMemo(() => {
     if (discount) {
@@ -64,14 +75,17 @@ const Promotions: React.FC<TProps> = ({
     }
   }, [discount]);
 
-  const chooseType = useCallback((value: 1 | 2 | 3) => {
+  const chooseType = (value: 1 | 2 | 3) => {
     dispatch(setLoader(true));
-    setType(value);
-  }, []);
+    dispatch(setType(value));
+  };
 
-  const declOfNumLiters = useCallback((val?: number) => {
-    return declOfNum(val ? val : 0, titles);
-  }, []);
+  const declOfNumLiters = useCallback(
+    (val?: number) => {
+      return declOfNum(val ? val : 0, titles);
+    },
+    [language],
+  );
 
   return (
     <View style={styles.wrapper}>
@@ -124,8 +138,7 @@ const Promotions: React.FC<TProps> = ({
                 {moment(discount?.date).format('MMMM').toUpperCase()}
               </Text>
               <Text style={styles.literSum}>
-                {discount?.quantity}{' '}
-                {/* <Text style={styles.liter}>{t('Літрів').toUpperCase()}</Text> */}
+                {literFormat(discount.quantity)}{' '}
                 <Text style={styles.liter}>
                   {declOfNumLiters(discount?.quantity).toUpperCase()}
                 </Text>
@@ -138,8 +151,7 @@ const Promotions: React.FC<TProps> = ({
                   {t('До наступного рівня знижки').toUpperCase()}
                   {'  '}
                   <Text style={styles.title}>
-                    {discount?.next_discount}
-                    {/* <Text style={styles.titleDesc}> {t('літрів')}</Text> */}
+                    {literFormat(discount.next_discount)}
                     <Text style={styles.titleDesc}>
                       {' '}
                       {declOfNumLiters(discount?.next_discount)}
@@ -170,6 +182,7 @@ const Promotions: React.FC<TProps> = ({
 };
 const mapStateToProps = (state: TGlobalState) => ({
   discount: state.discount.data,
+  type: state.discount.type,
   loading: state.discount.loading,
   initialLoading: state.discount.initialLoading,
   language: state.appGlobalState.lang,

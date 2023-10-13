@@ -20,3 +20,7 @@ export const formatPriceName = (val: number) => {
     value,
   };
 };
+
+export const literFormat = (value: number) => {
+  return Number.isInteger(value) ? value : value.toFixed(1);
+};

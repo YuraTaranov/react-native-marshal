@@ -3,18 +3,35 @@ import {setLoader} from './appGlobalState';
 import {httpGet, httpPost, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
 import {DiscountService} from '@httpServices';
-import {EFuel, TDiscountResponse, TGlobalState} from '@types';
+import {
+  EFuel,
+  EFuelTitle,
+  TDiscountResponse,
+  TFuelData,
+  TGlobalState,
+} from '@types';
+import {ISetDiscount} from 'src/types/actions/discount';
 
 const GET_DISCOUNT = '[discount] GET_DISCOUNT';
 const SET_DISCOUNT = '[discount] SET_DISCOUNT';
+const SET_TYPE = '[discount] SET_TYPE';
 const SET_INITIAL_LOADING = '[discount] SET_INITIAL_LOADING';
 const SET_LOADING = '[discount] SET_LOADING';
 const RESET_DISCOUNT = '[discount] RESET_DISCOUNT';
 
+const FUEL_INITIAL_STATE = {
+  type: 0,
+  discount: 0,
+  next_discount: 0,
+  quantity: 0,
+  date: '',
+};
+
 const initialstate: TGlobalState['discount'] = {
-  loading: false,
+  loading: true,
   initialLoading: true,
-  data: null,
+  data: FUEL_INITIAL_STATE,
+  type: 1,
 };
 
 export default (state = initialstate, action: any) => {
@@ -25,6 +42,8 @@ export default (state = initialstate, action: any) => {
       return Object.assign({}, {...state, initialLoading: action.data});
     case SET_LOADING:
       return Object.assign({}, {...state, loading: action.data});
+    case SET_TYPE:
+      return Object.assign({}, {...state, type: action.data});
     case RESET_DISCOUNT:
       return initialstate;
     default:
@@ -33,7 +52,7 @@ export default (state = initialstate, action: any) => {
 };
 
 export const getDiscount = (data: number) => ({data, type: GET_DISCOUNT});
-// export const getDiscount = () => ({type: GET_DISCOUNT});
+export const setType = (data: number) => ({data, type: SET_TYPE});
 export const setDiscount = (data: any) => ({data, type: SET_DISCOUNT});
 export const setLoading = (data: any) => ({data, type: SET_LOADING});
 export const setInitialLoading = (data: any) => ({
@@ -55,6 +74,7 @@ export function* getDiscountAsync(action: any) {
 
     yield put(setDiscount(data.data));
   } catch (e) {
+    console.log(e);
     errorHandler(e, 'getDiscountAsync');
   } finally {
     yield put(setLoading(false));
