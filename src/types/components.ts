@@ -212,5 +212,20 @@ export type TSectionListItem = {
 export enum EFuel {
   PETROL = 1,
   DIESEL = 2,
-  GAS = 3
+  GAS = 3,
+}
+
+export type TFuelData = {
+  quantity: number;
+  type: number;
+  discount: number;
+  next_discount: number;
+  date: string;
+  title: string;
+};
+
+export enum EFuelTitle  {
+  PETROL = "petrol",
+  GAS = "gas",
+  DIESEL = "diesel"
 }

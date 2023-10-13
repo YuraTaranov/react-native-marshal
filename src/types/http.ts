@@ -1,4 +1,4 @@
-import {TPurchase, TPurchaseDetail} from '@types';
+import {TFuelData, TPurchase, TPurchaseDetail} from '@types';
 
 export type TGenerateOptions = {
   method: 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH';
@@ -30,9 +30,6 @@ export type TPurchaseDetailResponse = {
 
 export type TDiscountResponse = {
   data: {
-    quantity: number,
-    type: number,
-    discount: number,
-    next_discount: number
-  }
-}
+    data: TFuelData;
+  };
+};
