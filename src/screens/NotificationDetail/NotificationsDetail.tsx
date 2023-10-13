@@ -31,9 +31,7 @@ const NotificationsDetail: React.FC<TProps> = ({dispatch, notifications}) => {
 
   const formatDateAndTime = useMemo(() => {
     return {
-      date: moment(new Date(date), 'MM.YYYY')
-        .locale(language)
-        .format('DD MMMM'),
+      date: moment(date).format('DD MMMM'),
       time: moment(date).format('HH:mm'),
     };
   }, [date, language, t]);
