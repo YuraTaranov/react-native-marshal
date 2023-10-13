@@ -18,6 +18,7 @@ import 'moment/locale/uk';
 import 'moment/locale/ru';
 import moment from 'moment';
 import {setLoader} from '@reducers/appGlobalState';
+import {declOfNum, formatPriceName} from '@helpers';
 
 const gradientColors = [
   'rgba(220, 221, 222, 0.1)',
@@ -59,24 +60,17 @@ const Promotions: React.FC<TProps> = ({
 
   const discountData = useMemo(() => {
     if (discount) {
-      const data = discount.discount.toFixed(2);
-      const spitValue = data.split('.');
-      const value =
-        discount.discount < 1
-          ? spitValue[1]
-          : spitValue[1] === '00'
-          ? spitValue[0]
-          : `${spitValue[0]}.${spitValue[1]}`;
-      return {
-        title: discount.discount < 1 ? 'коп./л' : 'грн./л',
-        value,
-      };
+      return formatPriceName(discount.discount);
     }
   }, [discount]);
 
   const chooseType = useCallback((value: 1 | 2 | 3) => {
     dispatch(setLoader(true));
     setType(value);
+  }, []);
+
+  const declOfNumLiters = useCallback((val?: number) => {
+    return declOfNum(val ? val : 0, titles);
   }, []);
 
   return (
@@ -131,7 +125,10 @@ const Promotions: React.FC<TProps> = ({
               </Text>
               <Text style={styles.literSum}>
                 {discount?.quantity}{' '}
-                <Text style={styles.liter}>{t('Літрів').toUpperCase()}</Text>
+                {/* <Text style={styles.liter}>{t('Літрів').toUpperCase()}</Text> */}
+                <Text style={styles.liter}>
+                  {declOfNumLiters(discount?.quantity).toUpperCase()}
+                </Text>
               </Text>
             </View>
             <View style={styles.infoView}>
@@ -142,7 +139,11 @@ const Promotions: React.FC<TProps> = ({
                   {'  '}
                   <Text style={styles.title}>
                     {discount?.next_discount}
-                    <Text style={styles.titleDesc}> {t('літрів')}</Text>
+                    {/* <Text style={styles.titleDesc}> {t('літрів')}</Text> */}
+                    <Text style={styles.titleDesc}>
+                      {' '}
+                      {declOfNumLiters(discount?.next_discount)}
+                    </Text>
                   </Text>
                 </Text>
               </View>
