@@ -42,6 +42,8 @@ const Promotions: React.FC<TProps> = ({
 }) => {
   language === 'ru' ? moment.locale('ru') : moment.locale('uk');
   const {t} = useTranslation();
+  const titles = [t('літр'), t('літра'), t('літрів')];
+
   const [type, setType] = useState<1 | 2 | 3>(1);
   const {setOptions} = useNavigation();
 
