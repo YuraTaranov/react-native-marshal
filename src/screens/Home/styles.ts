@@ -1,9 +1,14 @@
 import {StyleSheet} from '@components';
-import {android, colors, width} from '@constants';
+import {android, colors, sizes, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
+  },
+  gradientBorder: {
+    marginTop: 16 + 32,
+    width: sizes.window_width - 32 * 2,
+    marginLeft: 32,
   },
   buttonsBlock: {
     marginTop: 48,

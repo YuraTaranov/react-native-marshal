@@ -1,10 +1,12 @@
-import { Dimensions } from "react-native";
+import {Dimensions} from 'react-native';
 
-const { width, height } = Dimensions.get('screen')
+const {width, height} = Dimensions.get('screen');
 
 export const sizes = {
   window_width: width,
   window_height: height,
+  cardWidth: width - 32,
+  cardHeight: (width - 32) * 0.63,
   rem: width > 375 ? 18 : 16,
   horizontalCoefficient: width / 375,
   verticalCoefficient: height / 812,

@@ -127,7 +127,7 @@ const PurchaseDetail: React.FC<TProps> = ({
   );
 
   const onPressCall = useCallback(() => {
-    Linking.openURL(`tel:+380508639862`);
+    Linking.openURL(`tel:+380800508555`);
   }, []);
 
   return (
@@ -158,7 +158,7 @@ const PurchaseDetail: React.FC<TProps> = ({
           onPress={onPressCall}>
           <Icon name="phone" color={colors.green_289E42} size={13} />
           <Text style={styles.footerContact}>
-            {t('Гаряча лінія')}: +38-050-863-98-62
+            {t('Гаряча лінія')}: +38-080-050-85-55
           </Text>
         </TouchableOpacity>
       </View>

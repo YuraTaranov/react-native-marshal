@@ -18,16 +18,13 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   fuelContainer: {
-    height: 50,
+    // height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomRightRadius: 12,
     borderBottomLeftRadius: 12,
-    width: width - 72,
   },
   fuelTypeContainer: {
-    borderRightWidth: 0.5,
-    borderColor: colors.red_C76B6B,
     flex: 1,
     height: '100%',
     justifyContent: 'center',
@@ -42,7 +39,7 @@ export default StyleSheet.create({
   fuelTitle: {
     color: colors.white_FFFFFF,
     textTransform: 'uppercase',
-    fontSize: 10,
+    fontSize: 14,
     marginBottom: 8,
   },
   fuelTypeValueContainer: {
@@ -60,13 +57,13 @@ export default StyleSheet.create({
   },
   fuelTypeValue: {
     color: colors.white_FFFFFF,
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: fonts.interBold_700,
     marginRight: 8,
   },
   fuelValue: {
     color: colors.white_FFFFFF,
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: fonts.interBold_700,
     textTransform: 'uppercase',
   },
@@ -100,8 +97,8 @@ export default StyleSheet.create({
 
   // new card
   card: {
-    width: width - 32,
-    height: 260,
+    width: sizes.cardWidth,
+    height: sizes.cardHeight,
     borderRadius: 15,
     alignItems: 'center',
     backgroundColor: colors.white_FFFFFF,
@@ -170,7 +167,7 @@ export default StyleSheet.create({
   },
   nameContainer: {
     justifyContent: 'flex-end',
-    paddingTop :16,
+    paddingTop: 16,
     marginBottom: 16,
   },
   name: {
@@ -180,8 +177,8 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
   },
   cardNumberContainer: {
-    flex: 1,
-    justifyContent :"center"
+    justifyContent: 'flex-end',
+    marginBottom: 16,
   },
   cardNunber: {
     color: colors.white_FFFFFF,

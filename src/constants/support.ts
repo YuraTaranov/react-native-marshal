@@ -1,1 +1,1 @@
-export const privacyPolicySupportPhone = '+380508639852';
+export const privacyPolicySupportPhone = '+380800508555';

@@ -1,27 +1,52 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-
-import {useCallback, useMemo, useNavigation, useState, useEffect} from '@hooks';
-import {View, ScrollView, RefreshControl, QuestionButton} from '@components';
+import {
+  useCallback,
+  useMemo,
+  useNavigation,
+  useState,
+  useEffect,
+  useTranslation,
+} from '@hooks';
+import {
+  View,
+  RefreshControl,
+  QuestionButton,
+  PromotionView,
+  ActivityIndicator,
+  Text,
+  FlatList,
+} from '@components';
 import {colors} from '@constants';
-import {navigate} from '@services';
-import {getProfile} from '@reducers/profile';
-
 import styles from './styles';
-import {BonusCard, BonusInfoBlock, InviteButton} from './components';
+
 //types
-import {TGlobalState, TProfile} from '@types';
+import {TGlobalState, TProfile, TPromotion} from '@types';
+import {getPromotion} from '@reducers/promotion';
+import {
+  getPromotions,
+  setLazyLoading,
+  setRefreshing,
+} from '@reducers/promotions';
 
 type TProps = {
   dispatch: Dispatch;
-  profile: TProfile;
+  promotions: TPromotion[];
+  refreshing: boolean;
+  lazyLoading: boolean;
+  endLoading: boolean;
 };
 
-const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
-  const [refreshing, setRefreshing] = useState(false);
-
-  const {count_bonus, count_spent_bonus} = profile;
+const Bonuses: React.FC<TProps> = ({
+  dispatch,
+  promotions,
+  refreshing,
+  lazyLoading,
+  endLoading,
+}) => {
+  const {t} = useTranslation();
+  const [page, setPage] = useState<number>(1);
   const {setOptions} = useNavigation();
 
   useEffect(() => {
@@ -30,65 +55,86 @@ const Bonuses: React.FC<TProps> = ({dispatch, profile}) => {
     });
   }, []);
 
-  // const onPressTerms = useCallback(() => {
-  //   navigate('BonusesStack', {
-  //     screen: 'LoyaltyTerms',
-  //   });
-  // }, []);
+  const onPressItem = useCallback(
+    id => () => {
+      dispatch(getPromotion(id));
+    },
+    [],
+  );
 
-  const onPressInviteFriends = useCallback(() => {
-    navigate('BonusesStack', {
-      screen: 'InviteFriends',
-    });
+  const onEndReached = useCallback(() => {
+    if (!lazyLoading && !endLoading) {
+      dispatch(setLazyLoading(true));
+      const newPage = page + 1;
+      setPage(newPage);
+      dispatch(getPromotions({page: newPage}));
+    }
+  }, [page, lazyLoading, endLoading]);
+
+  const onRefresh = useCallback(() => {
+    dispatch(setRefreshing(true));
+    setPage(1);
+    dispatch(getPromotions({page: 1}));
   }, []);
 
-  const refresh = useCallback(() => {
-    setRefreshing(true);
-    dispatch(getProfile());
-    setRefreshing(false);
-  }, []);
+  const renderItem: ({item}: {item: TPromotion}) => JSX.Element = useCallback(
+    ({item}) => <PromotionView item={item} onPress={onPressItem} />,
+    [],
+  );
 
-  const refreshControl = useMemo(() => {
+  const keyExtractor: (item: TPromotion) => string = useCallback(
+    item => String(item.id),
+    [],
+  );
+
+  const lazyLoader = useMemo(
+    () =>
+      lazyLoading ? (
+        <ActivityIndicator size={'large'} color={colors.green_27A74C} />
+      ) : null,
+    [lazyLoading],
+  );
+
+  const ListEmptyComponent = useCallback(() => {
     return (
-      <RefreshControl
-        onRefresh={refresh}
-        refreshing={refreshing}
-        colors={[colors.green_27A74C]}
-        tintColor={colors.green_27A74C}
-        size={24}
-      />
+      <View style={styles.emptyView}>
+        <Text style={styles.emptyTitle}>
+          {t(`Нові акції скоро з'являться!`)}
+        </Text>
+      </View>
     );
-  }, [refreshing]);
-
-  // const activeReferrals = useMemo(() => {
-  //   return profile?.count_referral
-  //     ? `${profile.count_referral} ${declension(profile.count_referral, [
-  //         t('особа'),
-  //         t('особи'),
-  //         t('осіб'),
-  //       ])}`
-  //     : '';
-  // }, [profile?.count_referral, t]);
+  }, [t]);
 
   return (
     <View style={styles.container}>
-      <BonusCard count_bonus={count_bonus} />
-      <ScrollView refreshControl={refreshControl}>
-        <BonusInfoBlock
-          count_bonus={count_bonus}
-          count_spent_bonus={count_spent_bonus}
-        />
-        <InviteButton onPressHandler={onPressInviteFriends} />
-        {/* <TouchableOpacity style={styles.termsContainer} onPress={onPressTerms}>
-          <Text style={styles.termsTitle}>{t('Умови програми')}</Text>
-          <Icon size={24} name="right" />
-        </TouchableOpacity> */}
-      </ScrollView>
+      <FlatList
+        data={promotions}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        refreshControl={
+          <RefreshControl
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            colors={[colors.red_D61920]}
+            tintColor={colors.red_D61920}
+            size={24}
+          />
+        }
+        contentContainerStyle={!promotions.length && {height: '100%'}}
+        initialNumToRender={5}
+        onEndReachedThreshold={0.2}
+        onEndReached={onEndReached}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={lazyLoader}
+      />
     </View>
   );
 };
 const mapStateToProps = (state: TGlobalState) => ({
-  profile: state.profile.data,
+  promotions: state.promotions.data,
+  refreshing: state.promotions.refreshing,
+  lazyLoading: state.promotions.lazyLoading,
+  endLoading: state.promotions.endLoading,
 });
 
 export default connect(mapStateToProps)(Bonuses);

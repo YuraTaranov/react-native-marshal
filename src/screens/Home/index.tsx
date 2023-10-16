@@ -9,11 +9,8 @@ import {
 } from '@hooks';
 import {
   View,
-  Text,
-  TouchableOpacity,
   QuestionButton,
   BonusCardModal,
-  Icon,
   NotificationsManager,
   ReactNativeBiometrics,
   DeviceInfo,
@@ -170,8 +167,8 @@ const Home: React.FC<TProps> = ({
         onRefresh={refreshPromotions}
         refreshing={refreshing}
         progressViewOffset={-30}
-        colors={[colors.green_27A74C]}
-        tintColor={colors.green_27A74C}
+        colors={[colors.red_D61920]}
+        tintColor={colors.red_D61920}
         size={24}
       />
     );
@@ -185,8 +182,9 @@ const Home: React.FC<TProps> = ({
         isVisible={fuelModalVisible}
         closeModal={closeFuelModal}
       />
+      <GradientBorder colors={gradientColors} style={styles.gradientBorder} />
       <ScrollView refreshControl={refreshControl}>
-        <View style={styles.buttonsBlock}>
+        {/* <View style={styles.buttonsBlock}>
           <GradientBorder colors={gradientColors} />
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
@@ -207,7 +205,7 @@ const Home: React.FC<TProps> = ({
             </TouchableOpacity>
           </View>
           <GradientBorder colors={gradientColors} />
-        </View>
+        </View> */}
         {promotions ? <HomeCarousel promotions={promotions} /> : null}
       </ScrollView>
       <BonusCardModal

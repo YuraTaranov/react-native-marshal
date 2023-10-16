@@ -1,10 +1,10 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {httpGet, errorHandler, httpDel} from '@services';
 import {urls} from '@constants';
 import {logout} from './logout';
 import {setFaceIdActiveLocal} from './biometrics';
 import {ReactNativeBiometrics} from '@components';
-import {setLoader} from './appGlobalState';
+import {setLoader, setType} from './appGlobalState';
 import {resetNotifications} from './notifications';
 import {capitalizeUserPersonalData} from '@helpers';
 
@@ -39,7 +39,13 @@ export function* watchProfile() {
 }
 
 export function* getProfileAsync() {
+  const {fuelType} = yield select(state => state.appGlobalState);
+  if (!fuelType) {
+    yield put(setType(1));
+  }
+
   yield put(setLoader(false));
+
   try {
     const {data} = yield call(() => httpGet(urls.getProfile));
     if (data.data) {

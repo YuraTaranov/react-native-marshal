@@ -19,11 +19,12 @@ import {
   QRCode,
   Image,
   GradientBorder,
+  VerticalGradientBorder,
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {TProfile, TGlobalState, TFuelData} from '@types';
-import {colors, fuel, hitSlop} from '@constants';
+import {colors, fuel, hitSlop, sizes} from '@constants';
 import {ActivityIndicator, Animated, ImageBackground} from 'react-native';
 import {assets} from '@assets';
 import {Dispatch} from 'redux';
@@ -151,53 +152,49 @@ const FuelBalance: React.FC<TProps> = ({
               resizeMode="cover"
             />
           </TouchableOpacity>
-          <GradientBorder style={styles.gradientBorder} />
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>{userCardName}</Text>
-          </View>
-          <GradientBorder style={styles.gradientBorder} />
-          <View style={styles.fuelContainer}>
-            <TouchableOpacity
-              style={styles.fuelTypeContainer}
-              disabled={flipped}
-              onPress={openModal}>
-              <View>
-                <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
-                <View style={styles.fuelTypeValueContainer}>
-                  <Text style={styles.fuelTypeValue}>{`${t(
-                    activeDiscount.title,
-                  )}`}</Text>
-                  <Icon
-                    name="arrow-down"
-                    size={16}
-                    color={colors.white_FFFFFF}
-                  />
+          <View style={{flex: 1}}>
+            <GradientBorder style={styles.gradientBorder} />
+            <View style={styles.fuelContainer}>
+              <TouchableOpacity
+                style={styles.fuelTypeContainer}
+                disabled={flipped}
+                onPress={openModal}>
+                <View>
+                  <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
+                  <View style={styles.fuelTypeValueContainer}>
+                    <Text style={styles.fuelTypeValue}>{`${t(
+                      activeDiscount.title,
+                    )}`}</Text>
+                    <Icon
+                      name="arrow-down"
+                      size={16}
+                      color={colors.white_FFFFFF}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <VerticalGradientBorder />
+              <View style={styles.fuelValueContainer}>
+                <View>
+                  <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
+                  <Text style={styles.fuelValue}>
+                    {discount.loading ? (
+                      <ActivityIndicator size={'small'} />
+                    ) : (
+                      <>
+                        {`${discountData?.value}`}
+                        <Text
+                          style={[
+                            styles.fuelValue,
+                            styles.fuelValueRegular,
+                          ]}>{` ${discountData?.title}`}</Text>
+                      </>
+                    )}
+                  </Text>
                 </View>
               </View>
-            </TouchableOpacity>
-            <View style={styles.fuelValueContainer}>
-              <View>
-                <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
-                <Text style={styles.fuelValue}>
-                  {discount.loading ? (
-                    <ActivityIndicator size={'small'} />
-                  ) : (
-                    <>
-                      {`${discountData?.value}`}
-                      <Text
-                        style={[
-                          styles.fuelValue,
-                          styles.fuelValueRegular,
-                        ]}>{` ${discountData?.title}`}</Text>
-                    </>
-                  )}
-                </Text>
-              </View>
             </View>
-          </View>
-          <GradientBorder style={styles.gradientBorder} />
-          <View style={styles.cardNumberContainer}>
-            <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+            <GradientBorder style={styles.gradientBorder} />
           </View>
         </ImageBackground>
       </Animated.View>
@@ -227,7 +224,7 @@ const FuelBalance: React.FC<TProps> = ({
             </Text>
             <View style={styles.qrCodeContainer}>
               <QRCode
-                size={120}
+                size={sizes.cardHeight / 2}
                 value={`${profile?.card || ''}`}
                 backgroundColor="transparent"
               />

@@ -3,7 +3,7 @@ import {colors} from '@constants';
 
 export default StyleSheet.create({
   container: {
-    marginTop: 48,
+    marginTop: 32,
   },
   dotsContainer: {
     paddingTop: 16,

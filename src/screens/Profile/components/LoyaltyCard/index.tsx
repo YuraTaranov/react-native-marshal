@@ -9,6 +9,7 @@ import styles from './styles';
 
 //types
 import {TProfile} from '@types';
+import {sizes} from '@constants';
 
 type TProps = {
   profile: TProfile;
@@ -120,7 +121,7 @@ const LoyaltyCard: React.FC<TProps> = ({profile}) => {
             </Text>
             <View style={styles.qrCodeContainer}>
               <QRCode
-                size={120}
+                size={sizes.cardHeight / 2}
                 value={`${profile?.card}`}
                 backgroundColor="transparent"
               />

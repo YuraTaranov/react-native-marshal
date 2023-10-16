@@ -68,8 +68,6 @@ export function* getDiscountAsync(action: any) {
       DiscountService.getDiscount(action.data),
     );
 
-    console.log(data);
-
     yield put(setDiscount(data.data));
   } catch (e) {
     console.log(e);

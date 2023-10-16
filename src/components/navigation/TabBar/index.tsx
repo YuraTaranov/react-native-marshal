@@ -50,7 +50,7 @@ const TabBar: React.FC<TProps> = ({navigation, state, notifications}) => {
       />
       <TabItem
         isActive={generalIndex === 3}
-        title={'Бонуси'}
+        title={'Акції'}
         onPressHandler={jump('Bonuses')}
         iconName={generalIndex === 3 ? 'gift-3' : 'gift-2'}
       />

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {colors, fonts, width} from '@constants';
+import {colors, fonts, sizes, width} from '@constants';
 
 export default StyleSheet.create({
   container: {
@@ -16,8 +16,8 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   card: {
-    width: width - 32,
-    height: 230,
+    width: sizes.cardWidth,
+    height: sizes.cardHeight,
     borderRadius: 15,
     alignItems: 'center',
     backgroundColor: colors.white_FFFFFF,
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     height: 80,
     position: 'absolute',
     alignItems: 'center',
-    paddingTop: 35,
+    paddingTop: 30,
     top: 0,
   },
   logo: {
