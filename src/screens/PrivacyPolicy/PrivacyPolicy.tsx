@@ -10,7 +10,7 @@ type TProps = {};
 
 const PrivacyPolicy: React.FC<TProps> = () => {
   const onPressCall = useCallback(() => {
-    Linking.openURL(`tel:+380800508555`);
+    Linking.openURL(`tel:0800508555`);
   }, []);
 
   return (

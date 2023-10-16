@@ -24,7 +24,7 @@ const swipeDirection:
   | Direction[]
   | undefined = ['down', 'up'];
 
-const tel = '+38 (080) 050 85 55';
+const tel = '0 800 508 555';
 const viberNumberIOS = '%+380508639852';
 const viberNumberAndroid = '380508639852';
 const telegramUrl = 'tg://resolve?domain=Marshal_azs';
