@@ -8,7 +8,7 @@ import {
   useNavigation,
 } from '@hooks';
 import {FondyService, weblog} from '@httpServices';
-import {WebView} from 'react-native-webview';
+// import {WebView} from 'react-native-webview';
 
 import styles from './styles';
 import {Alert, HeaderButton, KeyboardAvoidingView} from '@components';
@@ -150,7 +150,7 @@ const PayForm: React.FC<TProps> = ({}) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
-      <WebView
+      {/* <WebView
         useWebKit
         sharedCookiesEnabled
         injectedJavaScript={INJECTED_JAVASCRIPT}
@@ -164,7 +164,7 @@ const PayForm: React.FC<TProps> = ({}) => {
         thirdPartyCookiesEnabled
         onMessage={parserOnMessage}
         onLoadStart={onLoadStart}
-      />
+      /> */}
       <ShowLoading isShowLoading={isShowLoading} />
     </KeyboardAvoidingView>
   );
