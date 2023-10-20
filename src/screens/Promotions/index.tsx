@@ -82,7 +82,7 @@ const Promotions: React.FC<TProps> = ({
 
   const declOfNumLiters = useCallback(
     (val?: number) => {
-      return declOfNum(val ? val : 0, titles);
+      return declOfNum(val ? Math.floor(val) : 0, titles);
     },
     [language],
   );
@@ -149,7 +149,7 @@ const Promotions: React.FC<TProps> = ({
               <Text style={styles.literSum}>
                 {literFormat(discount.quantity)}{' '}
                 <Text style={styles.liter}>
-                  {declOfNumLiters(discount?.quantity).toUpperCase()}
+                  {declOfNumLiters(discount.quantity).toUpperCase()}
                 </Text>
               </Text>
             </View>
