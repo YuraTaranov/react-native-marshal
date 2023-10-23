@@ -223,6 +223,11 @@ export enum EFuel {
   GAS = 3,
 }
 
+export type TCard = {
+  card_number: string;
+  qr: string;
+};
+
 export type TFuelData = {
   quantity: number;
   type: number;
@@ -230,6 +235,7 @@ export type TFuelData = {
   next_discount: number;
   date: string;
   title: string;
+  card: TCard;
 };
 
 export enum EFuelTitle {

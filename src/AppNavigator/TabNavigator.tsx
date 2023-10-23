@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {AppState} from 'react-native';
 import {connect} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabBar, Wrapper} from '@components';
@@ -9,14 +10,38 @@ import Promotions from './tabNavigatorStacks/Promotions';
 import Stations from './tabNavigatorStacks/Stations';
 import Bonuses from './tabNavigatorStacks/Bonuses';
 import Profile from './tabNavigatorStacks/Profile';
+import {Dispatch} from 'redux';
+import {getCards} from '@reducers/cards';
 
 const TabStack = createBottomTabNavigator();
 
 type TProps = {
+  dispatch: Dispatch;
   showFilterPage?: boolean;
 };
 
-const TabNavigator: React.FC<TProps> = ({}) => {
+const TabNavigator: React.FC<TProps> = ({dispatch}) => {
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        dispatch(getCards());
+      } else if (
+        appState.current === 'active' &&
+        nextAppState.match(/inactive|background/)
+      ) {
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      AppState.removeEventListener('change', () => {});
+    };
+  }, []);
   const renderTab = useCallback((props: any) => <TabBar {...props} />, []);
 
   return (

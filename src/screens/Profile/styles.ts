@@ -11,6 +11,7 @@ export default StyleSheet.create({
   gradientBorder: {
     width: sizes.window_width - 32 * 2,
     marginLeft: 16,
+    marginTop: 16 + 32,
     marginBottom: 5,
   },
   menuItemsContainer: {

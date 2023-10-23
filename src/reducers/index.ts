@@ -25,5 +25,6 @@ export default combineReducers({
   network: require('./network').default,
   purchaseDetail: require('./purchaseDetail').default,
   discount: require('./discount').default,
+  cards: require('./cards').default,
   // ADD NEW REDUCER
 });

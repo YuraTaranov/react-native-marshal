@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Marshal/Info.plist;
@@ -606,7 +606,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.92;
+				MARKETING_VERSION = 1.93;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -632,14 +632,14 @@
 				CODE_SIGN_ENTITLEMENTS = Marshal/Marshal.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = 2KDVG5YPDC;
 				INFOPLIST_FILE = Marshal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.92;
+				MARKETING_VERSION = 1.93;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

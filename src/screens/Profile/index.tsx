@@ -23,10 +23,11 @@ import {navigate} from '@services';
 import {getCars} from '@reducers/cars';
 
 import styles from './styles';
-import {LoyaltyCard, ProfileMenuItem} from './components';
+import {ProfileMenuItem} from './components';
 
 //types
 import {TGlobalState, TProfile, TNotification} from '@types';
+import FuelBalance from '../Home/components/FuelBalance/FuelBalance';
 
 type TProps = {
   notifications: TNotification[];
@@ -133,7 +134,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.container}>
-      {profile?.card ? <LoyaltyCard profile={profile} /> : null}
+      {profile?.card ? <FuelBalance screenType="profile" /> : null}
       <View style={styles.leftIndent}>
         <GradientBorder colors={gradients.gray} style={styles.gradientBorder} />
         <View style={styles.menuItemsContainer}>

@@ -18,6 +18,7 @@ const persistConfig = {
     'biometrics',
     'creditCards',
     'petrolStations',
+    'profile',
     'referral',
     'notifications',
   ], // ADD WHITE LIST IF YOU NEED

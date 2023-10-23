@@ -25,7 +25,7 @@ import {colors, urls} from '@constants';
 import {httpPost, navigate} from '@services';
 import {getPromotions} from '@reducers/promotions';
 import {getPetrolStations} from '@reducers/petrolStations';
-import {getProfile} from '@reducers/profile';
+import {getInitialData, getProfile} from '@reducers/profile';
 import {getSettings} from '@reducers/settings';
 import {getReferralLink} from '@reducers/referral';
 import {getPurchases} from '@reducers/purchases';
@@ -74,16 +74,10 @@ const Home: React.FC<TProps> = ({
     });
     dispatch(getProfile());
     dispatch(getReferralLink());
-    // dispatch(getPurchases(1));
   }, []);
 
   useEffect(() => {
-    dispatch(getPetrolStations());
-    dispatch(getSettings());
-    dispatch(getPromotionsMain());
-    dispatch(getFuel());
-    dispatch(getPromotions({page: 1}));
-    // dispatch(getCreditCards()); // TODO: buy fuel
+    dispatch(getInitialData('initial'));
   }, [lang]);
 
   useEffect(() => {
@@ -177,7 +171,7 @@ const Home: React.FC<TProps> = ({
   return (
     <View style={styles.container}>
       <NotificationsManager />
-      <FuelBalance />
+      <FuelBalance screenType="home" />
       <BuyFuelInProgress
         isVisible={fuelModalVisible}
         closeModal={closeFuelModal}

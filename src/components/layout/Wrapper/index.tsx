@@ -1,14 +1,11 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { View, Support, StatusBar } from '@components';
-import { TGlobalState } from '@types';
+import React, {Fragment, useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {View, Support, StatusBar} from '@components';
+import {TGlobalState} from '@types';
 import styles from './styles';
-import { colors } from '@constants';
-// import { useHeaderHeight } from '@react-navigation';
+import {colors} from '@constants';
 
-const Wrapper: React.FC<TProps> = ({ children }) => {
-  // const headerHeight = useHeaderHeight();
-
+const Wrapper: React.FC<TProps> = ({children}) => {
   return (
     <Fragment>
       <StatusBar backgroundColor={colors.white_FFFFFF} animated={true} />

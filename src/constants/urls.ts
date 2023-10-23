@@ -27,4 +27,5 @@ export const urls = {
   getPurchases: 'profile/get-purchase-history',
   getFuel: 'azs/fuels',
   paymentСards: 'fondy/credit-card',
+  getQRCode: 'profile/qr',
 };

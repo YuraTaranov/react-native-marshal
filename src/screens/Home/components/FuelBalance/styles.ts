@@ -8,17 +8,11 @@ export default StyleSheet.create({
     padding: 16,
   },
   contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.green_46C16B,
-    height: 60,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    borderColor: colors.green_27A74C,
-    borderBottomWidth: 1,
   },
   fuelContainer: {
-    // height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomRightRadius: 12,
@@ -160,15 +154,15 @@ export default StyleSheet.create({
     color: colors.black_343434,
   },
   qrCodeContainer: {
-    height: 120,
-    width: 120,
-    alignSelf: 'center',
+    width: sizes.cardHeight / 2,
+    height: sizes.cardHeight / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 12,
   },
   nameContainer: {
-    justifyContent: 'flex-end',
-    paddingTop: 16,
-    marginBottom: 16,
+    justifyContent: 'center',
+    flex: 1,
   },
   name: {
     color: colors.white_FFFFFF,
@@ -188,5 +182,18 @@ export default StyleSheet.create({
   },
   gradientBorder: {
     width: sizes.window_width - 64,
+  },
+  loaderView: {
+    position: 'absolute',
+    width: sizes.cardHeight / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+    height: sizes.cardHeight / 2,
+  },
+  blurView: {
+    position: 'absolute',
+    width: sizes.cardHeight / 2,
+    height: sizes.cardHeight / 2,
   },
 });

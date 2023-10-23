@@ -11,6 +11,7 @@ import {
   TGlobalState,
 } from '@types';
 import {ISetDiscount} from 'src/types/actions/discount';
+import {setCards} from './cards';
 
 const GET_DISCOUNT = '[discount] GET_DISCOUNT';
 const SET_DISCOUNT = '[discount] SET_DISCOUNT';
@@ -67,7 +68,7 @@ export function* getDiscountAsync(action: any) {
     const {data}: TDiscountResponse = yield call(() =>
       DiscountService.getDiscount(action.data),
     );
-
+    yield put(setCards(data.data.card));
     yield put(setDiscount(data.data));
   } catch (e) {
     console.log(e);

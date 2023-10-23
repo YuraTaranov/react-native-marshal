@@ -18,12 +18,18 @@ import {
   TDiscount,
   TFuelData,
   EFuelTitle,
+  TCard,
 } from './components';
 import {TRoute} from './geocode';
 
 export type TGlobalState = {
+  cards: {
+    loading: boolean;
+    data: TCard[];
+  };
   appGlobalState: {
     onBoarding: boolean;
+
     lang: TLang;
     accessToken: string;
     loader: boolean;

@@ -4,7 +4,7 @@ import {colors, fonts, sizes} from '@constants';
 const STEP = sizes.window_width / 10;
 
 const IMAGE_WIDTH = STEP * 5.5;
-const IMAGE_HEIGHT = STEP * 4.6;
+// const IMAGE_HEIGHT = STEP * 4.6;
 const TITLE_WIDTH = STEP * 8;
 const DESCRIPTION_WIDTH = STEP * 7;
 
@@ -37,13 +37,17 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   noInternetImage: {
-    height: IMAGE_HEIGHT,
-    width: IMAGE_WIDTH,
+    height: sizes.window_width / 3,
+    width: sizes.window_width,
+  },
+  qrCodeContainer: {
+    width: sizes.window_width,
+    alignItems: 'center',
   },
   noInternetImageContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   noInternetDescription: {
     textAlign: 'center',

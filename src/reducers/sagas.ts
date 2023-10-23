@@ -1,7 +1,7 @@
 import {all} from 'redux-saga/effects';
 // ADD IMPORT
-import { watchDiscount } from './discount'
-import { watchPurchaseDetail } from './purchaseDetail'
+import {watchDiscount} from './discount';
+import {watchPurchaseDetail} from './purchaseDetail';
 // import {watchPaymentСards} from './paymentСards';
 import {watchFuel} from './fuel';
 import {watchFuelCalculator} from './fuelCalculator';
@@ -20,12 +20,13 @@ import {watchPromotions} from './promotions';
 import {watchPromotion} from './promotion';
 import {watchPurchases} from './purchases';
 import {watchCreditCards} from './creditCards';
+import {watchCards} from './cards';
 
 export default function* rootSaga() {
   yield all([
     // ADD WATCHER
-		watchDiscount(),
-		watchPurchaseDetail(),
+    watchDiscount(),
+    watchPurchaseDetail(),
     watchFuel(),
     watchFuelCalculator(),
     watchPromotionsMain(),
@@ -43,5 +44,6 @@ export default function* rootSaga() {
     watchPromotions(),
     watchPurchases(),
     watchCreditCards(),
+    watchCards(),
   ]);
 }

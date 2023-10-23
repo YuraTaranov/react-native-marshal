@@ -1,13 +1,13 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
 import {httpGet, errorHandler} from '@services';
 import {urls} from '@constants';
-import { TGlobalState } from '@types';
+import {TGlobalState} from '@types';
 
 const GET_FUEL = '[fuel] GET_FUEL';
 const SET_FUEL = '[fuel] SET_FUEL';
 const RESET_FUEL = '[fuel] RESET_FUEL';
 
-const initialstate:TGlobalState["fuel"] = {
+const initialstate: TGlobalState['fuel'] = {
   data: [],
 };
 

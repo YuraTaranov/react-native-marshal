@@ -31,6 +31,8 @@ import {Dispatch} from 'redux';
 import {getDiscount} from '@reducers/discount';
 import {formatPriceName} from '@helpers';
 import {setType} from '@reducers/appGlobalState';
+import {getCards} from '@reducers/cards';
+import {BlurView} from '@react-native-community/blur';
 
 type TRadioButtonCBParams = {
   type: number;
@@ -39,12 +41,16 @@ type TRadioButtonCBParams = {
 
 type TProps = {
   dispatch: Dispatch;
+  screenType: 'home' | 'profile';
   profile: TProfile;
+  cards: TGlobalState['cards'];
   fuelType: number;
   discount: TGlobalState['discount'];
 };
 
 const FuelBalance: React.FC<TProps> = ({
+  screenType,
+  cards,
   profile,
   discount,
   fuelType,
@@ -52,12 +58,20 @@ const FuelBalance: React.FC<TProps> = ({
 }) => {
   const {t} = useTranslation();
   const {name, surname} = profile;
+
+  const qrCode = cards.data && cards.data.length ? cards?.data[0]?.qr : null;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [flipped, setFlipped] = useState(false);
   const isFocused = useIsFocused();
   const animationValue = useState(new Animated.Value(0))[0];
   const [activeDiscount, setActiveDiscount] = useState(() => fuel[0]);
   const previousType = usePrevious(discount.data.type);
+
+  useEffect(() => {
+    if (!!flipped) {
+      dispatch(getCards());
+    }
+  }, [flipped]);
 
   const userCardName = useMemo(
     () => `${name ?? ''} ${surname ?? surname}`,
@@ -70,7 +84,7 @@ const FuelBalance: React.FC<TProps> = ({
   }, [fuelType]);
 
   useEffect(() => {
-    if (isFocused && fuelType !== previousType) {
+    if (isFocused && fuelType !== previousType && screenType == 'home') {
       dispatch(getDiscount(fuelType));
     }
   }, [fuelType, isFocused]);
@@ -152,53 +166,64 @@ const FuelBalance: React.FC<TProps> = ({
               resizeMode="cover"
             />
           </TouchableOpacity>
-          <View style={{flex: 1}}>
-            <GradientBorder style={styles.gradientBorder} />
-            <View style={styles.fuelContainer}>
-              <TouchableOpacity
-                style={styles.fuelTypeContainer}
-                disabled={flipped}
-                onPress={openModal}>
-                <View>
-                  <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
-                  <View style={styles.fuelTypeValueContainer}>
-                    <Text style={styles.fuelTypeValue}>{`${t(
-                      activeDiscount.title,
-                    )}`}</Text>
-                    <Icon
-                      name="arrow-down"
-                      size={16}
-                      color={colors.white_FFFFFF}
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-              <VerticalGradientBorder />
-              <View style={styles.fuelValueContainer}>
-                <View>
-                  <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
-                  <Text style={styles.fuelValue}>
-                    {discount.loading ? (
-                      <ActivityIndicator
-                        size={'small'}
+          {screenType === 'home' ? (
+            <View style={{flex: 1}}>
+              <GradientBorder style={styles.gradientBorder} />
+              <View style={styles.fuelContainer}>
+                <TouchableOpacity
+                  style={styles.fuelTypeContainer}
+                  disabled={flipped}
+                  onPress={openModal}>
+                  <View>
+                    <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
+                    <View style={styles.fuelTypeValueContainer}>
+                      <Text style={styles.fuelTypeValue}>{`${t(
+                        activeDiscount.title,
+                      )}`}</Text>
+                      <Icon
+                        name="arrow-down"
+                        size={16}
                         color={colors.white_FFFFFF}
                       />
-                    ) : (
-                      <>
-                        {`${discountData?.value}`}
-                        <Text
-                          style={[
-                            styles.fuelValue,
-                            styles.fuelValueRegular,
-                          ]}>{` ${discountData?.title}`}</Text>
-                      </>
-                    )}
-                  </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <VerticalGradientBorder />
+                <View style={styles.fuelValueContainer}>
+                  <View>
+                    <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
+                    <Text style={styles.fuelValue}>
+                      {discount.loading ? (
+                        <ActivityIndicator
+                          size={'small'}
+                          color={colors.white_FFFFFF}
+                        />
+                      ) : (
+                        <>
+                          {`${discountData?.value}`}
+                          <Text
+                            style={[
+                              styles.fuelValue,
+                              styles.fuelValueRegular,
+                            ]}>{` ${discountData?.title}`}</Text>
+                        </>
+                      )}
+                    </Text>
+                  </View>
                 </View>
               </View>
+              <GradientBorder style={styles.gradientBorder} />
             </View>
-            <GradientBorder style={styles.gradientBorder} />
-          </View>
+          ) : (
+            <View style={styles.contentContainer}>
+              <View style={styles.nameContainer}>
+                <Text style={styles.name}>{userCardName}</Text>
+              </View>
+              <View style={styles.cardNumberContainer}>
+                <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+              </View>
+            </View>
+          )}
         </ImageBackground>
       </Animated.View>
     </View>
@@ -226,11 +251,26 @@ const FuelBalance: React.FC<TProps> = ({
               {cardNumber}
             </Text>
             <View style={styles.qrCodeContainer}>
-              <QRCode
-                size={sizes.cardHeight / 2}
-                value={`${profile?.card || ''}`}
-                backgroundColor="transparent"
-              />
+              <>
+                <QRCode
+                  size={sizes.cardHeight / 2}
+                  value={`${qrCode || profile?.card || ''}`}
+                  backgroundColor="transparent"
+                />
+                {!cards.loading ? null : (
+                  <>
+                    <View style={styles.loaderView}>
+                      <ActivityIndicator size={'large'} color={'black'} />
+                    </View>
+                    <BlurView
+                      style={styles.blurView}
+                      blurType="light"
+                      blurAmount={3}
+                      reducedTransparencyFallbackColor="white"
+                    />
+                  </>
+                )}
+              </>
             </View>
           </>
         ) : null}
@@ -311,6 +351,7 @@ const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
   discount: state.discount,
   fuelType: state.appGlobalState.fuelType,
+  cards: state.cards,
 });
 
 export default connect(mapStateToProps)(FuelBalance);
