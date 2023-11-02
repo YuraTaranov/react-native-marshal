@@ -92,7 +92,10 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
   }
   return (
     [
-      ...ArrayMarkers.map((m: TFullMarker): TMarker => {
+      ...ArrayMarkers.map((m: TFullMarker, index: number): TMarker => {
+        if (index === 0) {
+          console.log(m);
+        }
         return {
           id: +m.id,
           name: `${m.name}`,
@@ -282,15 +285,15 @@ const MapScreen: React.FC<TProps> = ({
   }, [isFocused]);
 
   useEffect(() => {
-    setAllMarkers(
-      formatMarkerData(
+    setAllMarkers([
+      ...formatMarkerData(
         getFilteredPetrolStationList({
           filters,
           stations: markers,
           textOfSearch,
         }),
       ),
-    );
+    ]);
   }, [filters, markers, textOfSearch]);
 
   const renderCluster = useCallback(cluster => {
@@ -325,7 +328,7 @@ const MapScreen: React.FC<TProps> = ({
         }}
       />
     ));
-  }, [selectedMarker, openMarker]);
+  }, [selectedMarker, openMarker, AllMarkers]);
 
   return (
     <View style={styles.container}>

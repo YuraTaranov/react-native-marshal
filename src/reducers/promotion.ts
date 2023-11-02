@@ -2,7 +2,7 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {setLoader} from './appGlobalState';
 import {httpGet, navigate, errorHandler} from '@services';
 import {urls} from '@constants';
-import { Alert } from '@components';
+import {Alert} from '@components';
 import i18next from 'i18next';
 
 const GET_PROMOTION = '[promotion] GET_PROMOTION';
@@ -22,7 +22,10 @@ export default (state = initialstate, action: any) => {
   }
 };
 
-export const getPromotion = (data: number) => ({data, type: GET_PROMOTION});
+export const getPromotion = (data: {id: number; item?: any}) => ({
+  data,
+  type: GET_PROMOTION,
+});
 export const setPromotion = (data: any) => ({data, type: SET_PROMOTION});
 export const resetPromotion = () => ({type: RESET_PROMOTION});
 
@@ -36,21 +39,29 @@ export function* getPromotionAsync(action: any) {
   const locale = lang === 'uk' ? 'ua' : lang;
   try {
     const body = yield call(() =>
-      httpGet(`${urls.getPromotions}/${action.data}/?locale=${locale}`),
+      httpGet(`${urls.getPromotions}/${action.data.id}/?locale=${locale}`),
     );
     yield put(setLoader(false));
     if (body.data.data) {
       yield put(setPromotion(body.data.data));
       navigate('PromotionsStack', {
-		  screen: 'Promotion'
-	  });
+        screen: 'Promotion',
+        params: action.data.item,
+      });
     }
   } catch (e: any) {
-	  if (e && e?.data && e?.data?.message?.startsWith('No query results for model')) {
-		return Alert.alert('', i18next.t('Эта акция устарела или временно недоступна'))
-	  } else {
-		errorHandler(e, 'getPromotionAsync');
-	  }
+    if (
+      e &&
+      e?.data &&
+      e?.data?.message?.startsWith('No query results for model')
+    ) {
+      return Alert.alert(
+        '',
+        i18next.t('Эта акция устарела или временно недоступна'),
+      );
+    } else {
+      errorHandler(e, 'getPromotionAsync');
+    }
   } finally {
     yield put(setLoader(false));
   }

@@ -25,7 +25,7 @@ const NotificationsManager: React.FC<TProps> = ({
   notifications,
   isUserAuthorized,
 }) => {
-  const {navigate} = useNavigation();
+  const {navigate, reset} = useNavigation();
 
   useEffect(() => {
     isUserAuthorized && checkPermission();
@@ -51,7 +51,10 @@ const NotificationsManager: React.FC<TProps> = ({
               });
               dispatch(
                 setNotifications(
-                  [item,...modifiedNotifications, ...notifications].slice(0, 40),
+                  [item, ...modifiedNotifications, ...notifications].slice(
+                    0,
+                    40,
+                  ),
                 ),
               );
             }
@@ -62,13 +65,13 @@ const NotificationsManager: React.FC<TProps> = ({
           item.type === 'discount' ||
           item.type === 'new'
         ) {
-          dispatch(getPromotion(item.data_id));
+          dispatch(getPromotion({id: item.data_id, item}));
+        } else {
+          navigate('ProfileStack', {
+            screen: 'NotificationsDetail',
+            params: {...item},
+          });
         }
-        
-        navigate('ProfileStack', {
-          screen: 'NotificationsDetail',
-          params: {...item},
-        });
         return null;
       },
       [notifications, navigate],
@@ -79,6 +82,9 @@ const NotificationsManager: React.FC<TProps> = ({
       .messaging()
       .onMessage(async (remoteMessage: any) => {
         __DEV__ && console.log('Foreground push data', remoteMessage.data);
+
+        console.log(remoteMessage);
+
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: false,
@@ -107,7 +113,7 @@ const NotificationsManager: React.FC<TProps> = ({
             [modifiedNotification, ...notifications].slice(0, 40),
           ),
         );
-  
+        console.log('handleNotification 1', modifiedNotification);
         handleNotification(modifiedNotification, remoteMessage.badge);
       },
     );

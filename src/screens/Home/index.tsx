@@ -52,8 +52,6 @@ const gradientColors = [
   'rgba(220, 221, 222, 0.1)',
 ];
 
-const device_id = DeviceInfo.getUniqueId();
-
 const Home: React.FC<TProps> = ({
   dispatch,
   promotions,
@@ -99,6 +97,7 @@ const Home: React.FC<TProps> = ({
   const createKeys = useCallback(async () => {
     try {
       const res = await ReactNativeBiometrics.createKeys();
+      const device_id = await DeviceInfo.getUniqueId();
       const body = await httpPost(urls.biometricsAdd, {
         public_key: res.publicKey,
         device_id,

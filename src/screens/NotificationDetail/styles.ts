@@ -25,6 +25,15 @@ export default StyleSheet.create({
     color: colors.gray_2D2D2D,
     marginBottom: 24,
   },
+  description: {
+    marginTop: 8,
+    color: colors.gray_2D2D2D,
+    fontSize: 16,
+  },
+  date: {
+    marginTop: 24,
+    color: colors.gray_6D6F79,
+  },
   buttonContainer: {
     flex: 1,
     justifyContent: 'flex-end',

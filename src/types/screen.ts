@@ -29,6 +29,7 @@ export type HomeStackParamList = {
   PayForm: TParamOfPayForm;
   PurchaseDetail: TParaOfPurchaseDetail;
   NotificationDetail: TNotification;
+  Promotion: TNotification;
 };
 
 export type FuelPurchaseRouteProp = RouteProp<
@@ -44,3 +45,4 @@ export type NotificationDetailRouteProp = RouteProp<
   HomeStackParamList,
   'NotificationDetail'
 >;
+export type PromotionRouteProp = RouteProp<HomeStackParamList, 'Promotion'>;

@@ -2,17 +2,13 @@ import React from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-
 import {useMemo, useTranslation, useRoute, useEffect} from '@hooks';
 import {View, Text, StatusBar, UsualButton, ScrollView} from '@components';
 import {goBack} from '@services';
 import {colors} from '@constants';
 import {animation} from '@helpers';
 import {setNotifications} from '@reducers/notifications';
-
 import styles from './styles';
-
-//types
 import {NotificationDetailRouteProp, TGlobalState, TNotification} from '@types';
 
 type TProps = {

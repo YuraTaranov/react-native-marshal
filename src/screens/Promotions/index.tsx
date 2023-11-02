@@ -76,8 +76,10 @@ const Promotions: React.FC<TProps> = ({
   }, [discount]);
 
   const chooseType = (value: 1 | 2 | 3) => {
-    dispatch(setLoader(true));
-    dispatch(setType(value));
+    if (value !== fuelType) {
+      dispatch(setLoader(true));
+      dispatch(setType(value));
+    }
   };
 
   const declOfNumLiters = useCallback(

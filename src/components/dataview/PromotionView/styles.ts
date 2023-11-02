@@ -53,21 +53,20 @@ export default StyleSheet.create({
     textTransform: 'capitalize',
   },
   priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    alignItems: 'flex-start',
     marginTop: 8,
   },
   priceNew: {
-    fontSize: 28,
+    fontSize: 24,
     zIndex: 50,
-    color: colors.white_FFFFFF,
+    color: colors.black_1F1F1F,
     fontFamily: fonts.interSemiBold_600,
   },
   priceOld: {
     fontSize: 16,
-    color: colors.gray_F3F5FA,
-    marginLeft: 8,
-    marginTop: 6,
+    color: colors.black_1F1F1F,
+    marginTop: 2,
     textDecorationLine: 'line-through',
   },
   link: {
@@ -88,7 +87,7 @@ export default StyleSheet.create({
   },
   imageContainer: {
     width: IMAGE_WIDTH,
-    height: 150,
+    height: IMAGE_WIDTH,
     position: 'absolute',
     bottom: -10,
     zIndex: 10,

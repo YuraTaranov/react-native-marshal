@@ -66,6 +66,7 @@ const FuelBalance: React.FC<TProps> = ({
   const animationValue = useState(new Animated.Value(0))[0];
   const [activeDiscount, setActiveDiscount] = useState(() => fuel[0]);
   const previousType = usePrevious(discount.data.type);
+  const previousLoading = usePrevious(cards.loading);
 
   useEffect(() => {
     if (!!flipped) {

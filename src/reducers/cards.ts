@@ -39,12 +39,13 @@ export function* getCardsAsync() {
   yield put(setCardsLoader(true));
   try {
     const body = yield call(() => httpGet(urls.getQRCode));
-    if (body?.data?.data) {
+    if (body.data && body.data.data) {
       yield put(setCards(body.data.data));
     }
   } catch (e) {
     errorHandler(e, 'getCarsAsync');
   } finally {
     yield put(setCardsLoader(false));
+    yield put(setLoader(false));
   }
 }

@@ -20,11 +20,11 @@ const BioAuthSwitch: React.FC<TProps> = ({dispatch, profile}) => {
   const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(
     !!Number(profile?.setting_bio_auth),
   );
-  const device_id = DeviceInfo.getUniqueId();
 
   const createKeys = useCallback(async () => {
     try {
       const res = await ReactNativeBiometrics.createKeys();
+      const device_id = await DeviceInfo.getUniqueId();
       const body = await httpPost(urls.biometricsAdd, {
         public_key: res.publicKey,
         device_id,
@@ -40,7 +40,7 @@ const BioAuthSwitch: React.FC<TProps> = ({dispatch, profile}) => {
       setIsBiometricsActive(false);
       errorHandler(e, 'createKeys error biometrics reg');
     }
-  }, [device_id]);
+  }, []);
 
   const deleteKeys = useCallback(async () => {
     const res = await ReactNativeBiometrics.deleteKeys();

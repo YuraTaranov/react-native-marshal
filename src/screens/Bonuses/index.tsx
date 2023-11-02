@@ -57,7 +57,7 @@ const Bonuses: React.FC<TProps> = ({
 
   const onPressItem = useCallback(
     id => () => {
-      dispatch(getPromotion(id));
+      dispatch(getPromotion({id}));
     },
     [],
   );

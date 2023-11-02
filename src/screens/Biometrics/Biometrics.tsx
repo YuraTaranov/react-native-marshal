@@ -35,7 +35,6 @@ type TProps = {
 const Biometrics: React.FC<TProps> = ({dispatch, biometricsType}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
-  const device_id = DeviceInfo.getUniqueId();
 
   useEffect(() => {
     setOptions({
@@ -47,6 +46,7 @@ const Biometrics: React.FC<TProps> = ({dispatch, biometricsType}) => {
     dispatch(setLoader(true));
     try {
       const res = await ReactNativeBiometrics.createKeys();
+      const device_id = await DeviceInfo.getUniqueId();
       const body = await httpPost(urls.biometricsAdd, {
         public_key: res.publicKey,
         device_id,

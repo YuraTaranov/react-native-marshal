@@ -27,7 +27,7 @@ const HomeCarousel: React.FC<TProps> = ({dispatch, promotions}) => {
 
   const onPressItem = useCallback(
     id => () => {
-      dispatch(getPromotion(id));
+      dispatch(getPromotion({id}));
     },
     [],
   );

@@ -10,12 +10,14 @@ import moment from 'moment';
 import {assets} from '@assets';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
+import {getPromotion} from '@reducers/promotion';
 
 type TProps = {
+  dispatch: any;
   notifications: TNotification[];
 };
 
-const Notifications: React.FC<TProps> = ({notifications}) => {
+const Notifications: React.FC<TProps> = ({notifications, dispatch}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
   useEffect(() => {
@@ -27,6 +29,8 @@ const Notifications: React.FC<TProps> = ({notifications}) => {
     item => () => {
       if (item.type === 'text') {
         navigate('NotificationsDetail', item);
+      } else {
+        dispatch(getPromotion({id: item.data_id, item}));
       }
     },
     [],

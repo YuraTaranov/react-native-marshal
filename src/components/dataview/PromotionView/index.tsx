@@ -82,12 +82,14 @@ const PromotionView: React.FC<TProps> = ({
         {item.type !== 'new' ? (
           <Text style={styles.date}>{promoEndDate}</Text>
         ) : null}
-        <Text style={titleStyles} numberOfLines={2} ellipsizeMode="tail">
-          {item.type === 'discount'
-            ? `${t('Знижка')} -${item.discount_percentage}%`
-            : item.title}
-        </Text>
-        {item.type !== 'action' ? (
+        {item.title ? (
+          <Text style={titleStyles} numberOfLines={2} ellipsizeMode="tail">
+            {item.type === 'discount'
+              ? `${t('Знижка')} -${item.discount_percentage}%`
+              : item.title}
+          </Text>
+        ) : null}
+        {item.type !== 'action' && item.description ? (
           <Text
             style={styles.description}
             numberOfLines={2}
@@ -111,13 +113,15 @@ const PromotionView: React.FC<TProps> = ({
           </TouchableOpacity>
         ) : null}
       </View>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{uri: item.image}}
-          style={styles.image}
-          resizeMode="stretch"
-        />
-      </View>
+      {item.image ? (
+        <View style={styles.imageContainer}>
+          <Image
+            source={{uri: item.image}}
+            style={styles.image}
+            resizeMode={'cover'}
+          />
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };

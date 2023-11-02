@@ -10,10 +10,10 @@ import {loginWithBiometrics} from '@reducers/login';
 const BiometricsLoginModal: React.FC<TProps> = ({dispatch}) => {
   const {t} = useTranslation();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const device_id = DeviceInfo.getUniqueId();
 
   const biometrics = async () => {
     const biometricKeysExist = await ReactNativeBiometrics.biometricKeysExist();
+    const device_id = await DeviceInfo.getUniqueId();
     if (biometricKeysExist.keysExist) {
       setModalVisible(true);
       try {

@@ -13,6 +13,7 @@ import {getPromotionsMain} from './promotionsMain';
 import {getFuel} from './fuel';
 import {getPromotions} from './promotions';
 import {getCards} from './cards';
+import {getDiscount} from './discount';
 
 const GET_PROFILE = '[profile] GET_PROFILE';
 const GET_INITIAL_DATA = '[profile] GET_INITIAL_DATA';
@@ -51,14 +52,14 @@ export function* watchProfile() {
 }
 
 export function* getInitialDataAsync(action: any) {
+  yield put(getPetrolStations());
+  yield put(getSettings());
+  yield put(getFuel());
+  yield put(getPromotions({page: 1}));
+  yield put(getPromotionsMain());
   if (action.data === 'connection') {
     yield put(getCards());
   }
-  yield put(getPetrolStations());
-  yield put(getSettings());
-  yield put(getPromotionsMain());
-  yield put(getFuel());
-  yield put(getPromotions({page: 1}));
 }
 export function* getProfileAsync() {
   const {fuelType} = yield select(state => state.appGlobalState);
