@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useCallback, useTranslation, useState} from '@hooks';
 import {DeviceInfo, SwitchCustom, ReactNativeBiometrics} from '@components';
 import {connect} from 'react-redux';
@@ -13,9 +13,14 @@ import {Dispatch} from 'redux';
 type TProps = {
   dispatch: Dispatch;
   profile: TProfile;
+  biometricsType: TGlobalState['biometrics']['biometricsType'];
 };
 
-const BioAuthSwitch: React.FC<TProps> = ({dispatch, profile}) => {
+const BioAuthSwitch: React.FC<TProps> = ({
+  dispatch,
+  profile,
+  biometricsType,
+}) => {
   const {t} = useTranslation();
   const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(
     !!Number(profile?.setting_bio_auth),
@@ -66,17 +71,31 @@ const BioAuthSwitch: React.FC<TProps> = ({dispatch, profile}) => {
     }
   }, []);
 
+  const title = useMemo(() => {
+    switch (biometricsType) {
+      case 'faceId':
+        return 'Вхід з Face ID';
+      case 'fingerprint':
+        return 'Вхід за відбитком';
+      case 'touchId':
+        return 'Вхід за відбитком';
+      default:
+        return 'Вхід за відбитком';
+    }
+  }, [biometricsType]);
+
   return (
     <SwitchCustom
       value={isBiometricsActive}
       onValueChange={toggleBiometricsSwitch}
-      title={t('Вхід за відбитком')}
+      title={t(title)}
     />
   );
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
+  biometricsType: state.biometrics.biometricsType,
 });
 
 export default connect(mapStateToProps)(BioAuthSwitch);
