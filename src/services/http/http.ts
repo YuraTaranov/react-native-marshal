@@ -6,7 +6,7 @@ import {setIsUserAuthorized, setToken} from '@reducers/appGlobalState';
 
 // const baseURL = __DEV__ ? urls.baseDevURL : urls.baseProdURL;
 // const baseURL = urls.baseProdURL;
-const baseURL = urls.baseProdURL;
+const baseURL = urls.baseDevURL;
 
 const instance = axios.create();
 instance.defaults.baseURL = baseURL;

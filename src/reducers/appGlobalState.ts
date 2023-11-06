@@ -1,6 +1,7 @@
 import {takeLatest, put} from 'redux-saga/effects';
 import i18next from 'i18next';
 import {TGlobalState, TLang, Tgps} from '@types';
+import {getSettings} from './settings';
 
 const RESET_APP_GLOBAL_STATE = '[appGlobalState] RESET_APP_GLOBAL_STATE';
 const CHANGE_LANG = '[appGlobalState] CHANGE_LANG';
@@ -78,4 +79,5 @@ export function* changeLangAsync(data: any) {
   const {lang} = data;
   yield i18next.changeLanguage(lang);
   yield put(setLang(lang));
+  yield put(getSettings());
 }

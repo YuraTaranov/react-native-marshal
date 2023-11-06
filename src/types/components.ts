@@ -147,8 +147,13 @@ export type TNotification = {
 
 export type TSettingsText = {
   text: string;
+  text_html: string;
   title: string;
-  type: 'about_the_application' | 'loyalty_conditions' | 'terms_of_use';
+  type:
+    | 'about_the_application'
+    | 'loyalty_conditions'
+    | 'terms_of_use'
+    | 'privacy_policies';
   updated_at: Date;
 };
 

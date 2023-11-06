@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Dispatch} from 'redux';
-import {useMemo, useTranslation, useCallback} from '@hooks';
-import {View, Text, TouchableOpacity, Linking} from '@components';
+import {useMemo, useTranslation, useCallback, useNavigation} from '@hooks';
+import {View, Text, Linking} from '@components';
 import {TGlobalState, TSettingsText} from '@types';
 import {connect} from 'react-redux';
 import styles from './styles';
 import moment from 'moment';
-import {hitSlop} from '@constants';
+import {Dimensions} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 
 type TProps = {
   dispatch: Dispatch;
@@ -20,9 +21,16 @@ const link = 'http://marshal.ua/rules';
 
 const UseTerms: React.FC<TProps> = ({dispatch, settings}) => {
   const {t} = useTranslation();
+  const {setOptions} = useNavigation();
 
   const onPressLink = useCallback(() => {
     Linking.openURL(link);
+  }, []);
+
+  useEffect(() => {
+    setOptions({
+      title: data?.title,
+    });
   }, []);
 
   const data = useMemo(() => {
@@ -36,13 +44,19 @@ const UseTerms: React.FC<TProps> = ({dispatch, settings}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('Умови використання')}</Text>
+      {/* <Text style={styles.title}>{t('Умови використання')}</Text> */}
       <Text style={styles.description}>{lastUpdate}</Text>
+      {data ? (
+        <RenderHtml
+          contentWidth={Dimensions.get('screen').width}
+          source={{html: data.text_html}}
+        />
+      ) : null}
       {/* <Text style={styles.content}>{data?.text}</Text> */}
-      <Text style={styles.content}>{text}</Text>
-      <TouchableOpacity hitSlop={hitSlop} onPress={onPressLink}>
+      {/* <Text style={styles.content}>{text}</Text> */}
+      {/* <TouchableOpacity hitSlop={hitSlop} onPress={onPressLink}>
         <Text style={styles.link}>{link}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
