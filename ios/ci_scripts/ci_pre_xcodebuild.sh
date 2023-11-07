@@ -5,4 +5,7 @@
 #
 #  Created by user on 07.11.2023.
 #  
+ls -la
+pwd
+cd ios
 pod install
