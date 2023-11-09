@@ -1,0 +1,2 @@
+json_key_data_raw(ENV['ANDROID_SERVICE_USER_JSON']) # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name(ENV['ANDROID_PACKAGE_NAME']) # e.g. com.krausefx.app
