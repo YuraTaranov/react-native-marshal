@@ -7,6 +7,7 @@ echo " Stage: Post-clone is activated .... "
 set -e
 # debug log
 set -x
+git config --local http.postBuffer 4800000000
 
 # Install dependencies using Homebrew. This is MUST! Do not delete.
 brew search node
