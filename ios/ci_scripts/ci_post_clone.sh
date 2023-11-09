@@ -7,7 +7,7 @@
  set -e
  # debug log
  set -x
- node --version
+
  # Install dependencies using Homebrew. This is MUST! Do not delete.
  brew install node@16 yarn cocoapods fastlane
 
