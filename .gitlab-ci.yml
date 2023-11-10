@@ -26,47 +26,8 @@ install-dependencies:
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 
-# IOS DELPOY DEV
-# build-ios-dev:
-#   stage: build
-#   variables:
-#     GIT_STRATEGY: clone
-#   before_script:
-#     - echo API_URL=$API_URL_DEV >> .env
-#     - cd ios && yarn install
-#     - pod install --repo-update
-#   script:
-#     - bundle exec fastlane build_ios
-#   after_script:
-#     - >
-#       if [ "$CI_JOB_STATUS" == "success" ]; then
-#         curl -X POST -H "Content-Type: application/json" --data "{\"chat_id\": \"$TELEGRAM_CHAT_ID\", \"text\": \"IOS DEV Build Job success!\nProject: $CI_PROJECT_NAME\"}" https://api.telegram.org/bot$TELEGRAM_BOT_API_TOKEN/sendMessage > /dev/null
-#       else
-#         curl -X POST -H "Content-Type: application/json" --data "{\"chat_id\": \"$TELEGRAM_CHAT_ID\", \"text\": \"IOS DEV Build Job failed!\nProject: $CI_PROJECT_NAME\nJob URL: $CI_JOB_URL\"}" https://api.telegram.org/bot$TELEGRAM_BOT_API_TOKEN/sendMessage > /dev/null
-#       fi
-#   artifacts:
-#     paths:
-#       - ./ios/
-#     expire_in: 3 hours
-#   tags:
-#     - macos-runner
-#   only:
-#     - dev
-
-# deploy-ios-dev:
-#   stage: deploy
-#   dependencies:
-#     - build-ios-dev
-#   script:
-#     - cd ios
-#     - bundle exec fastlane deploy_ios
-#   tags:
-#     - macos-runner
-#   only:
-#     - dev
-
 #ANDROID DEPLOY DEV
-build-android-dev:
+build-android-apk:
   image: artjoker/react-native:7.0
   stage: build
   dependencies:
@@ -79,7 +40,7 @@ build-android-dev:
     # - echo "keyAlias=$ANDROID_ALIAS" >> android/signing.properties
     # - echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/signing.properties
   script:
-    - echo "API_URL=$API_URL_DEV" >> .env
+    # - echo "API_URL=$API_URL_DEV" >> .env
     - cd android && fastlane build_android_apk
     - cd .. && cp ./android/app/build/outputs/apk/release/*.apk ./
   artifacts:
@@ -90,14 +51,35 @@ build-android-dev:
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 
+build-android-dev:
+  image: artjoker/react-native:7.0
+  stage: build
+  dependencies:
+    - install-dependencies
+  # before_script:
+  #   - echo $ANDROID_KEYSTORE | base64 -d > android/app/my-release-key.keystore
+  #   - echo "keystorePath=my-release-key.keystore" > android/signing.properties
+  #   - echo "keystorePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/signing.properties
+  #   - echo "keyAlias=$ANDROID_ALIAS" >> android/signing.properties
+  #   - echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/signing.properties
+  script:
+    # - echo "API_URL=$API_URL_DEV" >> .env
+    - cd android && fastlane build_android
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    expire_in: 1 hour
+    paths:
+      - ./android/app/build/outputs/
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
 .deploy-android-dev:
   image: artjoker/react-native:7.0
   stage: deploy
   dependencies:
-    - install-dependencies
+    - build-android-dev
   script:
-    - cd android && fastlane build_android
-    - fastlane deploy_android
+    - cd android && fastlane deploy_android
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
       when: manual
