@@ -21,7 +21,7 @@ npm install -g react-native-cli
 npm install -g react-native@0.64.1
 yarn install
 node -v
-react-native -v
+react-native --version
 
 echo " Stage: Post-clone is done .... "
 
