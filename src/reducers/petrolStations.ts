@@ -10,20 +10,20 @@ const SET_LOADING = '[petrolStations] SET_LOADING';
 const RESET_PETROL_STATIONS = '[petrolStations] RESET_PETROL_STATIONS';
 
 type TInitial = {
-	data: TPetrolStation[];
-	loading: boolean;
-}
+  data: TPetrolStation[];
+  loading: boolean;
+};
 
 const initstate: TInitial = {
-	data: [],
-	loading: false,
+  data: [],
+  loading: false,
 };
 
 export default (state = initstate, action: any) => {
   switch (action.type) {
     case SET_PETROL_STATIONS:
       return Object.assign({}, {...state, data: action.data});
-	case SET_LOADING:
+    case SET_LOADING:
       return Object.assign({}, {...state, loading: action.data});
     case RESET_PETROL_STATIONS:
       return initstate;
@@ -47,18 +47,20 @@ export function* watchPetrolStations() {
 export function* getPetrolStationsAsync() {
   const {lang} = yield select(state => state.appGlobalState);
   const locale = lang === 'uk' ? 'ua' : lang;
-  yield put(setLoading(true))
+  yield put(setLoading(true));
   try {
     const body: TGetPetrolStationResponseGenerator = yield call(() =>
       httpPost(urls.getPetrolStations, {locale}),
     );
     if (body?.data?.data) {
+      console.log(body?.data?.data[0]);
+
       yield put(setPetrolStations(body.data.data));
     }
   } catch (e) {
     yield put(setLoader(false));
     errorHandler(e, 'getPetrolStationsAsync');
   } finally {
-    yield put(setLoading(false))
+    yield put(setLoading(false));
   }
 }

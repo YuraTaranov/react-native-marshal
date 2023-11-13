@@ -33,7 +33,11 @@ import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
 import {getPromotionsMain} from '@reducers/promotionsMain';
 import {getFuel} from '@reducers/fuel';
-import {setFaceIdActiveLocal, setUserKey} from '@reducers/biometrics';
+import {
+  setBiometricsType,
+  setFaceIdActiveLocal,
+  setUserKey,
+} from '@reducers/biometrics';
 import BuyFuelInProgress from './components/BuyFuelInProgress/BuyFuelInProgress';
 import {ScrollView} from 'react-native';
 
@@ -72,6 +76,22 @@ const Home: React.FC<TProps> = ({
     });
     dispatch(getProfile());
     dispatch(getReferralLink());
+
+    ReactNativeBiometrics.isSensorAvailable().then(resultObject => {
+      const {available, biometryType} = resultObject;
+      if (available && biometryType === ReactNativeBiometrics.TouchID) {
+        dispatch(setBiometricsType('touchId'));
+      } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+        dispatch(setBiometricsType('faceId'));
+      } else if (
+        available &&
+        biometryType === ReactNativeBiometrics.Biometrics
+      ) {
+        dispatch(setBiometricsType('fingerprint'));
+      } else {
+        dispatch(setBiometricsType('none'));
+      }
+    });
   }, []);
 
   useEffect(() => {

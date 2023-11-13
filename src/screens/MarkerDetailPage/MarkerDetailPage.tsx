@@ -133,9 +133,7 @@ const MarkerDetailPage: React.FC<TProps> = ({
               <Text style={styles.leftText}>{`${item.name}`}</Text>
             </View>
             <View style={styles.rightView}>
-              <Text style={styles.rightText}>{`${
-                findFuelPrice(item.id) || ''
-              } ₴ / л`}</Text>
+              <Text style={styles.rightText}>{`${item.price} ₴ / л`}</Text>
             </View>
           </View>
         ))}

@@ -14,16 +14,18 @@ type TProps = {
   dispatch: Dispatch;
   profile: TProfile;
   biometricsType: TGlobalState['biometrics']['biometricsType'];
+  faceIdActiveLocal: TGlobalState['biometrics']['faceIdActiveLocal'];
 };
 
 const BioAuthSwitch: React.FC<TProps> = ({
   dispatch,
   profile,
   biometricsType,
+  faceIdActiveLocal,
 }) => {
   const {t} = useTranslation();
   const [isBiometricsActive, setIsBiometricsActive] = useState<boolean>(
-    !!Number(profile?.setting_bio_auth),
+    !!Number(profile?.setting_bio_auth) && faceIdActiveLocal,
   );
 
   const createKeys = useCallback(async () => {
@@ -96,6 +98,7 @@ const BioAuthSwitch: React.FC<TProps> = ({
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
   biometricsType: state.biometrics.biometricsType,
+  faceIdActiveLocal: state.biometrics.faceIdActiveLocal,
 });
 
 export default connect(mapStateToProps)(BioAuthSwitch);

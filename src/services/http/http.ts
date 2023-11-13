@@ -62,6 +62,8 @@ const sendRequest = async ({
 const generateOptions = ({method, url, data, params}: TGenerateOptions) => {
   const appGlobalState: any = storage?.store?.getState().appGlobalState || null;
   const token = appGlobalState.accessToken || '';
+  console.log(token);
+
   const locale = appGlobalState.lang === 'uk' ? 'ua' : appGlobalState.lang;
 
   const defaultHeaders = {
