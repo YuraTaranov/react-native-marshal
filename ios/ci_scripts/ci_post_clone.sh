@@ -16,7 +16,10 @@ brew link node@16
 # Install yarn and pods dependencies.
 # If you're using Flutter or Swift
 # just install pods by "pod install" command
-ls && cd .. && yarn && pod install
+cd .. && yarn install
+cd ios
+# cd ios && pod install
+# cd .. && patch-package
  
 echo " Stage: Post-clone is done .... "
 
