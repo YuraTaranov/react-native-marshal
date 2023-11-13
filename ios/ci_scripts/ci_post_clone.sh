@@ -17,7 +17,11 @@ brew link node@16
 # If you're using Flutter or Swift
 # just install pods by "pod install" command
 cd .. && yarn install
- 
+
+node -v
+react-native -v
+
 echo " Stage: Post-clone is done .... "
 
-exit 0
+exit 1
+
