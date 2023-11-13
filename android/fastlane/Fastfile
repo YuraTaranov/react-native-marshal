@@ -1,0 +1,29 @@
+default_platform(:android)
+
+  desc "Build a new version android app"
+  lane :build_android do
+    gradle(task: "bundleRelease")
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Build a new version android app"
+  lane :build_android_apk do
+    gradle(task: "assembleRelease")
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version android app to the Google Play"
+  lane :deploy_android do
+    upload_to_play_store(
+        track: 'internal',
+        release_status: 'completed',
+#        version_code: '6',
+#        skip_upload_changelogs: 'true',
+#        skip_upload_metadata: 'true',
+        skip_upload_images: 'true',
+        skip_upload_screenshots: 'true',
+        aab: "./app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
