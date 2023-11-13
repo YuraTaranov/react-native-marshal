@@ -16,9 +16,10 @@ brew link node@16
 # Install yarn and pods dependencies.
 # If you're using Flutter or Swift
 # just install pods by "pod install" command
-cd .. && yarn install
+cd ..
 npm install -g react-native-cli
 npm install -g react-native@0.64.1
+yarn install
 node -v
 react-native -v
 
