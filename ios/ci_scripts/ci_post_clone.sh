@@ -18,7 +18,7 @@ brew link node@16
 # just install pods by "pod install" command
 cd ..
 npm install -g react-native-cli
-npm install -g react-native@0.64.1
+#npm install -g react-native@0.64.1
 yarn install
 cd .. && node -v && react-native --version
 ls
