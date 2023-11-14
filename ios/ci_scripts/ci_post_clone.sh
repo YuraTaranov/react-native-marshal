@@ -10,8 +10,8 @@ set -x
 git config --local http.postBuffer 4800000000
 
 # Install dependencies using Homebrew. This is MUST! Do not delete.
-brew install node@16 yarn cocoapods fastlane
-brew link node@16
+brew install node@14 yarn cocoapods fastlane
+brew link node@14
 
 # Install yarn and pods dependencies.
 # If you're using Flutter or Swift
