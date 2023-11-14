@@ -20,8 +20,9 @@ cd ..
 npm install -g react-native-cli
 npm install -g react-native@0.64.1
 yarn install
-node -v
-react-native --version
+cd .. && node -v && react-native --version
+ls
+cd ios
 
 echo " Stage: Post-clone is done .... "
 
