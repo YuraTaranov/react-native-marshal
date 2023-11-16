@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {View} from '@components';
+import {DeviceInfo, View} from '@components';
 import {useCallback, useMemo} from '@hooks';
 
 import TabItem from '../TabItem';
@@ -13,10 +13,10 @@ import {TGlobalState} from '@types';
 type TProps = {
   navigation: any;
   state: any;
-  notifications: TGlobalState['notifications']['data'];
+  count: number;
 };
 
-const TabBar: React.FC<TProps> = ({navigation, state, notifications}) => {
+const TabBar: React.FC<TProps> = ({navigation, state, count}) => {
   const generalIndex: number = state?.index || 0;
 
   const jump = useCallback(
@@ -24,12 +24,21 @@ const TabBar: React.FC<TProps> = ({navigation, state, notifications}) => {
     [],
   );
 
-  const hasNewNotifications = useMemo(
-    () => Boolean(notifications.find(item => !item.isRead)),
-    [notifications],
-  );
+  const hasNewNotifications = useMemo(() => count > 0, [count]);
+
+  const style = useMemo(() => {
+    const name = DeviceInfo.getModel();
+    const devices = [
+      'iPhone 15',
+      'iPhone 15 Plus',
+      'iPhone 15 Pro',
+      'iPhone 15 Pro Max',
+    ];
+    return !devices.includes(name) ? {marginBottom: 32} : styles.marginBottom;
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {...style}]}>
       <TabItem
         isActive={generalIndex === 0}
         title={'Наші АЗК'}
@@ -66,7 +75,7 @@ const TabBar: React.FC<TProps> = ({navigation, state, notifications}) => {
 };
 
 const mapStateToProps = (state: TGlobalState) => ({
-  notifications: state.notifications.data,
+  count: state.notifications.count,
 });
 
 export default connect(mapStateToProps)(TabBar);

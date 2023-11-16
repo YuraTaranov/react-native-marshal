@@ -9,6 +9,8 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     paddingTop: 12,
+  },
+  marginBottom: {
     marginBottom: ios ? (isPhone14pro ? 24 : 8) : 8,
   },
   eachScreen: {

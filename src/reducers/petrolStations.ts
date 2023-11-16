@@ -53,8 +53,6 @@ export function* getPetrolStationsAsync() {
       httpPost(urls.getPetrolStations, {locale}),
     );
     if (body?.data?.data) {
-      console.log(body?.data?.data[0]);
-
       yield put(setPetrolStations(body.data.data));
     }
   } catch (e) {

@@ -7,16 +7,25 @@ import {View, Text, StatusBar, UsualButton, ScrollView} from '@components';
 import {goBack} from '@services';
 import {colors} from '@constants';
 import {animation} from '@helpers';
-import {setNotifications} from '@reducers/notifications';
+import {
+  readNotifications,
+  setNotifications,
+  setNotificationsCount,
+} from '@reducers/notifications';
 import styles from './styles';
 import {NotificationDetailRouteProp, TGlobalState, TNotification} from '@types';
 
 type TProps = {
   dispatch: Dispatch;
   notifications: TNotification[];
+  count: number;
 };
 
-const NotificationsDetail: React.FC<TProps> = ({dispatch, notifications}) => {
+const NotificationsDetail: React.FC<TProps> = ({
+  dispatch,
+  notifications,
+  count,
+}) => {
   const {
     t,
     i18n: {language},
@@ -34,11 +43,8 @@ const NotificationsDetail: React.FC<TProps> = ({dispatch, notifications}) => {
 
   useEffect(() => {
     if (!isRead) {
-      const notificationsActuality = notifications.map(item => {
-        return {...item, isRead: item.id === id ? true : item.isRead};
-      });
+      dispatch(readNotifications(id));
       animation('ios');
-      dispatch(setNotifications(notificationsActuality));
     }
   }, []);
 
@@ -63,5 +69,6 @@ const NotificationsDetail: React.FC<TProps> = ({dispatch, notifications}) => {
 
 const mapStateToProps = (state: TGlobalState) => ({
   notifications: state.notifications.data,
+  count: state.notifications.count,
 });
 export default connect(mapStateToProps)(NotificationsDetail);

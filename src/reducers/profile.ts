@@ -5,7 +5,7 @@ import {logout} from './logout';
 import {setFaceIdActiveLocal} from './biometrics';
 import {ReactNativeBiometrics} from '@components';
 import {setLoader, setType} from './appGlobalState';
-import {resetNotifications} from './notifications';
+import {getNotificationsCount, resetNotifications} from './notifications';
 import {capitalizeUserPersonalData} from '@helpers';
 import {getPetrolStations} from './petrolStations';
 import {getSettings} from './settings';
@@ -57,6 +57,7 @@ export function* getInitialDataAsync(action: any) {
   yield put(getFuel());
   yield put(getPromotions({page: 1}));
   yield put(getPromotionsMain());
+  yield put(getNotificationsCount());
   if (action.data === 'connection') {
     yield put(getCards());
   }

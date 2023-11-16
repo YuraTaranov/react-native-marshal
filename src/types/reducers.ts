@@ -98,6 +98,11 @@ export type TGlobalState = {
   };
   notifications: {
     data: TNotification[];
+    loading: boolean;
+    finishedGetNotifications: boolean;
+    lazyLoading: boolean;
+    isRefresh: boolean;
+    count: number;
   };
   settings: {
     data: TSettingsText[];

@@ -7,7 +7,11 @@ import {TGlobalState} from '@types';
 // import {ios} from '@constants';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
-import {setNotifications, regDeviceToken} from '@reducers/notifications';
+import {
+  setNotifications,
+  regDeviceToken,
+  getNotificationsCount,
+} from '@reducers/notifications';
 import {Dispatch} from 'redux';
 import {getPromotion} from '@reducers/promotion';
 import {getPromotionsMain} from '@reducers/promotionsMain';
@@ -81,10 +85,8 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = firebase
       .messaging()
       .onMessage(async (remoteMessage: any) => {
+        dispatch(getNotificationsCount());
         __DEV__ && console.log('Foreground push data', remoteMessage.data);
-
-        console.log(remoteMessage);
-
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: false,
@@ -101,19 +103,17 @@ const NotificationsManager: React.FC<TProps> = ({
   useEffect(() => {
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
-        __DEV__ && console.log('Trey push data', remoteMessage.data);
-
+        __DEV__ && console.log('onNotificationOpenedApp', remoteMessage.data);
+        dispatch(getNotificationsCount());
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: true,
         };
-
         dispatch(
           setNotifications(
             [modifiedNotification, ...notifications].slice(0, 40),
           ),
         );
-        console.log('handleNotification 1', modifiedNotification);
         handleNotification(modifiedNotification, remoteMessage.badge);
       },
     );
@@ -125,6 +125,7 @@ const NotificationsManager: React.FC<TProps> = ({
     messaging()
       .getInitialNotification()
       .then((remoteMessage: any) => {
+        dispatch(getNotificationsCount());
         if (remoteMessage) {
           __DEV__ && console.log('Quit push data', remoteMessage.data);
           const modifiedNotification: TNotification = {

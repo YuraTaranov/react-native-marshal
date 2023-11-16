@@ -12,6 +12,7 @@ import Bonuses from './tabNavigatorStacks/Bonuses';
 import Profile from './tabNavigatorStacks/Profile';
 import {Dispatch} from 'redux';
 import {getCards} from '@reducers/cards';
+import {getNotificationsCount} from '@reducers/notifications';
 
 const TabStack = createBottomTabNavigator();
 
@@ -30,6 +31,7 @@ const TabNavigator: React.FC<TProps> = ({dispatch}) => {
         nextAppState === 'active'
       ) {
         dispatch(getCards());
+        dispatch(getNotificationsCount());
       } else if (
         appState.current === 'active' &&
         nextAppState.match(/inactive|background/)

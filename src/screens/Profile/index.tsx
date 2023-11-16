@@ -33,6 +33,7 @@ type TProps = {
   notifications: TNotification[];
   dispatch: Dispatch;
   profile: TProfile;
+  count: number;
 };
 
 type TMenuItem = {
@@ -41,7 +42,12 @@ type TMenuItem = {
   onPress: () => void;
 };
 
-const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
+const Profile: React.FC<TProps> = ({
+  dispatch,
+  profile,
+  notifications,
+  count,
+}) => {
   const {t} = useTranslation();
   const {setOptions} = useNavigation();
 
@@ -101,17 +107,17 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
   }, [profile?.card]);
 
   const unreadNotificationsCount = useMemo(() => {
-    return notifications.filter(item => !item.isRead).length;
-  }, [notifications]);
+    return count;
+  }, [count]);
 
   const newNotificationsLength = useMemo(() => {
-    return unreadNotificationsCount
+    return unreadNotificationsCount > 0
       ? `${unreadNotificationsCount} ${declension(
           Number(unreadNotificationsCount),
           [t('непрочитане'), t('непрочитаних'), t('непрочитаних')],
         )}`
       : null;
-  }, [unreadNotificationsCount, t]);
+  }, [unreadNotificationsCount, t, count]);
 
   const onPressSettings = useCallback(() => {
     navigate('ProfileStack', {
@@ -154,6 +160,7 @@ const Profile: React.FC<TProps> = ({dispatch, profile, notifications}) => {
 const mapStateToProps = (state: TGlobalState) => ({
   profile: state.profile.data,
   notifications: state.notifications.data,
+  count: state.notifications.count,
 });
 
 export default connect(mapStateToProps)(Profile);

@@ -337,7 +337,7 @@ const MapScreen: React.FC<TProps> = ({
         // @ts-ignore
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={[styles.map, styles.mapPadding]}
+        style={[styles.map]}
         extent={ios ? 512 : 150}
         nodeSize={ios ? 64 : 200}
         // animationEnabled

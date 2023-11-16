@@ -19,7 +19,7 @@ import 'moment/locale/uk';
 import 'moment/locale/ru';
 import {Dispatch} from 'redux';
 import {animation} from '@helpers';
-import {setNotifications} from '@reducers/notifications';
+import {readNotifications, setNotifications} from '@reducers/notifications';
 
 type TProps = {
   dispatch: Dispatch;
@@ -52,11 +52,8 @@ const Promotion: React.FC<TProps> = ({
 
   useEffect(() => {
     if (params && !params.isRead && params.id) {
-      const notificationsActuality = notifications.map(item => {
-        return {...item, isRead: item.id === params.id ? true : item.isRead};
-      });
+      dispatch(readNotifications(params.id));
       animation('ios');
-      dispatch(setNotifications(notificationsActuality));
     }
   }, []);
 

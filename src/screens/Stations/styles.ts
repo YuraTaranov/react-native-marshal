@@ -9,6 +9,7 @@ export default StyleSheet.create({
   },
   whiteFond: {
     backgroundColor: colors.white_FFFFFF,
+    // backgroundColor: colors.red_9A1B18,
   },
   tabBarIndicatorStyle: {
     backgroundColor: colors.red_CA001A,

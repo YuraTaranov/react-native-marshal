@@ -13,6 +13,7 @@ const persistConfig = {
   timeout: 10000,
   key: 'root',
   storage: AsyncStorage,
+  blackList: ['notifications'],
   whitelist: [
     'appGlobalState',
     'biometrics',
@@ -20,7 +21,6 @@ const persistConfig = {
     'petrolStations',
     'profile',
     'referral',
-    'notifications',
   ], // ADD WHITE LIST IF YOU NEED
 };
 

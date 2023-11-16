@@ -5,11 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white_FFFFFF,
-    padding: 20,
+    paddingHorizontal: 20,
     overflow: 'visible',
   },
   contentContainer: {},
-  footer: {
-    height: 20,
-  },
 });

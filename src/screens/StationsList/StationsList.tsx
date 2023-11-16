@@ -138,7 +138,6 @@ const StationsList: React.FC<TProps> = ({
         })}
       </ScrollView>
       {!stations.length && <NothingFoundItem />}
-      <View style={styles.footer} />
     </View>
   );
 };
