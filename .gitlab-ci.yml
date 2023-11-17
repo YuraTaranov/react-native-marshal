@@ -20,14 +20,14 @@ install-dependencies:
     - yarn install --ignore-scripts
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
-    expire_in: 2 hour
+    expire_in: 4 hour
     paths:
       - ./node_modules
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 
 #ANDROID DEPLOY DEV
-.build-android-apk:
+build-android-apk:
   image: artjoker/react-native:7.0
   stage: build
   dependencies:
@@ -50,7 +50,7 @@ install-dependencies:
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 
-build-android-dev:
+.build-android-dev:
   image: artjoker/react-native:7.0
   stage: build
   dependencies:
@@ -76,9 +76,11 @@ deploy-android-dev:
   image: artjoker/react-native:7.0
   stage: deploy
   dependencies:
-    - build-android-dev
+    - install-dependencies
+  #   - build-android-dev
   script:
-    - cd android && fastlane deploy_android
+    - cd android && fastlane build_android
+    - fastlane deploy_android
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
       when: manual
