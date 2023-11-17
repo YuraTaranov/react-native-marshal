@@ -34,10 +34,10 @@ build-android-apk:
     - install-dependencies
   # before_script:
     # - echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
-    # - echo "keystorePath=release.keystore" > android/signing.properties
-    # - echo "keystorePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/signing.properties
-    # - echo "keyAlias=$ANDROID_ALIAS" >> android/signing.properties
-    # - echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/signing.properties
+    #   - echo "MYAPP_UPLOAD_STORE_FILE=release.keystore" > android/gradle.properties
+    # - echo "MYAPP_UPLOAD_STORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_ALIAS=$ANDROID_ALIAS" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_PASSWORD=$ANDROID_KEY_PASSWORD" >> android/gradle.properties
   script:
     # - echo "API_URL=$API_URL_DEV" >> .env
     - cd android && fastlane build_android_apk
@@ -56,11 +56,11 @@ build-android-apk:
   dependencies:
     - install-dependencies
   # before_script:
-  #   - echo $ANDROID_KEYSTORE | base64 -d > android/app/my-release-key.keystore
-  #   - echo "keystorePath=my-release-key.keystore" > android/signing.properties
-  #   - echo "keystorePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/signing.properties
-  #   - echo "keyAlias=$ANDROID_ALIAS" >> android/signing.properties
-  #   - echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/signing.properties
+    # - echo $ANDROID_KEYSTORE | base64 -d > android/app/my-release-key.keystore
+    # - echo "MYAPP_UPLOAD_STORE_FILE=release.keystore" > android/gradle.properties
+    # - echo "MYAPP_UPLOAD_STORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_ALIAS=$ANDROID_ALIAS" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_PASSWORD=$ANDROID_KEY_PASSWORD" >> android/gradle.properties
   script:
     # - echo "API_URL=$API_URL_DEV" >> .env
     - cd android && fastlane build_android
