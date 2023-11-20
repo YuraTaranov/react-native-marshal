@@ -35,7 +35,7 @@ const Promotion: React.FC<TProps> = ({
   notifications,
 }) => {
   const {t} = useTranslation();
-  language === 'ru' ? moment.locale('ru') : moment.locale('uk');
+  language ? moment.locale(language) : moment.locale('uk');
   const {setOptions} = useNavigation();
   const {params} = useRoute<PromotionRouteProp>();
 

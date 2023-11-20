@@ -166,7 +166,7 @@ export type TPaySystemContent = {
   selected?: boolean;
 };
 
-export type TLang = 'uk' | 'ru' | 'en';
+export type TLang = 'uk' | 'ru' | 'en' | null;
 export type Tgps = boolean;
 export type TPrice = {
   title: string;

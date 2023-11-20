@@ -17,7 +17,7 @@ const SET_FUEL_TYPE = '[appGlobalState] SET_FUEL_TYPE';
 const initialstate: TGlobalState['appGlobalState'] = {
   accessToken: '',
   isUserAuthorized: false,
-  lang: 'uk',
+  lang: null,
   loader: false,
   onBoarding: true,
   fuelType: 1,

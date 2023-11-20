@@ -14,6 +14,8 @@ import RootStackNavigator from './stacks/RootStackNavigator';
 
 //types
 import {TGlobalState} from '@types';
+import {locale} from '../services/localization/i18n';
+import {changeLang} from '@reducers/appGlobalState';
 
 const InitialStack = createStackNavigator();
 
@@ -24,7 +26,11 @@ type TProps = {
 
 const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
   useEffect(() => {
-    i18next.changeLanguage(appGlobalState.lang);
+    if (!appGlobalState.lang) {
+      dispatch(changeLang(locale));
+    } else {
+      i18next.changeLanguage(appGlobalState.lang);
+    }
   }, [appGlobalState.lang]);
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import {changeLang} from '@reducers/appGlobalState';
 import {Dispatch} from 'redux';
 import {colors, hitSlop} from '@constants';
+import {getInitialData} from '@reducers/profile';
 
 type TProps = {
   dispatch: Dispatch;
@@ -40,6 +41,7 @@ const LanguageModal: React.FC<TProps> = ({
     } else {
       dispatch(changeLang('en'));
     }
+    dispatch(getInitialData('initial'));
     closeModal();
   }, []);
 

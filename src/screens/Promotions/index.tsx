@@ -22,6 +22,8 @@ import {getDiscount} from '@reducers/discount';
 import {TDiscount, TGlobalState} from '@types';
 import {colors} from '@constants';
 import 'moment/locale/uk';
+// import 'moment/locale';
+import 'moment/locale/en-ca';
 import 'moment/locale/ru';
 import moment from 'moment';
 import {setLoader, setType} from '@reducers/appGlobalState';
@@ -50,7 +52,7 @@ const Promotions: React.FC<TProps> = ({
   initialLoading,
   language,
 }) => {
-  language === 'ru' ? moment.locale('ru') : moment.locale('uk');
+  language ? moment.locale(language) : moment.locale('uk');
   const {t} = useTranslation();
   const isFocused = useIsFocused();
   const previousType = usePrevious(discount.type);

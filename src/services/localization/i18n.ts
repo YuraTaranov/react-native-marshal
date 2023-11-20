@@ -25,7 +25,7 @@ i18n.use(initReactI18next).init({
     [languages.UK]: {translation: uk},
     [languages.EN]: {translation: en},
   },
-  lng: languages[locale.toUpperCase()],
+  lng: locale,
   fallbackLng: languages.RU,
   react: {
     nsMode: 'default',
