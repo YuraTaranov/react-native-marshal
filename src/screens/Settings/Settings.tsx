@@ -27,6 +27,7 @@ import {logout} from '@reducers/logout';
 import BioAuthSwitch from './components/BioAuthSwitch/BioAuthSwitch';
 import LanguageModal from './components/LanguageModal/LanguageModal';
 import {deleteProfile} from '@reducers/profile';
+import NotificationSwitch from './components/NotificationSwitch/NotificationSwitch';
 
 type TProps = {
   dispatch: Dispatch;
@@ -102,13 +103,13 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
         name: t('Геопозиція'),
         onPress: () => OpenAppSettings.open(),
       },
-      {
-        name: t('Сповіщення'),
-        onPress: () =>
-          navigate('ProfileStack', {
-            screen: 'NotificationSettings',
-          }),
-      },
+      // {
+      //   name: t('Сповіщення'),
+      //   onPress: () =>
+      //     navigate('ProfileStack', {
+      //       screen: 'NotificationSettings',
+      //     }),
+      // },
       {
         name: t('Про додаток'),
         onPress: () =>
@@ -145,7 +146,9 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
   }, [t]);
 
   const langValue = useMemo(() => {
-    return language === 'uk' ? t('Українська') : t('Російська');
+    return language === 'uk' || language === 'ru'
+      ? t('Українська')
+      : t('Англійська');
   }, [language, t]);
 
   const renderItem: ({item}: {item: TMenuItem}) => JSX.Element = useCallback(
@@ -173,6 +176,7 @@ const Settings: React.FC<TProps> = ({dispatch, biometricsType, language}) => {
         leftButtonText={t('Не зараз')}
       />
       {biometricsType !== 'none' ? <BioAuthSwitch /> : null}
+      <NotificationSwitch />
       <TouchableOpacity style={styles.langContainer} onPress={onPressLang}>
         <View>
           <Text style={styles.name}>{t('Мова')}</Text>

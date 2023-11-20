@@ -130,9 +130,9 @@ const FuelBalance: React.FC<TProps> = ({
 
   const discountData = useMemo(() => {
     if (discount) {
-      return formatPriceName(discount.data.discount);
+      return formatPriceName(discount.data.discount, t);
     }
-  }, [discount]);
+  }, [discount, t]);
 
   const renderFront = () => (
     <View>

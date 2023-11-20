@@ -63,7 +63,10 @@ const generateOptions = ({method, url, data, params}: TGenerateOptions) => {
   const appGlobalState: any = storage?.store?.getState().appGlobalState || null;
   const token = appGlobalState.accessToken || '';
 
-  const locale = appGlobalState.lang === 'uk' ? 'ua' : appGlobalState.lang;
+  const locale =
+    appGlobalState.lang === 'uk' || appGlobalState.lang === 'ru'
+      ? 'ua'
+      : appGlobalState.lang;
 
   const defaultHeaders = {
     'Content-Type': 'application/json',

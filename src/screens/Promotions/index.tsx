@@ -71,9 +71,9 @@ const Promotions: React.FC<TProps> = ({
 
   const discountData = useMemo(() => {
     if (discount) {
-      return formatPriceName(discount.discount);
+      return formatPriceName(discount.discount, t);
     }
-  }, [discount]);
+  }, [discount, t]);
 
   const chooseType = (value: 1 | 2 | 3) => {
     if (value !== fuelType) {

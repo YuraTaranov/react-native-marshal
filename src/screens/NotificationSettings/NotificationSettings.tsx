@@ -18,7 +18,7 @@ type TProps = {
 const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
   const {t} = useTranslation();
   const [isPromoActive, setIsPromoActive] = useState<boolean>(
-    profile?.setting_action,
+    profile?.setting_notification,
   );
   const [isPartnerActive, setIsPartnerActive] = useState<boolean>(
     profile?.setting_affiliate_program,
@@ -44,23 +44,23 @@ const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
   const togglePromo = useCallback(value => {
     setIsPromoActive(value);
     updateProfile({
-      setting_action: value,
+      setting_notification: value,
     });
   }, []);
 
-  const togglePartner = useCallback(value => {
-    setIsPartnerActive(value);
-    updateProfile({
-      setting_affiliate_program: value,
-    });
-  }, []);
+  // const togglePartner = useCallback(value => {
+  //   setIsPartnerActive(value);
+  //   updateProfile({
+  //     setting_affiliate_program: value,
+  //   });
+  // }, []);
 
-  const toggleMessages = useCallback(value => {
-    setIsMessagesActive(value);
-    updateProfile({
-      setting_message_dev: value,
-    });
-  }, []);
+  // const toggleMessages = useCallback(value => {
+  //   setIsMessagesActive(value);
+  //   updateProfile({
+  //     setting_message_dev: value,
+  //   });
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -69,7 +69,7 @@ const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
         onValueChange={togglePromo}
         title={t('Акційні пропозиції')}
       />
-      <SwitchCustom
+      {/* <SwitchCustom
         value={isPartnerActive}
         onValueChange={togglePartner}
         title={t('Про партнерську програму')}
@@ -78,7 +78,7 @@ const NotificationSettings: React.FC<TProps> = ({dispatch, profile}) => {
         value={isMessagesActive}
         onValueChange={toggleMessages}
         title={t('Повідомлення від розробників')}
-      />
+      /> */}
     </View>
   );
 };

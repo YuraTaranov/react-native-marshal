@@ -50,6 +50,7 @@ export type TProfile = {
   setting_bio_auth: boolean;
   setting_message_dev: boolean;
   setting_action: boolean;
+  setting_notification: boolean;
 };
 
 export type TPromotion = {

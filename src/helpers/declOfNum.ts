@@ -6,7 +6,7 @@ export const declOfNum = (number: number, titles: Array<string>): string => {
       : cases[number % 10 < 5 ? number % 10 : 5]
   ];
 };
-export const formatPriceName = (val: number) => {
+export const formatPriceName = (val: number, t: any) => {
   const data = val.toFixed(2);
   const spitValue = data.split('.');
   const value =
@@ -16,7 +16,7 @@ export const formatPriceName = (val: number) => {
       ? spitValue[0]
       : `${spitValue[0]}.${spitValue[1]}`;
   return {
-    title: val < 1 ? 'коп./л' : 'грн./л',
+    title: val < 1 ? t('коп./л') : t('грн./л'),
     value,
   };
 };

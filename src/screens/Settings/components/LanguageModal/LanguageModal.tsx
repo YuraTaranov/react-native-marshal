@@ -38,7 +38,7 @@ const LanguageModal: React.FC<TProps> = ({
     if (params.type === 1) {
       dispatch(changeLang('uk'));
     } else {
-      dispatch(changeLang('ru'));
+      dispatch(changeLang('en'));
     }
     closeModal();
   }, []);
@@ -65,8 +65,8 @@ const LanguageModal: React.FC<TProps> = ({
           type={1}
         />
         <RadioButtonCustom
-          text={t('Російська')}
-          active={language === 'ru'}
+          text={t('Англійська')}
+          active={language === 'en'}
           onChange={onPressLang}
           type={2}
         />
