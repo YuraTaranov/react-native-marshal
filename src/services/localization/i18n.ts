@@ -14,6 +14,9 @@ export const deviceLanguageAndRegion =
 export const {languageTag}: any =
   localize.findBestAvailableLanguage(languageCodes);
 
+export const locale =
+  languageTag === 'uk' || languageTag === 'ru' ? 'uk' : 'en';
+
 const defaultLanguage = languages.UK;
 
 i18n.use(initReactI18next).init({
@@ -22,7 +25,7 @@ i18n.use(initReactI18next).init({
     [languages.UK]: {translation: uk},
     [languages.EN]: {translation: en},
   },
-  lng: defaultLanguage,
+  lng: languages[locale.toUpperCase()],
   fallbackLng: languages.RU,
   react: {
     nsMode: 'default',
