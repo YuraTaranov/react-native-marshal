@@ -82,6 +82,7 @@ export function* getProfileAsync() {
   }
 }
 
+
 export function* deleteProfileAsync() {
   try {
     yield put(setLoader(true));
