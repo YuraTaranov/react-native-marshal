@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import styles from './styles';
 import 'moment/locale/uk';
 import 'moment/locale/ru';
+import 'moment/locale/en-ca';
 import {Dispatch} from 'redux';
 import {animation} from '@helpers';
 import {readNotifications, setNotifications} from '@reducers/notifications';
@@ -60,7 +61,7 @@ const Promotion: React.FC<TProps> = ({
   const dateTime = useMemo(() => {
     return `${
       promotion?.type === 'action' ? t('Акція до') : t('Знижка до')
-    } ${moment(promotion?.end).format('LL').slice(0, -2)}`;
+    } ${moment(promotion?.end).format('MMMM DD, YYYY')}`;
   }, [promotion.end, promotion?.type, t]);
 
   return (

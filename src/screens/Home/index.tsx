@@ -23,16 +23,11 @@ import {TGlobalState, TProfile, TPromotion} from '@types';
 import {connect} from 'react-redux';
 import {colors, urls} from '@constants';
 import {httpPost, navigate} from '@services';
-import {getPromotions} from '@reducers/promotions';
-import {getPetrolStations} from '@reducers/petrolStations';
 import {getInitialData, getProfile} from '@reducers/profile';
-import {getSettings} from '@reducers/settings';
 import {getReferralLink} from '@reducers/referral';
-import {getPurchases} from '@reducers/purchases';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import FuelBalance from './components/FuelBalance/FuelBalance';
 import {getPromotionsMain} from '@reducers/promotionsMain';
-import {getFuel} from '@reducers/fuel';
 import {
   setBiometricsType,
   setFaceIdActiveLocal,
@@ -77,8 +72,9 @@ const Home: React.FC<TProps> = ({
     dispatch(getProfile());
     dispatch(getReferralLink());
 
-    ReactNativeBiometrics.isSensorAvailable().then(resultObject => {
+    ReactNativeBiometrics.isSensorAvailable().then(async resultObject => {
       const {available, biometryType} = resultObject;
+
       if (available && biometryType === ReactNativeBiometrics.TouchID) {
         dispatch(setBiometricsType('touchId'));
       } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
@@ -87,7 +83,12 @@ const Home: React.FC<TProps> = ({
         available &&
         biometryType === ReactNativeBiometrics.Biometrics
       ) {
-        dispatch(setBiometricsType('fingerprint'));
+        try {
+          await ReactNativeBiometrics.createKeys();
+          dispatch(setBiometricsType('fingerprint'));
+        } catch (error) {
+          dispatch(setBiometricsType('none'));
+        }
       } else {
         dispatch(setBiometricsType('none'));
       }

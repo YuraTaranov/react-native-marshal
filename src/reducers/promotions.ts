@@ -53,7 +53,7 @@ export function* watchPromotions() {
 export function* getPromotionsAsync(action: any) {
   const promotions = yield select(state => state.promotions.data);
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   try {
     const body = yield call(() =>
       httpGet(

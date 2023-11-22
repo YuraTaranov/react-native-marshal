@@ -29,7 +29,11 @@ const AppNavigator: React.FC<TProps> = ({dispatch, appGlobalState}) => {
     if (!appGlobalState.lang) {
       dispatch(changeLang(locale));
     } else {
-      i18next.changeLanguage(appGlobalState.lang);
+      if (appGlobalState.lang === 'ru') {
+        i18next.changeLanguage('uk');
+      } else {
+        i18next.changeLanguage(appGlobalState.lang);
+      }
     }
   }, [appGlobalState.lang]);
 

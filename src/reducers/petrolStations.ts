@@ -46,7 +46,7 @@ export function* watchPetrolStations() {
 
 export function* getPetrolStationsAsync() {
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   yield put(setLoading(true));
   try {
     const body: TGetPetrolStationResponseGenerator = yield call(() =>

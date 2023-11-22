@@ -30,7 +30,7 @@ export function* watchSettings() {
 
 export function* getSettingsAsync() {
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   try {
     const body = yield call(() =>
       httpGet(`${urls.getSettingsText}?locale=${locale}`),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -8,13 +8,14 @@ import Animated, {
 import {Icon, Text, TouchableOpacity} from '@components';
 import {colors} from '@constants';
 import {useTranslation, useEffect} from '@hooks';
-
 import styles from './styles';
+import {TGlobalState} from '@types';
 
 type TProps = {
   onPressHandler: () => void;
   iconName: string;
   isActive: boolean;
+  lang: TGlobalState['appGlobalState']['lang'];
   title: string;
   hasBadge?: boolean;
 };
@@ -22,6 +23,7 @@ type TProps = {
 const TabItem: React.FC<TProps> = ({
   onPressHandler,
   iconName,
+  lang,
   isActive,
   title,
   hasBadge,
@@ -60,6 +62,8 @@ const TabItem: React.FC<TProps> = ({
     }
   }, [isActive, hasBadge]);
 
+  const sizeText = useMemo(() => (lang === 'en' ? 10 : 12), [lang]);
+
   return (
     <TouchableOpacity
       disabled={isActive}
@@ -76,7 +80,12 @@ const TabItem: React.FC<TProps> = ({
         />
       </Animated.View>
 
-      <Text style={[styles.title, isActive && styles.titleActive]}>
+      <Text
+        style={[
+          styles.title,
+          isActive && styles.titleActive,
+          {fontSize: sizeText},
+        ]}>
         {t(title)}
       </Text>
     </TouchableOpacity>

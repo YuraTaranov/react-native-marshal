@@ -6,6 +6,7 @@ import {TPromotion, TGlobalState} from '@types';
 import {fonts} from '@constants';
 import 'moment/locale/uk';
 import 'moment/locale/ru';
+import 'moment/locale/en-ca';
 import {assets} from '@assets';
 import {connect} from 'react-redux';
 

@@ -6,11 +6,12 @@ import {connect} from 'react-redux';
 import {TGlobalState} from '@types';
 // import {ios} from '@constants';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
+import PushNotification, {Importance} from 'react-native-push-notification';
 import {
   setNotifications,
   regDeviceToken,
   getNotificationsCount,
+  readNotifications,
 } from '@reducers/notifications';
 import {Dispatch} from 'redux';
 import {getPromotion} from '@reducers/promotion';
@@ -35,7 +36,7 @@ const NotificationsManager: React.FC<TProps> = ({
     isUserAuthorized && checkPermission();
   }, [isUserAuthorized]);
 
-  const handleNotification: (item: TNotification, badge: number) => null =
+  const handleNotification: (item: TNotification, badge?: number) => null =
     useCallback(
       (item, badge) => {
         ios &&
@@ -63,19 +64,21 @@ const NotificationsManager: React.FC<TProps> = ({
               );
             }
           });
-
-        if (
-          item.type === 'action' ||
-          item.type === 'discount' ||
-          item.type === 'new'
-        ) {
-          dispatch(getPromotion({id: item.data_id, item}));
-        } else {
-          navigate('ProfileStack', {
-            screen: 'NotificationsDetail',
-            params: {...item},
-          });
+        if (item) {
+          if (
+            item.type === 'action' ||
+            item.type === 'discount' ||
+            item.type === 'new'
+          ) {
+            dispatch(getPromotion({id: item.data_id, item}));
+          } else {
+            navigate('ProfileStack', {
+              screen: 'NotificationsDetail',
+              params: {...item},
+            });
+          }
         }
+
         return null;
       },
       [notifications, navigate],
@@ -96,6 +99,23 @@ const NotificationsManager: React.FC<TProps> = ({
             [modifiedNotification, ...notifications].slice(0, 40),
           ),
         );
+
+        PushNotification.localNotification({
+          autoCancel: true,
+          largeIcon: 'ic_stat_name',
+          smallIcon: 'ic_stat_name',
+          priority: 'max',
+          visibility: 'public',
+          importance: 'max',
+          channelId: 'channel-id',
+          vibrate: true,
+          vibration: 300,
+          playSound: false,
+          soundName: 'default',
+          userInfo: {data: remoteMessage.data},
+          title: remoteMessage.data.title || '',
+          message: remoteMessage.data.message || '',
+        });
       });
     return unsubscribe;
   }, [notifications]);
@@ -104,16 +124,21 @@ const NotificationsManager: React.FC<TProps> = ({
     const unsubscribe = messaging().onNotificationOpenedApp(
       async (remoteMessage: any) => {
         __DEV__ && console.log('onNotificationOpenedApp', remoteMessage.data);
-        dispatch(getNotificationsCount());
+        if (remoteMessage.data && remoteMessage.data.id) {
+          dispatch(readNotifications(remoteMessage.data.id));
+        }
         const modifiedNotification: TNotification = {
           ...remoteMessage.data,
           isRead: true,
         };
+        dispatch(getNotificationsCount());
         dispatch(
           setNotifications(
             [modifiedNotification, ...notifications].slice(0, 40),
           ),
         );
+        __DEV__ && console.log('modifiedNotification', modifiedNotification);
+
         handleNotification(modifiedNotification, remoteMessage.badge);
       },
     );
@@ -169,6 +194,23 @@ const NotificationsManager: React.FC<TProps> = ({
       }
       messaging().setAutoInitEnabled(true);
       getToken();
+
+      PushNotification.createChannel(
+        {
+          channelId: 'channel-id',
+          channelName: 'My channel',
+        },
+        callback => {},
+      );
+
+      PushNotification.configure({
+        onNotification: e => {
+          const clicked = e.userInteraction;
+          if (clicked) {
+            handleNotification(e.data.data);
+          }
+        },
+      });
     } else {
       requestPermission();
     }

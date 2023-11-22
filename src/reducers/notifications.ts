@@ -1,4 +1,4 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {httpGet, httpPost} from '@services';
 import {urls} from '@constants';
 import store from '../store';
@@ -100,9 +100,11 @@ export function* watchNotifications() {
 }
 
 export function* getNotificationsAsync(action: any) {
+  const {lang} = yield select(state => state.appGlobalState);
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   try {
     const body = yield call(() =>
-      httpGet(urls.getNotifications, {page: action.data}),
+      httpGet(urls.getNotifications, {page: action.data, locale}),
     );
     const notifications = body.data.data;
     if (notifications.length < 10) {

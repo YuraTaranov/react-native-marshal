@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 12,
+    // fontSize: 12,
     marginTop: 8,
     color: colors.black_58585B,
     fontFamily: fonts.interRegular_400,

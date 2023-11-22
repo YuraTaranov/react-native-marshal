@@ -1,6 +1,11 @@
 import React, {useMemo} from 'react';
 import {useCallback, useTranslation, useState} from '@hooks';
-import {DeviceInfo, SwitchCustom, ReactNativeBiometrics} from '@components';
+import {
+  DeviceInfo,
+  SwitchCustom,
+  ReactNativeBiometrics,
+  Alert,
+} from '@components';
 import {connect} from 'react-redux';
 import {setLoader} from '@reducers/appGlobalState';
 import {httpPost, errorHandler} from '@services';
@@ -30,6 +35,7 @@ const BioAuthSwitch: React.FC<TProps> = ({
 
   const createKeys = useCallback(async () => {
     try {
+      // const res = await ReactNativeBiometrics.createKeys();
       const res = await ReactNativeBiometrics.createKeys();
       const device_id = await DeviceInfo.getUniqueId();
       const body = await httpPost(urls.biometricsAdd, {
@@ -43,6 +49,7 @@ const BioAuthSwitch: React.FC<TProps> = ({
         dispatch(getProfile());
       }
     } catch (e) {
+      Alert.alert('createKeys Error', JSON.stringify(e));
       dispatch(setLoader(false));
       setIsBiometricsActive(false);
       errorHandler(e, 'createKeys error biometrics reg');
@@ -50,10 +57,14 @@ const BioAuthSwitch: React.FC<TProps> = ({
   }, []);
 
   const deleteKeys = useCallback(async () => {
-    const res = await ReactNativeBiometrics.deleteKeys();
-    dispatch(setLoader(false));
-    dispatch(setFaceIdActiveLocal(false));
-    dispatch(getProfile());
+    try {
+      const res = await ReactNativeBiometrics.deleteKeys();
+      dispatch(setLoader(false));
+      dispatch(setFaceIdActiveLocal(false));
+      dispatch(getProfile());
+    } catch (error) {
+      Alert.alert('deleteKeys Error', JSON.stringify(error));
+    }
   }, []);
 
   const toggleBiometricsSwitch = useCallback(async value => {
@@ -67,6 +78,7 @@ const BioAuthSwitch: React.FC<TProps> = ({
         value ? createKeys() : deleteKeys();
       }
     } catch (error) {
+      Alert.alert('toggleBiometricsSwitch Error', JSON.stringify(error));
       dispatch(setLoader(false));
       setIsBiometricsActive(false);
       errorHandler(error, 'toggleBiometricsSwitch');

@@ -22,7 +22,6 @@ import {getDiscount} from '@reducers/discount';
 import {TDiscount, TGlobalState} from '@types';
 import {colors} from '@constants';
 import 'moment/locale/uk';
-// import 'moment/locale';
 import 'moment/locale/en-ca';
 import 'moment/locale/ru';
 import moment from 'moment';

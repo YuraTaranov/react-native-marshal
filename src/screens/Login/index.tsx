@@ -54,14 +54,19 @@ const Login: React.FC<TProps> = ({
   const [textInputFocus, setTextInputFocus] = useState<boolean>(false);
   const [bioModalVisible, setBioModalVisible] = useState<boolean>(false);
 
-  ReactNativeBiometrics.isSensorAvailable().then(resultObject => {
+  ReactNativeBiometrics.isSensorAvailable().then(async resultObject => {
     const {available, biometryType} = resultObject;
     if (available && biometryType === ReactNativeBiometrics.TouchID) {
       dispatch(setBiometricsType('touchId'));
     } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
       dispatch(setBiometricsType('faceId'));
     } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
-      dispatch(setBiometricsType('fingerprint'));
+      try {
+        await ReactNativeBiometrics.createKeys();
+        dispatch(setBiometricsType('fingerprint'));
+      } catch (error) {
+        dispatch(setBiometricsType('none'));
+      }
     } else {
       dispatch(setBiometricsType('none'));
     }

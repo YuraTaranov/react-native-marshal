@@ -36,7 +36,7 @@ export function* watchPromotion() {
 export function* getPromotionAsync(action: any) {
   yield put(setLoader(true));
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   try {
     const body = yield call(() =>
       httpGet(`${urls.getPromotions}/${action.data.id}/?locale=${locale}`),

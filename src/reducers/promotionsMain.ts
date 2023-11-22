@@ -40,7 +40,7 @@ export function* watchPromotionsMain() {
 export function* getPromotionsMainAsync() {
   yield put(setRefreshing(true));
   const {lang} = yield select(state => state.appGlobalState);
-  const locale = lang === 'uk' ? 'ua' : lang;
+  const locale = lang === 'uk' || lang === 'ru' ? 'ua' : lang;
   try {
     const body = yield call(() =>
       httpGet(`${urls.getPromotionsMain}/?locale=${locale}`),
