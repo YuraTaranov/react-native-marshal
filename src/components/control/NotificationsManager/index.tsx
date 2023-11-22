@@ -155,11 +155,8 @@ const NotificationsManager: React.FC<TProps> = ({
   }, [notifications]);
 
   const getToken = useCallback(async () => {
+    await messaging().deleteToken();
     const fcmToken = await messaging().getToken();
-    // const fcmToken = await messaging().onTokenRefresh(token => {
-    //   console.log(token);
-    // });
-    // console.log('fcmToken', fcmToken);
     fcmToken && dispatch(regDeviceToken(fcmToken));
   }, []);
 

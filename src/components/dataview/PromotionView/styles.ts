@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {colors, fonts, ios, sizes} from '@constants';
 
 const HALF_SCREEN_WIDTH = sizes.window_width / 2;
@@ -9,7 +9,7 @@ const DESCRIPTION_WIDTH = sizes.window_width / 4;
 
 export default StyleSheet.create({
   container: {
-    height: 200,
+    height: Dimensions.get('screen').width / 2, // 1:2 1024px / 512px
     marginBottom: 16,
   },
   contentContainer: {

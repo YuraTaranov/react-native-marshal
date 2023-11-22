@@ -93,9 +93,6 @@ function formatMarkerData(ArrayMarkers: Array<TFullMarker>): Array<TMarker> {
   return (
     [
       ...ArrayMarkers.map((m: TFullMarker, index: number): TMarker => {
-        if (index === 0) {
-          console.log(m);
-        }
         return {
           id: +m.id,
           name: `${m.name}`,

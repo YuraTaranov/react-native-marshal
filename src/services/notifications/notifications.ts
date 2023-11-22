@@ -11,7 +11,11 @@ export const notificationService = {
 
     const checkResult = await notificationService.checkPermission();
     if (checkResult) {
+      // const fcmToken = await messaging().getToken();
+      // await messaging().deleteToken();
       const fcmToken = await messaging().getToken();
+      console.log('fcmToken', fcmToken);
+
       try {
         const body = {device_token: fcmToken};
         // const res = await httpPut('' + '/set-token', body);
