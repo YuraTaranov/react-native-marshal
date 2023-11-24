@@ -28,10 +28,8 @@ const PromotionView: React.FC<TProps> = ({
 
   const promoEndDate = useMemo(() => {
     return `${item.type === 'action' ? t('Акція до') : t('Знижка до')} ${moment(
-      item.end,
-    )
-      .format('LL')
-      .slice(0, -2)}`;
+      item?.end,
+    ).format('MMMM DD, YYYY')}`;
   }, [item.end, item.type, t]);
 
   const prices = useMemo(() => {
@@ -114,7 +112,7 @@ const PromotionView: React.FC<TProps> = ({
           </TouchableOpacity>
         ) : null}
       </View>
-      {/* {item.image ? (
+      {item.image ? (
         <View style={styles.imageContainer}>
           <Image
             source={{uri: item.image}}
@@ -122,7 +120,7 @@ const PromotionView: React.FC<TProps> = ({
             resizeMode={'cover'}
           />
         </View>
-      ) : null} */}
+      ) : null}
     </TouchableOpacity>
   );
 };
