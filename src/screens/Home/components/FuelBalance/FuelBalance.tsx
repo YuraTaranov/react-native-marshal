@@ -137,95 +137,96 @@ const FuelBalance: React.FC<TProps> = ({
   const renderFront = () => (
     <View>
       <Animated.View
-        style={[styles.card, styles.frontCard, frontAnimatedStyle]}>
-        <ImageBackground
-          source={assets.CARD_BACKGROUND}
-          style={styles.imageBackgroundContainer}
-          imageStyle={styles.imageBackground}>
-          <TouchableOpacity
-            onPress={flipCard}
-            activeOpacity={1}
-            disabled={!cardNumber}
-            style={styles.flipContainer}>
-            <View style={styles.fingerprintContainer}>
-              {cardNumber ? (
-                <Image
-                  source={assets.FINGERPRINT}
-                  style={styles.fingerprint}
-                  resizeMode="contain"
-                />
-              ) : null}
+        style={[frontAnimatedStyle, styles.frontCard, styles.card]}>
+        <TouchableOpacity
+          onPress={flipCard}
+          activeOpacity={1}
+          disabled={!cardNumber}
+          style={[styles.card, styles.frontCard]}>
+          <ImageBackground
+            source={assets.CARD_BACKGROUND}
+            style={styles.imageBackgroundContainer}
+            imageStyle={styles.imageBackground}>
+            <View style={styles.flipContainer}>
+              <View style={styles.fingerprintContainer}>
+                {cardNumber ? (
+                  <Image
+                    source={assets.FINGERPRINT}
+                    style={styles.fingerprint}
+                    resizeMode="contain"
+                  />
+                ) : null}
+              </View>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={flipCard}
-            style={styles.logoContainer}
-            activeOpacity={1}>
-            <Image
-              source={assets.CARD_LOGO}
-              style={styles.logo}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
-          {screenType === 'home' ? (
-            <View style={{flex: 1}}>
-              <GradientBorder style={styles.gradientBorder} />
-              <View style={styles.fuelContainer}>
-                <TouchableOpacity
-                  style={styles.fuelTypeContainer}
-                  disabled={flipped}
-                  onPress={openModal}>
-                  <View>
-                    <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
-                    <View style={styles.fuelTypeValueContainer}>
-                      <Text style={styles.fuelTypeValue}>{`${t(
-                        activeDiscount.title,
-                      )}`}</Text>
-                      <Icon
-                        name="arrow-down"
-                        size={16}
-                        color={colors.white_FFFFFF}
-                      />
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                <VerticalGradientBorder />
-                <View style={styles.fuelValueContainer}>
-                  <View>
-                    <Text style={styles.fuelTitle}>{t('Поточна знижка')}</Text>
-                    <Text style={styles.fuelValue}>
-                      {discount.loading ? (
-                        <ActivityIndicator
-                          size={'small'}
+            <View style={styles.logoContainer}>
+              <Image
+                source={assets.CARD_LOGO}
+                style={styles.logo}
+                resizeMode="cover"
+              />
+            </View>
+            {screenType === 'home' ? (
+              <View style={{flex: 1}}>
+                <GradientBorder style={styles.gradientBorder} />
+                <View style={styles.fuelContainer}>
+                  <TouchableOpacity
+                    style={styles.fuelTypeContainer}
+                    disabled={flipped}
+                    onPress={openModal}>
+                    <View>
+                      <Text style={styles.fuelTitle}>{t('Вид топлива')}</Text>
+                      <View style={styles.fuelTypeValueContainer}>
+                        <Text style={styles.fuelTypeValue}>{`${t(
+                          activeDiscount.title,
+                        )}`}</Text>
+                        <Icon
+                          name="arrow-down"
+                          size={16}
                           color={colors.white_FFFFFF}
                         />
-                      ) : (
-                        <>
-                          {`${discountData?.value}`}
-                          <Text
-                            style={[
-                              styles.fuelValue,
-                              styles.fuelValueRegular,
-                            ]}>{` ${discountData?.title}`}</Text>
-                        </>
-                      )}
-                    </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                  <VerticalGradientBorder />
+                  <View style={styles.fuelValueContainer}>
+                    <View>
+                      <Text style={styles.fuelTitle}>
+                        {t('Поточна знижка')}
+                      </Text>
+                      <Text style={styles.fuelValue}>
+                        {discount.loading ? (
+                          <ActivityIndicator
+                            size={'small'}
+                            color={colors.white_FFFFFF}
+                          />
+                        ) : (
+                          <>
+                            {`${discountData?.value}`}
+                            <Text
+                              style={[
+                                styles.fuelValue,
+                                styles.fuelValueRegular,
+                              ]}>{` ${discountData?.title}`}</Text>
+                          </>
+                        )}
+                      </Text>
+                    </View>
                   </View>
                 </View>
+                <GradientBorder style={styles.gradientBorder} />
               </View>
-              <GradientBorder style={styles.gradientBorder} />
-            </View>
-          ) : (
-            <View style={styles.contentContainer}>
-              <View style={styles.nameContainer}>
-                <Text style={styles.name}>{userCardName}</Text>
+            ) : (
+              <View style={styles.contentContainer}>
+                <View style={styles.nameContainer}>
+                  <Text style={styles.name}>{userCardName}</Text>
+                </View>
+                <View style={styles.cardNumberContainer}>
+                  <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
+                </View>
               </View>
-              <View style={styles.cardNumberContainer}>
-                <Text style={styles.cardNunber}>{`${cardNumber}`}</Text>
-              </View>
-            </View>
-          )}
-        </ImageBackground>
+            )}
+          </ImageBackground>
+        </TouchableOpacity>
       </Animated.View>
     </View>
   );
@@ -236,45 +237,47 @@ const FuelBalance: React.FC<TProps> = ({
         <TouchableOpacity
           onPress={flipCard}
           activeOpacity={1}
-          style={{width: '100%'}}>
-          <View style={styles.fingerprintContainer}>
-            <Image
-              source={assets.FINGERPRINT}
-              style={styles.fingerprint}
-              resizeMode="contain"
-            />
-          </View>
-        </TouchableOpacity>
-        <Text style={styles.bonusCardNumber}>{t('Карта лояльності')}</Text>
-        {profile?.card ? (
-          <>
-            <Text style={{...styles.bonusCardNumber, marginTop: 4}}>
-              {cardNumber}
-            </Text>
-            <View style={styles.qrCodeContainer}>
-              <>
-                <QRCode
-                  size={sizes.cardHeight / 2}
-                  value={`${qrCode || profile?.card || ''}`}
-                  backgroundColor="transparent"
-                />
-                {!cards.loading ? null : (
-                  <>
-                    <View style={styles.loaderView}>
-                      <ActivityIndicator size={'large'} color={'black'} />
-                    </View>
-                    <BlurView
-                      style={styles.blurView}
-                      blurType="light"
-                      blurAmount={3}
-                      reducedTransparencyFallbackColor="white"
-                    />
-                  </>
-                )}
-              </>
+          style={[styles.card, styles.backCard]}>
+          <View style={{width: '100%'}}>
+            <View style={styles.fingerprintContainer}>
+              <Image
+                source={assets.FINGERPRINT}
+                style={styles.fingerprint}
+                resizeMode="contain"
+              />
             </View>
-          </>
-        ) : null}
+          </View>
+          <Text style={styles.bonusCardNumber}>{t('Карта лояльності')}</Text>
+          {profile?.card ? (
+            <>
+              <Text style={{...styles.bonusCardNumber, marginTop: 4}}>
+                {cardNumber}
+              </Text>
+              <View style={styles.qrCodeContainer}>
+                <>
+                  <QRCode
+                    size={sizes.cardHeight / 2}
+                    value={`${qrCode || profile?.card || ''}`}
+                    backgroundColor="transparent"
+                  />
+                  {!cards.loading ? null : (
+                    <>
+                      <View style={styles.loaderView}>
+                        <ActivityIndicator size={'large'} color={'black'} />
+                      </View>
+                      <BlurView
+                        style={styles.blurView}
+                        blurType="light"
+                        blurAmount={3}
+                        reducedTransparencyFallbackColor="white"
+                      />
+                    </>
+                  )}
+                </>
+              </View>
+            </>
+          ) : null}
+        </TouchableOpacity>
       </Animated.View>
     </View>
   );
