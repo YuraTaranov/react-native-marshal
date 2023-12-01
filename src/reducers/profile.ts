@@ -54,13 +54,14 @@ export function* watchProfile() {
 export function* getInitialDataAsync(action: any) {
   yield put(getPetrolStations());
   yield put(getSettings());
+  if (action.data === 'connection') {
+    yield put(getCards());
+  }
   yield put(getFuel());
   yield put(getPromotions({page: 1}));
   yield put(getPromotionsMain());
   yield put(getNotificationsCount());
-  if (action.data === 'connection') {
-    yield put(getCards());
-  }
+ 
 }
 export function* getProfileAsync() {
   const {fuelType} = yield select(state => state.appGlobalState);
