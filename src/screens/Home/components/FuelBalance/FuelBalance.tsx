@@ -193,7 +193,7 @@ const FuelBalance: React.FC<TProps> = ({
                       <Text style={styles.fuelTitle}>
                         {t('Поточна знижка')}
                       </Text>
-                      <Text style={styles.fuelValue}>
+                      <Text style={styles.fuelValueMain}>
                         {discount.loading ? (
                           <ActivityIndicator
                             size={'small'}

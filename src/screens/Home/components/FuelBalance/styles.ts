@@ -38,6 +38,7 @@ export default StyleSheet.create({
   },
   fuelTypeValueContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   bonusValue: {
     color: colors.white_FFFFFF,
@@ -52,12 +53,19 @@ export default StyleSheet.create({
   fuelTypeValue: {
     color: colors.white_FFFFFF,
     fontSize: 16,
+    textTransform: 'uppercase',
     fontFamily: fonts.interBold_700,
     marginRight: 8,
   },
-  fuelValue: {
+  fuelValueMain: {
     color: colors.white_FFFFFF,
     fontSize: 16,
+    fontFamily: fonts.interBold_700,
+    textTransform: 'uppercase',
+  },
+  fuelValue: {
+    color: colors.white_FFFFFF,
+    fontSize: 12,
     fontFamily: fonts.interBold_700,
     textTransform: 'uppercase',
   },

@@ -135,8 +135,8 @@ android {
         applicationId "com.marshal.ukraine"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 91
-        versionName "1.93"
+        versionCode 98
+        versionName "1.94"
 		missingDimensionStrategy 'react-native-camera', 'general'
 		multiDexEnabled true
     }
