@@ -8,17 +8,15 @@
 
 ```bash
 $ yarn install
-
-$ yarn run pod_clean
 ```
 
 ## Running the app
 
 ```bash
 
-# Run IOS
+# iOS
 $ yarn run ios
 
-# Run Android
+# Android
 $ yarn run android
 ```
