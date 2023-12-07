@@ -1,0 +1,69 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.marshal.ukraine">
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+  <uses-permission
+    android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+  <uses-permission
+    android:name="android.permission.ACCESS_WIFI_STATE" />
+  <application
+    android:name=".MainApplication"
+    android:label="@string/app_name"
+    android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:allowBackup="false"
+    android:usesCleartextTraffic="true"
+    android:theme="@style/AppTheme">
+    <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_stat_name" />
+    <meta-data
+      android:name="com.dieam.reactnativepushnotification.default_notification_channel_id"
+      android:value="@string/default_notification_channel_id" />
+    <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="-"
+    />
+    <!-- <activity
+		android:name=".SplashActivity"
+		android:theme="@style/SplashTheme"
+		android:label="@string/app_name"
+	  >
+	  <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+	  </activity> -->
+
+    <!-- android:exported="true" -->
+    <activity
+      android:name=".MainActivity"
+      android:label="@string/app_name"
+      android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+      android:launchMode="singleTask"
+      android:windowSoftInputMode="adjustPan"
+      android:screenOrientation="portrait"
+      android:exported="true"
+    >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+          android:host="marshalukraine.page.link"
+          android:scheme="https"
+        />
+      </intent-filter>
+    </activity>
+    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+  </application>
+</manifest>

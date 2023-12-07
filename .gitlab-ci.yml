@@ -1,0 +1,87 @@
+stages:
+  - install
+  - build
+  - deploy
+
+variables:
+    LC_ALL: "en_US.UTF-8"
+    LANG: "en_US.UTF-8"
+
+# INSTALL DEPENDENCIES
+install-dependencies:
+  image: artjoker/react-native:7.0
+  stage: install
+  cache:
+    key: "$CI_JOB_NAME"
+    policy: pull-push
+    paths:
+      - node_modules/
+  script:
+    - yarn install --ignore-scripts
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    expire_in: 4 hour
+    paths:
+      - ./node_modules
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
+#ANDROID DEPLOY DEV
+build-android-apk:
+  image: artjoker/react-native:7.0
+  stage: build
+  dependencies:
+    - install-dependencies
+  # before_script:
+    # - echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
+    #   - echo "MYAPP_UPLOAD_STORE_FILE=release.keystore" > android/gradle.properties
+    # - echo "MYAPP_UPLOAD_STORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_ALIAS=$ANDROID_ALIAS" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_PASSWORD=$ANDROID_KEY_PASSWORD" >> android/gradle.properties
+  script:
+    # - echo "API_URL=$API_URL_DEV" >> .env
+    - cd android && fastlane build_android_apk
+    - cd .. && cp ./android/app/build/outputs/apk/release/*.apk ./
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    expire_in: 4 hour
+    paths:
+      - ./*.apk
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
+.build-android-dev:
+  image: artjoker/react-native:7.0
+  stage: build
+  dependencies:
+    - install-dependencies
+  # before_script:
+    # - echo $ANDROID_KEYSTORE | base64 -d > android/app/my-release-key.keystore
+    # - echo "MYAPP_UPLOAD_STORE_FILE=release.keystore" > android/gradle.properties
+    # - echo "MYAPP_UPLOAD_STORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_ALIAS=$ANDROID_ALIAS" >> android/gradle.properties
+    # - echo "MYAPP_UPLOAD_KEY_PASSWORD=$ANDROID_KEY_PASSWORD" >> android/gradle.properties
+  script:
+    # - echo "API_URL=$API_URL_DEV" >> .env
+    - cd android && fastlane build_android
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    expire_in: 1 hour
+    paths:
+      - ./android/app/build/outputs/
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
+deploy-android-dev:
+  image: artjoker/react-native:7.0
+  stage: deploy
+  dependencies:
+    - install-dependencies
+  #   - build-android-dev
+  script:
+    - cd android && fastlane build_android
+    - fastlane deploy_android
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: manual
+

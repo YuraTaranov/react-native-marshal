@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "528182531851",
+    "project_id": "marshal-322606",
+    "storage_bucket": "marshal-322606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528182531851:android:239c59aae2f4fa7471340e",
+        "android_client_info": {
+          "package_name": "com.marshal.ukraine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528182531851-6pba8jafcqghcvob2ig211inshsrqt42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marshal.ukraine",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "528182531851-ggepuleudckokq9kspqujv984b2133md.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "-"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528182531851-ggepuleudckokq9kspqujv984b2133md.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "528182531851-mdg4vhbbci4252vfhe6omt9kjpr112c9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.marshal",
+                "app_store_id": "1576710419"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
